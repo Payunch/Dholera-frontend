@@ -13,6 +13,8 @@ import Seo from '../components/Seo';
 const Planning = () => {
   const { verifiedLead } = useLead();
   const [pdfs, setPdfs] = useState([]);
+  const [loadingPdfs, setLoadingPdfs] = useState(true);
+  const [pdfLoadError, setPdfLoadError] = useState('');
   const [activeTab, setActiveTab] = useState(0);
   const [visibleCount, setVisibleCount] = useState({ 0: 8, 1: 8, 2: 8 });
   const [selectedPdfId, setSelectedPdfId] = useState(null);
@@ -22,10 +24,44 @@ const Planning = () => {
   const { sessionId, fingerprint } = useVisitorTracking();
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/pdf/list`)
-      .then(res => res.json())
-      .then(data => setPdfs(data))
-      .catch(console.error);
+    let active = true;
+
+    const loadPdfs = async () => {
+      setLoadingPdfs(true);
+      setPdfLoadError('');
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/pdf/list`);
+        if (!res.ok) {
+          throw new Error(`Failed to load documents (${res.status})`);
+        }
+
+        const data = await res.json();
+        if (!active) {
+          return;
+        }
+
+        setPdfs(Array.isArray(data) ? data : []);
+      } catch (error) {
+        if (!active) {
+          return;
+        }
+
+        console.error('PDF list load error:', error);
+        setPdfLoadError('Documents could not be loaded right now. Please try again shortly.');
+        setPdfs([]);
+      } finally {
+        if (active) {
+          setLoadingPdfs(false);
+        }
+      }
+    };
+
+    loadPdfs();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   const categories = ['Official PDFs', 'Naksha', 'DP Maps'];
@@ -167,7 +203,19 @@ const Planning = () => {
           </Box>
         )}
 
-        {filteredPdfs.length === 0 && (
+        {loadingPdfs && (
+          <Box sx={{ py: 10, textAlign: 'center' }}>
+            <Typography variant="h6" color="text.secondary">Loading documents...</Typography>
+          </Box>
+        )}
+
+        {!loadingPdfs && pdfLoadError && (
+          <Box sx={{ py: 10, textAlign: 'center' }}>
+            <Typography variant="h6" color="error.main">{pdfLoadError}</Typography>
+          </Box>
+        )}
+
+        {!loadingPdfs && !pdfLoadError && filteredPdfs.length === 0 && (
           <Box sx={{ py: 10, textAlign: 'center' }}>
             <Typography variant="h6" color="text.disabled">No documents available in this category.</Typography>
           </Box>
