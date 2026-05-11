@@ -63,6 +63,16 @@ This frontend is pre-configured for **Capacitor**.
 5. `npx cap sync android`
 6. `npx cap open android` (Opens in Android Studio)
 
+---
+
+## 🗺️ Frontend Roadmap
+- [ ] **Multilingual Completion:** Complete Gujarati and Hindi translations for all UI components.
+- [ ] **Interactive Maps:** Implementation of GIS/Leaflet for dynamic map exploration.
+- [ ] **Search & Filtering:** Global search across development updates and maps.
+- [ ] **SEO Prerendering:** Integration of `react-snap` or Vite-SSG for better indexing.
+- [ ] **Skeleton Screens:** Enhance all lazy-loaded components with polish.
+- [ ] **CI/CD Build:** Automated build and Vercel/Railway deployment hooks.
+
 ## ✅ Final Clean Status
 - Removed redundant `.codex` folder.
 - Removed legacy `pdf/` folder containing non-source assets.
