@@ -371,3 +371,5 @@ The following features are planned for future development to complete the platfo
 - [ ] **Image Optimization:** Automated compression and WebP conversion for all uploaded update images.
 # Dholera
 # Dholera-frontend
+
+<!-- https://res.cloudinary.com/dhf36t4vw/image/upload/f_auto,q_auto/cld-sample-4.jpg -->
