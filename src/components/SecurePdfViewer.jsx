@@ -26,9 +26,14 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
         const token = localStorage.getItem('lead_token');
         if (!token) throw new Error('Verification required to access this document.');
 
-        const res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
-          headers: { 'Authorization': token }
-        });
+        let res;
+        if (pdfId.startsWith('/docs/')) {
+          res = await fetch(pdfId);
+        } else {
+          res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
+            headers: { 'Authorization': token }
+          });
+        }
 
         if (!res.ok) {
           const errData = await res.json().catch(() => ({ error: 'Server error' }));

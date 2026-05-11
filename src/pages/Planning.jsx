@@ -10,9 +10,17 @@ import { useLead } from '../context/LeadContext';
 import { API_BASE_URL } from '../utils/apiBase';
 import Seo from '../components/Seo';
 
+const STATIC_PDFS = [
+  { id: '/docs/master-plan-overview.pdf', title: 'Dholera SIR Master Plan', category: 'PDFs' },
+  { id: '/docs/investor-update-pack.pdf', title: 'Investor Update Pack 2024', category: 'PDFs' },
+  { id: '/docs/development-plan-overview.pdf', title: 'Development Plan Overview', category: 'DP Maps' },
+  { id: '/docs/tp-1a1-reference.pdf', title: 'TP 1A1 Reference Map', category: 'Naksha' },
+  { id: '/docs/tp-4b1-layout.pdf', title: 'TP 4B1 Layout Plan', category: 'Naksha' }
+];
+
 const Planning = () => {
   const { verifiedLead } = useLead();
-  const [pdfs, setPdfs] = useState([]);
+  const [pdfs, setPdfs] = useState(STATIC_PDFS);
   const [loadingPdfs, setLoadingPdfs] = useState(true);
   const [pdfLoadError, setPdfLoadError] = useState('');
   const [activeTab, setActiveTab] = useState(0);
@@ -41,15 +49,28 @@ const Planning = () => {
           return;
         }
 
-        setPdfs(Array.isArray(data) ? data : []);
+        // Merge API data with static fallbacks, preventing duplicates by ID
+        const apiPdfs = Array.isArray(data) ? data : [];
+        const merged = [...apiPdfs];
+        
+        STATIC_PDFS.forEach(staticPdf => {
+          if (!merged.find(p => p.id === staticPdf.id)) {
+            merged.push(staticPdf);
+          }
+        });
+
+        setPdfs(merged);
       } catch (error) {
         if (!active) {
           return;
         }
 
         console.error('PDF list load error:', error);
-        setPdfLoadError('Documents could not be loaded right now. Please try again shortly.');
-        setPdfs([]);
+        // If API fails, we still keep the STATIC_PDFS (already set in initial state)
+        // No need to set error message if we have fallback data
+        if (pdfs.length === 0) {
+          setPdfLoadError('Documents could not be loaded right now. Please try again shortly.');
+        }
       } finally {
         if (active) {
           setLoadingPdfs(false);
