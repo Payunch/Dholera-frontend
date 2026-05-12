@@ -27,13 +27,9 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
         if (!token) throw new Error('Verification required to access this document.');
 
         let res;
-        if (pdfId.startsWith('/docs/')) {
-          res = await fetch(pdfId);
-        } else {
-          res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
-            headers: { 'Authorization': token }
-          });
-        }
+        res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
+          headers: { 'Authorization': token }
+        });
 
         if (!res.ok) {
           const errData = await res.json().catch(() => ({ error: 'Server error' }));

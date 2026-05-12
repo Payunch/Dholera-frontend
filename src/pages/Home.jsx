@@ -1,17 +1,19 @@
 import React from 'react';
 import { Box, Typography, Button, Container, Grid, Paper } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import MapIcon from '@mui/icons-material/Map';
 import FactoryIcon from '@mui/icons-material/Factory';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import Seo from '../components/Seo';
+import { useLanguage } from '../context/LanguageContext';
 
 const Home = () => {
+  const { t } = useLanguage();
+
   return (
     <Box>
       <Seo
-        title="Home"
+        title={t('nav_home')}
         description="Dholera growth evidence, planning maps, and verified lead capture in one portal."
         path="/"
       />
@@ -26,10 +28,10 @@ const Home = () => {
       }}>
         <Container maxWidth="md" sx={{ position: 'relative', zIndex: 2 }}>
           <Typography variant="h1" sx={{ mb: 3, fontWeight: 800 }}>
-            India's First Greenfield <Box component="span" sx={{ color: 'secondary.main' }}>Smart City</Box>
+            {t('hero_title')}
           </Typography>
           <Typography variant="h5" sx={{ mb: 5, color: 'rgba(255,255,255,0.8)', fontWeight: 400 }}>
-            Invest in the future of infrastructure, powered by state-of-the-art connectivity, sustainability, and government-backed planning.
+            {t('hero_subtitle')}
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
             <Button variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}>

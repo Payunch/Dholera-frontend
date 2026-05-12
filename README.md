@@ -77,3 +77,10 @@ This frontend is pre-configured for **Capacitor**.
 - Removed redundant `.codex` folder.
 - Removed legacy `pdf/` folder containing non-source assets.
 - Consolidated README content.
+
+## 🗺️ What was added to the Roadmaps
+
+	3. Frontend UI
+		 - UX & SEO: Focus on completing translations, GIS/Leaflet map integration, global search, and SEO prerendering.
+		 - Polish: Added tasks for skeleton screens and CI/CD build hooks.
+

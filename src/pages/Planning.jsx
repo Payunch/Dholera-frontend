@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Box, Grid, Card, CardContent, Button, Tabs, Tab, Paper, Breadcrumbs, Link } from '@mui/material';
+import { Container, Typography, Box, Grid, Card, CardContent, Button, Tabs, Tab, Paper, Breadcrumbs, Link, Skeleton } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import LockIcon from '@mui/icons-material/Lock';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
@@ -7,20 +7,14 @@ import SecurePdfViewer from '../components/SecurePdfViewer';
 import LeadPopup from '../components/LeadPopup';
 import { useVisitorTracking } from '../hooks/useVisitorTracking';
 import { useLead } from '../context/LeadContext';
+import { useLanguage } from '../context/LanguageContext';
 import { API_BASE_URL } from '../utils/apiBase';
 import Seo from '../components/Seo';
 
-const STATIC_PDFS = [
-  { id: '/docs/master-plan-overview.pdf', title: 'Dholera SIR Master Plan', category: 'PDFs' },
-  { id: '/docs/investor-update-pack.pdf', title: 'Investor Update Pack 2024', category: 'PDFs' },
-  { id: '/docs/development-plan-overview.pdf', title: 'Development Plan Overview', category: 'DP Maps' },
-  { id: '/docs/tp-1a1-reference.pdf', title: 'TP 1A1 Reference Map', category: 'Naksha' },
-  { id: '/docs/tp-4b1-layout.pdf', title: 'TP 4B1 Layout Plan', category: 'Naksha' }
-];
-
 const Planning = () => {
   const { verifiedLead } = useLead();
-  const [pdfs, setPdfs] = useState(STATIC_PDFS);
+  const { t } = useLanguage();
+  const [pdfs, setPdfs] = useState([]);
   const [loadingPdfs, setLoadingPdfs] = useState(true);
   const [pdfLoadError, setPdfLoadError] = useState('');
   const [activeTab, setActiveTab] = useState(0);
@@ -49,28 +43,14 @@ const Planning = () => {
           return;
         }
 
-        // Merge API data with static fallbacks, preventing duplicates by ID
         const apiPdfs = Array.isArray(data) ? data : [];
-        const merged = [...apiPdfs];
-        
-        STATIC_PDFS.forEach(staticPdf => {
-          if (!merged.find(p => p.id === staticPdf.id)) {
-            merged.push(staticPdf);
-          }
-        });
-
-        setPdfs(merged);
+        setPdfs(apiPdfs);
       } catch (error) {
         if (!active) {
           return;
         }
-
         console.error('PDF list load error:', error);
-        // If API fails, we still keep the STATIC_PDFS (already set in initial state)
-        // No need to set error message if we have fallback data
-        if (pdfs.length === 0) {
-          setPdfLoadError('Documents could not be loaded right now. Please try again shortly.');
-        }
+        setPdfLoadError('Documents could not be loaded right now. Please try again shortly.');
       } finally {
         if (active) {
           setLoadingPdfs(false);
@@ -122,19 +102,19 @@ const Planning = () => {
   return (
     <Box sx={{ pt: 12, pb: 8, bgcolor: 'background.default', minHeight: '100vh' }}>
       <Seo
-        title="Planning & Maps"
+        title={t('nav_planning')}
         description="Search Dholera planning documents, Naksha maps, and DP maps with secure lead-gated viewing."
         path="/planning"
       />
       <Container maxWidth="lg">
         <Breadcrumbs sx={{ mb: 2 }}>
           <Link underline="hover" color="inherit" href="/">Home</Link>
-          <Typography color="text.primary">Planning & Maps</Typography>
+          <Typography color="text.primary">{t('nav_planning')}</Typography>
           <Typography color="secondary.main" sx={{ fontWeight: 700 }}>{categories[activeTab]}</Typography>
         </Breadcrumbs>
 
         <Typography variant="h3" sx={{ fontWeight: 800, color: 'primary.main', mb: 2 }}>
-          Planning & Maps
+          {t('nav_planning')}
         </Typography>
         <Typography variant="h6" color="text.secondary" sx={{ mb: 4 }}>
           Access official blueprints and development documents for Dholera Smart City.
@@ -142,7 +122,7 @@ const Planning = () => {
 
         <TextField
           fullWidth
-          label="Search maps and documents"
+          label={t('search_placeholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           sx={{ mb: 4, maxWidth: 480 }}
@@ -168,7 +148,20 @@ const Planning = () => {
         </Paper>
 
         <Grid container spacing={4}>
-          {filteredPdfs.slice(0, visibleCount[activeTab]).map((pdf) => (
+          {loadingPdfs ? (
+            Array.from({ length: 8 }).map((_, i) => (
+              <Grid item xs={12} sm={6} md={3} key={i}>
+                <Card sx={{ borderRadius: 4 }}>
+                  <Skeleton variant="rectangular" height={140} />
+                  <CardContent sx={{ p: 2.5 }}>
+                    <Skeleton width="40%" sx={{ mb: 1 }} />
+                    <Skeleton width="90%" height={24} sx={{ mb: 2 }} />
+                    <Skeleton variant="rectangular" height={36} sx={{ borderRadius: 2 }} />
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          ) : filteredPdfs.slice(0, visibleCount[activeTab]).map((pdf) => (
             <Grid item xs={12} sm={6} md={3} key={pdf.id}>
               <Card sx={{ 
                 height: '100%', 
@@ -202,7 +195,7 @@ const Planning = () => {
                     onClick={() => handlePdfClick(pdf.id)}
                     sx={{ borderRadius: 2, fontWeight: 700, py: 1 }}
                   >
-                    {verifiedLead ? 'View Map' : 'Unlock Now'}
+                    {verifiedLead ? t('btn_view') : t('btn_unlock')}
                   </Button>
                 </CardContent>
               </Card>
@@ -210,7 +203,7 @@ const Planning = () => {
           ))}
         </Grid>
 
-        {filteredPdfs.length > visibleCount[activeTab] && (
+        {!loadingPdfs && filteredPdfs.length > visibleCount[activeTab] && (
           <Box sx={{ mt: 6, textAlign: 'center' }}>
             <Button 
               variant="outlined" 
@@ -224,21 +217,15 @@ const Planning = () => {
           </Box>
         )}
 
-        {loadingPdfs && (
+        {!loadingPdfs && !pdfLoadError && filteredPdfs.length === 0 && (
           <Box sx={{ py: 10, textAlign: 'center' }}>
-            <Typography variant="h6" color="text.secondary">Loading documents...</Typography>
+            <Typography variant="h6" color="text.disabled">No documents available in this category.</Typography>
           </Box>
         )}
 
         {!loadingPdfs && pdfLoadError && (
           <Box sx={{ py: 10, textAlign: 'center' }}>
             <Typography variant="h6" color="error.main">{pdfLoadError}</Typography>
-          </Box>
-        )}
-
-        {!loadingPdfs && !pdfLoadError && filteredPdfs.length === 0 && (
-          <Box sx={{ py: 10, textAlign: 'center' }}>
-            <Typography variant="h6" color="text.disabled">No documents available in this category.</Typography>
           </Box>
         )}
       </Container>

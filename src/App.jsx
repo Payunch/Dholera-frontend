@@ -18,6 +18,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { useVisitorTracking } from './hooks/useVisitorTracking';
 import LeadPopup from './components/LeadPopup';
 import { LeadProvider } from './context/LeadContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { API_BASE_URL } from './utils/apiBase';
 
 import { useEffect, useState } from 'react';
@@ -50,27 +51,29 @@ function AppContent() {
   const isAdminPath = location.pathname.startsWith('/admin');
 
   return (
-    <LeadProvider>
-      <ScrollToTop />
-      {!isAdminPath && <LeadPopup sessionId={sessionId} fingerprint={fingerprint} />}
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="updates" element={<Updates />} />
-          <Route path="planning" element={<Planning />} />
-          <Route path="investment" element={<Investment />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="terms-and-conditions" element={<TermsAndConditions />} />
-        </Route>
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<ProtectedAdmin><AdminLayout /></ProtectedAdmin>}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="leads" element={<AdminLeads />} />
-          <Route path="updates" element={<AdminUpdates />} />
-        </Route>
-      </Routes>
-    </LeadProvider>
+    <LanguageProvider>
+      <LeadProvider>
+        <ScrollToTop />
+        {!isAdminPath && <LeadPopup sessionId={sessionId} fingerprint={fingerprint} />}
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="updates" element={<Updates />} />
+            <Route path="planning" element={<Planning />} />
+            <Route path="investment" element={<Investment />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="terms-and-conditions" element={<TermsAndConditions />} />
+          </Route>
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<ProtectedAdmin><AdminLayout /></ProtectedAdmin>}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="leads" element={<AdminLeads />} />
+            <Route path="updates" element={<AdminUpdates />} />
+          </Route>
+        </Routes>
+      </LeadProvider>
+    </LanguageProvider>
   );
 }
 
