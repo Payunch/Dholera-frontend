@@ -68,9 +68,10 @@ const Planning = () => {
   const categories = ['Official PDFs', 'Naksha', 'DP Maps'];
   
   const filteredPdfs = pdfs.filter(pdf => {
-    if (activeTab === 0) return pdf.category === 'PDFs';
-    if (activeTab === 1) return pdf.category === 'Naksha';
-    if (activeTab === 2) return pdf.category === 'DP Maps';
+    const cat = (pdf.category || '').toLowerCase();
+    if (activeTab === 0) return cat.includes('pdf') || cat.includes('brochure') || cat.includes('legal') || cat.includes('general');
+    if (activeTab === 1) return cat.includes('naksha') || cat.includes('tp');
+    if (activeTab === 2) return cat.includes('dp') || cat.includes('map');
     return false;
   }).filter((pdf) => {
     if (!search) return true;

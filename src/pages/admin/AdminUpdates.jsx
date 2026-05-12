@@ -344,7 +344,7 @@ const AdminUpdates = () => {
             {(imagePreview || (editingUpdate?.imageUrl && !formData.image)) && (
               <Box
                 component="img"
-                src={imagePreview || `${(typeof window !== 'undefined' ? window.location.origin.replace('5173','3000').replace('5174','3000') : 'http://localhost:3000')}${editingUpdate?.imageUrl}`}
+                src={imagePreview || (editingUpdate?.imageUrl?.startsWith('http') ? editingUpdate.imageUrl : `${API_BASE_URL.replace(/\/api$/, '')}${editingUpdate?.imageUrl}`)}
                 alt="Preview"
                 sx={{
                   mt: 1.5,
