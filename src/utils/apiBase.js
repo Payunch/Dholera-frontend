@@ -9,7 +9,7 @@ const getDefaultApiBase = () => {
     return `${window.location.protocol}//${window.location.hostname}:3000/api`;
   }
 
-  return '/api';
+  return 'https://dholera-backend-production.up.railway.app/api';
 };
 
 const envApiBase = import.meta.env.VITE_API_BASE_URL?.trim();
