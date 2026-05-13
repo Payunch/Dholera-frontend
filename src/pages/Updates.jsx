@@ -23,21 +23,49 @@ const CATEGORY_COLORS = {
 
 const getCategoryColor = (cat) => CATEGORY_COLORS[cat] || '#37474F';
 
-/** Renders plain-text content respecting newlines as paragraphs */
+/** Renders plain-text content with improved typography and layout */
 const ArticleBody = ({ content }) => {
   if (!content) return null;
-  const paragraphs = content.split(/\n\n+/).map(p => p.replace(/\n/g, ' '));
+  
+  // Split by double newline to detect paragraphs
+  const paragraphs = content.split(/\n\n+/);
+  
   return (
-    <Box>
-      {paragraphs.map((p, i) => (
-        <Typography
-          key={i}
-          variant="body1"
-          sx={{ mb: 2, lineHeight: 1.8, color: 'text.primary', whiteSpace: 'pre-wrap' }}
-        >
-          {p}
-        </Typography>
-      ))}
+    <Box sx={{ mt: 2 }}>
+      {paragraphs.map((p, i) => {
+        // Basic check for lists (lines starting with - or *)
+        const lines = p.split('\n');
+        const isList = lines.every(line => line.trim().startsWith('- ') || line.trim().startsWith('* '));
+        
+        if (isList) {
+          return (
+            <Box component="ul" key={i} sx={{ mb: 3, pl: 4 }}>
+              {lines.map((line, li) => (
+                <Typography component="li" key={li} variant="body1" sx={{ mb: 1, color: 'text.primary', lineHeight: 1.8 }}>
+                  {line.trim().substring(2)}
+                </Typography>
+              ))}
+            </Box>
+          );
+        }
+
+        return (
+          <Typography
+            key={i}
+            variant="body1"
+            sx={{ 
+              mb: 3, 
+              lineHeight: 1.9, 
+              color: 'text.primary', 
+              fontSize: '1.125rem',
+              textAlign: 'justify',
+              hyphens: 'auto'
+            }}
+          >
+            {p.trim()}
+          </Typography>
+        );
+      })}
     </Box>
   );
 };
@@ -376,22 +404,58 @@ const Updates = () => {
 
               {/* Title */}
               <Typography
-                variant="h3"
+                variant="h2"
                 sx={{
                   fontWeight: 900,
-                  lineHeight: 1.2,
-                  mb: 4,
-                  color: 'text.primary',
-                  fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.6rem' }
+                  lineHeight: 1.15,
+                  mb: 2,
+                  color: 'primary.main',
+                  fontSize: { xs: '2.2rem', sm: '2.8rem', md: '3.5rem' },
+                  letterSpacing: '-0.02em'
                 }}
               >
                 {selected.title}
               </Typography>
 
-              <Divider sx={{ mb: 4 }} />
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4, opacity: 0.8 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                  By Dholera Growth Team
+                </Typography>
+                <Divider orientation="vertical" flexItem />
+                <Typography variant="subtitle1">
+                  5 min read
+                </Typography>
+              </Box>
+
+              <Divider sx={{ mb: 4, borderBottomWidth: 2 }} />
 
               {/* Full article content */}
               <ArticleBody content={selected.content} />
+
+              <Box sx={{ mt: 8, pt: 4, borderTop: '1px solid', borderColor: 'divider', textAlign: 'center' }}>
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>
+                  Share this update
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                  <Button 
+                    variant="outlined" 
+                    size="small" 
+                    onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(selected.title + ' ' + window.location.href)}`)}
+                  >
+                    WhatsApp
+                  </Button>
+                  <Button 
+                    variant="outlined" 
+                    size="small"
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.href);
+                      alert('Link copied to clipboard!');
+                    }}
+                  >
+                    Copy Link
+                  </Button>
+                </Box>
+              </Box>
             </Box>
 
             {/* ── Footer close button ── */}
