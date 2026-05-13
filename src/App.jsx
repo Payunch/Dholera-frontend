@@ -49,12 +49,13 @@ function AppContent() {
   const { sessionId, fingerprint } = useVisitorTracking();
   const location = useLocation();
   const isAdminPath = location.pathname.startsWith('/admin');
+  const isPlanningPage = location.pathname.startsWith('/planning');
 
   return (
     <LanguageProvider>
       <LeadProvider>
         <ScrollToTop />
-        {!isAdminPath && <LeadPopup sessionId={sessionId} fingerprint={fingerprint} />}
+        {!isAdminPath && !isPlanningPage && <LeadPopup sessionId={sessionId} fingerprint={fingerprint} />}
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

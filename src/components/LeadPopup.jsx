@@ -48,16 +48,20 @@ const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSuccess }) =>
   useEffect(() => {
     if (compulsory) {
       setOpen(true);
+      sessionStorage.setItem('hasSeenPopup', 'true');
       return;
     }
 
     const hasSeenPopup = sessionStorage.getItem('hasSeenPopup');
     if (!hasSeenPopup) {
+      // Mark as seen immediately so that refreshes or navigations within the 
+      // 10s window don't keep resetting the timer or triggering it again.
+      sessionStorage.setItem('hasSeenPopup', 'true');
+      
       const timer = setTimeout(() => {
         const token = localStorage.getItem('lead_token');
         if (!token) {
           setOpen(true);
-          sessionStorage.setItem('hasSeenPopup', 'true');
         }
       }, 10000);
       return () => clearTimeout(timer);
