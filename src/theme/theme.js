@@ -4,7 +4,7 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#0a3d62', // Deep trust blue
+      main: '#0F4C81', // Matching Flutter Navy
       light: '#3c6382',
       dark: '#06283d',
       contrastText: '#ffffff',

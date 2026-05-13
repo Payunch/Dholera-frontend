@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, AppBar, Toolbar, Button } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import PeopleIcon from '@mui/icons-material/People';
 import ArticleIcon from '@mui/icons-material/Article';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -59,6 +60,10 @@ const AdminLayout = () => {
           <ListItem button component={RouterLink} to="/admin">
             <ListItemIcon sx={{ color: 'rgba(255,255,255,0.7)' }}><DashboardIcon /></ListItemIcon>
             <ListItemText primary="Dashboard" />
+          </ListItem>
+          <ListItem button component={RouterLink} to="/admin/analytics">
+            <ListItemIcon sx={{ color: 'rgba(255,255,255,0.7)' }}><AssessmentIcon /></ListItemIcon>
+            <ListItemText primary="Analytics" />
           </ListItem>
           <ListItem button component={RouterLink} to="/admin/leads">
             <ListItemIcon sx={{ color: 'rgba(255,255,255,0.7)' }}><PeopleIcon /></ListItemIcon>

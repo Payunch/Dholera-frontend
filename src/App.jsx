@@ -12,6 +12,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLayout from './pages/admin/AdminLayout';
 import AdminLeads from './pages/admin/AdminLeads';
 import AdminUpdates from './pages/admin/AdminUpdates';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminLogin from './pages/admin/AdminLogin';
 
 import ScrollToTop from './components/ScrollToTop';
@@ -71,6 +72,7 @@ function AppContent() {
             <Route index element={<AdminDashboard />} />
             <Route path="leads" element={<AdminLeads />} />
             <Route path="updates" element={<AdminUpdates />} />
+            <Route path="analytics" element={<AdminAnalytics />} />
           </Route>
         </Routes>
       </LeadProvider>

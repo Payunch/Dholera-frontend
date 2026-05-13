@@ -29,24 +29,36 @@ const Navbar = () => {
     <AppBar position="fixed" color="default" elevation={1} sx={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(10px)' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <CorporateFareIcon sx={{ color: 'primary.main', mr: 1, fontSize: 32 }} />
-          <Typography
-            variant="h6"
-            noWrap
+          <Box
             component={RouterLink}
             to="/"
             sx={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none',
               mr: 2,
               flexGrow: 1,
-              fontFamily: 'Manrope',
-              fontWeight: 800,
-              color: 'primary.main',
-              textDecoration: 'none',
-              letterSpacing: '-0.5px'
             }}
           >
-            DHOLERA PORTAL
-          </Typography>
+            <Box
+              component="img"
+              src="/favicon.svg"
+              alt="Dholera Portal Logo"
+              sx={{ height: 32, mr: 1.5 }}
+            />
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                fontFamily: 'Manrope',
+                fontWeight: 800,
+                color: 'primary.main',
+                letterSpacing: '-0.5px'
+              }}
+            >
+              DHOLERA PORTAL
+            </Typography>
+          </Box>
           
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, alignItems: 'center' }}>
             <Button component={RouterLink} to="/" sx={{ color: 'text.primary', fontWeight: 600 }}>{t('nav_home')}</Button>
