@@ -4,6 +4,8 @@ import {
   Grid, TextField, Select, MenuItem, FormControl, InputLabel, Dialog, DialogTitle, DialogContent, DialogActions,
   Collapse, List, ListItem, ListItemText, ListItemIcon, LinearProgress, Alert, Tooltip
 } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import DownloadIcon from '@mui/icons-material/Download';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -164,6 +166,8 @@ const AdminLeads = () => {
   const [bulkDialogOpen, setBulkDialogOpen] = useState(false);
   const [bulkProgress, setBulkProgress] = useState({ current: 0, total: 0, name: '' });
   const [isBulkSending, setIsBulkSending] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const fetchLeads = () => {
     const query = new URLSearchParams(filters).toString();
@@ -373,9 +377,9 @@ const AdminLeads = () => {
       </Paper>
 
       {/* Notes Dialog */}
-      <Dialog open={notesOpen} onClose={() => setNotesOpen(false)} fullWidth maxWidth="sm">
-        <DialogTitle sx={{ fontWeight: 800 }}>Lead Intelligence: {currentLead?.name}</DialogTitle>
-        <DialogContent>
+      <Dialog open={notesOpen} onClose={() => setNotesOpen(false)} fullWidth maxWidth="sm" fullScreen={isMobile}>
+        <DialogTitle sx={{ fontWeight: 800, px: isMobile ? 2 : 3, pt: isMobile ? 2 : 3 }}>Lead Intelligence: {currentLead?.name}</DialogTitle>
+        <DialogContent sx={{ px: isMobile ? 2 : 3 }}>
           <TextField
             multiline rows={6} fullWidth variant="outlined"
             placeholder="Record specific requirements, site visit preference, or plot numbers of interest..."
@@ -383,18 +387,18 @@ const AdminLeads = () => {
             sx={{ mt: 1 }}
           />
         </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
+        <DialogActions sx={{ p: isMobile ? 2 : 3 }}>
           <Button onClick={() => setNotesOpen(false)} variant="outlined">Discard</Button>
           <Button variant="contained" onClick={handleNotesSave} sx={{ fontWeight: 700 }}>Save to Lead Profile</Button>
         </DialogActions>
       </Dialog>
 
       {/* Bulk WhatsApp Dialog */}
-      <Dialog open={bulkDialogOpen} onClose={() => !isBulkSending && setBulkDialogOpen(false)} fullWidth maxWidth="xs">
-        <DialogTitle sx={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Dialog open={bulkDialogOpen} onClose={() => !isBulkSending && setBulkDialogOpen(false)} fullWidth maxWidth="xs" fullScreen={isMobile}>
+        <DialogTitle sx={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: 1, px: isMobile ? 2 : 3, pt: isMobile ? 2 : 3 }}>
           <WhatsAppIcon color="success" /> Bulk Outreach
         </DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ px: isMobile ? 2 : 3 }}>
           {!isBulkSending ? (
             <Typography sx={{ mt: 1, color: '#475569' }}>
               This will initiate personal WhatsApp chats for <strong>{leads.filter(l => l.status === 'New').length}</strong> new leads. 
@@ -415,7 +419,7 @@ const AdminLeads = () => {
             </Box>
           )}
         </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
+        <DialogActions sx={{ p: isMobile ? 2 : 3 }}>
           {!isBulkSending && (
             <>
               <Button onClick={() => setBulkDialogOpen(false)}>Cancel</Button>

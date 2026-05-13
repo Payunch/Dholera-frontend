@@ -4,6 +4,8 @@ import {
   Chip, Box, Button, Dialog, DialogTitle, DialogContent, DialogActions, 
   TextField, FormControlLabel, Switch, IconButton, MenuItem, CircularProgress, Alert, Snackbar
 } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -22,9 +24,12 @@ const AdminUpdates = () => {
     content: '',
     category: 'Infrastructure',
     published: true,
-    image: null
+    image: null,
+    imageUrl: ''
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const categories = ['Infrastructure', 'Industrial', 'Planning', 'Investment', 'General'];
 
@@ -71,7 +76,8 @@ const AdminUpdates = () => {
         content: update.content || '',
         category: update.category || 'General',
         published: update.published ?? true,
-        image: null
+        image: null,
+        imageUrl: update.imageUrl || ''
       });
       // Clear any previously selected preview; the existing imageUrl is shown via the Box src fallback
       setImagePreview(null);
@@ -82,7 +88,8 @@ const AdminUpdates = () => {
         content: '',
         category: 'Infrastructure',
         published: true,
-        image: null
+        image: null,
+        imageUrl: ''
       });
       setImagePreview(null);
     }
@@ -137,6 +144,8 @@ const AdminUpdates = () => {
       
       if (formData.image) {
         data.append('image', formData.image);
+      } else if (formData.imageUrl?.trim()) {
+        data.append('imageUrl', formData.imageUrl.trim());
       }
 
       const url = editingUpdate 
@@ -284,9 +293,11 @@ const AdminUpdates = () => {
         </Paper>
       )}
 
-      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-        <DialogTitle>{editingUpdate ? 'Edit Update' : 'Create New Update'}</DialogTitle>
-        <DialogContent sx={{ pt: 2 }}>
+      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth fullScreen={isMobile}>
+        <DialogTitle sx={{ px: isMobile ? 2 : 3, pt: isMobile ? 2 : 3 }}>
+          {editingUpdate ? 'Edit Update' : 'Create New Update'}
+        </DialogTitle>
+        <DialogContent sx={{ pt: 2, px: isMobile ? 2 : 3 }}>
           <TextField
             fullWidth
             label="Title"
@@ -340,6 +351,16 @@ const AdminUpdates = () => {
                 {formData.image ? formData.image.name : 'No file chosen (JPG, PNG, WebP, SVG — max 5 MB)'}
               </Typography>
             </Box>
+            <TextField
+              fullWidth
+              label="Image URL (optional)"
+              name="imageUrl"
+              value={formData.image ? '' : (formData.imageUrl || '')}
+              onChange={handleInputChange}
+              sx={{ mt: 2 }}
+              helperText="Use a remote image link if you do not want to upload from device."
+              disabled={Boolean(formData.image)}
+            />
             {/* Image preview */}
             {(imagePreview || (editingUpdate?.imageUrl && !formData.image)) && (
               <Box
@@ -364,7 +385,7 @@ const AdminUpdates = () => {
             label="Published (Visible to public)"
           />
         </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2 }}>
+        <DialogActions sx={{ px: isMobile ? 2 : 3, pb: isMobile ? 2 : 3 }}>
           <Button onClick={handleClose} disabled={submitting}>Cancel</Button>
           <Button 
             variant="contained" 
