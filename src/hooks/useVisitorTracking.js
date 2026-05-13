@@ -82,7 +82,7 @@ export const useVisitorTracking = () => {
           },
           body: JSON.stringify({
             page: location.pathname,
-            timeSpent: 5
+            timeSpent: 15
           })
         }).then(async res => {
           if (res.status === 404 || res.status === 401 || res.status === 403) {
@@ -110,13 +110,13 @@ export const useVisitorTracking = () => {
             sessionId: sessionRef.current,
             browserFingerprint: fingerprintRef.current,
             page: location.pathname,
-            timeSpent: 5,
+            timeSpent: 15,
             source: document.referrer || 'Direct',
             deviceType: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'
           })
         }).catch(err => console.error('Tracking error:', err));
       }
-    }, 5000);
+    }, 15000);
 
     return () => clearInterval(interval);
   }, [location.pathname]);
