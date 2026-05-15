@@ -27,43 +27,59 @@ const getCategoryColor = (cat) => CATEGORY_COLORS[cat] || '#37474F';
 const ArticleBody = ({ content }) => {
   if (!content) return null;
   
-  // Split by double newline to detect paragraphs
-  const paragraphs = content.split(/\n\n+/);
+  // Split by double newline to detect major sections/paragraphs
+  const sections = content.split(/\n\n+/);
   
   return (
     <Box sx={{ mt: 2 }}>
-      {paragraphs.map((p, i) => {
-        // Basic check for lists (lines starting with - or *)
-        const lines = p.split('\n');
-        const isList = lines.every(line => line.trim().startsWith('- ') || line.trim().startsWith('* '));
+      {sections.map((section, i) => {
+        const lines = section.split('\n');
         
-        if (isList) {
-          return (
-            <Box component="ul" key={i} sx={{ mb: 3, pl: 4 }}>
-              {lines.map((line, li) => (
-                <Typography component="li" key={li} variant="body1" sx={{ mb: 1, color: 'text.primary', lineHeight: 1.8 }}>
-                  {line.trim().substring(2)}
-                </Typography>
-              ))}
-            </Box>
-          );
-        }
-
         return (
-          <Typography
-            key={i}
-            variant="body1"
-            sx={{ 
-              mb: 3, 
-              lineHeight: 1.9, 
-              color: 'text.primary', 
-              fontSize: '1.125rem',
-              textAlign: 'justify',
-              hyphens: 'auto'
-            }}
-          >
-            {p.trim()}
-          </Typography>
+          <Box key={i} sx={{ mb: 3 }}>
+            {lines.map((line, li) => {
+              const trimmedLine = line.trim();
+              if (!trimmedLine) return null;
+
+              // Check for headers (starts with emoji or ends with colon)
+              const isHeader = /^[\u{1F300}-\u{1F9FF}]/.test(trimmedLine) || trimmedLine.endsWith(':');
+              
+              if (isHeader) {
+                return (
+                  <Typography
+                    key={li}
+                    variant="h5"
+                    sx={{ 
+                      fontWeight: 800, 
+                      mt: li === 0 ? 0 : 2, 
+                      mb: 1.5, 
+                      color: 'primary.main',
+                      lineHeight: 1.4
+                    }}
+                  >
+                    {trimmedLine}
+                  </Typography>
+                );
+              }
+
+              // Normal paragraph line
+              return (
+                <Typography
+                  key={li}
+                  variant="body1"
+                  sx={{ 
+                    mb: 1.5, 
+                    lineHeight: 1.9, 
+                    color: 'text.primary', 
+                    fontSize: '1.125rem',
+                    textAlign: 'justify'
+                  }}
+                >
+                  {trimmedLine}
+                </Typography>
+              );
+            })}
+          </Box>
         );
       })}
     </Box>
