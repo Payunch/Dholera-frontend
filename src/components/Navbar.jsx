@@ -6,7 +6,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import LanguageIcon from '@mui/icons-material/Language';
 import { useLead } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
-import { fullLogo } from '../config/branding';
+import { SplitLogo } from './DynamicImages';
 
 const Navbar = () => {
   const { verifiedLead } = useLead();
@@ -41,12 +41,7 @@ const Navbar = () => {
               flexGrow: 1,
             }}
           >
-            <Box
-              component="img"
-              src={fullLogo}
-              alt="Dholera Portal Logo"
-              sx={{ height: 32, mr: 1.5 }}
-            />
+            <SplitLogo isFull={true} height={36} />
             <Typography
               variant="h6"
               noWrap
@@ -54,6 +49,7 @@ const Navbar = () => {
                 fontFamily: 'Manrope',
                 fontWeight: 800,
                 color: 'primary.main',
+                ml: 1,
                 letterSpacing: '-0.5px'
               }}
             >

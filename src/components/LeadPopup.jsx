@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link as RouterLink } from 'react-router-dom';
 import { useLead } from '../context/LeadContext';
 import { API_BASE_URL } from '../utils/apiBase';
+import { SplitLogo } from './DynamicImages';
 
 const INITIAL_FORM_DATA = {
   name: '',
@@ -376,6 +377,10 @@ const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSuccess }) =>
             <CloseIcon />
           </IconButton>
         )}
+
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, mb: 1 }}>
+          <SplitLogo isFull={false} height={50} />
+        </Box>
 
         <DialogTitle sx={{ fontWeight: 800, color: 'primary.main', textAlign: 'center', px: 0, pt: 1 }}>
           {step === 'success'

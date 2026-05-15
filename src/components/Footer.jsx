@@ -3,15 +3,20 @@ import { Box, Container, Typography, Grid, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { siteContact } from '../data/siteContact';
 
+import { SplitLogo } from './DynamicImages';
+
 const Footer = () => {
   return (
     <Box component="footer" sx={{ bgcolor: 'primary.dark', color: 'primary.contrastText', py: 6, mt: 'auto' }}>
       <Container maxWidth="xl">
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
-            <Typography variant="h5" sx={{ fontWeight: 800, mb: 2, letterSpacing: '-0.5px' }}>
-              {siteContact.brandName.toUpperCase()}
-            </Typography>
+            <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <SplitLogo isFull={false} height={40} />
+              <Typography variant="h5" sx={{ fontWeight: 800, letterSpacing: '-0.5px' }}>
+                {siteContact.brandName.toUpperCase()}
+              </Typography>
+            </Box>
             <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
               The official portal for Dholera Smart City infrastructure, investment, and planning intelligence. Government-level trust, modern execution.
             </Typography>
