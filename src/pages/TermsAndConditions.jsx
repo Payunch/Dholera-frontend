@@ -5,7 +5,7 @@ const sections = [
   {
     title: '1. Acceptance of Terms',
     paragraphs: [
-      'By accessing or using Dholera Portal, you agree to these Terms & Conditions. If you do not agree, please do not use the website or submit your personal information through it.'
+      'By accessing or using dholera platform, you agree to these Terms & Conditions. If you do not agree, please do not use the website or submit your personal information through it.'
     ]
   },
   {
@@ -74,7 +74,7 @@ const sections = [
   {
     title: '9. Limitation of Liability',
     paragraphs: [
-      'To the maximum extent permitted by law, Dholera Portal and its operators are not liable for indirect, incidental, special, or consequential losses arising from website use, reliance on posted information, delayed communication, or temporary unavailability of the service.'
+      'To the maximum extent permitted by law, dholera platform and its operators are not liable for indirect, incidental, special, or consequential losses arising from website use, reliance on posted information, delayed communication, or temporary unavailability of the service.'
     ]
   },
   {
@@ -95,10 +95,10 @@ const TermsAndConditions = () => {
   return (
     <LegalDocument
       title="Terms & Conditions"
-      description="Project-specific terms for lead submission, OTP verification, secure document access, and informational use of Dholera Portal."
+      description="Project-specific terms for lead submission, OTP verification, secure document access, and informational use of dholera platform."
       path="/terms-and-conditions"
       scopeLabel="Applies to all website users"
-      intro="These Terms & Conditions govern your use of Dholera Portal, including inquiry submissions, OTP-based access, and use of protected project documents."
+      intro="These Terms & Conditions govern your use of dholera platform, including inquiry submissions, OTP-based access, and use of protected project documents."
       sections={sections}
     />
   );

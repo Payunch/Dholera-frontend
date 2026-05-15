@@ -88,10 +88,10 @@ const PrivacyPolicy = () => {
   return (
     <LegalDocument
       title="Privacy Policy"
-      description="How Dholera Portal collects, uses, and protects inquiry, verification, and visitor-tracking data."
+      description="How dholera platform collects, uses, and protects inquiry, verification, and visitor-tracking data."
       path="/privacy-policy"
       scopeLabel="Applies to lead, contact, and tracking data"
-      intro="This Privacy Policy explains how Dholera Portal handles personal information collected through inquiry forms, OTP verification, visitor tracking, and secure document access."
+      intro="This Privacy Policy explains how dholera platform handles personal information collected through inquiry forms, OTP verification, visitor tracking, and secure document access."
       sections={sections}
     />
   );

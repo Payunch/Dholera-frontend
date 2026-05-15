@@ -80,14 +80,14 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
             onClick={handleOpenNewTab}
             sx={{ fontWeight: 700 }}
           >
-            {isMobile ? 'Full Screen' : 'Open in New Tab'}
+            {isMobile ? 'View Full Screen' : 'Open in New Tab'}
           </Button>
         )}
         <IconButton color="error" onClick={onClose} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }}>
           <CloseIcon />
         </IconButton>
       </Box>
-      <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', p: isMobile ? 0 : 2 }}>
+      <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', p: isMobile ? 2 : 2 }}>
         {loading && <CircularProgress color="primary" />}
         {error && (
           <Paper sx={{ p: 4, textAlign: 'center', bgcolor: '#fff', borderRadius: 4, maxWidth: 400 }}>
@@ -105,7 +105,7 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
             boxShadow: 24, 
             bgcolor: 'white',
             overflow: 'hidden',
-            WebkitOverflowScrolling: 'touch'
+            borderRadius: isMobile ? 2 : 0
           }}>
             {/* Tiled Watermark */}
             <Box sx={{ 
@@ -122,14 +122,41 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
               ))}
             </Box>
             
-            <iframe 
-              src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
-              width="100%" 
-              height="100%" 
-              style={{ border: 'none', background: '#fff' }}
-              title="Secure Document Viewer"
-              onContextMenu={(e) => e.preventDefault()}
-            />
+            {isMobile ? (
+              <Box sx={{ 
+                height: '100%', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                p: 4,
+                textAlign: 'center'
+              }}>
+                <PictureAsPdfIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 800 }}>Document Secured & Ready</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 4, maxWidth: 280 }}>
+                  Mobile browsers require opening secure documents in a full-screen tab for viewing.
+                </Typography>
+                <Button 
+                  variant="contained" 
+                  size="large" 
+                  onClick={handleOpenNewTab}
+                  startIcon={<PictureAsPdfIcon />}
+                  sx={{ borderRadius: 3, px: 4, py: 1.5, fontWeight: 700 }}
+                >
+                  Open Document
+                </Button>
+              </Box>
+            ) : (
+              <iframe 
+                src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
+                width="100%" 
+                height="100%" 
+                style={{ border: 'none', background: '#fff' }}
+                title="Secure Document Viewer"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            )}
           </Box>
         )}
       </Box>

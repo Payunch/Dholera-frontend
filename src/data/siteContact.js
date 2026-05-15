@@ -1,5 +1,5 @@
 export const siteContact = {
-  brandName: 'Dholera Portal',
+  brandName: 'dholera platform',
   operatorName: 'Naresh Gohel',
   email: 'gohelnaresh7707@gmail.com',
   phoneDisplay: '+91 7435808031',

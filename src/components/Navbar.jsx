@@ -38,14 +38,20 @@ const Navbar = () => {
               alignItems: 'center',
               textDecoration: 'none',
               mr: 2,
-              flexGrow: 1,
+              flexGrow: 0, // Don't grow to allow nav items to be centered or right-aligned
             }}
           >
             <Box
               component="img"
               src={fullLogo}
               alt="Dholera Logo"
-              sx={{ height: 36, width: 'auto', objectFit: 'contain', display: 'block' }}
+              sx={{ 
+                height: { xs: 40, md: 48 }, 
+                width: 'auto', 
+                objectFit: 'contain', 
+                display: 'block',
+                mr: 1.5
+              }}
             />
             <Typography
               variant="h6"
@@ -54,14 +60,17 @@ const Navbar = () => {
                 fontFamily: 'Manrope',
                 fontWeight: 800,
                 color: 'primary.main',
-                ml: 1,
-                letterSpacing: '-0.5px'
+                fontSize: { xs: '1.1rem', md: '1.25rem' },
+                letterSpacing: '-0.5px',
+                lineHeight: 1
               }}
             >
-              DHOLERA PORTAL
+              dholera platform
             </Typography>
           </Box>
           
+          <Box sx={{ flexGrow: 1 }} />
+
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, alignItems: 'center' }}>
             <Button component={RouterLink} to="/" sx={{ color: 'text.primary', fontWeight: 600 }}>{t('nav_home')}</Button>
             <Button component={RouterLink} to="/updates" sx={{ color: 'text.primary', fontWeight: 600 }}>{t('nav_updates')}</Button>
