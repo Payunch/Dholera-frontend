@@ -11,13 +11,19 @@ import { useLanguage } from '../context/LanguageContext';
 import { API_BASE_URL } from '../utils/apiBase';
 import Seo from '../components/Seo';
 
+import { useLocation } from 'react-router-dom';
+
 const Planning = () => {
   const { verifiedLead } = useLead();
   const { t } = useLanguage();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const initialTab = parseInt(queryParams.get('tab')) || 0;
+
   const [pdfs, setPdfs] = useState([]);
   const [loadingPdfs, setLoadingPdfs] = useState(true);
   const [pdfLoadError, setPdfLoadError] = useState('');
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [visibleCount, setVisibleCount] = useState({ 0: 8, 1: 8, 2: 8 });
   const [selectedPdfId, setSelectedPdfId] = useState(null);
   const [showViewer, setShowViewer] = useState(false);

@@ -71,34 +71,35 @@ const Navbar = () => {
           
           <Box sx={{ flexGrow: 1 }} />
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, alignItems: 'center' }}>
-            <Button component={RouterLink} to="/" sx={{ color: 'text.primary', fontWeight: 600 }}>{t('nav_home')}</Button>
-            <Button component={RouterLink} to="/updates" sx={{ color: 'text.primary', fontWeight: 600 }}>{t('nav_updates')}</Button>
-            <Button component={RouterLink} to="/planning" sx={{ color: 'text.primary', fontWeight: 600 }}>{t('nav_planning')}</Button>
-            <Button component={RouterLink} to="/investment" sx={{ color: 'text.primary', fontWeight: 600 }}>{t('nav_investment')}</Button>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3, alignItems: 'center' }}>
+            <Button component={RouterLink} to="/" sx={{ color: 'text.primary', fontWeight: 700, fontSize: '0.95rem' }}>{t('nav_home')}</Button>
+            <Button component={RouterLink} to="/updates" sx={{ color: 'text.primary', fontWeight: 700, fontSize: '0.95rem' }}>Blogs</Button>
+            <Button component={RouterLink} to="/contact" sx={{ color: 'text.primary', fontWeight: 700, fontSize: '0.95rem' }}>{t('nav_contact')}</Button>
             
-            <Tooltip title="Change Language">
-              <IconButton onClick={handleOpenLangMenu} sx={{ ml: 1, color: 'primary.main' }}>
-                <LanguageIcon />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleCloseLangMenu}
-              PaperProps={{ sx: { borderRadius: 3, mt: 1, boxShadow: 4 } }}
-            >
-              {languages.map((l) => (
-                <MenuItem 
-                  key={l.code} 
-                  onClick={() => handleLangSelect(l.code)}
-                  selected={lang === l.code}
-                  sx={{ fontWeight: 600, px: 3 }}
-                >
-                  {l.label}
-                </MenuItem>
-              ))}
-            </Menu>
+            <Box sx={{ ml: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Tooltip title="Select Language">
+                <IconButton onClick={handleOpenLangMenu} sx={{ color: 'primary.main', border: '1px solid', borderColor: 'divider' }}>
+                  <LanguageIcon />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleCloseLangMenu}
+                PaperProps={{ sx: { borderRadius: 3, mt: 1, boxShadow: 4 } }}
+              >
+                {languages.map((l) => (
+                  <MenuItem 
+                    key={l.code} 
+                    onClick={() => handleLangSelect(l.code)}
+                    selected={lang === l.code}
+                    sx={{ fontWeight: 600, px: 3 }}
+                  >
+                    {l.label}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
 
             {verifiedLead ? (
               <Tooltip title={`Verified: ${verifiedLead.name}`}>
@@ -108,12 +109,12 @@ const Navbar = () => {
                   variant="outlined"
                   color="secondary"
                   icon={<VerifiedIcon />}
-                  sx={{ fontWeight: 700, px: 1 }}
+                  sx={{ fontWeight: 700, px: 1, ml: 1 }}
                 />
               </Tooltip>
             ) : (
-              <Button component={RouterLink} to="/contact" variant="contained" color="primary" sx={{ borderRadius: 8, ml: 2, fontWeight: 700 }}>
-                {t('nav_contact')}
+              <Button component={RouterLink} to="/contact" variant="contained" color="primary" sx={{ borderRadius: 8, ml: 1, px: 3, fontWeight: 700 }}>
+                Get in Touch
               </Button>
             )}
           </Box>

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Box, Typography, Button, Container, Grid, Paper } from '@mui/material';
+import { Box, Typography, Button, Container, Grid, Paper, Stack } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import MapIcon from '@mui/icons-material/Map';
 import FactoryIcon from '@mui/icons-material/Factory';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import DescriptionIcon from '@mui/icons-material/Description';
+import LayersIcon from '@mui/icons-material/Layers';
 import Seo from '../components/Seo';
 import { useLanguage } from '../context/LanguageContext';
-
 import { TripleSplitImage } from '../components/DynamicImages';
 
 const Home = () => {
@@ -25,24 +27,61 @@ const Home = () => {
         position: 'relative',
         bgcolor: 'primary.dark',
         color: 'white',
-        py: { xs: 10, md: 20 },
+        py: { xs: 10, md: 15 },
         overflow: 'hidden',
-        textAlign: 'center'
+        textAlign: 'center',
+        background: 'linear-gradient(135deg, #0a3d62 0%, #3c6382 100%)'
       }}>
         <Container maxWidth="md" sx={{ position: 'relative', zIndex: 2 }}>
-          <Typography variant="h1" sx={{ mb: 3, fontWeight: 800 }}>
+          <Typography variant="h1" sx={{ mb: 3, fontWeight: 800, fontSize: { xs: '2.5rem', md: '4rem' } }}>
             {t('hero_title')}
           </Typography>
           <Typography variant="h5" sx={{ mb: 5, color: 'rgba(255,255,255,0.8)', fontWeight: 400 }}>
             {t('hero_subtitle')}
           </Typography>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
-            <Button variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}>
-              Explore Investment
+          
+          {/* Main Action Buttons */}
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ mb: 6 }}>
+            <Button variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" sx={{ px: 4, py: 1.5, fontSize: '1.1rem', fontWeight: 700, borderRadius: 2 }}>
+              Get in Touch
             </Button>
-            <Button variant="outlined" sx={{ color: 'white', borderColor: 'white', px: 4, py: 1.5, fontSize: '1.1rem', '&:hover': { borderColor: 'secondary.main', color: 'secondary.main' } }} component={RouterLink} to="/planning">
-              View Master Plan
+            <Button variant="outlined" sx={{ color: 'white', borderColor: 'white', px: 4, py: 1.5, fontSize: '1.1rem', fontWeight: 700, borderRadius: 2, '&:hover': { borderColor: 'secondary.main', color: 'secondary.main' } }} component={RouterLink} to="/updates">
+              Read Blogs
             </Button>
+          </Stack>
+
+          {/* PDF Quick Access Section */}
+          <Box sx={{ mt: 8, p: 3, bgcolor: 'rgba(255,255,255,0.05)', borderRadius: 4, backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 700, color: 'secondary.main', textTransform: 'uppercase', letterSpacing: 2 }}>
+              Secure Document Access
+            </Typography>
+            <Grid container spacing={2} justifyContent="center">
+              {[
+                { label: 'Official PDFs', icon: <DescriptionIcon />, color: '#fff', path: '/planning?tab=0' },
+                { label: 'Naksha Maps', icon: <LayersIcon />, color: '#fff', path: '/planning?tab=1' },
+                { label: 'DP Maps', icon: <MapIcon />, color: '#fff', path: '/planning?tab=2' },
+              ].map((pdf, i) => (
+                <Grid item xs={12} sm={4} key={i}>
+                  <Button 
+                    fullWidth 
+                    variant="contained" 
+                    component={RouterLink}
+                    to={pdf.path}
+                    startIcon={pdf.icon}
+                    sx={{ 
+                      bgcolor: 'rgba(255,255,255,0.1)', 
+                      color: 'white', 
+                      py: 2, 
+                      fontWeight: 700,
+                      borderRadius: 2,
+                      '&:hover': { bgcolor: 'secondary.main', color: 'primary.dark' }
+                    }}
+                  >
+                    {pdf.label}
+                  </Button>
+                </Grid>
+              ))}
+            </Grid>
           </Box>
         </Container>
       </Box>
