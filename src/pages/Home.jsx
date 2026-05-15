@@ -9,6 +9,7 @@ import { useLanguage } from '../context/LanguageContext';
 
 const Home = () => {
   const { t } = useLanguage();
+  const galleryImages = ['/sub1.png', '/sub2.png', '/sub3.png', '/sub4.png', '/sub5.png', '/sub6.png'];
 
   return (
     <Box>
@@ -59,6 +60,26 @@ const Home = () => {
                 </Box>
                 <Typography variant="h4" sx={{ fontWeight: 800, color: 'primary.main', mb: 1 }}>{item.title}</Typography>
                 <Typography variant="body1" color="text.secondary">{item.desc}</Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+
+      <Container maxWidth="xl" sx={{ mb: 10 }}>
+        <Typography variant="h4" sx={{ mb: 3, fontWeight: 800, color: 'primary.main' }}>
+          Project Gallery
+        </Typography>
+        <Grid container spacing={2}>
+          {galleryImages.map((src, idx) => (
+            <Grid item xs={12} sm={6} md={4} key={src}>
+              <Paper sx={{ overflow: 'hidden', borderRadius: 3 }}>
+                <Box
+                  component="img"
+                  src={src}
+                  alt={`Project image ${idx + 1}`}
+                  sx={{ width: '100%', height: 220, objectFit: 'cover', display: 'block' }}
+                />
               </Paper>
             </Grid>
           ))}

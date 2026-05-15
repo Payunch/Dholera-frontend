@@ -1,9 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { fullLogo } from '../config/branding';
 
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'http://localhost:5173';
 
-const Seo = ({ title, description, path = '/', image = '/logo.png' }) => {
+const Seo = ({ title, description, path = '/', image = fullLogo }) => {
   const resolvedTitle = title ? `${title} | Dholera Platform` : 'Dholera Platform | Growth Evidence & Planning Maps';
   const url = `${SITE_URL.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`;
   const defaultDesc = 'Official Dholera Platform for infrastructure intelligence, planning maps, TP maps, and land investment growth evidence in Dholera Smart City.';

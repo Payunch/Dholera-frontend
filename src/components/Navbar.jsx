@@ -6,6 +6,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import LanguageIcon from '@mui/icons-material/Language';
 import { useLead } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
+import { fullLogo } from '../config/branding';
 
 const Navbar = () => {
   const { verifiedLead } = useLead();
@@ -42,7 +43,7 @@ const Navbar = () => {
           >
             <Box
               component="img"
-              src="/logo.png"
+              src={fullLogo}
               alt="Dholera Portal Logo"
               sx={{ height: 32, mr: 1.5 }}
             />
