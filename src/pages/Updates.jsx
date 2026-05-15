@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container, Typography, Grid, Card, CardContent, CardMedia, Box,
   Chip, TextField, Dialog, Button, IconButton,
@@ -87,6 +88,8 @@ const ArticleBody = ({ content }) => {
 };
 
 const Updates = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [updates, setUpdates] = useState([]);
   const [search, setSearch]   = useState('');
   const [loading, setLoading] = useState(true);
@@ -100,10 +103,29 @@ const Updates = () => {
     const query = search ? `?search=${encodeURIComponent(search)}` : '';
     fetch(`${API_BASE_URL}/updates${query}`)
       .then(res => res.json())
-      .then(data => setUpdates(Array.isArray(data) ? data : []))
+      .then(data => {
+        const results = Array.isArray(data) ? data : [];
+        setUpdates(results);
+        
+        // If we have an ID in the URL, try to find and select it
+        if (id && results.length > 0) {
+          const found = results.find(u => String(u.id) === String(id));
+          if (found) setSelected(found);
+        }
+      })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [search]);
+  }, [search, id]);
+
+  const handleSelect = (update) => {
+    setSelected(update);
+    navigate(`/updates/${update.id}`);
+  };
+
+  const handleClose = () => {
+    setSelected(null);
+    navigate('/updates');
+  };
 
   const filtered = activeCategory === 'All'
     ? updates
@@ -118,11 +140,20 @@ const Updates = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 8 }}>
-      <Seo
-        title="Development Updates"
-        description="Search Dholera development updates, milestones, and evidence-backed announcements."
-        path="/updates"
-      />
+      {selected ? (
+        <Seo
+          title={selected.title}
+          description={selected.content?.slice(0, 160).replace(/\n/g, ' ')}
+          path={`/updates/${selected.id}`}
+          image={getImageSrc(selected)}
+        />
+      ) : (
+        <Seo
+          title="Development Updates"
+          description="Search Dholera development updates, milestones, and evidence-backed announcements."
+          path="/updates"
+        />
+      )}
 
       {/* Hero header */}
       <Box sx={{ mb: 6 }}>
@@ -223,7 +254,7 @@ const Updates = () => {
                         boxShadow: 6
                       }
                     }}
-                    onClick={() => setSelected(update)}
+                    onClick={() => handleSelect(update)}
                   >
                     {/* Image or coloured category banner */}
                     {imgSrc ? (
@@ -302,7 +333,7 @@ const Updates = () => {
       {/* Full-screen article reader */}
       <Dialog
         open={Boolean(selected)}
-        onClose={() => setSelected(null)}
+        onClose={handleClose}
         fullScreen
         scroll="paper"
         TransitionProps={{ unmountOnExit: true }}
@@ -327,7 +358,7 @@ const Updates = () => {
                 gap: 2
               }}
             >
-              <IconButton onClick={() => setSelected(null)} edge="start" aria-label="Close article">
+              <IconButton onClick={handleClose} edge="start" aria-label="Close article">
                 <CloseIcon />
               </IconButton>
               <Chip
@@ -355,7 +386,7 @@ const Updates = () => {
               <Button
                 variant="outlined"
                 size="small"
-                onClick={() => setSelected(null)}
+                onClick={handleClose}
                 sx={{ display: { xs: 'none', sm: 'inline-flex' }, textTransform: 'none' }}
               >
                 ← Back to Updates
@@ -488,7 +519,7 @@ const Updates = () => {
               <Button
                 variant="contained"
                 size="large"
-                onClick={() => setSelected(null)}
+                onClick={handleClose}
                 sx={{ px: 6, borderRadius: 3, textTransform: 'none', fontWeight: 700 }}
               >
                 ← Back to All Updates

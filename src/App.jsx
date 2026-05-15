@@ -59,6 +59,7 @@ function AppContent() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="updates" element={<Updates />} />
+            <Route path="updates/:id" element={<Updates />} />
             <Route path="investment" element={<Investment />} />
             <Route path="contact" element={<Contact />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
