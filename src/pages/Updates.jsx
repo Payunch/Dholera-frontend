@@ -42,7 +42,7 @@ const ArticleBody = ({ content }) => {
               if (!trimmedLine) return null;
 
               // Check for headers (starts with emoji or ends with colon)
-              const isHeader = /^[\u{1F300}-\u{1F9FF}]/.test(trimmedLine) || trimmedLine.endsWith(':');
+              const isHeader = /^(?:[\u{1F300}-\u{1FAFF}]|[#•\-])+/u.test(trimmedLine) || trimmedLine.endsWith(':');
               
               if (isHeader) {
                 return (
