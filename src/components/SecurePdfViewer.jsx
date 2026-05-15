@@ -5,6 +5,7 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { API_BASE_URL } from '../utils/apiBase';
 
 const SecurePdfViewer = ({ pdfId, onClose }) => {
+  const [blobUrl, setBlobUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -13,6 +14,8 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
   const leadEmail = localStorage.getItem('lead_email') || 'VERIFIED';
   const token = localStorage.getItem('lead_token');
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   useEffect(() => {
     if (!pdfId) {
       setError('Invalid document ID');
@@ -20,7 +23,7 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
       return;
     }
 
-    const verifyAccess = async () => {
+    const fetchPdf = async () => {
       setLoading(true);
       setError(null);
       try {
@@ -34,43 +37,69 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
           const errData = await res.json().catch(() => ({ error: 'Server error' }));
           throw new Error(errData.error || `Failed to load document (${res.status})`);
         }
+
+        // On Desktop, we use a Blob to avoid CSP framing issues and hide the URL token
+        // On Mobile, we still fetch to verify access, but we might open in new tab
+        const blob = await res.blob();
+        if (blob.type !== 'application/pdf') {
+          console.warn('Received non-PDF blob type:', blob.type);
+        }
+        
+        const url = URL.createObjectURL(blob);
+        setBlobUrl(url);
       } catch (err) {
-        console.error('SecurePdfViewer Verify Error:', err);
+        console.error('SecurePdfViewer Fetch Error:', err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    verifyAccess();
+    fetchPdf();
+
+    return () => {
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
+    };
   }, [pdfId, token]);
 
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const directUrl = `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`;
 
   const handleOpenNewTab = () => {
-    if (directUrl) {
+    // For mobile, opening the direct URL in a new tab is more reliable
+    if (isMobile && directUrl) {
       window.open(directUrl, '_blank');
+    } else if (blobUrl) {
+      window.open(blobUrl, '_blank');
     }
   };
 
   return (
     <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.95)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ p: isMobile ? 1 : 2, display: 'flex', justifyContent: 'flex-end', bgcolor: '#1e1e1e', gap: 2, alignItems: 'center' }}>
-        {!loading && !error && (
-          <Button 
-            variant="contained" 
-            color="secondary" 
-            size="small" 
-            onClick={handleOpenNewTab}
-            sx={{ fontWeight: 700 }}
-          >
-            {isMobile ? 'View Full Screen' : 'Open in New Tab'}
-          </Button>
-        )}
-        <IconButton color="error" onClick={onClose} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }}>
-          <CloseIcon />
-        </IconButton>
+      <Box sx={{ p: isMobile ? 1 : 2, display: 'flex', justifyContent: 'space-between', bgcolor: '#1e1e1e', gap: 2, alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, ml: 1 }}>
+          <PictureAsPdfIcon sx={{ color: 'secondary.main' }} />
+          <Typography variant="subtitle2" sx={{ color: 'white', fontWeight: 700, display: { xs: 'none', sm: 'block' } }}>
+            SECURE VIEW (PRINTING & DOWNLOAD DISABLED)
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+          {!loading && !error && isMobile && (
+            <Button 
+              variant="contained" 
+              color="secondary" 
+              size="small" 
+              onClick={handleOpenNewTab}
+              sx={{ fontWeight: 700 }}
+            >
+              Full Screen
+            </Button>
+          )}
+          <IconButton color="error" onClick={onClose} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
       </Box>
       <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', p: isMobile ? 2 : 2 }}>
         {loading && <CircularProgress color="primary" />}
@@ -81,7 +110,7 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
             <Button variant="contained" onClick={onClose}>Close Viewer</Button>
           </Paper>
         )}
-        {!loading && !error && (
+        {!loading && !error && blobUrl && (
           <Box sx={{ 
             position: 'relative', 
             width: '100%', 
@@ -109,8 +138,23 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
               ))}
             </Box>
             
+            {/* Overlay to block toolbar clicks on desktop */}
+            {!isMobile && (
+              <Box sx={{ 
+                position: 'absolute', 
+                top: 0, 
+                left: 0, 
+                right: 0, 
+                height: 56, 
+                zIndex: 20, 
+                bgcolor: 'transparent',
+                pointerEvents: 'auto',
+                cursor: 'not-allowed'
+              }} title="Toolbar restricted in secure view" />
+            )}
+
             <iframe 
-              src={`${directUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
+              src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} 
               width="100%" 
               height="100%" 
               style={{ border: 'none', background: '#fff', flex: 1 }}
