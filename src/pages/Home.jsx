@@ -73,12 +73,12 @@ const Home = () => {
         <Grid container spacing={2}>
           {galleryImages.map((src, idx) => (
             <Grid item xs={12} sm={6} md={4} key={src}>
-              <Paper sx={{ overflow: 'hidden', borderRadius: 3 }}>
+              <Paper sx={{ overflow: 'hidden', borderRadius: 3, bgcolor: '#f7f9fc' }}>
                 <Box
                   component="img"
                   src={src}
                   alt={`Project image ${idx + 1}`}
-                  sx={{ width: '100%', height: 220, objectFit: 'cover', display: 'block' }}
+                  sx={{ width: '100%', height: 220, objectFit: 'contain', display: 'block', p: 1 }}
                 />
               </Paper>
             </Grid>
