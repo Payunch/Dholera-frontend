@@ -6,7 +6,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import LanguageIcon from '@mui/icons-material/Language';
 import { useLead } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
-import { SplitLogo } from './DynamicImages';
+import { fullLogo } from '../config/branding';
 
 const Navbar = () => {
   const { verifiedLead } = useLead();
@@ -41,7 +41,12 @@ const Navbar = () => {
               flexGrow: 1,
             }}
           >
-            <SplitLogo isFull={true} height={36} />
+            <Box
+              component="img"
+              src={fullLogo}
+              alt="Dholera Logo"
+              sx={{ height: 36, width: 'auto', objectFit: 'contain', display: 'block' }}
+            />
             <Typography
               variant="h6"
               noWrap

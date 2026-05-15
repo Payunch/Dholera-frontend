@@ -70,9 +70,9 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
   };
 
   return (
-    <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.9)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', bgcolor: '#1e1e1e', gap: 2, alignItems: 'center' }}>
-        {blobUrl && isMobile && (
+    <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.95)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ p: isMobile ? 1 : 2, display: 'flex', justifyContent: 'flex-end', bgcolor: '#1e1e1e', gap: 2, alignItems: 'center' }}>
+        {blobUrl && (
           <Button 
             variant="contained" 
             color="secondary" 
@@ -80,14 +80,14 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
             onClick={handleOpenNewTab}
             sx={{ fontWeight: 700 }}
           >
-            Open in Full Screen
+            {isMobile ? 'Full Screen' : 'Open in New Tab'}
           </Button>
         )}
         <IconButton color="error" onClick={onClose} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }}>
           <CloseIcon />
         </IconButton>
       </Box>
-      <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+      <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', p: isMobile ? 0 : 2 }}>
         {loading && <CircularProgress color="primary" />}
         {error && (
           <Paper sx={{ p: 4, textAlign: 'center', bgcolor: '#fff', borderRadius: 4, maxWidth: 400 }}>
@@ -97,58 +97,39 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
           </Paper>
         )}
         {blobUrl && (
-          <Box sx={{ position: 'relative', width: '100%', height: '100%', maxWidth: '1100px', boxShadow: 24 }}>
+          <Box sx={{ 
+            position: 'relative', 
+            width: '100%', 
+            height: '100%', 
+            maxWidth: isMobile ? '100%' : '1100px', 
+            boxShadow: 24, 
+            bgcolor: 'white',
+            overflow: 'hidden',
+            WebkitOverflowScrolling: 'touch'
+          }}>
             {/* Tiled Watermark */}
             <Box sx={{ 
               position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
-              pointerEvents: 'none', zIndex: 10, overflow: 'hidden', opacity: 0.12,
-              display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'repeat(4, 1fr)'
+              pointerEvents: 'none', zIndex: 10, overflow: 'hidden', opacity: 0.08,
+              display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gridTemplateRows: 'repeat(4, 1fr)'
             }}>
-              {[...Array(12)].map((_, i) => (
+              {[...Array(isMobile ? 8 : 12)].map((_, i) => (
                 <Box key={i} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(-30deg)' }}>
-                  <Typography variant="caption" sx={{ color: 'black', fontWeight: 900, userSelect: 'none', textAlign: 'center' }}>
+                  <Typography variant="caption" sx={{ color: 'black', fontWeight: 900, userSelect: 'none', textAlign: 'center', fontSize: isMobile ? '0.6rem' : '0.75rem' }}>
                     {leadPhone} <br/> {leadEmail}
                   </Typography>
                 </Box>
               ))}
             </Box>
             
-            {isMobile ? (
-              <Box sx={{ 
-                bgcolor: 'white', 
-                height: '100%', 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                p: 4,
-                textAlign: 'center',
-                borderRadius: 2
-              }}>
-                <PictureAsPdfIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h6" sx={{ mb: 3, fontWeight: 700 }}>Document Ready</Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-                  Mobile browsers work best when opening documents in a new tab.
-                </Typography>
-                <Button 
-                  variant="contained" 
-                  size="large" 
-                  onClick={handleOpenNewTab}
-                  sx={{ borderRadius: 2, px: 4 }}
-                >
-                  View Document
-                </Button>
-              </Box>
-            ) : (
-              <iframe 
-                src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
-                width="100%" 
-                height="100%" 
-                style={{ border: 'none', background: '#fff' }}
-                title="Secure Document Viewer"
-                onContextMenu={(e) => e.preventDefault()}
-              />
-            )}
+            <iframe 
+              src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
+              width="100%" 
+              height="100%" 
+              style={{ border: 'none', background: '#fff' }}
+              title="Secure Document Viewer"
+              onContextMenu={(e) => e.preventDefault()}
+            />
           </Box>
         )}
       </Box>
