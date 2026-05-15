@@ -3,7 +3,6 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Updates from './pages/Updates';
-import Planning from './pages/Planning';
 import Investment from './pages/Investment';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -50,18 +49,16 @@ function AppContent() {
   const { sessionId, fingerprint } = useVisitorTracking();
   const location = useLocation();
   const isAdminPath = location.pathname.startsWith('/admin');
-  const isPlanningPage = location.pathname.startsWith('/planning');
 
   return (
     <LanguageProvider>
       <LeadProvider>
         <ScrollToTop />
-        {!isAdminPath && !isPlanningPage && <LeadPopup sessionId={sessionId} fingerprint={fingerprint} />}
+        {!isAdminPath && <LeadPopup sessionId={sessionId} fingerprint={fingerprint} />}
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="updates" element={<Updates />} />
-            <Route path="planning" element={<Planning />} />
             <Route path="investment" element={<Investment />} />
             <Route path="contact" element={<Contact />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
