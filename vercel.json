@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://dholera-backend-epb9.onrender.com/api/$1"
+      "destination": "https://api.dholeraplatform.com/api/$1"
     },
     {
       "source": "/((?!assets|logo.png|robots.txt|sitemap.xml|manifest.webmanifest|.*\\..*).*)",
