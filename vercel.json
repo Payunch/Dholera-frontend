@@ -5,7 +5,7 @@
       "destination": "https://dholera-backend-epb9.onrender.com/api/$1"
     },
     {
-      "source": "/((?!assets|favicon.svg|robots.txt|sitemap.xml|manifest.webmanifest|.*\\..*).*)",
+      "source": "/((?!assets|logo.png|robots.txt|sitemap.xml|manifest.webmanifest|.*\\..*).*)",
       "destination": "/index.html"
     }
   ],
