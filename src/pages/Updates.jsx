@@ -3,13 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container, Typography, Grid, Card, CardContent, CardMedia, Box,
   Chip, TextField, Dialog, Button, IconButton,
-  Skeleton, InputAdornment, Divider
+  Skeleton, InputAdornment, Divider, ToggleButtonGroup, ToggleButton
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import LanguageIcon from '@mui/icons-material/Language';
 import { API_BASE_URL } from '../utils/apiBase';
 import Seo from '../components/Seo';
+import { useLanguage } from '../context/LanguageContext';
 
 // Derives the backend base (e.g. http://localhost:3000) from API_BASE_URL
 const BACKEND_BASE = API_BASE_URL.replace(/\/api$/, '');
@@ -90,11 +92,14 @@ const ArticleBody = ({ content }) => {
 const Updates = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { lang: globalLang } = useLanguage();
+  
   const [updates, setUpdates] = useState([]);
   const [search, setSearch]   = useState('');
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null); // article open in modal
   const [activeCategory, setActiveCategory] = useState('All');
+  const [activeLang, setActiveLang] = useState(globalLang || 'en');
 
   const categories = ['All', 'Infrastructure', 'Industrial', 'Planning', 'Investment', 'General'];
 
@@ -127,9 +132,26 @@ const Updates = () => {
     navigate('/updates');
   };
 
-  const filtered = activeCategory === 'All'
-    ? updates
-    : updates.filter(u => u.category === activeCategory);
+  const handleLangChange = (event, newLang) => {
+    if (newLang !== null) {
+      setActiveLang(newLang);
+    }
+  };
+
+  // Helper to detect language of content
+  const getUpdateLang = (update) => {
+    const text = update.title + update.content;
+    // Simple heuristic: check for Devanagari or Gujarati scripts
+    if (/[\u0900-\u097F]/.test(text)) return 'hi';
+    if (/[\u0A80-\u0AFF]/.test(text)) return 'gu';
+    return 'en';
+  };
+
+  const filtered = updates.filter(u => {
+    const matchesCat = activeCategory === 'All' || u.category === activeCategory;
+    const matchesLang = getUpdateLang(u) === activeLang;
+    return matchesCat && matchesLang;
+  });
 
   const getImageSrc = (update) => {
     if (!update.imageUrl) return null;
@@ -156,13 +178,37 @@ const Updates = () => {
       )}
 
       {/* Hero header */}
-      <Box sx={{ mb: 6 }}>
-        <Typography variant="h2" sx={{ fontWeight: 800, color: 'primary.main', mb: 1 }}>
-          Development Updates
-        </Typography>
-        <Typography variant="h6" color="text.secondary">
-          Stay informed on the latest infrastructure milestones in Dholera Smart City.
-        </Typography>
+      <Box sx={{ mb: 6, display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'center' }, gap: 3 }}>
+        <Box>
+          <Typography variant="h2" sx={{ fontWeight: 800, color: 'primary.main', mb: 1 }}>
+            Development Updates
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
+            Stay informed on the latest infrastructure milestones in Dholera Smart City.
+          </Typography>
+        </Box>
+
+        {/* Language Switcher */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, bgcolor: 'background.paper', p: 1, borderRadius: 2, boxShadow: 1 }}>
+          <LanguageIcon color="action" />
+          <ToggleButtonGroup
+            value={activeLang}
+            exclusive
+            onChange={handleLangChange}
+            size="small"
+            aria-label="text alignment"
+          >
+            <ToggleButton value="en" aria-label="English">
+              English
+            </ToggleButton>
+            <ToggleButton value="hi" aria-label="Hindi">
+              हिन्दी
+            </ToggleButton>
+            <ToggleButton value="gu" aria-label="Gujarati">
+              ગુજરાતી
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
       </Box>
 
       {/* Search + filter bar */}
@@ -223,10 +269,10 @@ const Updates = () => {
               <Grid item xs={12}>
                 <Box sx={{ textAlign: 'center', py: 10 }}>
                   <Typography variant="h5" color="text.secondary" gutterBottom>
-                    No updates found
+                    No updates found in {activeLang === 'en' ? 'English' : activeLang === 'hi' ? 'Hindi' : 'Gujarati'}
                   </Typography>
                   <Typography color="text.secondary">
-                    {search ? 'Try a different search term.' : 'Check back soon for updates.'}
+                    {search ? 'Try a different search term.' : 'Switch language or check back soon.'}
                   </Typography>
                 </Box>
               </Grid>
@@ -493,9 +539,10 @@ const Updates = () => {
                   </Button>
                   <Button 
                     variant="outlined" 
-                    size="small"
+                    size="small" 
                     onClick={() => {
-                      navigator.clipboard.writeText(window.location.href);
+                      const shareUrl = `${window.location.origin}/updates/${selected.id}`;
+                      navigator.clipboard.writeText(shareUrl);
                       alert('Link copied to clipboard!');
                     }}
                   >
