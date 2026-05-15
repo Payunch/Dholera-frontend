@@ -5,13 +5,13 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { API_BASE_URL } from '../utils/apiBase';
 
 const SecurePdfViewer = ({ pdfId, onClose }) => {
-  const [blobUrl, setBlobUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
   // Use localStorage values directly to ensure we have the latest after verification
   const leadPhone = localStorage.getItem('lead_phone') || 'VERIFIED';
   const leadEmail = localStorage.getItem('lead_email') || 'VERIFIED';
+  const token = localStorage.getItem('lead_token');
 
   useEffect(() => {
     if (!pdfId) {
@@ -20,15 +20,13 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
       return;
     }
 
-    const fetchPdf = async () => {
+    const verifyAccess = async () => {
       setLoading(true);
       setError(null);
       try {
-        const token = localStorage.getItem('lead_token');
         if (!token) throw new Error('Verification required to access this document.');
 
-        let res;
-        res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
+        const res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
           headers: { 'Authorization': token }
         });
 
@@ -36,43 +34,30 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
           const errData = await res.json().catch(() => ({ error: 'Server error' }));
           throw new Error(errData.error || `Failed to load document (${res.status})`);
         }
-
-        const blob = await res.blob();
-        if (blob.type !== 'application/pdf') {
-          console.warn('Received non-PDF blob type:', blob.type);
-        }
-        
-        const url = URL.createObjectURL(blob);
-        setBlobUrl(url);
       } catch (err) {
-        console.error('SecurePdfViewer Fetch Error:', err);
+        console.error('SecurePdfViewer Verify Error:', err);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPdf();
-
-    return () => {
-      if (blobUrl) {
-        URL.revokeObjectURL(blobUrl);
-      }
-    };
-  }, [pdfId]);
+    verifyAccess();
+  }, [pdfId, token]);
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const directUrl = `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`;
 
   const handleOpenNewTab = () => {
-    if (blobUrl) {
-      window.open(blobUrl, '_blank');
+    if (directUrl) {
+      window.open(directUrl, '_blank');
     }
   };
 
   return (
     <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.95)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ p: isMobile ? 1 : 2, display: 'flex', justifyContent: 'flex-end', bgcolor: '#1e1e1e', gap: 2, alignItems: 'center' }}>
-        {blobUrl && (
+        {!loading && !error && (
           <Button 
             variant="contained" 
             color="secondary" 
@@ -96,7 +81,7 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
             <Button variant="contained" onClick={onClose}>Close Viewer</Button>
           </Paper>
         )}
-        {blobUrl && (
+        {!loading && !error && (
           <Box sx={{ 
             position: 'relative', 
             width: '100%', 
@@ -105,7 +90,9 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
             boxShadow: 24, 
             bgcolor: 'white',
             overflow: 'hidden',
-            borderRadius: isMobile ? 2 : 0
+            borderRadius: isMobile ? 2 : 0,
+            display: 'flex',
+            flexDirection: 'column'
           }}>
             {/* Tiled Watermark */}
             <Box sx={{ 
@@ -122,40 +109,34 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
               ))}
             </Box>
             
-            {isMobile ? (
+            <iframe 
+              src={`${directUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
+              width="100%" 
+              height="100%" 
+              style={{ border: 'none', background: '#fff', flex: 1 }}
+              title="Secure Document Viewer"
+              onContextMenu={(e) => e.preventDefault()}
+            />
+
+            {isMobile && (
               <Box sx={{ 
-                height: '100%', 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                p: 4,
-                textAlign: 'center'
+                position: 'absolute', 
+                bottom: 16, 
+                left: '50%', 
+                transform: 'translateX(-50%)', 
+                zIndex: 20
               }}>
-                <PictureAsPdfIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h6" sx={{ mb: 2, fontWeight: 800 }}>Document Secured & Ready</Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 4, maxWidth: 280 }}>
-                  Mobile browsers require opening secure documents in a full-screen tab for viewing.
-                </Typography>
                 <Button 
                   variant="contained" 
-                  size="large" 
+                  color="primary" 
+                  size="small" 
                   onClick={handleOpenNewTab}
                   startIcon={<PictureAsPdfIcon />}
-                  sx={{ borderRadius: 3, px: 4, py: 1.5, fontWeight: 700 }}
+                  sx={{ borderRadius: 4, boxShadow: 4, px: 3, whiteSpace: 'nowrap' }}
                 >
-                  Open Document
+                  Open Full Screen
                 </Button>
               </Box>
-            ) : (
-              <iframe 
-                src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
-                width="100%" 
-                height="100%" 
-                style={{ border: 'none', background: '#fff' }}
-                title="Secure Document Viewer"
-                onContextMenu={(e) => e.preventDefault()}
-              />
             )}
           </Box>
         )}
