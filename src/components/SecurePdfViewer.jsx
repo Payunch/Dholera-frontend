@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, CircularProgress, IconButton, Paper, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { API_BASE_URL } from '../utils/apiBase';
 
 const SecurePdfViewer = ({ pdfId, onClose }) => {
@@ -60,9 +61,28 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
     };
   }, [pdfId]);
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  const handleOpenNewTab = () => {
+    if (blobUrl) {
+      window.open(blobUrl, '_blank');
+    }
+  };
+
   return (
     <Box sx={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, bgcolor: 'rgba(0,0,0,0.9)', zIndex: 9999, display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', bgcolor: '#1e1e1e' }}>
+      <Box sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', bgcolor: '#1e1e1e', gap: 2, alignItems: 'center' }}>
+        {blobUrl && isMobile && (
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            size="small" 
+            onClick={handleOpenNewTab}
+            sx={{ fontWeight: 700 }}
+          >
+            Open in Full Screen
+          </Button>
+        )}
         <IconButton color="error" onClick={onClose} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }}>
           <CloseIcon />
         </IconButton>
@@ -93,14 +113,42 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
               ))}
             </Box>
             
-            <iframe 
-              src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
-              width="100%" 
-              height="100%" 
-              style={{ border: 'none', background: '#fff' }}
-              title="Secure Document Viewer"
-              onContextMenu={(e) => e.preventDefault()}
-            />
+            {isMobile ? (
+              <Box sx={{ 
+                bgcolor: 'white', 
+                height: '100%', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                p: 4,
+                textAlign: 'center',
+                borderRadius: 2
+              }}>
+                <PictureAsPdfIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
+                <Typography variant="h6" sx={{ mb: 3, fontWeight: 700 }}>Document Ready</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
+                  Mobile browsers work best when opening documents in a new tab.
+                </Typography>
+                <Button 
+                  variant="contained" 
+                  size="large" 
+                  onClick={handleOpenNewTab}
+                  sx={{ borderRadius: 2, px: 4 }}
+                >
+                  View Document
+                </Button>
+              </Box>
+            ) : (
+              <iframe 
+                src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`} 
+                width="100%" 
+                height="100%" 
+                style={{ border: 'none', background: '#fff' }}
+                title="Secure Document Viewer"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            )}
           </Box>
         )}
       </Box>

@@ -42,7 +42,7 @@ const Navbar = () => {
           >
             <Box
               component="img"
-              src="/favicon.svg"
+              src="/logo.png"
               alt="Dholera Portal Logo"
               sx={{ height: 32, mr: 1.5 }}
             />

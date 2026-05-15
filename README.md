@@ -84,7 +84,6 @@ VITE_WHATSAPP_NUMBER=919999999999
 VITE_APP_NAME=Dholera Growth Platform
 VITE_APP_DOMAIN=dholera.com
 ```
-
 ### Local Development
 
 ```bash
@@ -98,6 +97,16 @@ npm run build
 
 # Preview production build locally
 npm run preview
+```
+
+## SEO and Sitemap
+
+To ensure the site is indexable by search engines (like Google):
+
+1.  **Sitemap**: Run `node scripts/generate-sitemap.mjs` before deployment to update `public/sitemap.xml`. This file is already configured for `https://dholeraplatform.com`.
+2.  **Metadata**: The `Seo` component is used on every page to provide dynamic titles, descriptions, and keywords.
+3.  **Search Console**: Once deployed, submit `https://dholeraplatform.com/sitemap.xml` to Google Search Console to speed up indexing.
+4.  **Keywords**: The platform is now optimized for "Dholera Platform", "Dholera Smart City Maps", and "Dholera Investment".
 # Available at: http://localhost:4173
 ```
 
