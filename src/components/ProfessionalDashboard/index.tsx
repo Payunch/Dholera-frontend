@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -15,6 +15,7 @@ import {
   Chip,
   IconButton,
   Collapse,
+  CircularProgress,
 } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
@@ -26,36 +27,55 @@ import PeopleIcon from '@mui/icons-material/People';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import { CoSignatoryManager } from '../CoSignatoryManager';
 import { ExtensionRequestDialog } from '../ExtensionRequestDialog';
-
-const ACTIVE_PROJECTS = [
-  {
-    id: 'DS-2026-042',
-    name: 'Sector 4 High-Rise Complex',
-    status: 'Plinth Level Inspection',
-    progress: 1,
-    validity: '342 days left',
-    lastUpdate: '2 days ago',
-    collaboration: true,
-  },
-  {
-    id: 'DS-2026-089',
-    name: 'Industrial Unit - Zone 2',
-    status: 'Final Finishing',
-    progress: 3,
-    validity: '24 days left',
-    lastUpdate: 'Today',
-    collaboration: false,
-    needsExtension: true,
-  },
-];
+import { CoSignatoryManager } from '../CoSignatoryManager';
+import { API_BASE_URL } from '../../utils/apiBase';
 
 const INSPECTION_STAGES = ['Foundation', 'Plinth Level', 'Mid-Story', 'Occupancy Cert'];
 
 export const ProfessionalDashboard: React.FC = () => {
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
   const [extensionDialog, setExtensionDialog] = useState<{ open: boolean; projectId: string }>({ open: false, projectId: '' });
+  
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/clearance/my-models`);
+        const result = await res.json();
+        
+        // Transform the backend data into the format needed by the UI
+        const mappedProjects = (result.data || []).map((item: any) => {
+          let progress = 0;
+          if (item.status === 'Foundation') progress = 1;
+          else if (item.status === 'Plinth Level' || item.status === 'Plinth') progress = 2;
+          else if (item.status === 'Mid-Story') progress = 3;
+          else if (item.status === 'Occupancy Cert' || item.status === 'Occupancy') progress = 4;
+          
+          return {
+            id: `DS-${new Date(item.createdAt).getFullYear()}-${item.id.toString().padStart(3, '0')}`,
+            name: item.projectName,
+            status: item.status,
+            progress: progress,
+            validity: '365 days left',
+            lastUpdate: new Date(item.updatedAt).toLocaleDateString(),
+            collaboration: true,
+            needsExtension: item.status === 'Expired'
+          };
+        });
+        
+        setProjects(mappedProjects);
+      } catch (err) {
+        console.error('Failed to fetch projects', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchProjects();
+  }, []);
 
   return (
     <Box sx={{ py: 6 }}>
@@ -146,7 +166,16 @@ export const ProfessionalDashboard: React.FC = () => {
       </Typography>
 
       <Stack spacing={3}>
-        {ACTIVE_PROJECTS.map((project) => (
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+            <CircularProgress color="primary" />
+          </Box>
+        ) : projects.length === 0 ? (
+          <Paper elevation={0} sx={{ p: 4, textAlign: 'center', borderRadius: 'var(--radius-container)', border: '1px dashed divider' }}>
+            <Typography variant="body1" color="text.secondary">No active clearance projects found. Save an estimate from the Spatial Intelligence Hub to start.</Typography>
+          </Paper>
+        ) : (
+          projects.map((project) => (
           <Card
             key={project.id}
             elevation={0}
@@ -236,7 +265,7 @@ export const ProfessionalDashboard: React.FC = () => {
               </Box>
             </CardContent>
           </Card>
-        ))}
+        )))}
       </Stack>
 
       <ExtensionRequestDialog

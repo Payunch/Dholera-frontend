@@ -14,7 +14,12 @@ import {
   Grid,
   FormControl,
   FormLabel,
+  Button,
+  Snackbar,
+  CircularProgress
 } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import { API_BASE_URL } from '../../utils/apiBase';
 
 interface ProjectState {
   zoneTier: 'residential' | 'commercial' | 'industrial' | 'agricultural';
@@ -84,6 +89,8 @@ export const FeeCalculator: React.FC<FeeCalculatorProps> = ({ hideHeader = false
     requestFsiUpgrade: false,
     structureHeight: 0,
   });
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   // Calculate fees reactively only when dependent state variables are updated
   const matrix = useMemo<CalculationMatrix>(() => {
@@ -102,6 +109,32 @@ export const FeeCalculator: React.FC<FeeCalculatorProps> = ({ hideHeader = false
       ...prev,
       [field]: value,
     }));
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/clearance/save`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          projectName: 'New Fee Calculation',
+          modelType: 'fee-calculator',
+          configurationData: project,
+          LeadId: null,
+          status: 'Draft'
+        })
+      });
+      if (response.ok) {
+        setSaveSuccess(true);
+      } else {
+        console.error('Failed to save');
+      }
+    } catch (error) {
+      console.error('Error saving:', error);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -387,9 +420,29 @@ export const FeeCalculator: React.FC<FeeCalculatorProps> = ({ hideHeader = false
                 )
               )}
             </Box>
+
+            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                startIcon={saving ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
+                onClick={handleSave}
+                disabled={saving}
+                sx={{ borderRadius: 'var(--radius-interactive)', fontWeight: 800, bgcolor: 'var(--color-brand-primary)' }}
+              >
+                {saving ? 'Saving...' : 'Save Calculation to Profile'}
+              </Button>
+            </Box>
+
           </Box>
         </Grid>
       </Grid>
+      
+      <Snackbar open={saveSuccess} autoHideDuration={6000} onClose={() => setSaveSuccess(false)}>
+        <Alert onClose={() => setSaveSuccess(false)} severity="success" sx={{ width: '100%', fontWeight: 700 }}>
+          Clearance calculation saved successfully!
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 };

@@ -8,12 +8,17 @@ import {
   Divider,
   Stack,
   Slider,
-  Tooltip,
+  Button,
+  Snackbar,
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import { API_BASE_URL } from '../../utils/apiBase';
 
 interface ParkingState {
   builtUpArea: number;
@@ -27,6 +32,8 @@ export const ParkingPlanner: React.FC = () => {
     tenements: 10,
     propertyType: 'residential',
   });
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const calculations = useMemo(() => {
     // Logic based on GDCR Section 9.5
@@ -45,6 +52,32 @@ export const ParkingPlanner: React.FC = () => {
 
     return { ecsBase, totalArea, twoWheelerCount, cycleCount };
   }, [params]);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/clearance/save`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          projectName: 'New Parking Calculation',
+          modelType: 'parking-planner',
+          configurationData: params,
+          LeadId: null,
+          status: 'Draft'
+        })
+      });
+      if (response.ok) {
+        setSaveSuccess(true);
+      } else {
+        console.error('Failed to save');
+      }
+    } catch (error) {
+      console.error('Error saving:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <Paper
@@ -195,9 +228,29 @@ export const ParkingPlanner: React.FC = () => {
                 Includes 25% reserve for two-wheelers and 5% for non-motorized transport as per Sec 9.5.3.
               </Typography>
             </Box>
+
+            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                startIcon={saving ? <CircularProgress size={20} color="inherit" /> : <SaveIcon />}
+                onClick={handleSave}
+                disabled={saving}
+                sx={{ borderRadius: 'var(--radius-interactive)', fontWeight: 800, bgcolor: 'var(--color-brand-primary)' }}
+              >
+                {saving ? 'Saving...' : 'Save Calculation to Profile'}
+              </Button>
+            </Box>
+
           </Box>
         </Grid>
       </Grid>
+
+      <Snackbar open={saveSuccess} autoHideDuration={6000} onClose={() => setSaveSuccess(false)}>
+        <Alert onClose={() => setSaveSuccess(false)} severity="success" sx={{ width: '100%', fontWeight: 700 }}>
+          Parking calculation saved successfully!
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 };
