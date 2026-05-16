@@ -275,7 +275,7 @@ const Home = () => {
       </Box>
 
       {/* Infrastructure Metrics */}
-      <Container maxWidth="xl" sx={{ mb: 10 }}>
+      {/* <Container maxWidth="xl" sx={{ mb: 10 }}>
         <Grid container spacing={3} justifyContent="center">
           {[
             { title: '920 Sq. Km', desc: 'Total Development Area', icon: <MapIcon fontSize="large" color="primary" /> },
@@ -293,7 +293,7 @@ const Home = () => {
             </Grid>
           ))}
         </Grid>
-      </Container>
+      </Container> */}
 
       <Container maxWidth="xl" sx={{ mb: 10 }}>
         {/* <Typography variant="h4" sx={{ mb: 3, fontWeight: 800, color: 'primary.main' }}>

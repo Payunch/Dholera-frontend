@@ -4,7 +4,6 @@ const siteUrl = process.env.VITE_SITE_URL || "https://dholeraplatform.com";
 const routes = [
   "/",
   "/updates",
-  "/planning",
   "/investment",
   "/contact",
   "/terms-and-conditions",

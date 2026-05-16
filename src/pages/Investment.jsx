@@ -1,9 +1,15 @@
 import React from 'react';
 import { Container, Typography, Grid, Paper, Box } from '@mui/material';
+import Seo from '../components/Seo';
 
 const Investment = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 8 }}>
+      <Seo
+        title="Investment Overview"
+        description="Explore why Dholera Smart City is the prime destination for global and domestic investment with high ROI potential and smart infrastructure."
+        path="/investment"
+      />
       <Typography variant="h2" sx={{ mb: 2, fontWeight: 800, color: 'primary.main' }}>
         Investment Overview
       </Typography>

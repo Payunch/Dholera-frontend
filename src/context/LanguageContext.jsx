@@ -11,7 +11,7 @@ const translations = {
     nav_contact: 'Contact Us',
     btn_unlock: 'Unlock Now',
     btn_view: 'View Map',
-    btn_get_touch: 'Get in Touch',
+    btn_get_touch: 'Contact Us',
     search_placeholder: 'Search Documents...',
     footer_tagline: 'The official portal for Dholera Smart City infrastructure, investment, and planning intelligence.',
     footer_quick_links: 'Quick Links',

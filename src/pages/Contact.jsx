@@ -51,7 +51,7 @@ const Contact = () => {
         path="/contact"
       />
       <Typography variant="h2" sx={{ mb: 2, fontWeight: 800, color: 'primary.main', textAlign: 'center' }}>
-        Get in Touch
+        Contact Us
       </Typography>
       <Typography variant="h6" color="text.secondary" sx={{ mb: 6, textAlign: 'center' }}>
         Connect with our experts for investment opportunities and planning details.

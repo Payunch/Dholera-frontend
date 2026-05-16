@@ -144,7 +144,7 @@ const Navbar = () => {
                 />
               ) : (
                 <Button component={RouterLink} to="/contact" variant="contained" color="primary" sx={{ borderRadius: 8, ml: 1, px: 3, fontWeight: 700 }}>
-                  Get in Touch
+                  Contact Us
                 </Button>
               )}
             </Box>
@@ -217,7 +217,7 @@ const Navbar = () => {
               onClick={toggleMobileDrawer}
               sx={{ borderRadius: 2, py: 1.5, fontWeight: 700 }}
             >
-              Get in Touch
+              Contact Us
             </Button>
           )}
         </Box>

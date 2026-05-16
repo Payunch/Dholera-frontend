@@ -166,6 +166,8 @@ const Updates = () => {
           description={selected.content?.slice(0, 160).replace(/\n/g, ' ')}
           path={`/updates/${selected.id}`}
           image={getImageSrc(selected)}
+          type="article"
+          articleData={selected}
         />
       ) : (
         <Seo
