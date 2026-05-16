@@ -142,7 +142,7 @@ const AdminAnalytics = () => {
       ) : data && (
         <>
           <Grid container spacing={3} sx={{ mb: 4 }}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <StatCard 
                 title="Total Leads" 
                 value={data.totalLeads} 
@@ -152,7 +152,7 @@ const AdminAnalytics = () => {
                 color={theme.palette.primary.main}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <StatCard 
                 title="Total Visitors" 
                 value={data.totalVisitors} 
@@ -162,7 +162,7 @@ const AdminAnalytics = () => {
                 color={theme.palette.info.main}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <StatCard 
                 title="Total Updates" 
                 value={data.totalUpdates} 
@@ -172,7 +172,7 @@ const AdminAnalytics = () => {
                 color={theme.palette.success.main}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
               <StatCard 
                 title="Conversion Rate" 
                 value={`${((data.totalLeads / (data.totalVisitors || 1)) * 100).toFixed(1)}%`}
@@ -185,7 +185,7 @@ const AdminAnalytics = () => {
           </Grid>
 
           <Grid container spacing={3} sx={{ mb: 4 }}>
-            <Grid item xs={12} lg={8}>
+            <Grid size={{ xs: 12, lg: 8 }}>
               <Card sx={{ borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 700, mb: 3 }}>Lead Generation Trend</Typography>
@@ -211,7 +211,7 @@ const AdminAnalytics = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} lg={4}>
+            <Grid size={{ xs: 12, lg: 4 }}>
               <Card sx={{ borderRadius: 4, height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 700, mb: 3 }}>Top Performing Days</Typography>
@@ -249,7 +249,7 @@ const AdminAnalytics = () => {
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Card sx={{ borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 700, mb: 3 }}>Comparison Trend (Leads vs Visitors vs Updates)</Typography>

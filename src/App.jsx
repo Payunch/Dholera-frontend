@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -23,8 +23,10 @@ import { LeadProvider } from './context/LeadContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { API_BASE_URL } from './utils/apiBase';
 
-import { useEffect, useState } from 'react';
-
+/**
+ * Protected route wrapper for Admin pages.
+ * Ensures only authenticated admins can access.
+ */
 const ProtectedAdmin = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [ok, setOk] = useState(false);
@@ -34,11 +36,14 @@ const ProtectedAdmin = ({ children }) => {
     fetch(`${API_BASE_URL}/auth/me`, { credentials: 'include' })
       .then(res => {
         if (!mounted) return;
-        if (res.ok) setOk(true);
-        else setOk(false);
+        setOk(res.ok);
       })
-      .catch(() => setOk(false))
-      .finally(() => mounted && setLoading(false));
+      .catch(() => {
+        if (mounted) setOk(false);
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
     return () => { mounted = false; };
   }, []);
 
@@ -47,43 +52,54 @@ const ProtectedAdmin = ({ children }) => {
   return children;
 };
 
+/**
+ * Main application content wrapper.
+ * Manages tracking and global popups.
+ */
 function AppContent() {
   const { sessionId, fingerprint } = useVisitorTracking();
   const location = useLocation();
   const isAdminPath = location.pathname.startsWith('/admin');
 
   return (
-    <LanguageProvider>
-      <LeadProvider>
-        <ScrollToTop />
-        {!isAdminPath && <LeadPopup sessionId={sessionId} fingerprint={fingerprint} />}
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="updates" element={<Updates />} />
-            <Route path="updates/:id" element={<Updates />} />
-            <Route path="investment" element={<Investment />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="terms-and-conditions" element={<TermsAndConditions />} />
-            <Route path="professional/dashboard" element={<ProfessionalPortal />} />
-            <Route path="clearance-engine" element={<ClearanceEngine />} />
-          </Route>
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<ProtectedAdmin><AdminLayout /></ProtectedAdmin>}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="leads" element={<AdminLeads />} />
-            <Route path="updates" element={<AdminUpdates />} />
-            <Route path="analytics" element={<AdminAnalytics />} />
-          </Route>
-        </Routes>
-      </LeadProvider>
-    </LanguageProvider>
+    <>
+      <ScrollToTop />
+      {!isAdminPath && <LeadPopup sessionId={sessionId} fingerprint={fingerprint} />}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="updates" element={<Updates />} />
+          <Route path="updates/:id" element={<Updates />} />
+          <Route path="investment" element={<Investment />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="professional/dashboard" element={<ProfessionalPortal />} />
+          <Route path="clearance-engine" element={<ClearanceEngine />} />
+        </Route>
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<ProtectedAdmin><AdminLayout /></ProtectedAdmin>}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="leads" element={<AdminLeads />} />
+          <Route path="updates" element={<AdminUpdates />} />
+          <Route path="analytics" element={<AdminAnalytics />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
+/**
+ * Root App component providing global context providers.
+ */
 function App() {
-  return <AppContent />;
+  return (
+    <LanguageProvider>
+      <LeadProvider>
+        <AppContent />
+      </LeadProvider>
+    </LanguageProvider>
+  );
 }
 
 export default App;

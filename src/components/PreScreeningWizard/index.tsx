@@ -110,7 +110,7 @@ export const PreScreeningWizard: React.FC = () => {
                 Lock-in your clearance estimates and register as a certified DSIRDA professional to proceed with formal filing.
               </Typography>
               <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <TextField
                     fullWidth
                     label="Full Professional Name"
@@ -121,7 +121,7 @@ export const PreScreeningWizard: React.FC = () => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <TextField
                     fullWidth
                     label="Business Email Address"
@@ -133,7 +133,7 @@ export const PreScreeningWizard: React.FC = () => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <TextField
                     fullWidth
                     label="Contact Phone"
@@ -144,7 +144,7 @@ export const PreScreeningWizard: React.FC = () => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <TextField
                     fullWidth
                     label="Architectural/Dev Firm"

@@ -23,8 +23,7 @@ import { safeLocalStorage, safeSessionStorage } from '../utils/storage';
 import { SplitLogo } from './DynamicImages';
 
 const INITIAL_FORM_DATA = {
-  // ...
-
+  name: '',
   phone: '',
   email: '',
   otp: '',
@@ -51,18 +50,18 @@ const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSuccess }) =>
   useEffect(() => {
     if (compulsory) {
       setOpen(true);
-      sessionStorage.setItem('hasSeenPopup', 'true');
+      safeSessionStorage.setItem('hasSeenPopup', 'true');
       return;
     }
 
-    const hasSeenPopup = sessionStorage.getItem('hasSeenPopup');
+    const hasSeenPopup = safeSessionStorage.getItem('hasSeenPopup');
     if (!hasSeenPopup) {
       // Mark as seen immediately so that refreshes or navigations within the 
       // 10s window don't keep resetting the timer or triggering it again.
-      sessionStorage.setItem('hasSeenPopup', 'true');
+      safeSessionStorage.setItem('hasSeenPopup', 'true');
       
       const timer = setTimeout(() => {
-        const token = localStorage.getItem('lead_token');
+        const token = safeLocalStorage.getItem('lead_token');
         if (!token) {
           setOpen(true);
         }
@@ -323,10 +322,10 @@ const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSuccess }) =>
 
   const completeAuth = (data) => {
     if (data.lead_token) {
-      localStorage.setItem('lead_token', data.lead_token);
-      localStorage.setItem('lead_email', data.lead.email);
-      localStorage.setItem('lead_phone', data.lead.phone);
-      localStorage.setItem('lead_name', data.lead.name);
+      safeLocalStorage.setItem('lead_token', data.lead_token);
+      safeLocalStorage.setItem('lead_email', data.lead.email);
+      safeLocalStorage.setItem('lead_phone', data.lead.phone);
+      safeLocalStorage.setItem('lead_name', data.lead.name);
 
       loginLead({
         name: data.lead.name,

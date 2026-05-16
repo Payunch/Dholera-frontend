@@ -7,28 +7,26 @@ import theme from './theme/theme'
 import './theme/tokens.css'
 import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import ErrorBoundary from './components/ErrorBoundary'
 import '@fontsource/manrope/400.css';
 import '@fontsource/manrope/600.css';
 import '@fontsource/manrope/700.css';
 import '@fontsource/manrope/800.css';
 
-if (import.meta.env.DEV && typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then((registrations) => {
-    registrations.forEach((registration) => registration.unregister());
-  }).catch(() => {
-    // Ignore service worker cleanup errors in development.
-  });
-}
+// Root render targeting 'root' element from index.html
+const rootElement = document.getElementById('root');
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <ErrorBoundary>
       <HelmetProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <App />
-        </ThemeProvider>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
+        </BrowserRouter>
       </HelmetProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
-)
+    </ErrorBoundary>
+  );
+}

@@ -83,13 +83,13 @@ const AdminDashboard = () => {
         <Box>
           {/* Primary Stats */}
           <Grid container spacing={3} sx={{ mb: 6 }}>
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Paper sx={{ p: 3, borderRadius: 3, borderLeft: '4px solid #0a3d62', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 <Typography color="text.secondary" gutterBottom sx={{ fontWeight: 600 }}>Total Leads</Typography>
                 <Typography variant="h3" sx={{ fontWeight: 800, color: '#0a3d62' }}>{leads.length}</Typography>
               </Paper>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Paper sx={{ p: 3, borderRadius: 3, borderLeft: '4px solid #e58e26', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 <Typography color="text.secondary" gutterBottom sx={{ fontWeight: 600 }}>New Inquiries</Typography>
                 <Typography variant="h3" sx={{ fontWeight: 800, color: '#e58e26' }}>
@@ -97,7 +97,7 @@ const AdminDashboard = () => {
                 </Typography>
               </Paper>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Paper sx={{ p: 3, borderRadius: 3, borderLeft: '4px solid #4caf50', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 <Typography color="text.secondary" gutterBottom sx={{ fontWeight: 600 }}>Converted</Typography>
                 <Typography variant="h3" sx={{ fontWeight: 800, color: '#4caf50' }}>
@@ -109,7 +109,7 @@ const AdminDashboard = () => {
 
           <Grid container spacing={4}>
             {/* Recent Leads Table */}
-            <Grid item xs={12} lg={8}>
+            <Grid size={{ xs: 12, lg: 8 }}>
               <Typography variant="h5" sx={{ mb: 3, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
                 Recent Activity
               </Typography>
@@ -154,7 +154,7 @@ const AdminDashboard = () => {
             </Grid>
 
             {/* WhatsApp Analytics Sidebar */}
-            <Grid item xs={12} lg={4}>
+            <Grid size={{ xs: 12, lg: 4 }}>
               <Typography variant="h5" sx={{ mb: 3, fontWeight: 700 }}>WhatsApp Outreach</Typography>
               <Paper sx={{ p: 3, borderRadius: 3, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
                 <List disablePadding>

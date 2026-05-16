@@ -178,7 +178,7 @@ export const FeeCalculator: React.FC<FeeCalculatorProps> = ({ hideHeader = false
 
       <Grid container spacing={4}>
         {/* User Parameter Input Panel Area */}
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             <FormControl fullWidth>
               <FormLabel
@@ -303,7 +303,7 @@ export const FeeCalculator: React.FC<FeeCalculatorProps> = ({ hideHeader = false
         </Grid>
 
         {/* Real-Time Calculation Matrix Output Board */}
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Box
             sx={{
               bgcolor: 'background.paper',

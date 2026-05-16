@@ -11,6 +11,7 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Tooltip,
 } from '@mui/material';
 import MapIcon from '@mui/icons-material/Map';
 import WaterIcon from '@mui/icons-material/Water';
@@ -83,7 +84,7 @@ export const RiskMapping: React.FC<RiskMappingProps> = ({ hideHeader = false }) 
       )}
 
       <Grid container spacing={4}>
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Paper
             elevation={0}
             sx={{
@@ -196,7 +197,7 @@ export const RiskMapping: React.FC<RiskMappingProps> = ({ hideHeader = false }) 
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Paper
             elevation={0}
             sx={{

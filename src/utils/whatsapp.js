@@ -1,4 +1,5 @@
 import { API_BASE_URL } from './apiBase';
+import { safeLocalStorage } from './storage';
 
 /**
  * Send WhatsApp message to a single lead
@@ -10,7 +11,7 @@ export const sendWhatsAppMessage = async (lead) => {
     // 1. Fetch the pre-filled URL from backend
     const response = await fetch(`${API_BASE_URL}/leads/${lead.id}/whatsapp-url`, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+        'Authorization': `Bearer ${safeLocalStorage.getItem('admin_token')}`
       }
     });
     
@@ -26,7 +27,7 @@ export const sendWhatsAppMessage = async (lead) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+        'Authorization': `Bearer ${safeLocalStorage.getItem('admin_token')}`
       },
       body: JSON.stringify({ message_sent: true })
     }).catch(err => console.error('Failed to log WhatsApp activity:', err));

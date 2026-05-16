@@ -39,14 +39,24 @@ const getBrowserFingerprint = () => {
     return 'fp_fallback_' + Math.random().toString(36).substr(2, 5);
   }
 };
-
 export const useVisitorTracking = () => {
   const location = useLocation();
   const isAdminPath = location.pathname.startsWith('/admin');
-  const sessionRef = useRef(safeSessionStorage.getItem('visitorSessionId'));
-  const fingerprintRef = useRef(safeLocalStorage.getItem('visitorFingerprint'));
-  
+
+  // Use a fallback to empty strings if storage is completely unavailable or throws
+  const getInitialSession = () => {
+    try { return safeSessionStorage.getItem('visitorSessionId'); } catch (e) { return null; }
+  };
+  const getInitialFingerprint = () => {
+    try { return safeLocalStorage.getItem('visitorFingerprint'); } catch (e) { return null; }
+  };
+
+  const sessionRef = useRef(getInitialSession());
+  const fingerprintRef = useRef(getInitialFingerprint());
+
   useEffect(() => {
+    // ...
+
     // Skip tracking on admin pages
     if (isAdminPath) {
       return;

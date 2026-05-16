@@ -64,16 +64,16 @@ const Contact = () => {
         
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField fullWidth label="Full Name" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField fullWidth label="Phone Number" required value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField fullWidth label="Email Address" type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <FormControlLabel
                 sx={{ alignItems: 'flex-start', m: 0 }}
                 control={
@@ -101,7 +101,7 @@ const Contact = () => {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Button type="submit" variant="contained" color="primary" size="large" fullWidth>
                 Submit Inquiry
               </Button>

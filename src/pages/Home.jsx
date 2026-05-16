@@ -151,7 +151,7 @@ const Home = () => {
                 { label: t('pdf_cat_naksha'), icon: <LayersIcon />, id: 1 },
                 { label: t('pdf_cat_dp'), icon: <MapIcon />, id: 2 },
               ].map((pdf) => (
-                <Grid item xs={12} sm={4} key={pdf.id}>
+                <Grid size={{ xs: 12, sm: 4 }} key={pdf.id}>
                   <Button 
                     fullWidth 
                     variant={activeTab === pdf.id ? "contained" : "outlined"}
@@ -219,7 +219,7 @@ const Home = () => {
           <Grid container spacing={4}>
             {loadingPdfs ? (
               Array.from({ length: 4 }).map((_, i) => (
-                <Grid item xs={12} sm={6} md={3} key={i}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i}>
                   <Card sx={{ borderRadius: 4 }}>
                     <Skeleton variant="rectangular" height={140} />
                     <CardContent sx={{ p: 2.5 }}>
@@ -232,7 +232,7 @@ const Home = () => {
               ))
             ) : filteredPdfs.length > 0 ? (
               filteredPdfs.slice(0, visibleCount[activeTab]).map((pdf) => (
-                <Grid item xs={12} sm={6} md={3} key={pdf.id}>
+                <Grid size={{ xs: 12, sm: 6, md: 3 }} key={pdf.id}>
                   <Card sx={{ 
                     height: '100%', 
                     display: 'flex', 
@@ -272,7 +272,7 @@ const Home = () => {
                 </Grid>
               ))
             ) : (
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <Box sx={{ py: 10, textAlign: 'center' }}>
                   <Typography variant="h6" color="text.disabled">No documents available in this category.</Typography>
                 </Box>
@@ -329,7 +329,7 @@ const Home = () => {
         </Typography> */}
         <Grid container spacing={3}>
           {galleryIndices.map((idx) => (
-            <Grid item xs={12} sm={4} key={idx}>
+            <Grid size={{ xs: 12, sm: 4 }} key={idx}>
               <TripleSplitImage index={idx} height={260} />
             </Grid>
           ))}

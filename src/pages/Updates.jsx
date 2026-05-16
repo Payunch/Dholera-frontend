@@ -370,7 +370,7 @@ const Updates = () => {
       <Grid container spacing={4}>
         {loading
           ? Array.from({ length: 6 }).map((_, i) => (
-              <Grid item xs={12} sm={6} md={4} key={i}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={i}>
                 <Card sx={{ borderRadius: 3, overflow: 'hidden' }}>
                   <Skeleton variant="rectangular" height={200} />
                   <CardContent>
@@ -384,7 +384,7 @@ const Updates = () => {
             ))
           : filtered.length === 0
           ? (
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <Box sx={{ textAlign: 'center', py: 10 }}>
                   <Typography variant="h5" color="text.secondary" gutterBottom>
                     No updates found in {getLangName(lang)}
@@ -403,7 +403,7 @@ const Updates = () => {
                 : '';
 
               return (
-                <Grid item xs={12} sm={6} md={4} key={update.id}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }} key={update.id}>
                   <Card
                     sx={{
                       height: '100%',

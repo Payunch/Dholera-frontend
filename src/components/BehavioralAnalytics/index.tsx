@@ -69,7 +69,7 @@ export const BehavioralAnalytics: React.FC = () => {
           { label: 'Compliance Alerts', value: '92', icon: <WarningAmberIcon />, color: 'var(--color-status-warning)' },
           { label: 'Document Rejections', value: '14', icon: <HighlightOffIcon />, color: 'var(--color-status-error)' },
         ].map((kpi, idx) => (
-          <Grid item xs={12} md={4} key={idx}>
+          <Grid size={{ xs: 12, md: 4 }} key={idx}>
             <Card elevation={0} sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 'var(--radius-container)' }}>
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -87,7 +87,7 @@ export const BehavioralAnalytics: React.FC = () => {
         ))}
 
         {/* Engagement Trend */}
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid', borderColor: 'divider', borderRadius: 'var(--radius-container)', height: 400 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 3 }}>Hourly Engagement Pipeline</Typography>
             <ResponsiveContainer width="100%" height="85%">
@@ -108,7 +108,7 @@ export const BehavioralAnalytics: React.FC = () => {
         </Grid>
 
         {/* Compliance Distribution */}
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Paper elevation={0} sx={{ p: 3, border: '1px solid', borderColor: 'divider', borderRadius: 'var(--radius-container)', height: 400 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 3 }}>Structural Compliance Pass Rate</Typography>
             <ResponsiveContainer width="100%" height="70%">

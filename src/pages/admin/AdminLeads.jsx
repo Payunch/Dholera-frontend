@@ -103,7 +103,7 @@ const Row = ({ lead, handleStatusChange, openWhatsApp, setCurrentLead, setTempNo
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 2, p: 3, bgcolor: '#f8fafc', borderRadius: 3, border: '1px solid #e2e8f0' }}>
               <Grid container spacing={4}>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2, color: '#1e293b', display: 'flex', alignItems: 'center', gap: 1 }}>
                     <PictureAsPdfIcon fontSize="small" color="error" /> Document Engagement
                   </Typography>
@@ -122,7 +122,7 @@ const Row = ({ lead, handleStatusChange, openWhatsApp, setCurrentLead, setTempNo
                     <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>No documents viewed yet.</Typography>
                   )}
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2, color: '#1e293b', display: 'flex', alignItems: 'center', gap: 1 }}>
                     <DoneAllIcon fontSize="small" color="primary" /> Session Intelligence
                   </Typography>
@@ -309,7 +309,7 @@ const AdminLeads = () => {
           { label: 'Avg Engagement', value: `${Math.round(avgTime/60)}m`, color: '#6b21a8' },
           { label: 'Converted Leads', value: convertedCount, color: '#075985' },
         ].map((stat, idx) => (
-          <Grid item xs={12} sm={6} md={2.4} key={idx}>
+          <Grid size={{ xs: 12, sm: 6, md: 2.4 }} key={idx}>
             <Paper sx={{ p: 2, borderRadius: 3, textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderBottom: `4px solid ${stat.color}` }}>
               <Typography color="text.secondary" variant="caption" sx={{ fontWeight: 700, textTransform: 'uppercase' }}>{stat.label}</Typography>
               <Typography variant="h4" sx={{ fontWeight: 800, mt: 0.5, color: stat.color }}>{stat.value}</Typography>

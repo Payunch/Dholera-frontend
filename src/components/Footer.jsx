@@ -16,7 +16,7 @@ const Footer = () => {
       <Container maxWidth="xl">
         <Grid container spacing={6}>
           {/* Brand & About */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 1.5 }}>
               <SplitLogo isFull={false} height={45} />
               <Typography variant="h5" sx={{ fontWeight: 800, letterSpacing: '-0.5px', textTransform: 'uppercase' }}>
@@ -29,7 +29,7 @@ const Footer = () => {
           </Grid>
 
           {/* Quick Links */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Typography variant="h6" sx={{ fontWeight: 800, mb: 3, color: 'secondary.main' }}>
               {t('footer_quick_links')}
             </Typography>
@@ -43,7 +43,7 @@ const Footer = () => {
           </Grid>
 
           {/* Owner & Contact Details */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Typography variant="h6" sx={{ fontWeight: 800, mb: 3, color: 'secondary.main' }}>
               {t('footer_owner')}
             </Typography>

@@ -142,11 +142,11 @@ export const AdminRegistrationReview: React.FC = () => {
                   <Typography variant="body1">{selectedRecord.type}</Typography>
                 </Box>
                 <Grid container spacing={2}>
-                  <Grid item xs={6}>
+                  <Grid size={6}>
                     <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 800 }}>COA/ENG LICENSE NO.</Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>{selectedRecord.licenseNo}</Typography>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid size={6}>
                     <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 800 }}>CONTACT EMAIL</Typography>
                     <Typography variant="body2">{selectedRecord.email}</Typography>
                   </Grid>

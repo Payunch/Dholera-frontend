@@ -100,7 +100,7 @@ export const ParkingPlanner: React.FC = () => {
       </Box>
 
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Stack spacing={3}>
             <Box>
               <Typography variant="caption" sx={{ fontWeight: 800, color: 'text.secondary', textTransform: 'uppercase', display: 'block', mb: 1 }}>
@@ -166,7 +166,7 @@ export const ParkingPlanner: React.FC = () => {
           </Stack>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <Box sx={{ p: 3, bgcolor: 'var(--color-brand-background)', borderRadius: 'var(--radius-interactive)', border: '1px solid', borderColor: 'divider' }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 3, color: 'var(--color-brand-primary)' }}>
               Allocated Inventory Requirements

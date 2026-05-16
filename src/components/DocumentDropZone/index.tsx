@@ -91,7 +91,7 @@ export const DocumentDropZone: React.FC<DocumentDropZoneProps> = ({ hideHeader =
         {REQUIRED_DOCS.map((doc) => {
           const upload = uploads[doc.id];
           return (
-            <Grid item xs={12} md={4} key={doc.id}>
+            <Grid size={{ xs: 12, md: 4 }} key={doc.id}>
               <Paper
                 elevation={0}
                 sx={{

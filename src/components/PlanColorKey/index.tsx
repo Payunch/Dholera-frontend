@@ -60,7 +60,7 @@ export const PlanColorKey: React.FC = () => {
 
       <Grid container spacing={2}>
         {colorTokens.map((token, idx) => (
-          <Grid item xs={12} sm={6} md={4} key={idx}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={idx}>
             <Tooltip
               title={token.description}
               placement="top"

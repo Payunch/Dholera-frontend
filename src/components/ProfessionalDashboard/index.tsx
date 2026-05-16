@@ -81,7 +81,7 @@ export const ProfessionalDashboard: React.FC = () => {
     <Box sx={{ py: 6 }}>
       {/* Dashboard Header */}
       <Grid container spacing={3} sx={{ mb: 6 }} alignItems="center">
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Stack direction="row" spacing={3} alignItems="center">
             <Avatar
               sx={{
@@ -114,7 +114,7 @@ export const ProfessionalDashboard: React.FC = () => {
             </Box>
           </Stack>
         </Grid>
-        <Grid item xs={12} md={4} sx={{ textAlign: { md: 'right' } }}>
+        <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { md: 'right' } }}>
           <Button
             variant="contained"
             startIcon={<NotificationsActiveIcon />}
@@ -138,7 +138,7 @@ export const ProfessionalDashboard: React.FC = () => {
           { label: 'Extensions Req', value: '01', color: 'var(--color-status-error)' },
           { label: 'Total FSI Used', value: '1.45 Lakh sq.m', color: 'var(--color-brand-secondary)' },
         ].map((stat, idx) => (
-          <Grid item xs={6} md={3} key={idx}>
+          <Grid size={{ xs: 6, md: 3 }} key={idx}>
             <Paper
               elevation={0}
               sx={{

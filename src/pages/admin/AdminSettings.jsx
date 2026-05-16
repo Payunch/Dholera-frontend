@@ -109,7 +109,7 @@ const AdminSettings = () => {
       )}
 
       <Grid container spacing={4}>
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <Paper sx={{ p: 3, borderRadius: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, gap: 1 }}>
               <WhatsAppIcon color="success" />
@@ -122,7 +122,7 @@ const AdminSettings = () => {
             <Divider sx={{ mb: 3 }} />
 
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField 
                   fullWidth 
                   label="Site Owner Name" 
@@ -131,7 +131,7 @@ const AdminSettings = () => {
                   placeholder="e.g. Naresh Gohel"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField 
                   fullWidth 
                   label="WhatsApp / Phone" 
@@ -141,7 +141,7 @@ const AdminSettings = () => {
                   helperText="Format: 7435808031 (10 digits)"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <TextField 
                   fullWidth 
                   label="Contact Email" 
@@ -151,11 +151,11 @@ const AdminSettings = () => {
                 />
               </Grid>
               
-              <Grid item xs={12}>
+              <Grid size={12}>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 700 }}>Social Links (Optional)</Typography>
               </Grid>
               
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField 
                   fullWidth 
                   label="Facebook URL" 
@@ -163,7 +163,7 @@ const AdminSettings = () => {
                   onChange={e => setSettings({...settings, facebook: e.target.value})}
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField 
                   fullWidth 
                   label="Instagram URL" 
@@ -171,7 +171,7 @@ const AdminSettings = () => {
                   onChange={e => setSettings({...settings, instagram: e.target.value})}
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid size={{ xs: 12, sm: 4 }}>
                 <TextField 
                   fullWidth 
                   label="Twitter URL" 
@@ -195,7 +195,7 @@ const AdminSettings = () => {
           </Paper>
         </Grid>
         
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ p: 3, borderRadius: 3, bgcolor: 'primary.main', color: 'white' }}>
             <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Why this matters?</Typography>
             <Typography variant="body2" sx={{ opacity: 0.9 }}>
