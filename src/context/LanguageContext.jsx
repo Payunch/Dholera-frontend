@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { safeLocalStorage } from '../utils/storage';
 
 const LanguageContext = createContext();
 
@@ -78,14 +79,14 @@ const translations = {
 translations.hi.nav_planning = 'योजना';
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState(localStorage.getItem('preferred_lang') || 'en');
+  const [lang, setLang] = useState(safeLocalStorage.getItem('preferred_lang') || 'en');
 
   useEffect(() => {
-    localStorage.setItem('preferred_lang', lang);
+    safeLocalStorage.setItem('preferred_lang', lang);
   }, [lang]);
 
   const t = (key) => {
-    return translations[lang][key] || translations['en'][key] || key;
+    return translations[lang]?.[key] || translations['en']?.[key] || key;
   };
 
   return (

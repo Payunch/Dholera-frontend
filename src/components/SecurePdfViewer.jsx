@@ -3,6 +3,7 @@ import { Box, Typography, CircularProgress, IconButton, Paper, Button } from '@m
 import CloseIcon from '@mui/icons-material/Close';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { API_BASE_URL } from '../utils/apiBase';
+import { safeLocalStorage } from '../utils/storage';
 
 const SecurePdfViewer = ({ pdfId, onClose }) => {
   const [blobUrl, setBlobUrl] = useState(null);
@@ -10,9 +11,9 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
   const [error, setError] = useState(null);
   
   // Use localStorage values directly to ensure we have the latest after verification
-  const leadPhone = localStorage.getItem('lead_phone') || 'VERIFIED';
-  const leadEmail = localStorage.getItem('lead_email') || 'VERIFIED';
-  const token = localStorage.getItem('lead_token');
+  const leadPhone = safeLocalStorage.getItem('lead_phone') || 'VERIFIED';
+  const leadEmail = safeLocalStorage.getItem('lead_email') || 'VERIFIED';
+  const token = safeLocalStorage.getItem('lead_token');
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 

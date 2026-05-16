@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { API_BASE_URL } from '../utils/apiBase';
+import { safeLocalStorage } from '../utils/storage';
 
 const LeadContext = createContext();
 
@@ -12,7 +13,7 @@ export const LeadProvider = ({ children }) => {
     let cancelled = false;
 
     const verifySession = async () => {
-      const token = localStorage.getItem('lead_token');
+      const token = safeLocalStorage.getItem('lead_token');
 
       if (!token) {
         // No token stored — no need to hit the backend.
@@ -42,8 +43,8 @@ export const LeadProvider = ({ children }) => {
         // every transient failure, but DO NOT grant access to gated content.
         // Components that guard content should check `verifiedLead` AND
         // whether the backend is reachable independently.
-        const name  = localStorage.getItem('lead_name');
-        const phone = localStorage.getItem('lead_phone');
+        const name  = safeLocalStorage.getItem('lead_name');
+        const phone = safeLocalStorage.getItem('lead_phone');
         setVerifiedLead({ name, phone, token, _offline: true });
       } finally {
         if (!cancelled) setLoading(false);
@@ -60,10 +61,10 @@ export const LeadProvider = ({ children }) => {
   };
 
   const logoutLead = () => {
-    localStorage.removeItem('lead_token');
-    localStorage.removeItem('lead_name');
-    localStorage.removeItem('lead_phone');
-    localStorage.removeItem('lead_email');
+    safeLocalStorage.removeItem('lead_token');
+    safeLocalStorage.removeItem('lead_name');
+    safeLocalStorage.removeItem('lead_phone');
+    safeLocalStorage.removeItem('lead_email');
     setVerifiedLead(null);
   };
 

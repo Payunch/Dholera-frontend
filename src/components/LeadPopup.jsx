@@ -19,10 +19,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link as RouterLink } from 'react-router-dom';
 import { useLead } from '../context/LeadContext';
 import { API_BASE_URL } from '../utils/apiBase';
+import { safeLocalStorage, safeSessionStorage } from '../utils/storage';
 import { SplitLogo } from './DynamicImages';
 
 const INITIAL_FORM_DATA = {
-  name: '',
+  // ...
+
   phone: '',
   email: '',
   otp: '',
