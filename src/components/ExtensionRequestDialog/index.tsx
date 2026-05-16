@@ -36,7 +36,7 @@ export const ExtensionRequestDialog: React.FC<Props> = ({ open, onClose, project
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 'var(--radius-container)' } }}>
       <DialogTitle sx={{ fontWeight: 900, color: 'var(--color-brand-primary)', pb: 1 }}>
         Request Clearance Extension
-      </Typography>
+      </DialogTitle>
       <DialogContent>
         <Stack spacing={3} sx={{ mt: 1 }}>
           <Alert severity="info" icon={<InfoOutlinedIcon />} sx={{ borderRadius: 'var(--radius-interactive)' }}>
