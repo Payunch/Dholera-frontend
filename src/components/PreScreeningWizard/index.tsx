@@ -73,9 +73,9 @@ export const PreScreeningWizard: React.FC = () => {
               <Typography variant="body1" sx={{ mb: 4, color: 'text.secondary', fontWeight: 500 }}>
                 Define your project's target sector and spatial footprint to initialize the DSIRDA verification logic.
               </Typography>
-              <RiskMapping />
+              <RiskMapping hideHeader />
               <Box sx={{ my: 4 }} />
-              <FeeCalculator />
+              <FeeCalculator hideHeader />
             </Box>
           </Fade>
         );
@@ -88,7 +88,7 @@ export const PreScreeningWizard: React.FC = () => {
               </Typography>
               <PlanColorKey />
               <Box sx={{ my: 4 }} />
-              <DocumentDropZone />
+              <DocumentDropZone hideHeader />
               <Box sx={{ mt: 4, p: 3, bgcolor: 'var(--color-brand-background)', borderRadius: 'var(--radius-interactive)', border: '1px solid', borderColor: 'divider' }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 1, color: 'var(--color-brand-primary)' }}>
                   Structural Readiness Checklist:

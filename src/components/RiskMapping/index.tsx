@@ -60,21 +60,27 @@ const MAP_LAYERS: MapLayer[] = [
   },
 ];
 
-export const RiskMapping: React.FC = () => {
+interface RiskMappingProps {
+  hideHeader?: boolean;
+}
+
+export const RiskMapping: React.FC<RiskMappingProps> = ({ hideHeader = false }) => {
   const [activeLayer, setActiveLayer] = useState<string>('water');
 
   const layer = MAP_LAYERS.find(l => l.id === activeLayer) || MAP_LAYERS[0];
 
   return (
-    <Box sx={{ py: 4 }}>
-      <Box sx={{ mb: 4, textAlign: 'center' }}>
-        <Typography variant="h4" sx={{ fontWeight: 900, color: 'var(--color-brand-primary)', mb: 1 }}>
-          Interactive Risk & Zoning Map
-        </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ fontWeight: 500 }}>
-          Visual verification of Section 9 spatial exclusions and safety buffers.
-        </Typography>
-      </Box>
+    <Box sx={{ py: hideHeader ? 0 : 4 }}>
+      {!hideHeader && (
+        <Box sx={{ mb: 4, textAlign: 'center' }}>
+          <Typography variant="h4" sx={{ fontWeight: 900, color: 'var(--color-brand-primary)', mb: 1 }}>
+            Interactive Risk & Zoning Map
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ fontWeight: 500 }}>
+            Visual verification of Section 9 spatial exclusions and safety buffers.
+          </Typography>
+        </Box>
+      )}
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={8}>
@@ -82,8 +88,8 @@ export const RiskMapping: React.FC = () => {
             elevation={0}
             sx={{
               position: 'relative',
-              height: 400,
-              bgcolor: '#e2e8f0',
+              height: 450,
+              bgcolor: '#f1f5f9',
               borderRadius: 'var(--radius-container)',
               border: '1px solid',
               borderColor: 'divider',
@@ -92,56 +98,100 @@ export const RiskMapping: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.05)',
+              backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)',
+              backgroundSize: '20px 20px',
             }}
           >
-            {/* Visual Representation of Map Layers (Mock SVG/Box structure) */}
+            {/* Visual Representation of Map Layers */}
             <Box
               sx={{
-                width: '80%',
-                height: '70%',
-                border: '2px dashed #94a3b8',
+                width: '85%',
+                height: '75%',
+                border: '2px solid #94a3b8',
                 borderRadius: 2,
                 position: 'relative',
                 transition: 'all 0.5s ease',
+                bgcolor: 'rgba(255,255,255,0.5)',
+                backdropFilter: 'blur(2px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
-              <Typography variant="caption" sx={{ position: 'absolute', top: -20, left: 0, fontWeight: 700, color: 'text.disabled' }}>
-                DHOLERA SIR BOUNDARY
+              <Typography variant="caption" sx={{ position: 'absolute', top: 12, left: 12, fontWeight: 800, color: '#64748b', letterSpacing: '0.1em' }}>
+                DHOLERA SIR | SECTOR 4-5 BOUNDARY
               </Typography>
 
-              {/* Dynamic Layer Elements */}
+              {/* Dynamic Layer Elements with improved visuals */}
               {activeLayer === 'water' && (
-                <Box sx={{ position: 'absolute', top: '30%', left: '10%', width: '40%', height: 40, bgcolor: layer.color, opacity: 0.4, borderRadius: 10, filter: 'blur(4px)' }} />
+                <Box 
+                  sx={{ 
+                    position: 'absolute', 
+                    top: '25%', 
+                    left: '0%', 
+                    width: '100%', 
+                    height: 60, 
+                    bgcolor: layer.color, 
+                    opacity: 0.3, 
+                    filter: 'blur(8px)',
+                    animation: 'pulse 3s infinite ease-in-out',
+                    '@keyframes pulse': {
+                      '0%, 100%': { opacity: 0.2 },
+                      '50%': { opacity: 0.4 }
+                    }
+                  }} 
+                />
               )}
               {activeLayer === 'seismic' && (
-                <Box sx={{ position: 'absolute', inset: '20%', border: `4px solid ${layer.color}`, opacity: 0.3, borderRadius: 4, bgcolor: layer.color }} />
+                <Box 
+                  sx={{ 
+                    position: 'absolute', 
+                    inset: '15%', 
+                    border: `3px dashed ${layer.color}`, 
+                    opacity: 0.4, 
+                    borderRadius: 4, 
+                    bgcolor: `${layer.color}11`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }} 
+                >
+                   <TerrainIcon sx={{ fontSize: 120, color: layer.color, opacity: 0.1 }} />
+                </Box>
               )}
               {activeLayer === 'environment' && (
-                <Box sx={{ position: 'absolute', bottom: '10%', right: '10%', width: 80, height: 80, bgcolor: layer.color, opacity: 0.5, borderRadius: '50%' }} />
+                <Box sx={{ position: 'absolute', bottom: '15%', right: '15%', width: 120, height: 120, bgcolor: layer.color, opacity: 0.4, borderRadius: '50%', filter: 'blur(10px)' }} />
               )}
 
-              <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
-                <MapIcon sx={{ fontSize: 48, color: 'text.disabled', opacity: 0.5 }} />
-                <Typography variant="caption" display="block" color="text.disabled">
-                  Spatial Layer: {layer.label}
+              <Box sx={{ textAlign: 'center', zIndex: 1, p: 3, bgcolor: 'rgba(255,255,255,0.8)', borderRadius: 2, boxShadow: 'var(--shadow-resting)' }}>
+                <MapIcon sx={{ fontSize: 40, color: layer.color, mb: 1 }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 800, color: 'var(--color-brand-primary)' }}>
+                  Active Layer: {layer.label}
+                </Typography>
+                <Typography variant="caption" display="block" color="text.secondary" sx={{ fontWeight: 600 }}>
+                  Cross-referencing Section 9.7 Buffers...
                 </Typography>
               </Box>
             </Box>
 
-            <Box sx={{ position: 'absolute', bottom: 16, right: 16 }}>
-              <ToggleButtonGroup
-                value={activeLayer}
-                exclusive
-                onChange={(_, val) => val && setActiveLayer(val)}
-                size="small"
-                sx={{ bgcolor: 'white', boxShadow: 'var(--shadow-resting)' }}
-              >
-                {MAP_LAYERS.map(l => (
-                  <ToggleButton key={l.id} value={l.id} sx={{ px: 2, py: 1 }}>
-                    {l.icon}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
+            {/* Layer Selector Overlay */}
+            <Box sx={{ position: 'absolute', bottom: 20, right: 20 }}>
+              <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden' }}>
+                <ToggleButtonGroup
+                  value={activeLayer}
+                  exclusive
+                  onChange={(_, val) => val && setActiveLayer(val)}
+                  size="medium"
+                >
+                  {MAP_LAYERS.map(l => (
+                    <Tooltip key={l.id} title={l.label} placement="top">
+                      <ToggleButton value={l.id} sx={{ px: 2, py: 1.5, color: activeLayer === l.id ? 'white !important' : 'inherit', bgcolor: activeLayer === l.id ? `${l.color} !important` : 'white' }}>
+                        {l.icon}
+                      </ToggleButton>
+                    </Tooltip>
+                  ))}
+                </ToggleButtonGroup>
+              </Paper>
             </Box>
           </Paper>
         </Grid>

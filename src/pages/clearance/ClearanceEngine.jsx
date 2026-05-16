@@ -67,10 +67,10 @@ const ClearanceEngine = () => {
         </Tabs>
 
         <Box sx={{ p: { xs: 2, md: 4 } }}>
-          {activeTab === 0 && <FeeCalculator />}
+          {activeTab === 0 && <FeeCalculator hideHeader />}
           {activeTab === 1 && <ParkingPlanner />}
-          {activeTab === 2 && <RiskMapping />}
-          {activeTab === 3 && <DocumentDropZone />}
+          {activeTab === 2 && <RiskMapping hideHeader />}
+          {activeTab === 3 && <DocumentDropZone hideHeader />}
         </Box>
       </Paper>
 

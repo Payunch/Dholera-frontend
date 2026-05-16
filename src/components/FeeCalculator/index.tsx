@@ -73,7 +73,11 @@ export const checkZoningRestrictions = (zoneTier: string, height: number): strin
   return safetyWarnings;
 };
 
-export const FeeCalculator: React.FC = () => {
+interface FeeCalculatorProps {
+  hideHeader?: boolean;
+}
+
+export const FeeCalculator: React.FC<FeeCalculatorProps> = ({ hideHeader = false }) => {
   const [project, setProject] = useState<ProjectState>({
     zoneTier: 'residential',
     builtUpArea: 0,
@@ -120,22 +124,24 @@ export const FeeCalculator: React.FC = () => {
         fontFamily: 'var(--font-interface-body)',
       }}
     >
-      <Box sx={{ mb: 4 }}>
-        <Typography
-          variant="h5"
-          sx={{
-            fontWeight: 800,
-            color: 'var(--color-brand-primary)',
-            fontFamily: 'var(--font-interface-headings)',
-            letterSpacing: '-0.02em',
-          }}
-        >
-          DSIRDA Clearance Verification Cost Matrix
-        </Typography>
-        <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5, fontWeight: 500 }}>
-          Automated evaluation engine derived directly from Draft GDCR regulatory parameters.
-        </Typography>
-      </Box>
+      {!hideHeader && (
+        <Box sx={{ mb: 4 }}>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 800,
+              color: 'var(--color-brand-primary)',
+              fontFamily: 'var(--font-interface-headings)',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            DSIRDA Clearance Verification Cost Matrix
+          </Typography>
+          <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5, fontWeight: 500 }}>
+            Automated evaluation engine derived directly from Draft GDCR regulatory parameters.
+          </Typography>
+        </Box>
+      )}
 
       <Grid container spacing={4}>
         {/* User Parameter Input Panel Area */}

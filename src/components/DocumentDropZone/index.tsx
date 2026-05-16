@@ -30,7 +30,11 @@ const REQUIRED_DOCS = [
   { id: 'ownership-proof', label: 'Ownership / Lease Documents', description: 'Verified land ownership proof or long-term lease agreement.' },
 ];
 
-export const DocumentDropZone: React.FC = () => {
+interface DocumentDropZoneProps {
+  hideHeader?: boolean;
+}
+
+export const DocumentDropZone: React.FC<DocumentDropZoneProps> = ({ hideHeader = false }) => {
   const [uploads, setUploads] = useState<Record<string, FileUpload | null>>({
     'form-c': null,
     'structural-cert': null,
@@ -76,10 +80,12 @@ export const DocumentDropZone: React.FC = () => {
   };
 
   return (
-    <Box sx={{ py: 4 }}>
-      <Typography variant="h5" sx={{ fontWeight: 800, color: 'var(--color-brand-primary)', mb: 3, fontFamily: 'var(--font-interface-headings)' }}>
-        Mandatory Structural Document Uploads
-      </Typography>
+    <Box sx={{ py: hideHeader ? 0 : 4 }}>
+      {!hideHeader && (
+        <Typography variant="h5" sx={{ fontWeight: 800, color: 'var(--color-brand-primary)', mb: 3, fontFamily: 'var(--font-interface-headings)' }}>
+          Mandatory Structural Document Uploads
+        </Typography>
+      )}
       
       <Grid container spacing={3}>
         {REQUIRED_DOCS.map((doc) => {
