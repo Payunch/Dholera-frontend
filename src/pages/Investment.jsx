@@ -17,7 +17,7 @@ const Investment = () => {
         Why Dholera is the prime destination for global and domestic investment.
       </Typography>
 
-      <Grid container spacing={4}>
+      {/* <Grid container spacing={4}>
         {[
           { title: 'Strategic Location', desc: 'Located on the DMIC corridor, seamlessly connecting major industrial hubs.' },
           { title: 'Smart Infrastructure', desc: 'Underground utilities, smart grids, and sustainable water management.' },
@@ -35,7 +35,7 @@ const Investment = () => {
             </Paper>
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </Container>
   );
 };

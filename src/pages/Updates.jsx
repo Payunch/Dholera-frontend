@@ -158,24 +158,160 @@ const Updates = () => {
     return 'English';
   };
 
-  return (
-    <Container maxWidth="xl" sx={{ py: 8 }}>
-      {selected ? (
+  // ── Render Blog Post View ──
+  if (selected) {
+    const imgSrc = getImageSrc(selected);
+    const imgPos = selected.imagePosition || 'top';
+
+    return (
+      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
         <Seo
           title={selected.title}
           description={selected.content?.slice(0, 160).replace(/\n/g, ' ')}
           path={`/updates/${selected.id}`}
-          image={getImageSrc(selected)}
+          image={imgSrc}
           type="article"
           articleData={selected}
         />
-      ) : (
-        <Seo
-          title={t('nav_updates')}
-          description="Search Dholera development updates, milestones, and evidence-backed announcements."
-          path="/updates"
-        />
-      )}
+
+        <Box sx={{ mb: 4 }}>
+          <Button
+            startIcon={<CloseIcon />}
+            onClick={handleClose}
+            sx={{ fontWeight: 700, mb: 2 }}
+          >
+            {t('nav_updates')}
+          </Button>
+        </Box>
+
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          {/* Title and Meta */}
+          <Box sx={{ mb: 4 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2, flexWrap: 'wrap' }}>
+              <Chip
+                label={selected.category}
+                sx={{
+                  bgcolor: getCategoryColor(selected.category),
+                  color: '#fff',
+                  fontWeight: 700,
+                  fontSize: '0.75rem'
+                }}
+              />
+              {selected.createdAt && (
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                >
+                  <CalendarTodayIcon sx={{ fontSize: 14 }} />
+                  {new Date(selected.createdAt).toLocaleDateString('en-IN', {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}
+                </Typography>
+              )}
+            </Box>
+
+            <Typography
+              variant="h2"
+              sx={{
+                fontWeight: 900,
+                lineHeight: 1.15,
+                mb: 2,
+                color: 'primary.main',
+                fontSize: { xs: '2.2rem', sm: '2.8rem', md: '3.5rem' },
+                letterSpacing: '-0.02em'
+              }}
+            >
+              {selected.title}
+            </Typography>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4, opacity: 0.8 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                By Dholera Growth Team
+              </Typography>
+              <Divider orientation="vertical" flexItem />
+              <Typography variant="subtitle1">
+                5 min read
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* Top Image */}
+          {imgSrc && imgPos === 'top' && (
+            <Box
+              component="img"
+              src={imgSrc}
+              alt={selected.title}
+              sx={{
+                width: '100%',
+                maxHeight: { xs: 300, md: 500 },
+                objectFit: 'cover',
+                borderRadius: 4,
+                mb: 4,
+                boxShadow: 3
+              }}
+            />
+          )}
+
+          {/* Content */}
+          <ArticleBody content={selected.content} />
+
+          {/* Bottom Image */}
+          {imgSrc && imgPos === 'bottom' && (
+            <Box
+              component="img"
+              src={imgSrc}
+              alt={selected.title}
+              sx={{
+                width: '100%',
+                maxHeight: { xs: 300, md: 500 },
+                objectFit: 'cover',
+                borderRadius: 4,
+                mt: 4,
+                boxShadow: 3
+              }}
+            />
+          )}
+
+          <Box sx={{ mt: 8, pt: 4, borderTop: '1px solid', borderColor: 'divider', textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 700 }}>
+              Share this update
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+              <Button 
+                variant="outlined" 
+                onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(selected.title + ' ' + window.location.href)}`)}
+              >
+                WhatsApp
+              </Button>
+              <Button 
+                variant="outlined" 
+                onClick={() => {
+                  const shareUrl = window.location.href;
+                  navigator.clipboard.writeText(shareUrl);
+                  alert('Link copied to clipboard!');
+                }}
+              >
+                Copy Link
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Container>
+    );
+  }
+
+  // ── Render List View ──
+  return (
+    <Container maxWidth="xl" sx={{ py: 8 }}>
+      <Seo
+        title={t('nav_updates')}
+        description="Search Dholera development updates, milestones, and evidence-backed announcements."
+        path="/updates"
+      />
 
       {/* Hero header */}
       <Box sx={{ mb: 6 }}>

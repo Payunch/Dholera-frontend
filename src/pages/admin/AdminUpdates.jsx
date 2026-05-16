@@ -25,13 +25,19 @@ const AdminUpdates = () => {
     category: 'Infrastructure',
     published: true,
     image: null,
-    imageUrl: ''
+    imageUrl: '',
+    imagePosition: 'top'
   });
   const [imagePreview, setImagePreview] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const categories = ['Infrastructure', 'Industrial', 'Planning', 'Investment', 'General'];
+  const categories = ['Infrastructure', 'Industrial', 'Planning', 'Investment', 'General', 'Article', 'Announcement'];
+  const positions = [
+    { value: 'top', label: 'Top of Content' },
+    { value: 'bottom', label: 'Bottom of Content' },
+    { value: 'none', label: 'No Image' }
+  ];
 
   const fetchUpdates = () => {
     setLoading(true);
@@ -77,7 +83,8 @@ const AdminUpdates = () => {
         category: update.category || 'General',
         published: update.published ?? true,
         image: null,
-        imageUrl: update.imageUrl || ''
+        imageUrl: update.imageUrl || '',
+        imagePosition: update.imagePosition || 'top'
       });
       // Clear any previously selected preview; the existing imageUrl is shown via the Box src fallback
       setImagePreview(null);
@@ -89,7 +96,8 @@ const AdminUpdates = () => {
         category: 'Infrastructure',
         published: true,
         image: null,
-        imageUrl: ''
+        imageUrl: '',
+        imagePosition: 'top'
       });
       setImagePreview(null);
     }
@@ -141,6 +149,7 @@ const AdminUpdates = () => {
       data.append('content', formData.content.trim());
       data.append('category', formData.category);
       data.append('published', String(formData.published));
+      data.append('imagePosition', formData.imagePosition);
       
       if (formData.image) {
         data.append('image', formData.image);
@@ -360,10 +369,23 @@ const AdminUpdates = () => {
               sx={{ mt: 2 }}
               helperText="Use a remote image link if you do not want to upload from device."
               disabled={Boolean(formData.image)}
-            />
-            {/* Image preview */}
-            {(imagePreview || (editingUpdate?.imageUrl && !formData.image)) && (
-              <Box
+              />
+              <TextField
+              fullWidth
+              label="Image Position"
+              name="imagePosition"
+              select
+              value={formData.imagePosition}
+              onChange={handleInputChange}
+              sx={{ mt: 2, mb: 2 }}
+              helperText="Choose where the header image appears relative to the content."
+              >
+              {positions.map(pos => (
+                <MenuItem key={pos.value} value={pos.value}>{pos.label}</MenuItem>
+              ))}
+              </TextField>
+              {/* Image preview */}
+              {(imagePreview || (editingUpdate?.imageUrl && !formData.image)) && (              <Box
                 component="img"
                 src={imagePreview || (editingUpdate?.imageUrl?.startsWith('http') ? editingUpdate.imageUrl : `${API_BASE_URL.replace(/\/api$/, '')}${editingUpdate?.imageUrl}`)}
                 alt="Preview"
