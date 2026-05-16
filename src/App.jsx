@@ -13,6 +13,8 @@ import AdminLeads from './pages/admin/AdminLeads';
 import AdminUpdates from './pages/admin/AdminUpdates';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminLogin from './pages/admin/AdminLogin';
+import ProfessionalPortal from './pages/professional/Dashboard';
+import ClearanceEngine from './pages/clearance/ClearanceEngine';
 
 import ScrollToTop from './components/ScrollToTop';
 import { useVisitorTracking } from './hooks/useVisitorTracking';
@@ -64,6 +66,8 @@ function AppContent() {
             <Route path="contact" element={<Contact />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="professional/dashboard" element={<ProfessionalPortal />} />
+            <Route path="clearance-engine" element={<ClearanceEngine />} />
           </Route>
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<ProtectedAdmin><AdminLayout /></ProtectedAdmin>}>

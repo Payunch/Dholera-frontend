@@ -4,6 +4,7 @@ import App from './App.jsx'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import theme from './theme/theme'
+import './theme/tokens.css'
 import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import '@fontsource/manrope/400.css';

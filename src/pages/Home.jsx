@@ -17,6 +17,7 @@ import { useLead } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
 import { API_BASE_URL } from '../utils/apiBase';
 import { TripleSplitImage } from '../components/DynamicImages';
+import { PreScreeningWizard } from '../components/PreScreeningWizard';
 
 const Home = () => {
   const { verifiedLead } = useLead();
@@ -119,11 +120,23 @@ const Home = () => {
           
           {/* Main Action Buttons */}
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ mb: 6 }}>
-            <Button variant="contained" color="secondary" size="large" component={RouterLink} to="/contact" sx={{ px: 4, py: 1.5, fontSize: '1.1rem', fontWeight: 700, borderRadius: 2 }}>
-              {t('btn_get_touch')}
+            <Button 
+              variant="contained" 
+              color="secondary" 
+              size="large" 
+              component={RouterLink} 
+              to="/clearance-engine" 
+              sx={{ px: 4, py: 1.5, fontSize: '1.1rem', fontWeight: 700, borderRadius: 2 }}
+            >
+              Start Free Pre-Screening
             </Button>
-            <Button variant="outlined" sx={{ color: 'white', borderColor: 'white', px: 4, py: 1.5, fontSize: '1.1rem', fontWeight: 700, borderRadius: 2, '&:hover': { borderColor: 'secondary.main', color: 'secondary.main' } }} component={RouterLink} to="/updates">
-              Read Blogs
+            <Button 
+              variant="outlined" 
+              sx={{ color: 'white', borderColor: 'white', px: 4, py: 1.5, fontSize: '1.1rem', fontWeight: 700, borderRadius: 2, '&:hover': { borderColor: 'secondary.main', color: 'secondary.main' } }} 
+              component={RouterLink} 
+              to="/contact"
+            >
+              Consult an Expert
             </Button>
           </Stack>
 
@@ -164,6 +177,21 @@ const Home = () => {
               ))}
             </Grid>
           </Box>
+        </Container>
+      </Box>
+
+      {/* Interactive Clearance & Fee Engine */}
+      <Box sx={{ py: { xs: 6, md: 10 }, bgcolor: 'background.paper' }}>
+        <Container maxWidth="lg">
+          <Box sx={{ mb: 6, textAlign: 'center' }}>
+            <Typography variant="h3" sx={{ fontWeight: 800, color: 'primary.main', mb: 2 }}>
+              Project Clearance & Fee Engine
+            </Typography>
+            <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 700, mx: 'auto', fontWeight: 400 }}>
+              Instantly verify zoning compliance and calculate official DSIRDA development permission fees semantically.
+            </Typography>
+          </Box>
+          <PreScreeningWizard />
         </Container>
       </Box>
 

@@ -11,6 +11,8 @@ import LanguageIcon from '@mui/icons-material/Language';
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import EngineeringIcon from '@mui/icons-material/Engineering';
+import CalculateIcon from '@mui/icons-material/Calculate';
 import { useLead } from '../context/LeadContext';
 import { useLanguage } from '../context/LanguageContext';
 import { fullLogo } from '../config/branding';
@@ -40,8 +42,9 @@ const Navbar = () => {
 
   const navItems = [
     { label: t('nav_home'), path: '/', icon: <HomeIcon /> },
+    { label: 'Clearance', path: '/clearance-engine', icon: <CalculateIcon /> },
     { label: 'Blogs', path: '/updates', icon: <ArticleIcon /> },
-    { label: t('nav_contact'), path: '/contact', icon: <ContactSupportIcon /> }
+    { label: 'Pro Portal', path: '/professional/dashboard', icon: <EngineeringIcon /> },
   ];
 
   const renderLangSwitcher = (isMobile = false) => (
