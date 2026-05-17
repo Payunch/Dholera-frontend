@@ -75,7 +75,7 @@ function AppContent() {
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="professional/dashboard" element={<ProfessionalPortal />} />
-          <Route path="clearance-engine" element={<ClearanceEngine />} />
+          <Route path="clearance-engine/*" element={<ClearanceEngine />} />
         </Route>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<ProtectedAdmin><AdminLayout /></ProtectedAdmin>}>

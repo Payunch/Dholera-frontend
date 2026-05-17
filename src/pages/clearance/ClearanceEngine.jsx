@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
 import {
   Container,
   Typography,
@@ -21,6 +22,27 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const ClearanceEngine = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // If URL is /clearance-engine/zoning-map, default to that tab
+    if (location.pathname.includes('/zoning-map')) {
+      setActiveTab(2);
+    } else if (location.pathname.includes('/parking-planner')) {
+      setActiveTab(1);
+    } else if (location.pathname.includes('/plan-drop')) {
+      setActiveTab(3);
+    } else {
+      setActiveTab(0);
+    }
+  }, [location.pathname]);
+
+  const handleTabChange = (_, newValue) => {
+    setActiveTab(newValue);
+    const paths = ['/clearance-engine', '/clearance-engine/parking-planner', '/clearance-engine/zoning-map', '/clearance-engine/plan-drop'];
+    navigate(paths[newValue]);
+  };
 
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
@@ -51,7 +73,7 @@ const ClearanceEngine = () => {
       >
         <Tabs
           value={activeTab}
-          onChange={(_, v) => setActiveTab(v)}
+          onChange={handleTabChange}
           variant="fullWidth"
           sx={{
             bgcolor: 'var(--color-brand-background)',
@@ -84,6 +106,8 @@ const ClearanceEngine = () => {
         <Button
           variant="contained"
           size="large"
+          component={RouterLink}
+          to="/professional/dashboard"
           sx={{
             bgcolor: 'var(--color-brand-accent)',
             color: 'white',

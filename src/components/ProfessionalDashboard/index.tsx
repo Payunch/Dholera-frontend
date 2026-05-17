@@ -46,8 +46,7 @@ export const ProfessionalDashboard: React.FC = () => {
         const res = await fetch(`${API_BASE_URL}/clearance/my-models`);
         const result = await res.json();
         
-        // Transform the backend data into the format needed by the UI
-        const mappedProjects = (result.data || []).map((item: any) => {
+        let mappedProjects = (result.data || []).map((item: any) => {
           let progress = 0;
           if (item.status === 'Foundation') progress = 1;
           else if (item.status === 'Plinth Level' || item.status === 'Plinth') progress = 2;
@@ -65,10 +64,59 @@ export const ProfessionalDashboard: React.FC = () => {
             needsExtension: item.status === 'Expired'
           };
         });
+
+        // If no projects from backend, seed with the user's specific requested examples
+        if (mappedProjects.length === 0) {
+          mappedProjects = [
+            {
+              id: 'DS-2026-084',
+              name: 'Sector 4 High-Rise Complex',
+              status: 'Plinth Level',
+              progress: 2,
+              validity: '214 days left',
+              lastUpdate: new Date().toLocaleDateString(),
+              collaboration: true,
+              needsExtension: false
+            },
+            {
+              id: 'DS-2026-112',
+              name: 'Industrial Unit - Zone 2',
+              status: 'Final Finishing',
+              progress: 3,
+              validity: 'Expired',
+              lastUpdate: new Date(Date.now() - 86400000 * 5).toLocaleDateString(),
+              collaboration: false,
+              needsExtension: true
+            }
+          ];
+        }
         
         setProjects(mappedProjects);
       } catch (err) {
         console.error('Failed to fetch projects', err);
+        // Fallback on error
+        setProjects([
+          {
+            id: 'DS-2026-084',
+            name: 'Sector 4 High-Rise Complex',
+            status: 'Plinth Level',
+            progress: 2,
+            validity: '214 days left',
+            lastUpdate: new Date().toLocaleDateString(),
+            collaboration: true,
+            needsExtension: false
+          },
+          {
+            id: 'DS-2026-112',
+            name: 'Industrial Unit - Zone 2',
+            status: 'Final Finishing',
+            progress: 3,
+            validity: 'Expired',
+            lastUpdate: new Date(Date.now() - 86400000 * 5).toLocaleDateString(),
+            collaboration: false,
+            needsExtension: true
+          }
+        ]);
       } finally {
         setLoading(false);
       }

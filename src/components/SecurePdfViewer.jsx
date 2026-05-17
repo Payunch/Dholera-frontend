@@ -15,11 +15,22 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
   const leadEmail = safeLocalStorage.getItem('lead_email') || 'VERIFIED';
   const token = safeLocalStorage.getItem('lead_token');
 
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  // Enhanced mobile detection
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
+                   (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent));
+
+  const directUrl = `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`;
 
   useEffect(() => {
     if (!pdfId) {
       setError('Invalid document ID');
+      setLoading(false);
+      return;
+    }
+
+    // On Mobile, we prefer the direct URL via a new tab as it's more reliable than iframes with blobs
+    // We only fetch on desktop to provide the "Secure Viewer" experience (watermarks over iframe)
+    if (isMobile) {
       setLoading(false);
       return;
     }
@@ -39,8 +50,6 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
           throw new Error(errData.error || `Failed to load document (${res.status})`);
         }
 
-        // On Desktop, we use a Blob to avoid CSP framing issues and hide the URL token
-        // On Mobile, we still fetch to verify access, but we might open in new tab
         const blob = await res.blob();
         if (blob.type !== 'application/pdf') {
           console.warn('Received non-PDF blob type:', blob.type);
@@ -63,16 +72,11 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
         URL.revokeObjectURL(blobUrl);
       }
     };
-  }, [pdfId, token]);
-
-  const directUrl = `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`;
+  }, [pdfId, token, isMobile]);
 
   const handleOpenNewTab = () => {
-    // For mobile, opening the direct URL in a new tab is more reliable
-    if (isMobile && directUrl) {
+    if (directUrl) {
       window.open(directUrl, '_blank');
-    } else if (blobUrl) {
-      window.open(blobUrl, '_blank');
     }
   };
 
@@ -111,7 +115,7 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
             <Button variant="contained" onClick={onClose}>Close Viewer</Button>
           </Paper>
         )}
-        {!loading && !error && blobUrl && (
+        {!loading && !error && (isMobile || blobUrl) && (
           <Box sx={{ 
             position: 'relative', 
             width: '100%', 
@@ -124,7 +128,7 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
             display: 'flex',
             flexDirection: 'column'
           }}>
-            {/* Tiled Watermark */}
+            {/* Tiled Watermark - Only show on desktop with iframe or if we have a mobile container */}
             <Box sx={{ 
               position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
               pointerEvents: 'none', zIndex: 10, overflow: 'hidden', opacity: 0.08,
@@ -154,14 +158,36 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
               }} title="Toolbar restricted in secure view" />
             )}
 
-            <iframe 
-              src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} 
-              width="100%" 
-              height="100%" 
-              style={{ border: 'none', background: '#fff', flex: 1 }}
-              title="Secure Document Viewer"
-              onContextMenu={(e) => e.preventDefault()}
-            />
+            {isMobile ? (
+              <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 4, textAlign: 'center', gap: 3 }}>
+                <PictureAsPdfIcon sx={{ fontSize: 80, color: 'primary.main', opacity: 0.5 }} />
+                <Box>
+                  <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>Document Ready</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    For the best experience on mobile, please open the document in full screen mode.
+                  </Typography>
+                </Box>
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  size="large" 
+                  onClick={handleOpenNewTab}
+                  startIcon={<PictureAsPdfIcon />}
+                  sx={{ borderRadius: 4, boxShadow: 4, px: 4, py: 1.5, fontWeight: 700 }}
+                >
+                  View Document
+                </Button>
+              </Box>
+            ) : (
+              <iframe 
+                src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} 
+                width="100%" 
+                height="100%" 
+                style={{ border: 'none', background: '#fff', flex: 1 }}
+                title="Secure Document Viewer"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            )}
 
             {isMobile && (
               <Box sx={{ 
@@ -173,13 +199,12 @@ const SecurePdfViewer = ({ pdfId, onClose }) => {
               }}>
                 <Button 
                   variant="contained" 
-                  color="primary" 
+                  color="secondary" 
                   size="small" 
                   onClick={handleOpenNewTab}
-                  startIcon={<PictureAsPdfIcon />}
-                  sx={{ borderRadius: 4, boxShadow: 4, px: 3, whiteSpace: 'nowrap' }}
+                  sx={{ borderRadius: 4, boxShadow: 4, px: 3, whiteSpace: 'nowrap', fontWeight: 700 }}
                 >
-                  Open Full Screen
+                  Full Screen
                 </Button>
               </Box>
             )}
