@@ -58,10 +58,29 @@ export const PreScreeningWizard: React.FC = () => {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setActiveStep(steps.length);
+    try {
+      const response = await fetch(`${API_BASE_URL}/leads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: leadInfo.name,
+          email: leadInfo.email,
+          phone: leadInfo.phone,
+          source: 'Pre-Screening Wizard Registration',
+          // Note: Backend might not accept 'company' directly in the base Lead model, 
+          // but we pass it anyway or we could append it to notes if the backend supported it.
+        })
+      });
+      if (response.ok) {
+        setActiveStep(steps.length);
+      } else {
+        console.error('Failed to register lead');
+      }
+    } catch (error) {
+      console.error('Error submitting registration:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderStepContent = (step: number) => {

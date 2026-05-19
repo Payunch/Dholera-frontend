@@ -26,10 +26,30 @@ export const ExtensionRequestDialog: React.FC<Props> = ({ open, onClose, project
 
   const handleApply = async () => {
     setLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setLoading(false);
-    onClose();
-    alert('Extension request for ' + projectId + ' submitted. Please complete the ₹300.00 payment.');
+    try {
+      // The projectId is prefixed with 'DS-YYYY-XXX' in the UI, we extract the numeric ID
+      const numericId = projectId.split('-').pop()?.replace(/^0+/, '') || '';
+      if (!numericId) throw new Error('Invalid Project ID');
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/clearance/${numericId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'Extension Requested' })
+      });
+
+      if (response.ok) {
+        alert('Extension request for ' + projectId + ' submitted. Please complete the ₹300.00 payment.');
+      } else {
+        console.error('Failed to submit extension');
+        alert('Error submitting extension request.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error submitting extension request.');
+    } finally {
+      setLoading(false);
+      onClose();
+    }
   };
 
   return (
