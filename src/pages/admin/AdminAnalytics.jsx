@@ -10,6 +10,12 @@ import PeopleIcon from '@mui/icons-material/People';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import UpdateIcon from '@mui/icons-material/Update';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SearchIcon from '@mui/icons-material/Search';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import LaunchIcon from '@mui/icons-material/Launch';
 import { 
   BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, 
   Tooltip, ResponsiveContainer, Legend, AreaChart, Area 
@@ -21,6 +27,7 @@ const AdminAnalytics = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [biData, setBiData] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('Last 7 Days');
   const [dateRange, setDateRange] = useState({
     start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
@@ -31,7 +38,20 @@ const AdminAnalytics = () => {
 
   useEffect(() => {
     fetchAnalytics();
+    fetchBiOverview();
   }, [dateRange]);
+
+  const fetchBiOverview = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/bi/overview`, { credentials: 'include' });
+      if (res.ok) {
+        const result = await res.json();
+        setBiData(result);
+      }
+    } catch (err) {
+      console.error('Error fetching BI overview:', err);
+    }
+  };
 
   const fetchAnalytics = async () => {
     setLoading(true);
@@ -132,6 +152,58 @@ const AdminAnalytics = () => {
           </IconButton>
         </Stack>
       </Box>
+
+      {/* Business Intelligence & Marketing Hub Row */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card sx={{ borderRadius: 4, height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+            <CardContent>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <AssessmentIcon color="primary" /> Business Intelligence (Revenue)
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid size={6}>
+                  <Box sx={{ p: 2, bgcolor: 'success.light', borderRadius: 2, color: 'success.dark' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 700, opacity: 0.8 }}>Total Revenue</Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 900 }}>₹{biData?.summary?.totalRevenueINR || 0}</Typography>
+                  </Box>
+                </Grid>
+                <Grid size={6}>
+                  <Box sx={{ p: 2, bgcolor: 'warning.light', borderRadius: 2, color: 'warning.dark' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 700, opacity: 0.8 }}>PDF Purchases</Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 900 }}>{biData?.summary?.purchases30d || 0}</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <Card sx={{ borderRadius: 4, height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+            <CardContent>
+              <Typography variant="h6" sx={{ fontWeight: 700, mb: 1.5 }}>Marketing Hub (External)</Typography>
+              <Stack direction="row" spacing={1} flexWrap="wrap" gap={1}>
+                {[
+                  { label: 'Search Console', icon: <SearchIcon />, url: 'https://search.google.com/search-console' },
+                  { label: 'GA4 Analytics', icon: <QueryStatsIcon />, url: 'https://analytics.google.com/' },
+                  { label: 'MS Clarity', icon: <PlayCircleOutlineIcon />, url: 'https://clarity.microsoft.com/' }
+                ].map(hub => (
+                  <Chip 
+                    key={hub.label}
+                    icon={hub.icon}
+                    label={hub.label}
+                    onClick={() => window.open(hub.url, '_blank')}
+                    onDelete={() => window.open(hub.url, '_blank')}
+                    deleteIcon={<LaunchIcon />}
+                    variant="outlined"
+                    sx={{ p: 1, borderRadius: 2, fontWeight: 700 }}
+                  />
+                ))}
+              </Stack>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
 
       {data && data.dailyMetrics.length === 0 ? (
         <Paper sx={{ p: 8, textAlign: 'center', borderRadius: 4 }}>
