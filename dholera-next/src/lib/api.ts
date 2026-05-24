@@ -1,6 +1,18 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dholeraplatform.com/api";
+const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
+
+const resolveApiBaseUrl = () => {
+  const envValue =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    "";
+
+  return trimTrailingSlash(envValue || "https://api.dholeraplatform.com/api");
+};
+
+export const API_BASE_URL = resolveApiBaseUrl();
+export const SITE_BASE_URL = API_BASE_URL.replace(/\/api$/, "");
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

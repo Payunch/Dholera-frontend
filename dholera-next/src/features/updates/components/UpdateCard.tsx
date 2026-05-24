@@ -4,6 +4,7 @@ import { Calendar, ArrowRight } from "lucide-react";
 import { format } from "date-fns";
 import { Update } from "@/types/update";
 import { cn } from "@/lib/utils";
+import { SITE_BASE_URL } from "@/lib/api";
 
 interface UpdateCardProps {
   update: Update;
@@ -23,9 +24,8 @@ export function UpdateCard({ update }: UpdateCardProps) {
     ? update.content.replace(/\n/g, " ").slice(0, 140) + (update.content.length > 140 ? "..." : "")
     : "";
 
-  const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.dholeraplatform.com/api").replace(/\/api$/, "");
   const imgSrc = update.imageUrl 
-    ? (update.imageUrl.startsWith("http") ? update.imageUrl : `${API_BASE}${update.imageUrl}`)
+    ? (update.imageUrl.startsWith("http") ? update.imageUrl : `${SITE_BASE_URL}${update.imageUrl}`)
     : null;
 
   return (

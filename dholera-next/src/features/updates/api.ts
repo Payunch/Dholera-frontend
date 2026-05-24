@@ -1,6 +1,5 @@
 import { Update } from "@/types/update";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dholeraplatform.com/api";
+import { API_BASE_URL } from "@/lib/api";
 
 export async function getUpdates(search?: string): Promise<Update[]> {
   const query = search ? `?search=${encodeURIComponent(search)}` : "";

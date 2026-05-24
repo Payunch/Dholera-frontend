@@ -3,16 +3,15 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { AdminDashboardClient } from "@/features/admin/components/AdminDashboardClient";
 import { Lead, WhatsAppStats } from "@/types/admin";
+import { API_BASE_URL } from "@/lib/api";
 
 export const metadata: Metadata = {
   title: "Admin Master Control | Dholera Platform",
   robots: "noindex, nofollow",
 };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dholeraplatform.com/api";
-
 export default async function AdminDashboardPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const allCookies = cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ');
 
   try {

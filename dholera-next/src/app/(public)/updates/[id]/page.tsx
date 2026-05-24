@@ -4,21 +4,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Calendar, Share2, Clock } from "lucide-react";
 import { format } from "date-fns";
-import { getUpdateById, getUpdates } from "@/features/updates/api";
+import { getUpdateById } from "@/features/updates/api";
 import { ArticleBody } from "@/features/updates/components/ArticleBody";
 import { cn } from "@/lib/utils";
+import { SITE_BASE_URL } from "@/lib/api";
 
 interface Props {
   params: { id: string };
 }
 
-// SSG: Pre-generate paths for faster indexing
-export async function generateStaticParams() {
-  const updates = await getUpdates();
-  return updates.map((u) => ({
-    id: u.id.toString(),
-  }));
-}
+export const dynamic = "force-dynamic";
 
 // Dynamic SEO
 export async function generateMetadata(
@@ -29,9 +24,8 @@ export async function generateMetadata(
   if (!update) return {};
 
   const previousImages = (await parent).openGraph?.images || [];
-  const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.dholeraplatform.com/api").replace(/\/api$/, "");
   const imgSrc = update.imageUrl 
-    ? (update.imageUrl.startsWith("http") ? update.imageUrl : `${API_BASE}${update.imageUrl}`)
+    ? (update.imageUrl.startsWith("http") ? update.imageUrl : `${SITE_BASE_URL}${update.imageUrl}`)
     : null;
 
   return {
@@ -69,9 +63,8 @@ export default async function UpdateDetailPage({ params }: Props) {
     notFound();
   }
 
-  const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "https://api.dholeraplatform.com/api").replace(/\/api$/, "");
   const imgSrc = update.imageUrl 
-    ? (update.imageUrl.startsWith("http") ? update.imageUrl : `${API_BASE}${update.imageUrl}`)
+    ? (update.imageUrl.startsWith("http") ? update.imageUrl : `${SITE_BASE_URL}${update.imageUrl}`)
     : null;
   const imgPos = update.imagePosition || "top";
   const catColor = CATEGORY_COLORS[update.category] || CATEGORY_COLORS.General;

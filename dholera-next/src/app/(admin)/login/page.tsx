@@ -125,10 +125,11 @@ export default function AdminLoginPage() {
 
         <div className="text-center">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600 italic">
-            Authorized Personnel Only • IP Logged
+            Authorized Personnel Only - IP Logged
           </p>
         </div>
       </div>
     </div>
   );
 }
+
