@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
-import Script from 'next/script';
 
 interface SecurePdfViewerProps {
   pdfId: string;
@@ -25,6 +24,7 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
   const [paymentLoading, setPaymentLoading] = useState(false);
 
   const token = safeLocalStorage.getItem('lead_token');
+  const fingerprint = safeLocalStorage.getItem('visitorFingerprint');
   const leadName = safeLocalStorage.getItem('lead_name') || 'Guest';
   const leadEmail = safeLocalStorage.getItem('lead_email') || 'Guest';
   const leadPhone = safeLocalStorage.getItem('lead_phone') || 'Guest';
@@ -46,7 +46,7 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
       if (!token) throw new Error('Verification required to access this document.');
 
       const res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
-        headers: { 'Authorization': token }
+        headers: { 'Authorization': token || '' }
       });
 
       if (res.status === 402) {
@@ -97,7 +97,7 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
           'Content-Type': 'application/json',
           'Authorization': token || ''
         },
-        body: JSON.stringify({ pdfId, leadToken: token })
+        body: JSON.stringify({ pdfId, leadToken: token, fingerprint })
       });
 
       const orderData = await res.json();
@@ -150,8 +150,6 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
 
   return (
     <div className="fixed inset-0 z-[200] flex flex-col bg-slate-950/95 backdrop-blur-md">
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      
       {/* Header */}
       <div className="flex items-center justify-between bg-slate-900 px-4 py-3 border-b border-white/5">
         <div className="flex items-center gap-3">

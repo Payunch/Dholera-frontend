@@ -29,7 +29,7 @@ export default function AdminLoginPage() {
       );
 
       clearCsrfCache();
-      router.push("/admin/dashboard");
+      router.push("/dashboard");
     } catch (err: any) {
       clearCsrfCache();
       const data = err.response?.data;

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import ClientLayout from "@/components/layout/ClientLayout";
 
@@ -55,6 +56,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans">
+        <Script 
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="lazyOnload"
+        />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
