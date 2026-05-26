@@ -5,6 +5,7 @@ import { Search } from "lucide-react";
 import { Update, UpdateCategory } from "@/types/update";
 import { UpdateCard } from "./UpdateCard";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 interface UpdatesListingProps {
   initialUpdates: Update[];
@@ -15,12 +16,22 @@ const categories: UpdateCategory[] = ["All", "Infrastructure", "Industrial", "Pl
 export function UpdatesListing({ initialUpdates }: UpdatesListingProps) {
   const [search, setSearch] = React.useState("");
   const [activeCategory, setActiveCategory] = React.useState<UpdateCategory>("All");
+  const { lang } = useLanguage();
+
+  // Helper to detect language of content (mirrored from legacy)
+  const getUpdateLang = (update: Update) => {
+    const text = update.title + update.content;
+    if (/[\u0900-\u097F]/.test(text)) return 'hi';
+    if (/[\u0A80-\u0AFF]/.test(text)) return 'gu';
+    return 'en';
+  };
 
   const filteredUpdates = initialUpdates.filter((u) => {
     const matchesCat = activeCategory === "All" || u.category === activeCategory;
     const matchesSearch = u.title.toLowerCase().includes(search.toLowerCase()) || 
                           u.content.toLowerCase().includes(search.toLowerCase());
-    return matchesCat && matchesSearch;
+    const matchesLang = getUpdateLang(u) === lang;
+    return matchesCat && matchesSearch && matchesLang;
   });
 
   return (
