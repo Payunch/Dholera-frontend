@@ -28,8 +28,14 @@ export default function AdminLoginPage() {
         { headers: { "x-csrf-token": csrf } }
       );
 
+      setLoading(true);
+      setError("");
+      // Clear cache and wait briefly for cookies to persist
       clearCsrfCache();
-      router.push("/admin/dashboard");
+      
+      setTimeout(() => {
+        window.location.href = "/admin/dashboard";
+      }, 800);
     } catch (err: any) {
       clearCsrfCache();
       const data = err.response?.data;
