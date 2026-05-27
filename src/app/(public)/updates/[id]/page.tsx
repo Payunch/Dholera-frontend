@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { SITE_BASE_URL } from "@/lib/api";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export const dynamic = "force-dynamic";
@@ -20,7 +20,8 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const update = await getUpdateById(params.id);
+  const { id } = await params;
+  const update = await getUpdateById(id);
   if (!update) return {};
 
   const previousImages = (await parent).openGraph?.images || [];
@@ -57,7 +58,8 @@ const CATEGORY_COLORS = {
 };
 
 export default async function UpdateDetailPage({ params }: Props) {
-  const update = await getUpdateById(params.id);
+  const { id } = await params;
+  const update = await getUpdateById(id);
 
   if (!update) {
     notFound();
