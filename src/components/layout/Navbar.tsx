@@ -18,7 +18,7 @@ export function Navbar() {
     { label: t('nav_home'), href: "/", icon: Home },
     { label: t('nav_planning'), href: "/clearance-engine", icon: Calculator },
     { label: t('nav_updates'), href: "/updates", icon: FileText },
-    { label: "Pro Portal", href: "/dashboard", icon: LayoutDashboard },
+    { label: "Pro Portal", href: "/professional/dashboard", icon: LayoutDashboard },
   ];
 
   const languages = [

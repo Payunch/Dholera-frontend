@@ -46,7 +46,7 @@ const getBrowserFingerprint = () => {
 
 export const useVisitorTracking = () => {
   const pathname = usePathname();
-  const isAdminPath = pathname.startsWith('/admin') || pathname === '/login' || pathname === '/dashboard';
+  const isAdminPath = pathname.startsWith('/admin');
 
   const sessionRef = useRef<string | null>(null);
   const fingerprintRef = useRef<string | null>(null);
