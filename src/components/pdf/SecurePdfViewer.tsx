@@ -139,6 +139,10 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
         theme: { color: '#ea580c' }
       };
 
+      if (typeof window.Razorpay === 'undefined') {
+        throw new Error('Payment gateway is still loading. Please try again in a few seconds.');
+      }
+
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (err: any) {
