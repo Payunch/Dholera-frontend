@@ -3,6 +3,10 @@ import Script from "next/script";
 import "./globals.css";
 import ClientLayout from "@/components/layout/ClientLayout";
 
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-1F1ETWFZ6M";
+const CLARITY_ID = process.env.NEXT_PUBLIC_MS_CLARITY_ID;
+const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   title: {
     default: "Dholera Platform | Official Infrastructure Intelligence & Planning Maps",
@@ -46,6 +50,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: GOOGLE_SITE_VERIFICATION ? { google: [GOOGLE_SITE_VERIFICATION] } : undefined,
 };
 
 export default function RootLayout({
@@ -56,6 +61,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans">
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '${GA_MEASUREMENT_ID}');`}
+            </Script>
+          </>
+        )}
+
+        {CLARITY_ID && (
+          <Script id="clarity-init" strategy="afterInteractive">
+            {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/${CLARITY_ID}";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script");`}
+          </Script>
+        )}
+
         <Script 
           src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="afterInteractive"
