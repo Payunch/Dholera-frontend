@@ -34,8 +34,9 @@ export default function AdminLoginPage() {
       clearCsrfCache();
       
       setTimeout(() => {
-        window.location.href = "/admin/dashboard";
-      }, 800);
+        router.replace("/admin/dashboard");
+        router.refresh();
+      }, 200);
     } catch (err: any) {
       clearCsrfCache();
       const data = err.response?.data;
