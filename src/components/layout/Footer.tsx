@@ -1,8 +1,26 @@
+"use client";
+
 import Link from "next/link";
 import { Globe, Radio, Camera, PlayCircle, Mail, Phone, MapPin } from "lucide-react";
 import { siteConfig } from "@/config/site";
 
+declare global {
+  interface Window {
+    dispatchEvent: (event: Event) => boolean;
+  }
+}
+
+const OPEN_CONSENT_EVENT = "open-consent-banner";
+
 export function Footer() {
+  const handleCookieSettings = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.dispatchEvent(new Event(OPEN_CONSENT_EVENT));
+  };
+
   return (
     <footer className="w-full border-t bg-slate-50 text-slate-900">
       <div className="container mx-auto px-4 py-12 md:px-8">
@@ -49,6 +67,11 @@ export function Footer() {
               <li><Link href="/privacy-policy" className="hover:text-orange-600 transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms-and-conditions" className="hover:text-orange-600 transition-colors">Terms of Service</Link></li>
               <li><Link href="/contact" className="hover:text-orange-600 transition-colors">Contact</Link></li>
+              <li>
+                <button type="button" onClick={handleCookieSettings} className="hover:text-orange-600 transition-colors">
+                  Cookie settings
+                </button>
+              </li>
             </ul>
           </div>
 

@@ -25,5 +25,6 @@ Privacy notes:
 - These are public-facing client keys (GA/Clarity); do not store sensitive secrets in the frontend repo.
 - Consider adding a cookie-consent mechanism before enabling tracking in regions that require consent.
 - If you need EEA consent mode, the GA snippet should be extended before or alongside the config call.
+- The site now defaults analytics consent to denied and shows a banner with Accept/Reject choices.
 
 If you want, I can add a short consent banner component and wire it to conditionally initialize GA/Clarity.

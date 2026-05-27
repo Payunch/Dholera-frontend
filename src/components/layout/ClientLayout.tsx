@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ClientProviders } from "@/providers/ClientProviders";
 import { VisitorTracker } from "@/components/common/VisitorTracker";
 import OrganizationSchema from "@/components/OrganizationSchema";
+import ConsentBanner from "@/components/consent/ConsentBanner";
 
 export default function ClientLayout({
   children,
@@ -33,6 +34,7 @@ export default function ClientLayout({
       </div>
       <OrganizationSchema />
       <VisitorTracker />
+      <ConsentBanner />
     </ClientProviders>
   );
 }
