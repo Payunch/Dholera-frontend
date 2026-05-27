@@ -1,8 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Globe, Radio, Camera, PlayCircle, Mail, Phone, MapPin } from "lucide-react";
+import { Globe, Radio, Camera, PlayCircle, Mail, Phone, User } from "lucide-react";
 import { siteConfig } from "@/config/site";
+
+const ownerDetails = {
+  brandName: "dholera platform",
+  operatorName: "Naresh Gohel",
+  email: "gohelnaresh7707@gmail.com",
+  phoneDisplay: "+91 7435808031",
+};
 
 declare global {
   interface Window {
@@ -28,7 +35,7 @@ export function Footer() {
           {/* Brand & Mission */}
           <div className="space-y-4">
             <h3 className="text-2xl font-extrabold tracking-tight text-orange-600">
-              dholera platform
+              {ownerDetails.brandName}
             </h3>
             <p className="text-sm leading-relaxed text-slate-600">
               The official intelligence platform for Dholera Smart City. We provide verified data, planning maps, and investment growth evidence for India's first operational smart city.
@@ -77,24 +84,24 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-500">Get in Touch</h4>
+            <h4 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-500">Owner Details</h4>
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
+              <User className="h-5 w-5 text-orange-600 shrink-0" />
+              <span>{ownerDetails.operatorName}</span>
+            </div>
             <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
               <Mail className="h-5 w-5 text-orange-600 shrink-0" />
-              <span>{siteConfig.contact.email}</span>
+              <span>{ownerDetails.email}</span>
             </div>
             <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
               <Phone className="h-5 w-5 text-orange-600 shrink-0" />
-              <span>{siteConfig.contact.phoneDisplay}</span>
-            </div>
-            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
-              <MapPin className="h-5 w-5 text-orange-600 shrink-0" />
-              <span>Dholera Special Investment Region, Gujarat, India</span>
+              <span>{ownerDetails.phoneDisplay}</span>
             </div>
           </div>
         </div>
 
         <div className="mt-12 border-t pt-8 text-center text-xs font-bold uppercase tracking-widest text-slate-400">
-          (c) {new Date().getFullYear()} Dholera Platform. All rights reserved. Built for India's Growth.
+          (c) {new Date().getFullYear()} {ownerDetails.brandName.toUpperCase()}. All rights reserved. Built for India's Growth.
         </div>
       </div>
     </footer>
