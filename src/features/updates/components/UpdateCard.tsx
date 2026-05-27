@@ -25,7 +25,7 @@ export function UpdateCard({ update }: UpdateCardProps) {
     : "";
 
   const imgSrc = update.imageUrl 
-    ? (update.imageUrl.startsWith("http") ? update.imageUrl : `${process.env.NEXT_PUBLIC_API_URL}${update.imageUrl}`)
+    ? (update.imageUrl.startsWith("http") ? update.imageUrl : `${SITE_BASE_URL}${update.imageUrl}`)
     : null;
 
   return (

@@ -9,9 +9,7 @@ export const SplitLogo = ({ isFull, height = 32 }: { isFull?: boolean; height?: 
     <div
       style={{
         height,
-        width: isFull ? height * 4 : height,
-        overflow: 'hidden',
-        position: 'relative',
+        width: isFull ? height * 4 : height * 1.2,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -21,11 +19,8 @@ export const SplitLogo = ({ isFull, height = 32 }: { isFull?: boolean; height?: 
         src="/logo.png"
         alt="Dholera Logo"
         style={{
-          height: height * 2, // Source is twice the display height
-          position: 'absolute',
-          top: isFull ? 0 : -height, // Show top half if full, bottom if not
-          left: '50%',
-          transform: 'translateX(-50%)',
+          height,
+          width: '100%',
           objectFit: 'contain'
         }}
       />
