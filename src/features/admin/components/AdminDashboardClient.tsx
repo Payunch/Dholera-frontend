@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { 
   BarChart3, 
   Users, 
@@ -16,6 +17,7 @@ import { Lead, WhatsAppStats } from "@/types/admin";
 import { LeadsStats } from "./LeadsStats";
 import { LeadsTable } from "./LeadsTable";
 import { cn } from "@/lib/utils";
+import { apiClient } from "@/lib/api";
 
 interface AdminDashboardClientProps {
   initialLeads: Lead[];
@@ -23,7 +25,9 @@ interface AdminDashboardClientProps {
 }
 
 export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDashboardClientProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = React.useState(0);
+  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
 
   const tabs = [
     { label: "Leads", icon: Users },
@@ -31,6 +35,21 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
     { label: "Insights", icon: Activity },
     { label: "System", icon: Settings },
   ];
+
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
+
+    try {
+      await apiClient.post("/auth/logout");
+    } catch (err) {
+      console.error("Admin logout failed:", err);
+    } finally {
+      router.replace("/admin/login");
+      router.refresh();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -61,9 +80,14 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
               </nav>
             </div>
             
-            <button className="flex items-center gap-2 rounded-xl border-2 border-slate-100 px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-400 hover:border-red-100 hover:text-red-500 transition-all">
+            <button
+              type="button"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="flex items-center gap-2 rounded-xl border-2 border-slate-100 px-4 py-2 text-xs font-black uppercase tracking-widest text-slate-400 transition-all hover:border-red-100 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-60"
+            >
               <LogOut className="h-4 w-4" />
-              Terminate
+              {isLoggingOut ? "Terminating" : "Terminate"}
             </button>
           </div>
         </div>
