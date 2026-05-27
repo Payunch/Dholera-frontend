@@ -245,8 +245,10 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       safeLocalStorage.setItem('lead_name', data.lead.name);
 
       loginLead({
+        id: data.lead.id,
         name: data.lead.name,
         phone: data.lead.phone,
+        email: data.lead.email,
         token: data.lead_token
       });
     }

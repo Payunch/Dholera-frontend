@@ -5,10 +5,15 @@ import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 
 interface Lead {
+  id?: number;
   name: string;
   phone: string;
   email?: string;
   token: string;
+  status?: string;
+  source?: string;
+  is_registered?: boolean;
+  createdAt?: string;
   _offline?: boolean;
 }
 
@@ -45,6 +50,12 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (response.ok) {
           const data = await response.json();
+          if (data?.lead) {
+            if (data.lead.id) safeLocalStorage.setItem('lead_id', String(data.lead.id));
+            if (data.lead.email) safeLocalStorage.setItem('lead_email', data.lead.email);
+            safeLocalStorage.setItem('lead_phone', data.lead.phone || '');
+            safeLocalStorage.setItem('lead_name', data.lead.name || '');
+          }
           setVerifiedLead({ ...data.lead, token });
         } else {
           logoutLead();
@@ -54,8 +65,17 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
         console.error('Failed to verify lead session:', err);
         const name = safeLocalStorage.getItem('lead_name');
         const phone = safeLocalStorage.getItem('lead_phone');
+        const email = safeLocalStorage.getItem('lead_email') || undefined;
+        const id = Number.parseInt(safeLocalStorage.getItem('lead_id') || '', 10);
         if (name && phone) {
-            setVerifiedLead({ name, phone, token, _offline: true });
+            setVerifiedLead({
+              id: Number.isFinite(id) ? id : undefined,
+              name,
+              phone,
+              email,
+              token,
+              _offline: true,
+            });
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -68,6 +88,11 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const loginLead = (leadData: Lead) => {
+    if (leadData.id) safeLocalStorage.setItem('lead_id', String(leadData.id));
+    if (leadData.email) safeLocalStorage.setItem('lead_email', leadData.email);
+    safeLocalStorage.setItem('lead_phone', leadData.phone);
+    safeLocalStorage.setItem('lead_name', leadData.name);
+    safeLocalStorage.setItem('lead_token', leadData.token);
     setVerifiedLead(leadData);
   };
 
@@ -76,6 +101,7 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
     safeLocalStorage.removeItem('lead_name');
     safeLocalStorage.removeItem('lead_phone');
     safeLocalStorage.removeItem('lead_email');
+    safeLocalStorage.removeItem('lead_id');
     setVerifiedLead(null);
   };
 
