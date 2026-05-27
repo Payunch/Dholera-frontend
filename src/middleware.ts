@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
 
   // Protect /admin/dashboard
   if (pathname.startsWith('/admin/dashboard')) {
-    const adminToken = request.cookies.get('admin_token')?.value;
+    const adminToken = request.cookies.get('admin_access_token')?.value;
     
     if (!adminToken) {
        return NextResponse.redirect(new URL('/admin/login', request.url));
@@ -17,5 +17,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/dashboard/:path*', '/admin/login'],
+  matcher: ['/admin/dashboard', '/admin/dashboard/:path*', '/admin/login'],
 };
