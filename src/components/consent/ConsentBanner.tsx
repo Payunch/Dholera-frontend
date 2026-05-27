@@ -32,7 +32,7 @@ declare global {
 export default function ConsentBanner() {
   const [isVisible, setIsVisible] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
-  const feedbackTimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const feedbackTimerRef = useRef<number | null>(null);
 
   const clearFeedbackTimer = () => {
     if (feedbackTimerRef.current) {
