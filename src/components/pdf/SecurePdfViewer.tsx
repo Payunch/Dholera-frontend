@@ -5,6 +5,8 @@ import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle } fr
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 
+import { useLead } from '@/providers/LeadProvider';
+
 interface SecurePdfViewerProps {
   pdfId: string;
   onClose: () => void;
@@ -21,7 +23,10 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
+  const [requiresRegistration, setRequiresRegistration] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
+
+  const { logoutLead } = useLead();
 
   const token = safeLocalStorage.getItem('lead_token');
   const fingerprint = safeLocalStorage.getItem('visitorFingerprint');
@@ -57,6 +62,11 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({ error: 'Server error' }));
+        if (errData.trialLimitReached) {
+          setRequiresRegistration(true);
+          setLoading(false);
+          return;
+        }
         throw new Error(errData.error || `Failed to load document (${res.status})`);
       }
 
@@ -173,6 +183,30 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
       <div className="flex-1 flex items-center justify-center p-4">
         {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
         
+        {requiresRegistration && (
+          <div className="max-w-md w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl animate-in zoom-in-95">
+            <div className="flex justify-center mb-6">
+               <div className="h-20 w-20 rounded-3xl bg-blue-50 flex items-center justify-center">
+                 <ShieldCheck className="h-10 w-10 text-blue-600" />
+               </div>
+            </div>
+            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Trial Limit Reached</h3>
+            <p className="text-slate-500 font-medium mb-8">
+              You have already viewed one document in trial mode. Please register with your own details for full platform access.
+            </p>
+            <button 
+              onClick={() => {
+                logoutLead();
+                onClose();
+              }}
+              className="w-full rounded-2xl bg-slate-900 py-5 text-white font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl flex items-center justify-center gap-3"
+            >
+              Register for Full Access
+            </button>
+            <button onClick={onClose} className="mt-4 text-sm font-bold text-slate-400 hover:text-slate-600">Maybe Later</button>
+          </div>
+        )}
+
         {requiresPayment && (
           <div className="max-w-md w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl animate-in zoom-in-95">
             <div className="flex justify-center mb-6">

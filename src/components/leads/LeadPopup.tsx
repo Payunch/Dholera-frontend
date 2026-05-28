@@ -225,7 +225,11 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       const res = await fetch(`${API_BASE_URL}/leads/login-with-passcode`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: formData.phone, passcode: formData.passcode })
+        body: JSON.stringify({ 
+          phone: formData.phone, 
+          passcode: formData.passcode,
+          browserFingerprint: fingerprint 
+        })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Login failed.');

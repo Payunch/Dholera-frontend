@@ -13,6 +13,7 @@ interface Lead {
   status?: string;
   source?: string;
   is_registered?: boolean;
+  is_trial?: boolean;
   createdAt?: string;
   _offline?: boolean;
 }
