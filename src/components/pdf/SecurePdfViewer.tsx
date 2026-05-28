@@ -60,11 +60,6 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
         throw new Error(errData.error || `Failed to load document (${res.status})`);
       }
 
-      if (isMobile) {
-        setLoading(false);
-        return;
-      }
-
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       setBlobUrl(url);
@@ -213,7 +208,7 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
           </div>
         )}
 
-        {!loading && !error && (isMobile || blobUrl) && (
+        {!loading && !error && blobUrl && (
           <div className="relative w-full h-full max-w-6xl bg-white shadow-2xl overflow-hidden rounded-xl flex flex-col">
             {/* Watermark Overlay */}
             <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.03] grid grid-cols-2 md:grid-cols-3 grid-rows-4 overflow-hidden">
@@ -224,27 +219,28 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
                ))}
             </div>
 
-            {isMobile ? (
-              <div className="flex-1 flex flex-col items-center justify-center p-10 text-center gap-6">
-                <FileText className="h-24 w-24 text-slate-200" />
-                <div className="space-y-2">
-                  <h4 className="text-2xl font-black text-slate-900 uppercase">Document Ready</h4>
-                  <p className="text-slate-500 font-medium">For the best experience on mobile, please view in full screen mode.</p>
+            {/* Always try to show iframe, but provide a download/open button for mobile as backup */}
+            <div className="flex-1 flex flex-col relative">
+              {isMobile && (
+                <div className="absolute top-4 right-4 z-30">
+                  <a 
+                    href={directUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 rounded-xl bg-slate-900/80 backdrop-blur-sm px-4 py-2 text-[10px] font-black uppercase text-white hover:bg-orange-600 transition-all"
+                  >
+                    Full Screen <ExternalLink className="h-3 w-3" />
+                  </a>
                 </div>
-                <button onClick={() => window.open(directUrl, '_blank')} className="rounded-2xl bg-slate-900 px-8 py-4 text-white font-black uppercase tracking-widest flex items-center gap-3">
-                  Open Document <ExternalLink className="h-5 w-5" />
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="absolute top-0 inset-x-0 h-14 z-20 cursor-not-allowed" title="Toolbar restricted" />
-                <iframe 
-                  src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-                  className="flex-1 w-full border-none"
-                  onContextMenu={(e) => e.preventDefault()}
-                />
-              </>
-            )}
+              )}
+              
+              <div className="absolute top-0 inset-x-0 h-14 z-20 cursor-not-allowed" title="Toolbar restricted" />
+              <iframe 
+                src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                className="flex-1 w-full border-none h-full"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            </div>
           </div>
         )}
       </div>
