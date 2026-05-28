@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import * as React from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ClientProviders } from "@/providers/ClientProviders";
@@ -26,14 +27,18 @@ export default function ClientLayout({
   return (
     <ClientProviders>
       <div className="flex min-h-screen flex-col">
-        <Navbar />
+        <React.Suspense fallback={<div className="h-20 bg-slate-950/80" />}>
+          <Navbar />
+        </React.Suspense>
         <main className="flex-1">
           {children}
         </main>
         <Footer />
       </div>
       <OrganizationSchema />
-      <VisitorTracker />
+      <React.Suspense fallback={null}>
+        <VisitorTracker />
+      </React.Suspense>
       <ConsentBanner />
     </ClientProviders>
   );

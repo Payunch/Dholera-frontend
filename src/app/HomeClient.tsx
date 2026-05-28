@@ -102,7 +102,9 @@ export function HomeClient() {
       </section>
 
       {/* Restored Gated PDF Access Logic */}
-      <PdfListing />
+      <React.Suspense fallback={<div className="py-20 text-center font-black uppercase tracking-widest text-slate-400">Loading Intelligence...</div>}>
+        <PdfListing />
+      </React.Suspense>
 
       {/* SEO Content Block */}
       <section className="bg-slate-900 py-24 text-white">
