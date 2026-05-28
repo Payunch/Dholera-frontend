@@ -23,7 +23,7 @@ export default function TermsAndConditions() {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-slate-800">3. Payments and Refunds</h2>
         <p className="text-slate-600 leading-relaxed">
-          All payments for digital documents are final. Please ensure you select the correct document before completing the Razorpay transaction.
+          All payments for digital documents are final. Please ensure you select the correct document before completing the PhonePe transaction.
         </p>
       </section>
 

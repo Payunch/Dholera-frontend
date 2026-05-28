@@ -12,12 +12,6 @@ interface SecurePdfViewerProps {
   onClose: () => void;
 }
 
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
-
 export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -105,51 +99,20 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
         body: JSON.stringify({ pdfId, leadToken: token, fingerprint })
       });
 
-      const orderData = await res.json();
-      if (!res.ok) throw new Error(orderData.error || 'Failed to create payment order');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to initiate payment');
 
-      if (orderData.alreadyPurchased) {
+      if (data.alreadyPurchased) {
         fetchPdf();
         return;
       }
 
-      const options = {
-        key: orderData.key_id,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        name: 'Dholera Platform',
-        description: 'Premium Document Access',
-        order_id: orderData.orderId,
-        handler: async (response: any) => {
-          try {
-            const verifyRes = await fetch(`${API_BASE_URL}/payment/verify-payment`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': token || ''
-              },
-              body: JSON.stringify({ ...response, pdfId, leadToken: token })
-            });
-
-            if (verifyRes.ok) {
-              fetchPdf();
-            } else {
-              setError('Payment verification failed.');
-            }
-          } catch (err) {
-            setError('Connection error during verification.');
-          }
-        },
-        prefill: { name: leadName, email: leadEmail, contact: leadPhone },
-        theme: { color: '#ea580c' }
-      };
-
-      if (typeof window.Razorpay === 'undefined') {
-        throw new Error('Payment gateway is still loading. Please try again in a few seconds.');
+      if (data.redirectUrl) {
+        // Redirect to PhonePe payment page
+        window.location.href = data.redirectUrl;
+      } else {
+        throw new Error('Payment gateway redirect URL missing');
       }
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
     } catch (err: any) {
       setError(err.message);
     } finally {

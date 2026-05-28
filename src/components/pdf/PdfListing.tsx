@@ -16,10 +16,14 @@ interface PDF {
   category: string;
 }
 
+import { useSearchParams, useRouter } from 'next/navigation';
+
 export function PdfListing() {
   const { verifiedLead } = useLead();
   const { t } = useLanguage();
   const { sessionId, fingerprint } = useVisitorTracking();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [pdfs, setPdfs] = useState<PDF[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +33,21 @@ export function PdfListing() {
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
+
+  useEffect(() => {
+    const status = searchParams.get('payment_status');
+    const pdfId = searchParams.get('pdfId');
+
+    if (status === 'success' && pdfId) {
+      setSelectedPdfId(pdfId);
+      setShowViewer(true);
+      // Clean up URL
+      router.replace('/pdfs', { scroll: false });
+    } else if (status === 'failed') {
+      alert('Payment failed. Please try again.');
+      router.replace('/pdfs', { scroll: false });
+    }
+  }, [searchParams, router]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/pdf/list`)
