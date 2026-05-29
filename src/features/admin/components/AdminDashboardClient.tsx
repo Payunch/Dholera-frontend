@@ -17,7 +17,7 @@ import { Lead, WhatsAppStats } from "@/types/admin";
 import { LeadsStats } from "./LeadsStats";
 import { LeadsTable } from "./LeadsTable";
 import { cn } from "@/lib/utils";
-import { apiClient } from "@/lib/api";
+import { apiClient, API_BASE_URL } from "@/lib/api";
 
 interface AdminDashboardClientProps {
   initialLeads: Lead[];
@@ -48,6 +48,64 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
     } finally {
       router.replace("/admin/login");
       router.refresh();
+    }
+  };
+
+  const [isExporting, setIsExporting] = React.useState(false);
+  const [isImporting, setIsImporting] = React.useState(false);
+  const [importFile, setImportFile] = React.useState<File | null>(null);
+
+  const handleExportBackup = async () => {
+    if (isExporting) return;
+    setIsExporting(true);
+    try {
+      const resp = await fetch(`${API_BASE_URL}/admin/backup`, { credentials: 'include' });
+      if (!resp.ok) throw new Error('Export failed');
+      const blob = await resp.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `dholera-backup-${new Date().toISOString()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Backup failed', err);
+      alert('Backup failed');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleImportBackup = async () => {
+    if (isImporting) return;
+    if (!importFile) return alert('Select a backup file to import');
+    if (!confirm('Importing a backup will replace current data. Proceed?')) return;
+
+    setIsImporting(true);
+    try {
+      const form = new FormData();
+      form.append('backup', importFile);
+      const resp = await fetch(`${API_BASE_URL}/admin/restore`, {
+        method: 'POST',
+        body: form,
+        credentials: 'include'
+      });
+      if (!resp.ok) {
+        const txt = await resp.text();
+        throw new Error(txt || 'Restore failed');
+      }
+      const json = await resp.json();
+      alert('Restore completed');
+      console.log('Restore result', json);
+      router.refresh();
+    } catch (err) {
+      console.error('Restore failed', err);
+      alert('Restore failed');
+    } finally {
+      setIsImporting(false);
+      setImportFile(null);
     }
   };
 
@@ -158,7 +216,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
           </>
         )}
 
-        {activeTab !== 0 && (
+        {activeTab === 1 && (
           <div className="flex flex-col items-center justify-center py-40 text-center space-y-6">
              <div className="h-24 w-24 rounded-[2rem] bg-slate-100 flex items-center justify-center text-slate-300">
                 <ShieldCheck className="h-12 w-12" />
@@ -167,6 +225,49 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
                 <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900">{tabs[activeTab].label} Restricted</h3>
                 <p className="text-lg font-medium text-slate-500 italic">This sector of the Master Control is undergoing biometric verification alignment...</p>
              </div>
+          </div>
+        )}
+
+        {activeTab === 2 && (
+          <div className="flex flex-col items-center justify-center py-40 text-center space-y-6">
+             <div className="h-24 w-24 rounded-[2rem] bg-slate-100 flex items-center justify-center text-slate-300">
+                <Activity className="h-12 w-12" />
+             </div>
+             <div className="space-y-2">
+                <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900">{tabs[activeTab].label} Restricted</h3>
+                <p className="text-lg font-medium text-slate-500 italic">Insights are available via reports endpoint.</p>
+             </div>
+          </div>
+        )}
+
+        {activeTab === 3 && (
+          <div className="space-y-6">
+            <div className="rounded-[1rem] border border-slate-200 bg-white p-6 shadow">
+              <h3 className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-slate-700">System Backup</h3>
+              <p className="text-sm text-slate-500 mb-4">Export a JSON snapshot of the database. This will not include uploaded files in the /uploads directory.</p>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handleExportBackup}
+                  disabled={isExporting}
+                  className="rounded-lg bg-slate-900 px-4 py-2 text-white disabled:opacity-60"
+                >
+                  {isExporting ? 'Exporting...' : 'Export Backup'}
+                </button>
+                <input
+                  type="file"
+                  accept="application/json"
+                  onChange={(e) => setImportFile(e.target.files ? e.target.files[0] : null)}
+                  className="text-sm"
+                />
+                <button
+                  onClick={handleImportBackup}
+                  disabled={isImporting}
+                  className="rounded-lg border border-slate-200 px-4 py-2 disabled:opacity-60"
+                >
+                  {isImporting ? 'Importing...' : 'Import Backup'}
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </main>
