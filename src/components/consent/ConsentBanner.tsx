@@ -81,23 +81,19 @@ export default function ConsentBanner() {
     }, 2400);
   };
 
-  if (!isVisible) {
-    return null;
-  }
-
   return (
     <>
       {statusMessage && (
-        <div className="fixed inset-x-0 bottom-4 z-50 px-4">
-          <div className="mx-auto max-w-md rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900 shadow-lg shadow-emerald-950/10">
+        <div className="fixed inset-x-0 bottom-4 z-[200] px-4">
+          <div className="mx-auto max-w-md rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900 shadow-lg shadow-emerald-950/10 animate-fade-up">
             {statusMessage}
           </div>
         </div>
       )}
 
       {isVisible && (
-        <div className="fixed inset-x-0 bottom-0 z-50 px-4 pb-4">
-          <div className="mx-auto flex max-w-4xl flex-col gap-4 rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-2xl shadow-slate-900/10 backdrop-blur md:flex-row md:items-center md:justify-between">
+        <div className="fixed inset-x-0 bottom-0 z-[200] px-4 pb-4">
+          <div className="mx-auto flex max-w-4xl flex-col gap-4 rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-2xl shadow-slate-900/10 backdrop-blur md:flex-row md:items-center md:justify-between animate-fade-up">
             <div className="space-y-1">
               <p className="text-sm font-semibold text-slate-900">Cookies and analytics</p>
               <p className="max-w-2xl text-sm leading-6 text-slate-600">
