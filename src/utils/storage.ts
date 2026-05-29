@@ -12,7 +12,7 @@ const isStorageAvailable = (type: 'localStorage' | 'sessionStorage') => {
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 };
@@ -25,29 +25,29 @@ const safeStorage = (type: 'localStorage' | 'sessionStorage') => {
       try {
         if (!available) return null;
         return window[type].getItem(key);
-      } catch (e) {
+      } catch {
         return null;
       }
     },
     setItem: (key: string, value: string) => {
       try {
         if (available) window[type].setItem(key, value);
-      } catch (e) {
-        console.warn(`SafeStorage: Failed to set item ${key}`, e);
+      } catch {
+        console.warn(`SafeStorage: Failed to set item ${key}`);
       }
     },
     removeItem: (key: string) => {
       try {
         if (available) window[type].removeItem(key);
-      } catch (e) {
-        console.warn(`SafeStorage: Failed to remove item ${key}`, e);
+      } catch {
+        console.warn(`SafeStorage: Failed to remove item ${key}`);
       }
     },
     clear: () => {
       try {
         if (available) window[type].clear();
-      } catch (e) {
-        console.warn('SafeStorage: Failed to clear storage', e);
+      } catch {
+        console.warn('SafeStorage: Failed to clear storage');
       }
     }
   };

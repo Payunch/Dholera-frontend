@@ -8,7 +8,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
 
   // Fetch all updates to include in sitemap
-  let updates: any[] = [];
+  interface Update {
+    id: string | number;
+    updatedAt?: string;
+    createdAt: string;
+  }
+  let updates: Update[] = [];
   try {
     updates = await getUpdates();
   } catch (error) {

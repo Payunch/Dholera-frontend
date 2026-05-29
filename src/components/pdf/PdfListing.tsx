@@ -36,26 +36,34 @@ export function PdfListing() {
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
 
-  useEffect(() => {
-    const status = searchParams.get('payment_status');
-    const pdfId = searchParams.get('pdfId');
+  const status = searchParams.get('payment_status');
+  const paymentPdfId = searchParams.get('pdfId');
+  const hasPaymentSuccess = status === 'success' && Boolean(paymentPdfId);
+  const viewerPdfId = selectedPdfId ?? (hasPaymentSuccess ? paymentPdfId : null);
+  const viewerOpen = showViewer || hasPaymentSuccess;
 
-    if (status === 'success' && pdfId) {
-      setSelectedPdfId(pdfId);
-      setShowViewer(true);
-      // Clean up URL
+  useEffect(() => {
+    if (status === 'success' && paymentPdfId) {
       router.replace('/pdfs', { scroll: false });
     } else if (status === 'failed') {
       alert('Payment failed. Please try again.');
       router.replace('/pdfs', { scroll: false });
     }
-  }, [searchParams, router]);
+  }, [status, paymentPdfId, router]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/pdf/list`)
-      .then(res => res.json())
+      .then(async res => {
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || `Server returned ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => setPdfs(Array.isArray(data) ? data : []))
-      .catch(console.error)
+      .catch(err => {
+        console.error('PDF Listing Error:', err);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -90,11 +98,11 @@ export function PdfListing() {
   };
 
   return (
-    <section className="py-20 bg-slate-50" id="documents">
+    <section className="py-20 bg-[#f8f6f1] bg-grid-sand" id="documents">
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
           <div className="space-y-4">
-            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900">
+            <h2 className="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900">
               Verified <span className="text-orange-600 italic">Intelligence</span>
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -185,8 +193,8 @@ export function PdfListing() {
         />
       )}
       
-      {showViewer && selectedPdfId && (
-        <SecurePdfViewer pdfId={selectedPdfId} onClose={() => setShowViewer(false)} />
+      {viewerOpen && viewerPdfId && (
+        <SecurePdfViewer pdfId={viewerPdfId} onClose={() => setShowViewer(false)} />
       )}
     </section>
   );

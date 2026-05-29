@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 
@@ -30,6 +30,24 @@ const LeadContext = createContext<LeadContextType | undefined>(undefined);
 export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
   const [verifiedLead, setVerifiedLead] = useState<Lead | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const loginLead = useCallback((leadData: Lead) => {
+    if (leadData.id) safeLocalStorage.setItem('lead_id', String(leadData.id));
+    if (leadData.email) safeLocalStorage.setItem('lead_email', leadData.email);
+    safeLocalStorage.setItem('lead_phone', leadData.phone);
+    safeLocalStorage.setItem('lead_name', leadData.name);
+    safeLocalStorage.setItem('lead_token', leadData.token);
+    setVerifiedLead(leadData);
+  }, []);
+
+  const logoutLead = useCallback(() => {
+    safeLocalStorage.removeItem('lead_token');
+    safeLocalStorage.removeItem('lead_name');
+    safeLocalStorage.removeItem('lead_phone');
+    safeLocalStorage.removeItem('lead_email');
+    safeLocalStorage.removeItem('lead_id');
+    setVerifiedLead(null);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -86,25 +104,7 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
     verifySession();
 
     return () => { cancelled = true; };
-  }, []);
-
-  const loginLead = (leadData: Lead) => {
-    if (leadData.id) safeLocalStorage.setItem('lead_id', String(leadData.id));
-    if (leadData.email) safeLocalStorage.setItem('lead_email', leadData.email);
-    safeLocalStorage.setItem('lead_phone', leadData.phone);
-    safeLocalStorage.setItem('lead_name', leadData.name);
-    safeLocalStorage.setItem('lead_token', leadData.token);
-    setVerifiedLead(leadData);
-  };
-
-  const logoutLead = () => {
-    safeLocalStorage.removeItem('lead_token');
-    safeLocalStorage.removeItem('lead_name');
-    safeLocalStorage.removeItem('lead_phone');
-    safeLocalStorage.removeItem('lead_email');
-    safeLocalStorage.removeItem('lead_id');
-    setVerifiedLead(null);
-  };
+  }, [logoutLead]);
 
   return (
     <LeadContext.Provider value={{ verifiedLead, loginLead, logoutLead, loading }}>

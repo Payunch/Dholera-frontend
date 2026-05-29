@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { X, Loader2, CheckCircle2, ShieldCheck, Mail, Phone, User, KeyRound, Lock } from 'lucide-react';
+import { X, Loader2, CheckCircle2, Mail, Phone, User, KeyRound, Lock } from 'lucide-react';
 import { useLead } from '@/providers/LeadProvider';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage, safeSessionStorage } from '@/utils/storage';
 import { SplitLogo } from '@/components/common/DynamicImages';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
 
 const INITIAL_FORM_DATA = {
   name: '',
@@ -23,16 +22,39 @@ const validateName = (name: string) => name.trim().length >= 2;
 const validatePhone = (phone: string) => /^[6-9]\d{9}$/.test(phone);
 const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+type LeadRecord = {
+  id: number;
+  name: string;
+  phone: string;
+  email?: string;
+};
+
+type LeadAuthResponse = {
+  lead_token?: string;
+  lead?: LeadRecord;
+  verification_token?: string;
+  alreadyRegistered?: boolean;
+  message?: string;
+  error?: string;
+};
+
+const getErrorMessage = (err: unknown, fallback: string) => {
+  if (err instanceof Error && err.message) {
+    return err.message;
+  }
+  return fallback;
+};
+
 interface LeadPopupProps {
   sessionId?: string;
   fingerprint?: string;
   compulsory?: boolean;
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: LeadAuthResponse) => void;
 }
 
 export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSuccess }: LeadPopupProps) => {
   const { loginLead } = useLead();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(() => compulsory);
   const [step, setStep] = useState<'details' | 'otp' | 'passcode' | 'login' | 'success'>('details');
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [consentAccepted, setConsentAccepted] = useState(false);
@@ -43,7 +65,6 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
 
   useEffect(() => {
     if (compulsory) {
-      setOpen(true);
       safeSessionStorage.setItem('hasSeenPopup', 'true');
       return;
     }
@@ -77,12 +98,6 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       ...current,
       [field]: value
     }));
-  };
-
-  const goToStep = (nextStep: typeof step) => {
-    setError('');
-    setStatusMessage('');
-    setStep(nextStep);
   };
 
   const requestOtp = async ({ isResend = false } = {}) => {
@@ -124,7 +139,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
         })
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as LeadAuthResponse;
 
       if (!res.ok) {
         if (data.alreadyRegistered) {
@@ -146,7 +161,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       setStatusMessage(isResend ? 'A fresh verification code has been sent.' : data.message || 'Verification code sent.');
       setStep('otp');
       return true;
-    } catch (err) {
+    } catch {
       setError('Connection error. Please try again.');
       return false;
     } finally {
@@ -170,7 +185,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: formData.phone, otp: formData.otp })
       });
-      const data = await res.json();
+      const data = (await res.json()) as LeadAuthResponse;
 
       if (!res.ok) {
         setError(data.error || 'Invalid verification code.');
@@ -183,7 +198,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
         verificationToken: data.verification_token
       }));
       setStep('passcode');
-    } catch (err) {
+    } catch {
       setError('Connection error.');
     } finally {
       setLoading(false);
@@ -208,11 +223,11 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
           verificationToken: formData.verificationToken
         })
       });
-      const data = await res.json();
+      const data = (await res.json()) as LeadAuthResponse;
       if (!res.ok) throw new Error(data.error || 'Failed to set passcode.');
       completeAuth(data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err, 'Failed to set passcode.'));
     } finally {
       setLoading(false);
     }
@@ -231,18 +246,18 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
           browserFingerprint: fingerprint 
         })
       });
-      const data = await res.json();
+      const data = (await res.json()) as LeadAuthResponse;
       if (!res.ok) throw new Error(data.error || 'Login failed.');
       completeAuth(data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err, 'Login failed.'));
     } finally {
       setLoading(false);
     }
   };
 
-  const completeAuth = (data: any) => {
-    if (data.lead_token) {
+  const completeAuth = (data: LeadAuthResponse) => {
+    if (data.lead_token && data.lead) {
       safeLocalStorage.setItem('lead_token', data.lead_token);
       safeLocalStorage.setItem('lead_email', data.lead.email);
       safeLocalStorage.setItem('lead_phone', data.lead.phone);

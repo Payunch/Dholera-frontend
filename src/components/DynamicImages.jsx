@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import Image from 'next/image';
 
 /**
  * Upper side is full logo, bottom size is only logo.
@@ -18,9 +19,11 @@ export const SplitLogo = ({ isFull, height = 32 }) => {
         justifyContent: 'center'
       }}
     >
-      <img
+      <Image
         src="/logo.png"
         alt="Dholera Logo"
+        width={height * 4}
+        height={height * 2}
         style={{
           height: height * 2, // Source is twice the display height
           position: 'absolute',
@@ -50,9 +53,11 @@ export const TripleSplitImage = ({ index, height = 300 }) => {
         boxShadow: 2
       }}
     >
-      <img
+      <Image
         src="/sub1.png"
         alt={`Section ${index}`}
+        width={800}
+        height={height * 3}
         style={{
           width: '100%',
           height: height * 3, // Source is 3x the display height

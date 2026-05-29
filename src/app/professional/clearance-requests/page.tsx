@@ -98,9 +98,9 @@ export default function ProfessionalClearanceRequestsPage() {
           setSelectedId(first.id);
           setSelectedModel(first);
         }
-      } catch (err: any) {
+      } catch (err) {
         if (!active) return;
-        setError(err?.message || "Failed to load clearance requests.");
+        setError(err instanceof Error ? err.message : "Failed to load clearance requests.");
       } finally {
         if (active) setLoading(false);
       }
@@ -140,9 +140,9 @@ export default function ProfessionalClearanceRequestsPage() {
         if (!active) return;
         const detail = (data?.data || null) as ClearanceModel | null;
         setSelectedModel(detail);
-      } catch (err: any) {
+      } catch (err) {
         if (!active) return;
-        setDetailError(err?.message || "Failed to load request details.");
+        setDetailError(err instanceof Error ? err.message : "Failed to load request details.");
       } finally {
         if (active) setDetailLoading(false);
       }
@@ -156,43 +156,40 @@ export default function ProfessionalClearanceRequestsPage() {
   }, [selectedId, verifiedLead?.token]);
 
   const normalizedQuery = searchQuery.trim().toLowerCase();
-  const filteredModels = models.filter((model) => {
-    const statusValue = String(model.status || "draft").toLowerCase();
-    const projectValue = String(model.projectName || `Model ${model.id}`).toLowerCase();
-    const modelTypeValue = String(model.modelType || "").toLowerCase();
+  const filteredModels = useMemo(() => {
+    return models.filter((model) => {
+      const statusValue = String(model.status || "draft").toLowerCase();
+      const projectValue = String(model.projectName || `Model ${model.id}`).toLowerCase();
+      const modelTypeValue = String(model.modelType || "").toLowerCase();
 
-    let statusMatch = true;
-    if (statusFilter !== "All") {
-      const filterNeedle = statusFilter.toLowerCase();
-      if (statusFilter === "Under Review") {
-        statusMatch = statusValue.includes("review") || statusValue.includes("pending") || statusValue.includes("submitted");
-      } else if (statusFilter === "Rejected") {
-        statusMatch = statusValue.includes("reject") || statusValue.includes("failed");
-      } else {
-        statusMatch = statusValue.includes(filterNeedle);
+      let statusMatch = true;
+      if (statusFilter !== "All") {
+        const filterNeedle = statusFilter.toLowerCase();
+        if (statusFilter === "Under Review") {
+          statusMatch = statusValue.includes("review") || statusValue.includes("pending") || statusValue.includes("submitted");
+        } else if (statusFilter === "Rejected") {
+          statusMatch = statusValue.includes("reject") || statusValue.includes("failed");
+        } else {
+          statusMatch = statusValue.includes(filterNeedle);
+        }
       }
-    }
 
-    const searchMatch =
-      !normalizedQuery ||
-      projectValue.includes(normalizedQuery) ||
-      modelTypeValue.includes(normalizedQuery);
+      const searchMatch =
+        !normalizedQuery ||
+        projectValue.includes(normalizedQuery) ||
+        modelTypeValue.includes(normalizedQuery);
 
-    return statusMatch && searchMatch;
-  });
+      return statusMatch && searchMatch;
+    });
+  }, [models, statusFilter, normalizedQuery]);
 
-  useEffect(() => {
-    if (filteredModels.length === 0) {
-      setSelectedId(null);
-      setSelectedModel(null);
-      return;
-    }
-
-    const exists = filteredModels.some((model) => model.id === selectedId);
-    if (!exists) {
-      setSelectedId(filteredModels[0].id);
-    }
-  }, [filteredModels, selectedId]);
+  // Update selectedId during render if the current selection is no longer valid
+  const exists = filteredModels.some((model) => model.id === selectedId);
+  if (!exists && filteredModels.length > 0 && selectedId !== filteredModels[0].id) {
+    setSelectedId(filteredModels[0].id);
+  } else if (filteredModels.length === 0 && selectedId !== null) {
+    setSelectedId(null);
+  }
 
   return (
     <ProfessionalRouteGuard>

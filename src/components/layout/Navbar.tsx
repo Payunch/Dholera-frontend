@@ -38,7 +38,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-8 text-[10px] font-black uppercase tracking-wider">
+        <nav className="hidden md:flex items-center space-x-8 text-[10px] font-black uppercase tracking-wider font-display">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -101,7 +101,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-white/5 bg-slate-950 px-4 py-8 space-y-8 animate-in slide-in-from-top-4 duration-300">
+        <div className="md:hidden border-t border-white/5 bg-slate-950 px-4 py-8 space-y-8 animate-in slide-in-from-top-4 duration-300 font-display">
           <div className="flex flex-col gap-6">
             {navItems.map((item) => (
               <Link

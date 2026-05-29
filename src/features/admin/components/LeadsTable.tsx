@@ -1,8 +1,7 @@
 "use client";
 
 import { Lead } from "@/types/admin";
-import { MessageSquare, MoreVertical, Phone } from "lucide-react";
-import { format } from "date-fns";
+import { MessageSquare, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LeadsTableProps {

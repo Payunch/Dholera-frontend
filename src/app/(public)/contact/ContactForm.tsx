@@ -4,7 +4,6 @@ import * as React from "react";
 import Link from "next/link";
 import { User, Phone, Mail, Send, CheckCircle2, AlertCircle, MessageSquare } from "lucide-react";
 import { apiClient } from "@/lib/api";
-import { cn } from "@/lib/utils";
 
 export function ContactForm() {
   const [formData, setFormData] = React.useState({ name: "", phone: "", email: "" });
@@ -24,7 +23,7 @@ export function ContactForm() {
       setStatus("success");
       setFormData({ name: "", phone: "", email: "" });
       setConsentAccepted(false);
-    } catch (err) {
+    } catch {
       setStatus("error");
     }
   };

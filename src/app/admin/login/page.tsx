@@ -5,7 +5,18 @@ import { useRouter } from "next/navigation";
 import { ShieldAlert, Lock, User, KeyRound, Loader2, ChevronRight } from "lucide-react";
 import { apiClient } from "@/lib/api";
 import { fetchCsrfToken, clearCsrfCache } from "@/utils/csrf";
-import { cn } from "@/lib/utils";
+
+const parseAuthError = (err: unknown) => {
+  const responseData =
+    typeof err === "object" && err !== null && "response" in err
+      ? (err as { response?: { data?: { mfaRequired?: boolean; error?: string } } }).response?.data
+      : undefined;
+
+  return {
+    message: responseData?.error || "Biometric authentication mismatch or invalid credentials.",
+    mfaRequired: Boolean(responseData?.mfaRequired),
+  };
+};
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -23,7 +34,8 @@ export default function AdminLoginPage() {
 
     try {
       const csrf = await fetchCsrfToken();
-      const res = await apiClient.post("/auth/login", 
+      await apiClient.post(
+        "/auth/login", 
         { username, password, mfaCode },
         { headers: { "x-csrf-token": csrf } }
       );
@@ -37,11 +49,11 @@ export default function AdminLoginPage() {
         router.replace("/admin/dashboard");
         router.refresh();
       }, 200);
-    } catch (err: any) {
+    } catch (err) {
       clearCsrfCache();
-      const data = err.response?.data;
-      setMfaEnabled(Boolean(data?.mfaRequired));
-      setError(data?.error || "Biometric authentication mismatch or invalid credentials.");
+      const { message, mfaRequired } = parseAuthError(err);
+      setMfaEnabled(mfaRequired);
+      setError(message);
     } finally {
       setLoading(false);
     }

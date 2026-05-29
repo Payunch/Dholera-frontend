@@ -34,11 +34,11 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand & Mission */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-extrabold tracking-tight text-orange-600">
+            <h3 className="font-display text-2xl font-extrabold tracking-tight text-orange-600">
               {ownerDetails.brandName}
             </h3>
             <p className="text-sm leading-relaxed text-slate-600">
-              The official intelligence platform for Dholera Smart City. We provide verified data, planning maps, and investment growth evidence for India's first operational smart city.
+              The official intelligence platform for Dholera Smart City. We provide verified data, planning maps, and investment growth evidence for India&apos;s first operational smart city.
             </p>
             <div className="flex space-x-4">
               <Link href={siteConfig.links.facebook} className="text-slate-400 hover:text-orange-600 transition-colors">
@@ -58,7 +58,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-500">Platform</h4>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">Platform</h4>
             <ul className="space-y-4 text-sm font-semibold">
               <li><Link href="/" className="hover:text-orange-600 transition-colors">Home</Link></li>
               <li><Link href="/clearance-engine" className="hover:text-orange-600 transition-colors">Clearance Engine</Link></li>
@@ -69,7 +69,7 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-500">Legal</h4>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">Legal</h4>
             <ul className="space-y-4 text-sm font-semibold">
               <li><Link href="/privacy-policy" className="hover:text-orange-600 transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms-and-conditions" className="hover:text-orange-600 transition-colors">Terms of Service</Link></li>
@@ -84,7 +84,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-500">Owner Details</h4>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">Owner Details</h4>
             <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
               <User className="h-5 w-5 text-orange-600 shrink-0" />
               <span>{ownerDetails.operatorName}</span>
@@ -101,7 +101,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t pt-8 text-center text-xs font-bold uppercase tracking-widest text-slate-400">
-          (c) {new Date().getFullYear()} {ownerDetails.brandName.toUpperCase()}. All rights reserved. Built for India's Growth.
+          (c) {new Date().getFullYear()} {ownerDetails.brandName.toUpperCase()}. All rights reserved. Built for India&apos;s Growth.
         </div>
       </div>
     </footer>

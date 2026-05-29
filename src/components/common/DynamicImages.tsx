@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 /**
  * Upper side is full logo, bottom size is only logo.
@@ -15,9 +16,11 @@ export const SplitLogo = ({ isFull, height = 32 }: { isFull?: boolean; height?: 
         justifyContent: 'center'
       }}
     >
-      <img
+      <Image
         src="/logo.png"
         alt="Dholera Logo"
+        width={128} // Approximate width based on 4:1 aspect ratio for height 32
+        height={32}
         style={{
           height,
           width: '100%',
@@ -44,9 +47,11 @@ export const TripleSplitImage = ({ index, height = 300 }: { index: number; heigh
         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
       }}
     >
-      <img
+      <Image
         src="/sub1.png"
         alt={`Section ${index}`}
+        width={800} // Large enough width
+        height={height * 3}
         style={{
           width: '100%',
           height: height * 3, // Source is 3x the display height

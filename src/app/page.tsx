@@ -45,7 +45,7 @@ export default function HomePage() {
           The Dholera Platform is the definitive source for intelligence on the Dholera Special Investment Region (DSIR). 
           We specialize in providing high-resolution planning maps, including Town Planning (TP) maps, Development Plan (DP) maps, 
           and official DSIRDA documentation. Our goal is to provide investors and professionals with verified growth evidence 
-          for India's first operational smart city.
+          for India&apos;s first operational smart city.
         </p>
         <ul>
           <li>Verified Dholera Smart City Maps</li>

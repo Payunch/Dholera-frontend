@@ -62,9 +62,9 @@ export default function ProfessionalDocumentsPage() {
 
         if (!active) return;
         setPurchases(Array.isArray(data?.purchases) ? data.purchases : []);
-      } catch (err: any) {
+      } catch (err) {
         if (!active) return;
-        setError(err?.message || "Failed to load purchased documents.");
+        setError(err instanceof Error ? err.message : "Failed to load purchased documents.");
       } finally {
         if (active) setLoading(false);
       }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
@@ -24,20 +24,18 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
 
   const token = safeLocalStorage.getItem('lead_token');
   const fingerprint = safeLocalStorage.getItem('visitorFingerprint');
-  const leadName = safeLocalStorage.getItem('lead_name') || 'Guest';
   const leadEmail = safeLocalStorage.getItem('lead_email') || 'Guest';
   const leadPhone = safeLocalStorage.getItem('lead_phone') || 'Guest';
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-               (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent)));
+  const isMobile = useMemo(() => {
+    if (typeof navigator === 'undefined') return false;
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+      (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent));
   }, []);
 
   const directUrl = `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`;
 
-  const fetchPdf = async () => {
+  const fetchPdf = useCallback(async () => {
     setLoading(true);
     setError(null);
     setRequiresPayment(false);
@@ -67,25 +65,27 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       setBlobUrl(url);
-    } catch (err: any) {
+    } catch (err) {
       console.error('SecurePdfViewer Fetch Error:', err);
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Failed to load document.');
     } finally {
       setLoading(false);
     }
-  };
+  }, [pdfId, token]);
 
   useEffect(() => {
-    if (!pdfId) {
-      setError('Invalid document ID');
-      setLoading(false);
-      return;
-    }
-    fetchPdf();
+    if (!pdfId) return;
+    // Defer execution to avoid synchronous setState in effect warning
+    Promise.resolve().then(() => {
+      fetchPdf();
+    });
+  }, [fetchPdf, pdfId]);
+
+  useEffect(() => {
     return () => {
       if (blobUrl) URL.revokeObjectURL(blobUrl);
     };
-  }, [pdfId, token, isMobile]);
+  }, [blobUrl]);
 
   const handlePayment = async () => {
     setPaymentLoading(true);
@@ -113,12 +113,14 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
       } else {
         throw new Error('Payment gateway redirect URL missing');
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to initiate payment');
     } finally {
       setPaymentLoading(false);
     }
   };
+
+  const displayError = !pdfId ? 'Invalid document ID' : error;
 
   return (
     <div className="fixed inset-0 z-[200] flex flex-col bg-slate-950/95 backdrop-blur-md">
@@ -196,16 +198,16 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
           </div>
         )}
 
-        {error && !requiresPayment && (
+        {displayError && !requiresPayment && (
           <div className="max-w-sm w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl">
             <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
             <h3 className="text-xl font-black text-slate-900 uppercase mb-2">Access Denied</h3>
-            <p className="text-slate-500 font-medium mb-8">{error}</p>
+            <p className="text-slate-500 font-medium mb-8">{displayError}</p>
             <button onClick={onClose} className="w-full rounded-2xl bg-slate-900 py-4 text-white font-black uppercase tracking-widest">Close Viewer</button>
           </div>
         )}
 
-        {!loading && !error && blobUrl && (
+        {!loading && !displayError && blobUrl && (
           <div className="relative w-full h-full max-w-6xl bg-white shadow-2xl overflow-hidden rounded-xl flex flex-col">
             {/* Watermark Overlay */}
             <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.03] grid grid-cols-2 md:grid-cols-3 grid-rows-4 overflow-hidden">

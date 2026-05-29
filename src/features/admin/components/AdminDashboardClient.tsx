@@ -3,13 +3,10 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { 
-  BarChart3, 
   Users, 
   ShieldCheck, 
   Settings, 
   LogOut,
-  ChevronRight,
-  TrendingUp,
   Activity,
   Globe
 } from "lucide-react";

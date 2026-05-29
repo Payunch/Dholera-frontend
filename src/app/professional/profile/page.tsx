@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { ProfessionalRouteGuard } from "@/components/professional/ProfessionalRouteGuard";
 import { useLead } from "@/providers/LeadProvider";
@@ -21,10 +21,12 @@ export default function ProfessionalProfilePage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  useEffect(() => {
+  const [prevLead, setPrevLead] = useState(verifiedLead);
+  if (verifiedLead !== prevLead) {
+    setPrevLead(verifiedLead);
     setName(verifiedLead?.name || "");
     setEmail(verifiedLead?.email || "");
-  }, [verifiedLead?.name, verifiedLead?.email]);
+  }
 
   const handleSave = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -59,8 +61,8 @@ export default function ProfessionalProfilePage() {
       }
 
       setMessage("Profile updated successfully.");
-    } catch (err: any) {
-      setError(err?.message || "Failed to save profile");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save profile");
     } finally {
       setSaving(false);
     }

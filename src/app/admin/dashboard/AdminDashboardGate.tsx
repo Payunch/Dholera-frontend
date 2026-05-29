@@ -13,6 +13,19 @@ const fallbackStats: WhatsAppStats = {
   responseRate: "Manual",
 };
 
+const getErrorMessage = (err: unknown) => {
+  if (typeof err === "object" && err !== null && "response" in err) {
+    const response = (err as { response?: { data?: { error?: string } } }).response;
+    if (response?.data?.error) {
+      return response.data.error;
+    }
+  }
+  if (err instanceof Error) {
+    return err.message;
+  }
+  return "Unable to load admin dashboard.";
+};
+
 export function AdminDashboardGate() {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
@@ -35,11 +48,9 @@ export function AdminDashboardGate() {
 
         setLeads(Array.isArray(leadsRes.data) ? leadsRes.data : []);
         setWaStats(statsRes.data || fallbackStats);
-      } catch (err: any) {
+      } catch (err) {
         if (!active) return;
-
-        const message = err?.response?.data?.error || "Unable to load admin dashboard.";
-        setError(message);
+        setError(getErrorMessage(err));
       } finally {
         if (active) setLoading(false);
       }

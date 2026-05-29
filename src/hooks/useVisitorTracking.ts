@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage, safeSessionStorage } from '@/utils/storage';
@@ -13,7 +13,7 @@ const getBrowserFingerprint = () => {
   try {
     const { userAgent, language, hardwareConcurrency } = navigator;
     // deviceMemory is not on all browsers TS types
-    const deviceMemory = (navigator as any).deviceMemory || 'unknown';
+    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 'unknown';
     const { width, height, colorDepth } = window.screen;
     
     let canvasData = 'no-canvas';
@@ -48,41 +48,61 @@ export const useVisitorTracking = () => {
   const pathname = usePathname();
   const isAdminPath = pathname.startsWith('/admin');
 
-  const sessionRef = useRef<string | null>(null);
-  const fingerprintRef = useRef<string | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [fingerprint, setFingerprint] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    sessionRef.current = safeSessionStorage.getItem('visitorSessionId');
-    fingerprintRef.current = safeLocalStorage.getItem('visitorFingerprint');
+    let nextSessionId = safeSessionStorage.getItem('visitorSessionId');
+    let nextFingerprint = safeLocalStorage.getItem('visitorFingerprint');
 
     if (isAdminPath) return;
 
-    if (!sessionRef.current) {
-      sessionRef.current = generateSessionId();
-      safeSessionStorage.setItem('visitorSessionId', sessionRef.current);
+    if (!nextSessionId) {
+      nextSessionId = generateSessionId();
+      safeSessionStorage.setItem('visitorSessionId', nextSessionId);
     }
 
-    if (!fingerprintRef.current) {
-      fingerprintRef.current = getBrowserFingerprint();
-      safeLocalStorage.setItem('visitorFingerprint', fingerprintRef.current);
+    if (!nextFingerprint) {
+      nextFingerprint = getBrowserFingerprint();
+      safeLocalStorage.setItem('visitorFingerprint', nextFingerprint);
+    }
+
+    const activeSessionId = nextSessionId;
+    const activeFingerprint = nextFingerprint;
+
+    if (activeSessionId !== sessionId) {
+      window.setTimeout(() => setSessionId(nextSessionId), 0);
+    }
+
+    if (activeFingerprint !== fingerprint) {
+      window.setTimeout(() => setFingerprint(nextFingerprint), 0);
     }
 
     const checkReturning = async () => {
       const existingToken = safeLocalStorage.getItem('lead_token');
-      if (!existingToken && fingerprintRef.current) {
+      if (!existingToken && activeFingerprint) {
         try {
-          const res = await fetch(`${API_BASE_URL}/leads/check-visitor/${fingerprintRef.current}`);
+          const res = await fetch(`${API_BASE_URL}/leads/check-visitor/${activeFingerprint}`);
+          if (!res.ok) {
+            // Not a network error, but a server error (e.g. 500)
+            const errData = await res.json().catch(() => ({}));
+            console.warn('Check visitor server error:', errData.error || res.statusText);
+            return;
+          }
           const data = await res.json();
           if (data.verified && data.lead_token) {
             safeLocalStorage.setItem('lead_token', data.lead_token);
-            safeLocalStorage.setItem('lead_email', data.lead.email);
-            safeLocalStorage.setItem('lead_phone', data.lead.phone);
-            safeLocalStorage.setItem('lead_name', data.lead.name);
+            if (data.lead) {
+              safeLocalStorage.setItem('lead_email', data.lead.email || '');
+              safeLocalStorage.setItem('lead_phone', data.lead.phone || '');
+              safeLocalStorage.setItem('lead_name', data.lead.name || '');
+            }
           }
         } catch (err) {
-          console.error('Check visitor error:', err);
+          // This catches actual network errors (e.g. server offline)
+          console.error('Check visitor network error:', err);
         }
       }
     };
@@ -97,13 +117,13 @@ export const useVisitorTracking = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': token
+            'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}`
           },
           body: JSON.stringify({
             page: pathname,
             timeSpent: 15
           })
-        }).catch(err => console.error('Tracking error:', err));
+        }).catch(err => console.warn('Tracking error (returning):', err.message));
       } else {
         fetch(`${API_BASE_URL}/track`, {
           method: 'POST',
@@ -111,19 +131,19 @@ export const useVisitorTracking = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            sessionId: sessionRef.current,
-            browserFingerprint: fingerprintRef.current,
+            sessionId: activeSessionId,
+            browserFingerprint: activeFingerprint,
             page: pathname,
             timeSpent: 15,
-            source: document.referrer || 'Direct',
-            deviceType: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'
+            source: typeof document !== 'undefined' ? document.referrer : 'Direct',
+            deviceType: typeof navigator !== 'undefined' && /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'
           })
-        }).catch(err => console.error('Tracking error:', err));
+        }).catch(err => console.warn('Tracking error (anonymous):', err.message));
       }
     }, 15000);
 
     return () => clearInterval(interval);
-  }, [pathname, isAdminPath]);
+  }, [pathname, isAdminPath, sessionId, fingerprint]);
 
-  return { sessionId: sessionRef.current, fingerprint: fingerprintRef.current };
+  return { sessionId, fingerprint };
 };
