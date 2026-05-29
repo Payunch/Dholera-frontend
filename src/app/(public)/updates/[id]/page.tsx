@@ -92,7 +92,7 @@ export default async function UpdateDetailPage({ params }: Props) {
               </span>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
                 <Calendar className="h-4 w-4" />
-                {format(new Date(update.createdAt), "MMMM d, yyyy")}
+                {format(new Date(update.createdAt), "MMMM d, yyyy, h:mm a")}
               </div>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
                 <Clock className="h-4 w-4" />

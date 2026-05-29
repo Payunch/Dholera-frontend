@@ -1,19 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { format, isValid, parseISO } from 'date-fns';
 import { useLead } from '@/providers/LeadProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import { API_BASE_URL } from '@/lib/api';
 import { SecurePdfViewer } from '@/components/pdf/SecurePdfViewer';
 import { LeadPopup } from '@/components/leads/LeadPopup';
 import { useVisitorTracking } from '@/hooks/useVisitorTracking';
-import { FileText, Lock, Search, Loader2 } from 'lucide-react';
+import { Calendar, FileText, Lock, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PDF {
   id: string;
   title: string;
   category: string;
+  createdAt?: string;
 }
 
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -78,6 +80,13 @@ export function PdfListing() {
     } else {
       setShowVerifyPopup(true);
     }
+  };
+
+  const formatUploadedAt = (value?: string) => {
+    if (!value) return 'Upload time unavailable';
+    const parsed = parseISO(value);
+    if (!isValid(parsed)) return 'Upload time unavailable';
+    return format(parsed, 'MMM d, yyyy, h:mm a');
   };
 
   return (
@@ -145,6 +154,10 @@ export function PdfListing() {
                   <h3 className="font-black text-slate-900 leading-tight min-h-[3rem] line-clamp-2">
                     {pdf.title}
                   </h3>
+                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-400">
+                    <Calendar className="h-3.5 w-3.5" />
+                    {formatUploadedAt(pdf.createdAt)}
+                  </div>
                   <button 
                     onClick={() => handlePdfClick(pdf.id)}
                     className={cn(

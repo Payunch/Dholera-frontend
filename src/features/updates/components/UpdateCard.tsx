@@ -59,7 +59,7 @@ export function UpdateCard({ update }: UpdateCardProps) {
           </span>
           <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider">
             <Calendar className="h-3.5 w-3.5" />
-            {format(new Date(update.createdAt), "MMM d, yyyy")}
+            {format(new Date(update.createdAt), "MMM d, yyyy, h:mm a")}
           </div>
         </div>
 
