@@ -195,7 +195,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       setFormData((current) => ({
         ...current,
         otp: '',
-        verificationToken: data.verification_token
+        verificationToken: data.verification_token || ''
       }));
       setStep('passcode');
     } catch {
@@ -259,7 +259,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
   const completeAuth = (data: LeadAuthResponse) => {
     if (data.lead_token && data.lead) {
       safeLocalStorage.setItem('lead_token', data.lead_token);
-      safeLocalStorage.setItem('lead_email', data.lead.email);
+      safeLocalStorage.setItem('lead_email', data.lead.email || '');
       safeLocalStorage.setItem('lead_phone', data.lead.phone);
       safeLocalStorage.setItem('lead_name', data.lead.name);
 
