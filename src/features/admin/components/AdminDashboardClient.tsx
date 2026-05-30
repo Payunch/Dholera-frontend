@@ -16,6 +16,7 @@ import { LeadsTable } from "./LeadsTable";
 import { UpdatesManagement } from "./UpdatesManagement";
 import { cn } from "@/lib/utils";
 import { apiClient, API_BASE_URL } from "@/lib/api";
+import { fetchCsrfToken } from "@/utils/csrf";
 
 interface AdminDashboardClientProps {
   initialLeads: Lead[];
@@ -83,7 +84,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
   const handleExportPdfs = async () => {
     try {
       const resp = await fetch(`${API_BASE_URL}/pdf/export`, { credentials: 'include' });
-      if (!resp.ok) throw new Error('PDF Export failed');
+      if (!ok) throw new Error('PDF Export failed');
       const json = await resp.json();
       const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
       const url = window.URL.createObjectURL(blob);
@@ -103,8 +104,12 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
     if (isSyncing) return;
     setIsSyncing(true);
     try {
+      const csrfToken = await fetchCsrfToken();
       const resp = await fetch(`${API_BASE_URL}/pdf/sync-disk`, { 
         method: 'POST',
+        headers: {
+          'X-CSRF-Token': csrfToken || ''
+        },
         credentials: 'include' 
       });
       const data = await resp.json();
@@ -129,9 +134,13 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
       const content = await pdfImportFile.text();
       const data = JSON.parse(content);
 
+      const csrfToken = await fetchCsrfToken();
       const resp = await fetch(`${API_BASE_URL}/pdf/import`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken || ''
+        },
         body: JSON.stringify(data),
         credentials: 'include'
       });
@@ -160,8 +169,12 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
     try {
       const form = new FormData();
       form.append('backup', importFile);
+      const csrfToken = await fetchCsrfToken();
       const resp = await fetch(`${API_BASE_URL}/admin/restore`, {
         method: 'POST',
+        headers: {
+          'X-CSRF-Token': csrfToken || ''
+        },
         body: form,
         credentials: 'include'
       });
