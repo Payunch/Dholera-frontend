@@ -6,6 +6,7 @@ export interface Update {
   imageUrl?: string;
   imagePosition?: "top" | "bottom";
   published: boolean;
+  publishedAt: string;
   createdAt: string;
   updatedAt: string;
 }

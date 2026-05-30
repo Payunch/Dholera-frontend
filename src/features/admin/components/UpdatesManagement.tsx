@@ -30,6 +30,7 @@ export function UpdatesManagement() {
   const [content, setContent] = React.useState("");
   const [category, setCategory] = React.useState<Update["category"]>("General");
   const [published, setPublished] = React.useState(true);
+  const [publishedAt, setPublishedAt] = React.useState("");
   const [imageFile, setImageFile] = React.useState<File | null>(null);
   const [imageUrl, setImageUrl] = React.useState("");
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -57,6 +58,7 @@ export function UpdatesManagement() {
       setContent("");
       setCategory("General");
       setPublished(true);
+      setPublishedAt(new Date().toISOString().slice(0, 16));
       setImageFile(null);
       setImageUrl("");
     } else {
@@ -65,6 +67,7 @@ export function UpdatesManagement() {
       setContent(update.content);
       setCategory(update.category);
       setPublished(update.published);
+      setPublishedAt(new Date(update.publishedAt || update.createdAt).toISOString().slice(0, 16));
       setImageFile(null);
       setImageUrl(update.imageUrl || "");
     }
@@ -92,6 +95,7 @@ export function UpdatesManagement() {
       formData.append("content", content);
       formData.append("category", category);
       formData.append("published", String(published));
+      formData.append("publishedAt", new Date(publishedAt).toISOString());
       if (imageFile) {
         formData.append("image", imageFile);
       } else if (imageUrl) {
@@ -190,7 +194,7 @@ export function UpdatesManagement() {
             </h4>
             
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
-              {update.category} • {format(new Date(update.createdAt), "MMM d, yyyy")}
+              {update.category} • {format(new Date(update.publishedAt || update.createdAt), "MMM d, yyyy")}
             </p>
 
             <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100">
@@ -273,6 +277,17 @@ export function UpdatesManagement() {
                         {published ? "Published" : "Draft"}
                       </button>
                     </div>
+                  </div>
+
+                  {/* Published Date */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-slate-500">Publication Date & Time</label>
+                    <input
+                      type="datetime-local"
+                      value={publishedAt}
+                      onChange={(e) => setPublishedAt(e.target.value)}
+                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                    />
                   </div>
 
                   {/* Image Source */}
