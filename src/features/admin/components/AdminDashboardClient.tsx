@@ -84,7 +84,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
   const handleExportPdfs = async () => {
     try {
       const resp = await fetch(`${API_BASE_URL}/pdf/export`, { credentials: 'include' });
-      if (!ok) throw new Error('PDF Export failed');
+      if (!resp.ok) throw new Error('PDF Export failed');
       const json = await resp.json();
       const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
       const url = window.URL.createObjectURL(blob);
