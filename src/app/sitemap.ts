@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     id: string | number;
     updatedAt?: string;
     createdAt: string;
+    publishedAt?: string;
   }
   let updates: Update[] = [];
   try {
@@ -22,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const updateEntries: MetadataRoute.Sitemap = updates.map((update) => ({
     url: `${baseUrl}/updates/${update.id}`,
-    lastModified: new Date(update.updatedAt || update.createdAt),
+    lastModified: new Date(update.publishedAt || update.updatedAt || update.createdAt),
     changeFrequency: "weekly",
     priority: 0.7,
   }));

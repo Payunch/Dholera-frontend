@@ -37,7 +37,7 @@ export async function generateMetadata(
       description: update.content.slice(0, 160).replace(/\n/g, " "),
       images: imgSrc ? [imgSrc, ...previousImages] : previousImages,
       type: "article",
-      publishedTime: update.createdAt,
+      publishedTime: update.publishedAt || update.createdAt,
       authors: ["Dholera Growth Team"],
     },
     twitter: {
@@ -92,7 +92,7 @@ export default async function UpdateDetailPage({ params }: Props) {
               </span>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
                 <Calendar className="h-4 w-4" />
-                {format(new Date(update.createdAt), "MMMM d, yyyy, h:mm a")}
+                {format(new Date(update.publishedAt || update.createdAt), "MMMM d, yyyy, h:mm a")}
               </div>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
                 <Clock className="h-4 w-4" />
