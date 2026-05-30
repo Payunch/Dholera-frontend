@@ -10,44 +10,9 @@ import {
   FileText,
   CheckCircle2
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { PdfListing } from "@/components/pdf/PdfListing";
-import { TripleSplitImage } from "@/components/common/DynamicImages";
 
 export function HomeClient() {
-  const heroSteps = [
-    {
-      step: "01",
-      title: "Send the plot context",
-      desc: "Share plot number, goal, and expected use so we can anchor to verified sources.",
-    },
-    {
-      step: "02",
-      title: "We match official plans",
-      desc: "We map your input to DSIRDA-aligned planning, zoning, and fee references.",
-    },
-    {
-      step: "03",
-      title: "Get actionable evidence",
-      desc: "Receive the maps, fees, and compliance signals you need to move fast.",
-    },
-  ];
-
-  const signalStrip = [
-    {
-      title: "DSIRDA-aligned sources",
-      desc: "Every map is checked against official planning records.",
-    },
-    {
-      title: "Planning-grade visuals",
-      desc: "TP, DP, and zone context delivered in one place.",
-    },
-    {
-      title: "Decision-ready outputs",
-      desc: "Clear references for compliance and investment validation.",
-    },
-  ];
-
   const coreLoop = [
     {
       step: "01",
@@ -84,135 +49,87 @@ export function HomeClient() {
   ];
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-[#0b0f12] pt-24 pb-20 md:pt-32 md:pb-32">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-orange-600/30 blur-[120px] animate-float-soft" />
-          <div
-            className="absolute -bottom-32 right-[-40px] h-96 w-96 rounded-full bg-teal-500/30 blur-[140px] animate-float-soft"
-            style={{ animationDelay: "1.5s" }}
-          />
-          <div className="absolute inset-0 bg-grid-sand opacity-15" />
-        </div>
-
-        <div className="container relative z-10 mx-auto grid items-center gap-12 px-4 md:px-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-8 text-left">
-            <div className="inline-flex items-center rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.3em] text-orange-300 animate-fade-up">
-              Verified DSIR Infrastructure Intelligence
+      <section className="relative overflow-hidden bg-slate-50 pt-24 pb-20 md:pt-32 md:pb-40 border-b border-slate-100">
+        <div className="container relative z-10 mx-auto px-4 md:px-8">
+          <div className="mx-auto max-w-4xl text-center space-y-10">
+            <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-black uppercase tracking-[0.3em] text-orange-600 animate-fade-up">
+              Official Infrastructure Intelligence
             </div>
 
-            <h1 className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl animate-fade-up">
-              The Official <span className="text-orange-500">Dholera Platform</span> for evidence-backed planning
+            <h1 className="font-display text-5xl font-black tracking-tight text-slate-900 sm:text-7xl lg:text-8xl uppercase leading-[0.95] animate-fade-up">
+              Decide with <span className="text-orange-600 italic">Certainty</span> in Dholera SIR
             </h1>
 
-            <p className="max-w-2xl text-lg text-slate-300 md:text-xl animate-fade-up">
-              Access verified planning maps, TP maps, and live infrastructure signals. Move from plot context to
-              compliance confidence with clarity and speed.
+            <p className="mx-auto max-w-2xl text-lg font-medium text-slate-500 md:text-xl animate-fade-up-slow leading-relaxed">
+              The primary platform for verified planning maps, TP maps, and real-time infrastructure tracking. 
+              Accelerating professional land decisions with industrial-grade data.
             </p>
 
-            <div className="flex flex-col items-start gap-4 sm:flex-row pt-2 animate-fade-up">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row pt-4 animate-fade-up-slow">
               <Link
                 href="/clearance-engine"
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-orange-600 px-8 py-4 text-lg font-bold text-white transition-all hover:bg-orange-500 sm:w-auto"
+                className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 px-10 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-slate-900/10 hover:shadow-orange-600/20"
               >
-                Start Free Pre-Screening
-                <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                Launch Clearance Engine
+                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/updates"
-                className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-white/20 px-8 py-4 text-lg font-bold text-white transition-all hover:bg-white/10 sm:w-auto"
+                className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-slate-200 bg-white px-10 text-sm font-black uppercase tracking-widest text-slate-900 transition-all hover:border-slate-400 sm:w-auto"
               >
-                See Growth Updates
+                Growth Updates
               </Link>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 pt-6 sm:grid-cols-3">
-              {signalStrip.map((signal) => (
-                <div
-                  key={signal.title}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-200 backdrop-blur"
-                >
-                  <p className="font-display text-base font-semibold text-white">{signal.title}</p>
-                  <p className="mt-2 text-xs text-slate-300">{signal.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/40 backdrop-blur">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-300">Context Pack</span>
-              <span className="text-xs text-slate-400">Built for DSIR decisions</span>
-            </div>
-
-            <div className="mt-6 space-y-6">
-              {heroSteps.map((item) => (
-                <div key={item.step} className="flex gap-4">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-xs font-black text-white">
-                    {item.step}
-                  </div>
-                  <div>
-                    <p className="font-display text-base font-semibold text-white">{item.title}</p>
-                    <p className="mt-1 text-sm text-slate-300">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 rounded-2xl border border-white/10 bg-black/20 p-4 text-xs text-slate-300">
-              Bring the plot details. We return the verified maps, zoning, and fees that matter most.
             </div>
           </div>
         </div>
       </section>
 
+      {/* PDF Listing Section (Intelligence Hub) */}
+      <div id="documents" className="bg-white">
+        <React.Suspense fallback={<div className="py-32 text-center font-black uppercase tracking-widest text-slate-300 animate-pulse">Scanning Archives...</div>}>
+          <PdfListing />
+        </React.Suspense>
+      </div>
+
       {/* Core Loop Section */}
-      <section className="bg-white py-20">
+      <section className="bg-slate-50 py-32 border-y border-slate-100">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl space-y-4">
-              <p className="text-xs font-black uppercase tracking-[0.3em] text-teal-600">Core Loop</p>
-              <h2 className="font-display text-3xl font-bold text-slate-900 md:text-5xl">
-                Context in, clarity out
-              </h2>
-              <p className="text-base text-slate-600">
-                The fastest planning decisions come from tight loops. We help you supply the right context,
-                convert it into verified evidence, and keep each step clear.
-              </p>
-            </div>
-            <div className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">
-              Section by section precision
-            </div>
+          <div className="mb-24 text-center space-y-6">
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">The Loop</p>
+            <h2 className="font-display text-4xl font-black text-slate-900 md:text-6xl uppercase">
+              How we turn data into <span className="text-orange-600 italic">Proof</span>
+            </h2>
           </div>
 
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {coreLoop.map((item) => (
               <div
                 key={item.step}
-                className="rounded-3xl border border-slate-100 bg-white p-6 shadow-xl shadow-slate-200/50 transition-all hover:-translate-y-1"
+                className="group flex flex-col items-center text-center p-10 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/50 transition-all hover:-translate-y-2"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">{item.step}</span>
-                  <item.icon className="h-5 w-5 text-orange-600" />
+                <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-[2rem] bg-slate-50 text-orange-600 border border-slate-100 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                  <item.icon className="h-8 w-8" />
                 </div>
-                <h3 className="mt-4 font-display text-xl font-bold text-slate-900">{item.title}</h3>
-                <p className="mt-2 text-sm text-slate-600">{item.desc}</p>
+                <span className="mb-4 text-xs font-black uppercase tracking-widest text-slate-400 group-hover:text-orange-600 transition-colors">Step {item.step}</span>
+                <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 mb-4">{item.title}</h3>
+                <p className="text-sm font-medium text-slate-500 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Trust & Stats Section */}
-      <section className="bg-[#f2efe8] py-16">
+      {/* Trust & Signals Section */}
+      <section className="bg-white py-32">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="mb-10 max-w-2xl space-y-4">
+          <div className="mx-auto max-w-3xl text-center mb-20 space-y-6">
             <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">Evidence Signals</p>
-            <h2 className="font-display text-3xl font-bold text-slate-900 md:text-4xl">
-              Designed to remove guesswork
+            <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight">
+              Designed to <span className="text-orange-600 italic">Remove</span> Guesswork
             </h2>
-            <p className="text-slate-600">
+            <p className="text-lg font-medium text-slate-500 leading-relaxed">
               We translate complex planning records into a clean decision surface. Each module is tuned for
               compliance, speed, and investor clarity.
             </p>
@@ -236,78 +153,55 @@ export function HomeClient() {
                 desc: "Estimate fees, plot readiness, and investment outcomes with confidence." 
               },
             ].map((item, idx) => (
-              <div key={idx} className="flex flex-col items-start space-y-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-xl shadow-slate-200/50">
-                <div className={cn("flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-orange-600")}>
+              <div key={idx} className="flex flex-col items-start space-y-6 rounded-3xl border border-slate-100 bg-slate-50/50 p-8 transition-all hover:bg-white hover:shadow-2xl hover:shadow-slate-200/40">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-orange-600 shadow-md border border-slate-100">
                   <item.icon className="h-7 w-7" />
                 </div>
-                <h3 className="font-display text-xl font-bold text-slate-900">{item.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900">{item.title}</h3>
+                <p className="text-base font-medium text-slate-500 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Legacy Feature Alignment: Interactive Tool & Project Gallery */}
-      <section className="bg-slate-50 py-16">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="mb-8 max-w-2xl space-y-3">
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-teal-600">Visual Evidence</p>
-            <h2 className="font-display text-3xl font-bold text-slate-900 md:text-4xl">
-              See the planning context in one glance
-            </h2>
-            <p className="text-sm text-slate-600">
-              From boundary verification to infrastructure readiness, we surface the visuals that drive the decision.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((idx) => (
-              <TripleSplitImage key={idx} index={idx} height={240} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Restored Gated PDF Access Logic */}
-      <React.Suspense fallback={<div className="py-20 text-center font-black uppercase tracking-widest text-slate-400">Loading Intelligence...</div>}>
-        <PdfListing />
-      </React.Suspense>
 
       {/* Quality Bar Section */}
-      <section className="bg-white py-20">
-        <div className="container mx-auto grid gap-10 px-4 md:px-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-5">
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">Quality Bar</p>
-            <h2 className="font-display text-3xl font-bold text-slate-900 md:text-4xl">
-              Every release is checked like a decision engine
-            </h2>
-            <p className="text-base text-slate-600">
-              We review each section the same way you review a land decision. Clear labels, verified data, and
-              zero broken flows.
-            </p>
-          </div>
-          <div className="space-y-3">
-            {qualityBar.map((item) => (
-              <div key={item} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 text-teal-600" />
-                <span className="text-sm font-semibold text-slate-700">{item}</span>
+      <section className="bg-slate-900 py-32 text-white overflow-hidden relative">
+        <div className="absolute inset-0 bg-orange-600 opacity-5 blur-[120px] -translate-y-1/2" />
+        <div className="container mx-auto px-4 md:px-8 relative z-10">
+          <div className="grid gap-16 lg:grid-cols-2 items-center">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-400">Institutional Integrity</p>
+                <h2 className="font-display text-4xl font-black md:text-6xl uppercase leading-tight">
+                  The Quality <span className="text-orange-400 italic">Bar</span>
+                </h2>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SEO Content Block */}
-      <section className="bg-slate-900 py-24 text-white">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="mx-auto max-w-4xl space-y-12">
-            <div className="space-y-4">
-              <h2 className="font-display text-2xl font-black uppercase tracking-[0.3em] text-orange-400">Why Dholera Platform?</h2>
-              <p className="text-lg text-slate-300 leading-relaxed">
-                As the primary <span className="font-bold text-white uppercase italic">Dholera Platform</span>, we bridge the gap between 
-                complex urban planning data and investor accessibility. Our platform is built on the pillars of transparency, 
-                verification, and real-time intelligence. 
+              <p className="text-xl text-slate-300 leading-relaxed font-medium">
+                As the primary <span className="font-bold text-white uppercase italic tracking-wider">Dholera Platform</span>, we bridge the gap between 
+                complex urban planning data and investor accessibility.
               </p>
+              <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
+                 <div className="space-y-1">
+                    <p className="text-4xl font-black text-white italic tracking-tighter uppercase">5,000+</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Hectares Monitored</p>
+                 </div>
+                 <div className="space-y-1">
+                    <p className="text-4xl font-black text-white italic tracking-tighter uppercase">100%</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Verified Data</p>
+                 </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              {qualityBar.map((item) => (
+                <div key={item} className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all hover:bg-white/10">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-500/20 text-orange-400">
+                    <CheckCircle2 className="h-4 w-4" />
+                  </div>
+                  <span className="text-sm font-bold uppercase tracking-widest text-slate-100">{item}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

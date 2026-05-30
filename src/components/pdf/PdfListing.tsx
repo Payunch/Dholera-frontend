@@ -16,6 +16,7 @@ interface PDF {
   title: string;
   category: string;
   createdAt?: string;
+  documentDate?: string;
 }
 
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -90,19 +91,20 @@ export function PdfListing() {
     }
   };
 
-  const formatUploadedAt = (value?: string) => {
-    if (!value) return 'Upload time unavailable';
+  const formatUploadedAt = (pdf: PDF) => {
+    const value = pdf.documentDate || pdf.createdAt;
+    if (!value) return 'Date unavailable';
     const parsed = parseISO(value);
-    if (!isValid(parsed)) return 'Upload time unavailable';
-    return format(parsed, 'MMM d, yyyy, h:mm a');
+    if (!isValid(parsed)) return 'Date unavailable';
+    return format(parsed, 'MMM d, yyyy');
   };
 
   return (
-    <section className="py-20 bg-[#f8f6f1] bg-grid-sand" id="documents">
+    <section className="py-24 bg-white" id="documents">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
           <div className="space-y-4">
-            <h2 className="font-display text-3xl md:text-5xl font-black uppercase tracking-tight text-slate-900">
+            <h2 className="font-display text-4xl font-black uppercase tracking-tight text-slate-900">
               Verified <span className="text-orange-600 italic">Intelligence</span>
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -111,10 +113,10 @@ export function PdfListing() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    "px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest transition-all",
+                    "px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2",
                     activeTab === tab.id 
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-600/20" 
-                      : "bg-white text-slate-400 hover:text-slate-900 border border-slate-200"
+                      ? "bg-orange-600 border-orange-600 text-white shadow-xl shadow-orange-600/20" 
+                      : "bg-white border-slate-100 text-slate-400 hover:border-orange-600 hover:text-orange-600"
                   )}
                 >
                   {tab.label}
@@ -128,7 +130,7 @@ export function PdfListing() {
             <input
               type="text"
               placeholder={t('search_placeholder')}
-              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-slate-200 font-bold outline-none focus:border-orange-600 transition-all"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 border-slate-100 font-bold outline-none focus:border-orange-600 focus:bg-white transition-all"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -141,13 +143,13 @@ export function PdfListing() {
             <span className="font-black uppercase tracking-widest text-slate-400 animate-pulse">Scanning Archives...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {filtered.map(pdf => (
               <div 
                 key={pdf.id}
-                className="group relative bg-white rounded-3xl p-6 border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-orange-600/10 transition-all hover:-translate-y-1"
+                className="group flex flex-col bg-white rounded-[2rem] p-6 border border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-orange-600/5 hover:border-orange-200 transition-all hover:-translate-y-2"
               >
-                <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 flex items-center justify-center relative overflow-hidden">
+                <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 flex items-center justify-center relative overflow-hidden border border-slate-50">
                    <FileText className="h-16 w-16 text-slate-200 group-hover:scale-110 transition-transform duration-500" />
                    {!verifiedLead && (
                      <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
@@ -155,28 +157,33 @@ export function PdfListing() {
                      </div>
                    )}
                 </div>
-                <div className="space-y-3">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600 bg-orange-50 px-3 py-1 rounded-full">
-                    {pdf.category}
-                  </span>
-                  <h3 className="font-black text-slate-900 leading-tight min-h-[3rem] line-clamp-2">
+                <div className="flex-1 flex flex-col space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600">
+                      {pdf.category}
+                    </span>
+                    <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      <Calendar className="h-3 w-3" />
+                      {formatUploadedAt(pdf)}
+                    </div>
+                  </div>
+                  <h3 className="font-display text-xl font-black text-slate-900 leading-tight line-clamp-2">
                     {pdf.title}
                   </h3>
-                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-400">
-                    <Calendar className="h-3.5 w-3.5" />
-                    {formatUploadedAt(pdf.createdAt)}
+                  
+                  <div className="pt-2 mt-auto">
+                    <button 
+                      onClick={() => handlePdfClick(pdf.id)}
+                      className={cn(
+                        "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
+                        verifiedLead 
+                          ? "bg-slate-900 text-white hover:bg-orange-600 shadow-lg shadow-slate-900/10" 
+                          : "bg-orange-600 text-white hover:bg-orange-500 shadow-lg shadow-orange-600/10"
+                      )}
+                    >
+                      {verifiedLead ? t('btn_view') : t('btn_unlock')}
+                    </button>
                   </div>
-                  <button 
-                    onClick={() => handlePdfClick(pdf.id)}
-                    className={cn(
-                      "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2",
-                      verifiedLead 
-                        ? "bg-slate-900 text-white hover:bg-orange-600" 
-                        : "bg-orange-600 text-white hover:bg-orange-500"
-                    )}
-                  >
-                    {verifiedLead ? t('btn_view') : t('btn_unlock')}
-                  </button>
                 </div>
               </div>
             ))}

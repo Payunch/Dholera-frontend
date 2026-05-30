@@ -51,6 +51,9 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
   const [isExporting, setIsExporting] = React.useState(false);
   const [isImporting, setIsImporting] = React.useState(false);
   const [importFile, setImportFile] = React.useState<File | null>(null);
+  const [isSyncing, setIsSyncing] = React.useState(false);
+  const [pdfImportFile, setPdfImportFile] = React.useState<File | null>(null);
+  const [isPdfImporting, setIsPdfImporting] = React.useState(false);
 
   const handleExportBackup = async () => {
     if (isExporting) return;
@@ -62,7 +65,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `dholera-backup-${new Date().toISOString()}.json`;
+      a.download = `dholera-platform-backup-${new Date().toISOString().split('T')[0]}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -72,6 +75,77 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
       alert('Backup failed');
     } finally {
       setIsExporting(false);
+    }
+  };
+
+  const handleExportPdfs = async () => {
+    try {
+      const resp = await fetch(`${API_BASE_URL}/pdf/export`, { credentials: 'include' });
+      if (!resp.ok) throw new Error('PDF Export failed');
+      const json = await resp.json();
+      const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `dholera-pdf-metadata-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch {
+      alert('PDF metadata export failed');
+    }
+  };
+
+  const handleSyncDisk = async () => {
+    if (isSyncing) return;
+    setIsSyncing(true);
+    try {
+      const resp = await fetch(`${API_BASE_URL}/pdf/sync-disk`, { 
+        method: 'POST',
+        credentials: 'include' 
+      });
+      const data = await resp.json();
+      if (resp.ok) {
+        alert(`Sync complete. Added ${data.added} new documents.`);
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (err) {
+      alert('Sync failed: ' + (err instanceof Error ? err.message : 'Unknown error'));
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  const handleImportPdfs = async () => {
+    if (isPdfImporting) return;
+    if (!pdfImportFile) return alert('Select a PDF metadata file to import');
+
+    setIsPdfImporting(true);
+    try {
+      const content = await pdfImportFile.text();
+      const data = JSON.parse(content);
+
+      const resp = await fetch(`${API_BASE_URL}/pdf/import`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        credentials: 'include'
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json();
+        throw new Error(err.error || 'Import failed');
+      }
+
+      const result = await resp.json();
+      alert(`Import success: ${result.created} created, ${result.updated} updated.`);
+      setPdfImportFile(null);
+    } catch (err) {
+      alert('Import failed: ' + (err instanceof Error ? err.message : 'Unknown error'));
+    } finally {
+      setIsPdfImporting(false);
     }
   };
 
@@ -238,31 +312,76 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
         )}
 
         {activeTab === 3 && (
-          <div className="space-y-6">
-            <div className="rounded-[1rem] border border-slate-200 bg-white p-6 shadow">
-              <h3 className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-slate-700">System Backup</h3>
-              <p className="text-sm text-slate-500 mb-4">Export a JSON snapshot of the database. This will not include uploaded files in the /uploads directory.</p>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={handleExportBackup}
-                  disabled={isExporting}
-                  className="rounded-lg bg-slate-900 px-4 py-2 text-white disabled:opacity-60"
-                >
-                  {isExporting ? 'Exporting...' : 'Export Backup'}
-                </button>
-                <input
-                  type="file"
-                  accept="application/json"
-                  onChange={(e) => setImportFile(e.target.files ? e.target.files[0] : null)}
-                  className="text-sm"
-                />
-                <button
-                  onClick={handleImportBackup}
-                  disabled={isImporting}
-                  className="rounded-lg border border-slate-200 px-4 py-2 disabled:opacity-60"
-                >
-                  {isImporting ? 'Importing...' : 'Import Backup'}
-                </button>
+          <div className="space-y-8">
+            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
+              <h3 className="mb-6 text-sm font-black uppercase tracking-[0.3em] text-slate-700">Portable Infrastructure Data</h3>
+              <div className="grid gap-8 md:grid-cols-2">
+                <div className="space-y-4">
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-orange-600">Full System Snapshot</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">Download a complete JSON backup of the platform database, including leads, sessions, and logs.</p>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <button
+                      onClick={handleExportBackup}
+                      disabled={isExporting}
+                      className="rounded-xl bg-slate-900 px-6 py-3 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 disabled:opacity-60"
+                    >
+                      {isExporting ? 'Exporting...' : 'Export Platform Backup'}
+                    </button>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="file"
+                        accept="application/json"
+                        onChange={(e) => setImportFile(e.target.files ? e.target.files[0] : null)}
+                        className="text-[10px] font-bold uppercase"
+                      />
+                      <button
+                        onClick={handleImportBackup}
+                        disabled={isImporting}
+                        className="rounded-xl border border-slate-200 px-6 py-3 text-xs font-black uppercase tracking-widest text-slate-600 transition-all hover:bg-slate-50 disabled:opacity-60"
+                      >
+                        {isImporting ? 'Importing...' : 'Restore'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 border-l border-slate-100 pl-8">
+                  <h4 className="text-xs font-bold uppercase tracking-widest text-orange-600">PDF Intelligence Portability</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">Manage specific PDF metadata. Use the Sync function to automatically discover new PDF files uploaded to the server.</p>
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap gap-4">
+                      <button
+                        onClick={handleExportPdfs}
+                        className="rounded-xl border border-slate-200 px-6 py-3 text-xs font-black uppercase tracking-widest text-slate-600 transition-all hover:border-slate-900 hover:text-slate-900"
+                      >
+                        Export PDF Metadata
+                      </button>
+                      <button
+                        onClick={handleSyncDisk}
+                        disabled={isSyncing}
+                        className="rounded-xl bg-orange-600 px-6 py-3 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-700 disabled:opacity-60 shadow-lg shadow-orange-600/10"
+                      >
+                        {isSyncing ? 'Synchronizing...' : 'Sync Local PDFs'}
+                      </button>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 pt-2 border-t border-slate-50">
+                      <input
+                        type="file"
+                        accept="application/json"
+                        onChange={(e) => setPdfImportFile(e.target.files ? e.target.files[0] : null)}
+                        className="text-[10px] font-bold uppercase"
+                      />
+                      <button
+                        onClick={handleImportPdfs}
+                        disabled={isPdfImporting}
+                        className="rounded-xl border border-slate-200 px-6 py-3 text-xs font-black uppercase tracking-widest text-slate-600 transition-all hover:bg-slate-50 disabled:opacity-60"
+                      >
+                        {isPdfImporting ? 'Importing...' : 'Import Metadata'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -16,22 +16,24 @@ export const metadata: Metadata = {
 
 export default function ClearanceEnginePage() {
   return (
-    <div className="bg-[#f8f6f1] bg-grid-sand pt-24 pb-20 min-h-screen">
+    <div className="bg-white pt-24 pb-32 min-h-screen">
       <div className="container mx-auto px-4 md:px-8">
-        <header className="mb-12 text-center space-y-4">
-          <div className="inline-flex items-center rounded-full bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 border border-orange-500/20">
+        <header className="mb-16 text-center space-y-6">
+          <div className="inline-flex items-center rounded-full bg-orange-50 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 border border-orange-200">
             Spatial Intelligence Hub
           </div>
-          <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 md:text-6xl uppercase">
+          <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 md:text-7xl uppercase leading-tight">
             Clearance <span className="text-orange-600 italic">&</span> Fee Engine
           </h1>
-          <p className="mx-auto max-w-3xl text-lg font-medium text-slate-600 leading-relaxed">
+          <p className="mx-auto max-w-3xl text-lg font-medium text-slate-500 leading-relaxed">
             Configure your project parameters to meet strict DSIRDA structural guidelines. 
             Achieve total clearance certainty before spending capital.
           </p>
         </header>
 
-        <ClearanceClient />
+        <div className="mx-auto max-w-5xl">
+          <ClearanceClient />
+        </div>
       </div>
     </div>
   );

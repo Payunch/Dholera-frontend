@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Instrument_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/layout/ClientLayout";
+import OrganizationSchema from "@/components/OrganizationSchema";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -83,6 +84,7 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6979634293826789"
           crossOrigin="anonymous"
         />
+        <OrganizationSchema />
       </head>
       <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
         <Script id="gtm-consent-init" strategy="beforeInteractive">
