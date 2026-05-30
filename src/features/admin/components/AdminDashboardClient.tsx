@@ -13,6 +13,7 @@ import {
 import { Lead, WhatsAppStats } from "@/types/admin";
 import { LeadsStats } from "./LeadsStats";
 import { LeadsTable } from "./LeadsTable";
+import { UpdatesManagement } from "./UpdatesManagement";
 import { cn } from "@/lib/utils";
 import { apiClient, API_BASE_URL } from "@/lib/api";
 
@@ -28,6 +29,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
 
   const tabs = [
     { label: "Leads", icon: Users },
+    { label: "Updates", icon: Globe },
     { label: "Professionals", icon: ShieldCheck },
     { label: "Insights", icon: Activity },
     { label: "System", icon: Settings },
@@ -265,7 +267,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
                 <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl">
                    <div className="flex items-center gap-3 mb-6">
                       <div className="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-                        <Globe className="h-5 w-5" />
+                        <Activity className="h-5 w-5" />
                       </div>
                       <div>
                         <h4 className="text-sm font-black uppercase tracking-tight">Regional Node</h4>
@@ -287,7 +289,9 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
           </>
         )}
 
-        {activeTab === 1 && (
+        {activeTab === 1 && <UpdatesManagement />}
+
+        {activeTab === 2 && (
           <div className="flex flex-col items-center justify-center py-40 text-center space-y-6">
              <div className="h-24 w-24 rounded-[2rem] bg-slate-100 flex items-center justify-center text-slate-300">
                 <ShieldCheck className="h-12 w-12" />
@@ -299,7 +303,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
           </div>
         )}
 
-        {activeTab === 2 && (
+        {activeTab === 3 && (
           <div className="flex flex-col items-center justify-center py-40 text-center space-y-6">
              <div className="h-24 w-24 rounded-[2rem] bg-slate-100 flex items-center justify-center text-slate-300">
                 <Activity className="h-12 w-12" />
@@ -311,7 +315,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
           </div>
         )}
 
-        {activeTab === 3 && (
+        {activeTab === 4 && (
           <div className="space-y-8">
             <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
               <h3 className="mb-6 text-sm font-black uppercase tracking-[0.3em] text-slate-700">Portable Infrastructure Data</h3>
