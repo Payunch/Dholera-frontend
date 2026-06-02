@@ -42,13 +42,10 @@ export default function AdminLoginPage() {
 
       setLoading(true);
       setError("");
-      // Clear cache and wait briefly for cookies to persist
+      // Clear cache and use a full page reload for maximum cookie reliability
       clearCsrfCache();
       
-      setTimeout(() => {
-        router.replace("/admin/dashboard");
-        router.refresh();
-      }, 200);
+      window.location.href = "/admin/dashboard";
     } catch (err) {
       clearCsrfCache();
       const { message, mfaRequired } = parseAuthError(err);
