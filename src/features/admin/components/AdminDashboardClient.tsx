@@ -9,13 +9,15 @@ import {
   LogOut,
   Activity,
   Globe,
-  CheckSquare
+  CheckSquare,
+  Database
 } from "lucide-react";
 import { Lead, WhatsAppStats } from "@/types/admin";
 import { LeadsStats } from "./LeadsStats";
 import { LeadsTable } from "./LeadsTable";
 import { UpdatesManagement } from "./UpdatesManagement";
 import { PaymentApprovals } from "./PaymentApprovals";
+import { DatabaseExplorer } from "./DatabaseExplorer";
 import { cn } from "@/lib/utils";
 import { apiClient, API_BASE_URL } from "@/lib/api";
 import { fetchCsrfToken } from "@/utils/csrf";
@@ -52,6 +54,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
     { label: "Approvals", icon: CheckSquare, badge: pendingCount },
     { label: "Updates", icon: Globe },
     { label: "Insights", icon: Activity },
+    { label: "Database", icon: Database },
     { label: "System", icon: Settings },
   ];
 
@@ -342,7 +345,9 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
           </div>
         )}
 
-        {activeTab === 4 && (
+        {activeTab === 4 && <DatabaseExplorer />}
+
+        {activeTab === 5 && (
           <div className="space-y-8">
             <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
               <h3 className="mb-6 text-sm font-black uppercase tracking-[0.3em] text-slate-700">Portable Infrastructure Data</h3>
