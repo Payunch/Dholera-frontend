@@ -30,10 +30,8 @@ declare global {
 }
 
 export default function ConsentBanner() {
-  const [isVisible, setIsVisible] = useState(() => {
-    const storedChoice = safeLocalStorage.getItem(CONSENT_STORAGE_KEY) as ConsentChoice | null;
-    return storedChoice !== "accepted" && storedChoice !== "rejected";
-  });
+  const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const feedbackTimerRef = useRef<number | null>(null);
 
@@ -45,7 +43,13 @@ export default function ConsentBanner() {
   };
 
   useEffect(() => {
+    setMounted(true);
     const storedChoice = safeLocalStorage.getItem(CONSENT_STORAGE_KEY) as ConsentChoice | null;
+    
+    // Only show if no choice has been made
+    if (storedChoice !== "accepted" && storedChoice !== "rejected") {
+      setIsVisible(true);
+    }
 
     if (storedChoice === "accepted" || storedChoice === "rejected") {
       updateGoogleConsent(storedChoice);
@@ -80,6 +84,8 @@ export default function ConsentBanner() {
       feedbackTimerRef.current = null;
     }, 2400);
   };
+
+  if (!mounted) return null;
 
   return (
     <>

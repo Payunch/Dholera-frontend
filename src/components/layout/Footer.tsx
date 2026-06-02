@@ -101,7 +101,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t pt-8 text-center text-xs font-bold uppercase tracking-widest text-slate-400">
-          (c) {new Date().getFullYear()} {ownerDetails.brandName.toUpperCase()}. All rights reserved. Built for India&apos;s Growth.
+          (c) 2026 {ownerDetails.brandName.toUpperCase()}. All rights reserved. Built for India&apos;s Growth.
         </div>
       </div>
     </footer>
