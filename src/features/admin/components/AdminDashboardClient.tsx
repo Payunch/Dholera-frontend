@@ -18,6 +18,7 @@ import { LeadsTable } from "./LeadsTable";
 import { UpdatesManagement } from "./UpdatesManagement";
 import { PaymentApprovals } from "./PaymentApprovals";
 import { DatabaseExplorer } from "./DatabaseExplorer";
+import { PlatformInsights } from "./PlatformInsights";
 import { cn } from "@/lib/utils";
 import { apiClient, API_BASE_URL } from "@/lib/api";
 import { fetchCsrfToken } from "@/utils/csrf";
@@ -333,17 +334,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
 
         {activeTab === 2 && <UpdatesManagement />}
 
-        {activeTab === 3 && (
-          <div className="flex flex-col items-center justify-center py-40 text-center space-y-6">
-             <div className="h-24 w-24 rounded-[2rem] bg-slate-100 flex items-center justify-center text-slate-300">
-                <Activity className="h-12 w-12" />
-             </div>
-             <div className="space-y-2">
-                <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900">{tabs[activeTab].label} Restricted</h3>
-                <p className="text-lg font-medium text-slate-500 italic">Insights are available via reports endpoint.</p>
-             </div>
-          </div>
-        )}
+        {activeTab === 3 && <PlatformInsights />}
 
         {activeTab === 4 && <DatabaseExplorer />}
 
