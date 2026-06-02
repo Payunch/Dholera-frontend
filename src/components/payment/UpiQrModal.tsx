@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { X, ShieldCheck, Copy, Check, MessageSquare } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -25,8 +25,15 @@ export const UpiQrModal = ({
 
   const totalAmount = baseAmount * count;
 
-  // Simple UPI Link
-  const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&am=${totalAmount.toFixed(2)}&cu=INR`;
+  // Build UPI Link safely: upi://pay?pa=upiid&pn=name&am=amount&cu=INR
+  const upiLink = useMemo(() => {
+    const params = new URLSearchParams();
+    params.set('pa', upiId);
+    params.set('pn', merchantName);
+    params.set('am', totalAmount.toFixed(2));
+    params.set('cu', 'INR');
+    return `upi://pay?${params.toString()}`;
+  }, [upiId, merchantName, totalAmount]);
 
   useEffect(() => {
     setMounted(true);
