@@ -43,9 +43,8 @@ export function PdfListing() {
   const [showUpiModal, setShowUpiModal] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [upiOrderDetails, setUpiOrderDetails] = useState<{
-    upiId: string;
-    merchantName: string;
     amount: number;
+    title: string;
     transactionId: string;
     isPro?: boolean;
   } | null>(null);
@@ -132,9 +131,8 @@ export function PdfListing() {
       }
 
       setUpiOrderDetails({
-        upiId: data.upiId,
-        merchantName: data.merchantName,
         amount: data.amount,
+        title: `SELECTED PDFS (QTY: ${selectedPdfs.length})`,
         transactionId: data.transactionId,
         isPro: data.isPro
       });
@@ -147,19 +145,48 @@ export function PdfListing() {
     }
   };
 
-  const handleNotifyAdmin = (finalAmount: number) => {
+  const handleNotifyAdmin = (finalAmount: number, utr?: string) => {
     const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
     const adminPhone = rawPhone.replace(/\D/g, ''); 
-    const subject = upiOrderDetails?.isPro ? 'PRO ACCESS (ALL DOCUMENTS)' : `SELECTED PDFS (QTY: ${finalAmount / 10})`;
-    const message = `Hello Admin, I have paid ₹${finalAmount} for ${subject}. \n\nTransaction ID: ${upiOrderDetails?.transactionId}\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease unlock my access.`;
-    window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
+    const utrSnippet = utr ? `\nUTR/Ref: ${utr}` : '';
+    const message = `Hello Admin, I have paid ₹${finalAmount} for ${upiOrderDetails?.title}.${utrSnippet}\n\nTransaction ID: ${upiOrderDetails?.transactionId}\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease unlock my access.`;
+    window.open(`https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  const handleVerifyUtr = async (utr: string): Promise<boolean> => {
+    if (!upiOrderDetails || !verifiedLead) return false;
+    try {
+      const res = await fetch(`${API_BASE_URL}/payment/verify-utr`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': verifiedLead.token
+        },
+        body: JSON.stringify({ 
+          utr, 
+          transactionId: upiOrderDetails.transactionId,
+          leadToken: verifiedLead.token 
+        })
+      });
+
+      if (res.ok) {
+        setShowUpiModal(false);
+        setIsSelectionMode(false);
+        window.location.reload(); 
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error('UTR Verify Error:', err);
+      return false;
+    }
   };
 
   const handleManualAccess = () => {
     const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
     const adminPhone = rawPhone.replace(/\D/g, ''); 
     const message = `Hello Admin, I am interested in unlocking Pro Access to all intelligence archives. \n\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease guide me on the process.`;
-    window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const formatUploadedAt = (pdf: PDF) => {
@@ -350,11 +377,13 @@ export function PdfListing() {
 
       {showUpiModal && upiOrderDetails && (
         <UpiQrModal
-          upiId={upiOrderDetails.upiId}
+          upiId={process.env.ADMIN_UPI_ID || '917435808310@ybl'}
           amount={upiOrderDetails.amount}
-          merchantName={upiOrderDetails.merchantName}
+          merchantName={process.env.ADMIN_NAME || 'Dholera Platform'}
+          transactionId={upiOrderDetails.transactionId}
           onClose={() => setShowUpiModal(false)}
           onNotify={handleNotifyAdmin}
+          onVerifyUtr={handleVerifyUtr}
         />
       )}
     </section>

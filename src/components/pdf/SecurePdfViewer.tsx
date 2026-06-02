@@ -169,6 +169,34 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     }
   };
 
+  const handleVerifyUtr = async (utr: string): Promise<boolean> => {
+    if (!upiOrderDetails?.transactionId) return false;
+    try {
+      const res = await fetch(`${API_BASE_URL}/payment/verify-utr`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token || ''
+        },
+        body: JSON.stringify({ 
+          utr, 
+          transactionId: upiOrderDetails.transactionId,
+          leadToken: token 
+        })
+      });
+
+      if (res.ok) {
+        setShowUpiModal(false);
+        fetchPdf(); // Refresh to unlock
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error('UTR Verify Error:', err);
+      return false;
+    }
+  };
+
   if (!mounted) return null;
 
   const displayError = !pdfId ? 'Invalid document ID' : error;
@@ -273,8 +301,10 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             upiId={upiOrderDetails.upiId}
             amount={upiOrderDetails.amount}
             merchantName={upiOrderDetails.merchantName}
+            transactionId={upiOrderDetails.transactionId}
             onClose={() => setShowUpiModal(false)}
             onNotify={handleNotifyAdmin}
+            onVerifyUtr={handleVerifyUtr}
           />
         )}
 
