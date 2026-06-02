@@ -41,9 +41,13 @@ export function PdfListing() {
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedPdfs, setSelectedPdfs] = useState<string[]>([]);
   const [showUpiModal, setShowUpiModal] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const [upiOrderDetails, setUpiOrderDetails] = useState<{
+    upiId: string;
+    merchantName: string;
     amount: number;
-    title: string;
+    transactionId: string;
+    isPro?: boolean;
   } | null>(null);
 
   useEffect(() => {
@@ -98,27 +102,62 @@ export function PdfListing() {
     );
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!verifiedLead) {
       setShowVerifyPopup(true);
       return;
     }
-    setUpiOrderDetails({
-      amount: selectedPdfs.length * 10,
-      title: `SELECTED PDFS (QTY: ${selectedPdfs.length})`
-    });
-    setShowUpiModal(true);
+
+    setPaymentLoading(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/payment/request-manual`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': verifiedLead.token
+        },
+        body: JSON.stringify({ 
+          pdfIds: selectedPdfs, 
+          leadToken: verifiedLead.token 
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Checkout failed');
+
+      if (data.alreadyPurchased) {
+        alert('You already have access to these documents.');
+        setIsSelectionMode(false);
+        return;
+      }
+
+      setUpiOrderDetails({
+        upiId: data.upiId,
+        merchantName: data.merchantName,
+        amount: data.amount,
+        transactionId: data.transactionId,
+        isPro: data.isPro
+      });
+      setShowUpiModal(true);
+
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Checkout failed');
+    } finally {
+      setPaymentLoading(false);
+    }
   };
 
   const handleNotifyAdmin = (finalAmount: number) => {
     const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
     const adminPhone = rawPhone.replace(/\D/g, ''); 
-    const message = `Hello Admin, I have paid ₹${finalAmount} for ${upiOrderDetails?.title}. \n\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease unlock my access.`;
+    const subject = upiOrderDetails?.isPro ? 'PRO ACCESS (ALL DOCUMENTS)' : `SELECTED PDFS (QTY: ${finalAmount / 10})`;
+    const message = `Hello Admin, I have paid ₹${finalAmount} for ${subject}. \n\nTransaction ID: ${upiOrderDetails?.transactionId}\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease unlock my access.`;
     window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const handleManualAccess = () => {
-    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '9174358080310';
+    const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
+    const adminPhone = rawPhone.replace(/\D/g, ''); 
     const message = `Hello Admin, I am interested in unlocking Pro Access to all intelligence archives. \n\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease guide me on the process.`;
     window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
@@ -157,12 +196,11 @@ export function PdfListing() {
             </div>
           </div>
 
-          {/* Pro Membership Card */}
           <div className="bg-slate-950 rounded-3xl p-6 text-white shadow-2xl border border-white/10 flex flex-col sm:flex-row items-center gap-6">
              <div className="text-center sm:text-left">
                <h4 className="text-sm font-black uppercase tracking-widest text-orange-500">Pro Intelligence</h4>
                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Unlimited Access to 50+ documents</p>
-               <p className="text-[9px] font-medium text-slate-500 uppercase mt-1 italic">Trial: 1 free document per user</p>
+               <p className="text-[9px] font-medium text-slate-500 uppercase mt-1 italic">Trial: PDF 19 is Free</p>
              </div>
              <button 
                onClick={handleManualAccess}
@@ -276,11 +314,11 @@ export function PdfListing() {
                     <span className="text-xl font-black text-white">₹{selectedPdfs.length * 10}</span>
                  </div>
                  <button 
-                   disabled={selectedPdfs.length === 0}
+                   disabled={selectedPdfs.length === 0 || paymentLoading}
                    onClick={handleCheckout}
                    className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20"
                  >
-                   Pay Now & Unlock
+                   {paymentLoading ? '...' : 'Pay Now & Unlock'}
                  </button>
               </div>
            </div>
@@ -312,9 +350,9 @@ export function PdfListing() {
 
       {showUpiModal && upiOrderDetails && (
         <UpiQrModal
-          upiId={process.env.ADMIN_UPI_ID || '917435808310@ybl'}
+          upiId={upiOrderDetails.upiId}
           amount={upiOrderDetails.amount}
-          merchantName={process.env.ADMIN_NAME || 'Dholera Platform'}
+          merchantName={upiOrderDetails.merchantName}
           onClose={() => setShowUpiModal(false)}
           onNotify={handleNotifyAdmin}
         />

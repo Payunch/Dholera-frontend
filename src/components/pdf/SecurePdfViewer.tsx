@@ -21,9 +21,15 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
   
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const [showUpiModal, setShowUpiModal] = useState(false);
-  const [upiAmount, setUpiAmount] = useState(499);
-  const [upiType, setUpiType] = useState<'single' | 'pro'>('pro');
+  const [upiOrderDetails, setUpiOrderDetails] = useState<{
+    upiId: string;
+    merchantName: string;
+    amount: number;
+    transactionId: string;
+    isPro?: boolean;
+  } | null>(null);
 
   const { logoutLead } = useLead();
 
@@ -114,15 +120,53 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
   const handleNotifyAdmin = (finalAmount: number) => {
     const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
     const adminPhone = rawPhone.replace(/\D/g, ''); 
-    const subject = upiType === 'pro' ? 'PRO ACCESS (ALL DOCUMENTS)' : `SELECTED PDFS (QTY: ${finalAmount / 10})`;
-    const message = `Hello Admin, I have paid ₹${finalAmount} for ${subject}. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease unlock my access.`;
+    
+    const subject = upiOrderDetails?.isPro ? 'PRO ACCESS (ALL DOCUMENTS)' : `SELECTED PDFS (QTY: ${finalAmount / 10})`;
+    const message = `Hello Admin, I have paid ₹${finalAmount} for ${subject}. \n\nTransaction ID: ${upiOrderDetails?.transactionId}\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease unlock my access.`;
+    
     window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
-  const openUpi = (type: 'single' | 'pro') => {
-    setUpiType(type);
-    setUpiAmount(type === 'pro' ? 499 : 10);
-    setShowUpiModal(true);
+  const startManualPayment = async (type: 'single' | 'pro') => {
+    setPaymentLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/payment/request-manual`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token || ''
+        },
+        body: JSON.stringify({ 
+          pdfId: type === 'pro' ? 'all' : pdfId, 
+          leadToken: token, 
+          fingerprint 
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+
+      if (data.alreadyPurchased) {
+        fetchPdf();
+        return;
+      }
+
+      setUpiOrderDetails({
+        upiId: data.upiId,
+        merchantName: data.merchantName,
+        amount: data.amount,
+        transactionId: data.transactionId,
+        isPro: data.isPro
+      });
+      setShowUpiModal(true);
+
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to initiate payment');
+    } finally {
+      setPaymentLoading(false);
+    }
   };
 
   if (!mounted) return null;
@@ -182,27 +226,29 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             <div className="bg-slate-50 p-8 md:w-1/2 flex flex-col gap-4 border-l border-slate-100">
               {/* Option 1: Pro */}
               <button 
-                onClick={() => openUpi('pro')}
-                className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1"
+                disabled={paymentLoading}
+                onClick={() => startManualPayment('pro')}
+                className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1 disabled:opacity-50"
               >
                 <span className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-1">Recommended</span>
                 <span className="text-lg font-black uppercase tracking-tight">Unlock Hub</span>
                 <span className="text-xs font-bold text-slate-400 group-hover:text-white/80">Lifetime access to all PDFs</span>
                 <div className="mt-4 flex items-center justify-between w-full">
-                   <span className="text-2xl font-black">₹499</span>
+                   <span className="text-2xl font-black">{paymentLoading ? '...' : '₹499'}</span>
                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
 
               {/* Option 2: Single */}
               <button 
-                onClick={() => openUpi('single')}
-                className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1"
+                disabled={paymentLoading}
+                onClick={() => startManualPayment('single')}
+                className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1 disabled:opacity-50"
               >
                 <span className="text-lg font-black uppercase tracking-tight text-slate-900">Unlock This Only</span>
                 <span className="text-xs font-bold text-slate-400">Single document access</span>
                 <div className="mt-4 flex items-center justify-between w-full">
-                   <span className="text-2xl font-black text-slate-900">₹10</span>
+                   <span className="text-2xl font-black text-slate-900">{paymentLoading ? '...' : '₹10'}</span>
                    <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
@@ -222,11 +268,11 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
           </div>
         )}
 
-        {showUpiModal && (
+        {showUpiModal && upiOrderDetails && (
           <UpiQrModal
-            upiId={process.env.ADMIN_UPI_ID || '917435808310@ybl'}
-            amount={upiAmount}
-            merchantName={process.env.ADMIN_NAME || 'Dholera Platform'}
+            upiId={upiOrderDetails.upiId}
+            amount={upiOrderDetails.amount}
+            merchantName={upiOrderDetails.merchantName}
             onClose={() => setShowUpiModal(false)}
             onNotify={handleNotifyAdmin}
           />
