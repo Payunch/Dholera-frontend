@@ -145,6 +145,46 @@ export function PdfListing() {
     }
   };
 
+  const handleBuyAll = async () => {
+    if (!verifiedLead) {
+      setShowVerifyPopup(true);
+      return;
+    }
+    
+    setPaymentLoading(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/payment/request-manual`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': verifiedLead.token
+        },
+        body: JSON.stringify({ pdfId: 'all', leadToken: verifiedLead.token })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to initiate purchase');
+
+      if (data.alreadyPurchased) {
+        alert('You already have Pro (All Access) membership!');
+        return;
+      }
+
+      setUpiOrderDetails({
+        amount: data.amount,
+        title: `PRO ACCESS (ALL DOCUMENTS)`,
+        transactionId: data.transactionId,
+        isPro: true
+      });
+      setShowUpiModal(true);
+
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Payment failed');
+    } finally {
+      setPaymentLoading(false);
+    }
+  };
+
   const handleVerifyUtr = async (utr: string): Promise<boolean> => {
     if (!upiOrderDetails || !verifiedLead) return false;
     try {
@@ -174,10 +214,6 @@ export function PdfListing() {
       console.error('UTR Submit Error:', err);
       return false;
     }
-  };
-
-  const handleManualAccess = () => {
-    setIsSelectionMode(true);
   };
 
   const formatUploadedAt = (pdf: PDF) => {
@@ -211,20 +247,30 @@ export function PdfListing() {
                   {tab.label}
                 </button>
               ))}
+
+              {!isSelectionMode && (
+                <button
+                  onClick={() => setIsSelectionMode(true)}
+                  className="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2 border-dashed border-slate-200 text-slate-400 hover:border-orange-600 hover:text-orange-600 flex items-center gap-2"
+                >
+                  <ShieldCheck className="h-3 w-3" /> Select Multiple
+                </button>
+              )}
             </div>
           </div>
 
-          <div className="bg-slate-950 rounded-3xl p-6 text-white shadow-2xl border border-white/10 flex flex-col sm:flex-row items-center gap-6">
+          <div className="bg-slate-950 rounded-3xl p-6 text-white shadow-2xl border border-white/10 flex flex-col sm:flex-row items-center gap-6 animate-in fade-in slide-in-from-right-10 duration-700">
              <div className="text-center sm:text-left">
-               <h4 className="text-sm font-black uppercase tracking-widest text-orange-500">Pro Intelligence</h4>
-               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Unlimited Access to 50+ documents</p>
-               <p className="text-[9px] font-medium text-slate-500 uppercase mt-1 italic">Trial: PDF 19 is Free</p>
+               <h4 className="text-sm font-black uppercase tracking-widest text-orange-500">Intelligence Hub Pro</h4>
+               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Unlimited Access to 50+ maps & documents</p>
+               <p className="text-[9px] font-medium text-slate-500 uppercase mt-1 italic">One-time: ₹499 Lifetime</p>
              </div>
              <button 
-               onClick={handleManualAccess}
-               className="bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-orange-600/20 whitespace-nowrap"
+               onClick={handleBuyAll}
+               disabled={verifiedLead?.is_pro || paymentLoading}
+               className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20 whitespace-nowrap"
              >
-               {verifiedLead?.is_pro ? 'PRO ACTIVE' : 'Unlock Hub'}
+               {verifiedLead?.is_pro ? 'PRO ACTIVE' : paymentLoading ? '...' : 'Unlock Hub'}
              </button>
           </div>
 
