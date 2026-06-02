@@ -77,7 +77,12 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     setRequiresPayment(false);
     
     try {
-      if (!token) throw new Error('Verification required to access this document.');
+      const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID || '19';
+      const isTrial = String(pdfId) === String(freeTrialId);
+
+      if (!token && !isTrial) {
+        throw new Error('Verification required to access this document.');
+      }
 
       // ROADMAP PHASE 6: USE CENTRALIZED API CLIENT (Handles App Check automatically)
       const res = await apiClient.get(`/pdf/view/${pdfId}`, {
@@ -95,16 +100,27 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
         pollIntervalRef.current = null;
       }
     } catch (err: any) {
+      let errorData = err.response?.data;
+
+      // Since responseType is 'blob', we must convert error blob back to text/json
+      if (errorData instanceof Blob) {
+        try {
+          const text = await errorData.text();
+          errorData = JSON.parse(text);
+        } catch (e) {
+          errorData = { error: 'Document access failed' };
+        }
+      }
+
       if (err.response?.status === 402) {
-        const data = err.response.data;
-        if (data.status === 'awaiting_approval') {
+        if (errorData?.status === 'awaiting_approval') {
           setAwaitingApproval(true);
         } else {
           setRequiresPayment(true);
         }
       } else if (!isPolling) {
         console.error('SecurePdfViewer Fetch Error:', err);
-        setError(err.response?.data?.error || 'Failed to load document.');
+        setError(errorData?.error || 'Failed to load document.');
       }
     } finally {
       if (!isPolling) setLoading(false);
