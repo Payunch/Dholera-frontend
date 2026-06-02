@@ -5,32 +5,24 @@ import Link from "next/link";
 import { ProfessionalRouteGuard } from "@/components/professional/ProfessionalRouteGuard";
 import { API_BASE_URL } from "@/lib/api";
 import { useLead } from "@/providers/LeadProvider";
+import { Loader2, FileText, ExternalLink, ShieldCheck } from "lucide-react";
 
 type PurchaseRecord = {
   id: number;
-  amount: number;
-  currency: string;
+  pdfId: number;
   status: string;
-  purchasedAt: string;
-  document: {
-    id: number;
-    title: string;
-    category: string;
-    file_path: string;
-    is_protected: boolean;
-  } | null;
+  amount: number;
+  transactionId: string;
+  createdAt: string;
+  documentTitle: string;
+  category?: string;
 };
 
 const formatDate = (value?: string) => {
   if (!value) return "-";
   const parsed = new Date(value);
   if (Number.isNaN(parsed.getTime())) return "-";
-  return parsed.toLocaleDateString();
-};
-
-const formatAmount = (paise: number, currency: string) => {
-  const rupees = Number.isFinite(paise) ? paise / 100 : 0;
-  return `${currency || "INR"} ${rupees.toFixed(2)}`;
+  return parsed.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 };
 
 export default function ProfessionalDocumentsPage() {
@@ -51,9 +43,13 @@ export default function ProfessionalDocumentsPage() {
       try {
         const response = await fetch(`${API_BASE_URL}/payment/my-purchases`, {
           headers: {
-            Authorization: `Bearer ${verifiedLead.token}`,
+            Authorization: verifiedLead.token,
           },
         });
+
+        if (response.status === 404) {
+          throw new Error("Payment records service temporarily unavailable. Please try again later.");
+        }
 
         const data = await response.json();
         if (!response.ok) {
@@ -61,9 +57,14 @@ export default function ProfessionalDocumentsPage() {
         }
 
         if (!active) return;
-        setPurchases(Array.isArray(data?.purchases) ? data.purchases : []);
+        // Only show completed purchases in this view
+        const completed = (Array.isArray(data?.purchases) ? data.purchases : [])
+          .filter((p: PurchaseRecord) => p.status === 'completed');
+          
+        setPurchases(completed);
       } catch (err) {
         if (!active) return;
+        console.error('Pro Portal Load Error:', err);
         setError(err instanceof Error ? err.message : "Failed to load purchased documents.");
       } finally {
         if (active) setLoading(false);
@@ -80,76 +81,78 @@ export default function ProfessionalDocumentsPage() {
   return (
     <ProfessionalRouteGuard>
       <div className="min-h-screen bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-          <h1 className="text-2xl font-black text-slate-900">Documents</h1>
-          <p className="mt-2 text-sm text-slate-600">
-            Purchased official documents are listed below from your completed payments.
-          </p>
+        <div className="mx-auto max-w-5xl rounded-[2.5rem] border border-slate-200 bg-white p-10 shadow-xl overflow-hidden">
+          <div className="flex items-center gap-4 mb-8">
+             <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-white shadow-lg shadow-orange-600/20">
+                <FileText className="h-6 w-6" />
+             </div>
+             <div>
+                <h1 className="text-3xl font-black text-slate-900 uppercase tracking-tight">Intelligence Vault</h1>
+                <p className="text-sm font-medium text-slate-500">Your collection of unlocked official DSIRDA documents.</p>
+             </div>
+          </div>
 
           {loading && (
-            <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-6 text-sm font-semibold text-slate-600">
-              Loading purchased documents...
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <Loader2 className="h-10 w-10 text-orange-600 animate-spin" />
+              <p className="text-xs font-black uppercase tracking-widest text-slate-400">Opening Vault...</p>
             </div>
           )}
 
           {!loading && error && (
-            <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-6 text-sm font-semibold text-red-700">
-              {error}
+            <div className="rounded-2xl border-2 border-dashed border-red-100 bg-red-50 p-10 text-center">
+              <p className="text-sm font-bold text-red-600 uppercase tracking-wider">{error}</p>
+              <button onClick={() => window.location.reload()} className="mt-4 text-[10px] font-black uppercase tracking-widest text-red-700 underline">Try Again</button>
             </div>
           )}
 
           {!loading && !error && purchases.length === 0 && (
-            <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-6 text-sm font-semibold text-slate-600">
-              No completed purchases found yet.
+            <div className="rounded-[2rem] border-2 border-dashed border-slate-100 bg-slate-50/50 p-16 text-center">
+               <div className="h-16 w-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm text-slate-300">
+                  <ShieldCheck className="h-8 w-8" />
+               </div>
+               <h3 className="text-lg font-black text-slate-900 uppercase mb-2">Vault is Empty</h3>
+               <p className="text-sm font-medium text-slate-400 max-w-xs mx-auto">You haven't unlocked any premium documents yet. Head to the archive to explore.</p>
+               <Link href="/#pdfs" className="mt-8 inline-block rounded-xl bg-slate-900 px-8 py-3 text-xs font-black text-white uppercase tracking-widest hover:bg-orange-600 transition-all">Browse Archive</Link>
             </div>
           )}
 
           {!loading && !error && purchases.length > 0 && (
-            <div className="mt-8 overflow-hidden rounded-xl border border-slate-200">
-              <table className="min-w-full divide-y divide-slate-200 text-sm">
-                <thead className="bg-slate-50">
-                  <tr>
-                    <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-slate-500">Document</th>
-                    <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-slate-500">Category</th>
-                    <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-slate-500">Amount</th>
-                    <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-slate-500">Purchased</th>
-                    <th className="px-4 py-3 text-left font-bold uppercase tracking-wider text-slate-500">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 bg-white">
-                  {purchases.map((purchase) => (
-                    <tr key={purchase.id}>
-                      <td className="px-4 py-3 font-semibold text-slate-900">{purchase.document?.title || "Document"}</td>
-                      <td className="px-4 py-3 text-slate-700">{purchase.document?.category || "-"}</td>
-                      <td className="px-4 py-3 text-slate-700">{formatAmount(purchase.amount, purchase.currency)}</td>
-                      <td className="px-4 py-3 text-slate-700">{formatDate(purchase.purchasedAt)}</td>
-                      <td className="px-4 py-3 text-slate-700">
-                        {purchase.document?.id ? (
-                          <a
-                            href={`${API_BASE_URL}/pdf/view/${purchase.document.id}?token=${encodeURIComponent(verifiedLead?.token || "")}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-semibold text-orange-600 hover:text-orange-700"
-                          >
-                            View PDF
-                          </a>
-                        ) : (
-                          <span className="text-slate-400">Unavailable</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+               {purchases.map((purchase) => (
+                 <div key={purchase.id} className="group bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md hover:border-orange-200 transition-all flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                       <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-orange-50 group-hover:text-orange-600 transition-all">
+                          <FileText className="h-5 w-5" />
+                       </div>
+                       <div>
+                          <h4 className="text-sm font-black text-slate-900 uppercase leading-tight line-clamp-1">{purchase.documentTitle}</h4>
+                          <div className="flex items-center gap-2 mt-1">
+                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{purchase.category || 'General'}</span>
+                             <span className="text-[8px] text-slate-300">•</span>
+                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{formatDate(purchase.createdAt)}</span>
+                          </div>
+                       </div>
+                    </div>
+                    <a 
+                      href={`${API_BASE_URL}/pdf/view/${purchase.pdfId}?token=${verifiedLead?.token}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-xl bg-slate-50 text-slate-400 hover:bg-orange-600 hover:text-white transition-all shadow-sm"
+                    >
+                       <ExternalLink className="h-4 w-4" />
+                    </a>
+                 </div>
+               ))}
             </div>
           )}
 
-          <div className="mt-8 flex gap-3">
-            <Link href="/professional/dashboard" className="rounded-md bg-orange-600 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-700">
-              Back to Dashboard
+          <div className="mt-12 pt-8 border-t border-slate-100 flex flex-wrap gap-4">
+            <Link href="/professional/dashboard" className="rounded-xl bg-slate-900 px-6 py-3 text-xs font-black uppercase tracking-widest text-white hover:bg-orange-600 transition-all shadow-lg">
+              Dashboard
             </Link>
-            <Link href="/" className="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
-              Home
+            <Link href="/#pdfs" className="rounded-xl border-2 border-slate-100 px-6 py-3 text-xs font-black uppercase tracking-widest text-slate-400 hover:border-orange-600 hover:text-orange-600 transition-all">
+              Add Documents
             </Link>
           </div>
         </div>

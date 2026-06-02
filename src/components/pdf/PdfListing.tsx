@@ -32,6 +32,7 @@ export function PdfListing() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
   const [search, setSearch] = useState('');
+  const [purchasedPdfIds, setPurchasedPdfIds] = useState<string[]>([]);
   
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
@@ -49,6 +50,23 @@ export function PdfListing() {
     isPro?: boolean;
   } | null>(null);
 
+  const fetchPurchases = React.useCallback(() => {
+    if (!verifiedLead?.token) return;
+    fetch(`${API_BASE_URL}/payment/my-purchases`, {
+      headers: { 'Authorization': verifiedLead.token }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success && data.purchases) {
+        const completed = data.purchases
+          .filter((p: any) => p.status === 'completed')
+          .map((p: any) => String(p.pdfId));
+        setPurchasedPdfIds(completed);
+      }
+    })
+    .catch(e => console.error('Purchases fetch error:', e));
+  }, [verifiedLead?.token]);
+
   useEffect(() => {
     fetch(`${API_BASE_URL}/pdf/list`)
       .then(async res => {
@@ -63,7 +81,12 @@ export function PdfListing() {
         console.error('PDF Listing Error:', err);
       })
       .finally(() => setLoading(false));
-  }, []);
+
+    fetchPurchases();
+    // Poll for approvals every 30 seconds while browsing
+    const interval = setInterval(fetchPurchases, 30000);
+    return () => clearInterval(interval);
+  }, [fetchPurchases]);
 
   const tabs = [
     { id: 0, label: t('pdf_cat_official'), keywords: ['pdf', 'brochure', 'legal', 'general'] },
@@ -127,6 +150,7 @@ export function PdfListing() {
       if (data.alreadyPurchased) {
         alert('You already have access to these documents.');
         setIsSelectionMode(false);
+        fetchPurchases();
         return;
       }
 
@@ -167,6 +191,7 @@ export function PdfListing() {
 
       if (data.alreadyPurchased) {
         alert('You already have Pro (All Access) membership!');
+        fetchPurchases();
         return;
       }
 
@@ -204,9 +229,8 @@ export function PdfListing() {
       if (res.ok) {
         setShowUpiModal(false);
         setIsSelectionMode(false);
-        // Instant unlock notification
         alert('Payment details submitted. Your documents will be unlocked as soon as the Admin approves.');
-        window.location.reload(); 
+        fetchPurchases();
         return true;
       }
       return false;
@@ -214,6 +238,10 @@ export function PdfListing() {
       console.error('UTR Submit Error:', err);
       return false;
     }
+  };
+
+  const handleManualAccess = () => {
+    setIsSelectionMode(true);
   };
 
   const formatUploadedAt = (pdf: PDF) => {
@@ -259,10 +287,11 @@ export function PdfListing() {
             </div>
           </div>
 
+          {/* Pro Membership Card */}
           <div className="bg-slate-950 rounded-3xl p-6 text-white shadow-2xl border border-white/10 flex flex-col sm:flex-row items-center gap-6 animate-in fade-in slide-in-from-right-10 duration-700">
              <div className="text-center sm:text-left">
-               <h4 className="text-sm font-black uppercase tracking-widest text-orange-500">Intelligence Hub Pro</h4>
-               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Unlimited Access to 50+ maps & documents</p>
+               <h4 className="text-sm font-black uppercase tracking-widest text-orange-500">Intelligence Pro</h4>
+               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Unlimited Access to all maps & archives</p>
                <p className="text-[9px] font-medium text-slate-500 uppercase mt-1 italic">One-time: ₹499 Lifetime</p>
              </div>
              <button 
@@ -270,7 +299,7 @@ export function PdfListing() {
                disabled={verifiedLead?.is_pro || paymentLoading}
                className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20 whitespace-nowrap"
              >
-               {verifiedLead?.is_pro ? 'PRO ACTIVE' : paymentLoading ? '...' : 'Unlock Hub'}
+               {verifiedLead?.is_pro ? 'PRO ACTIVE' : paymentLoading ? '...' : 'Unlock All (₹499)'}
              </button>
           </div>
 
@@ -296,6 +325,7 @@ export function PdfListing() {
             {filtered.map(pdf => {
               const isSelected = selectedPdfs.includes(pdf.id);
               const isFree = String(pdf.id) === '19';
+              const isPurchased = purchasedPdfIds.includes(String(pdf.id));
               
               return (
                 <div 
@@ -319,7 +349,8 @@ export function PdfListing() {
                        </div>
                      )}
 
-                     {(!verifiedLead?.is_pro && !isFree && !isSelected) && (
+                     {/* Hide lock if user is Pro OR if it's free OR if user purchased it */}
+                     {(!verifiedLead?.is_pro && !isFree && !isSelected && !isPurchased) && (
                        <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
                          <Lock className="h-4 w-4" />
                        </div>
