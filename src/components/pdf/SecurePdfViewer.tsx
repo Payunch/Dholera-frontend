@@ -79,42 +79,12 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     try {
       if (!token) throw new Error('Verification required to access this document.');
 
-      const headers: Record<string, string> = {
-        'Authorization': token || ''
-      };
+      // ROADMAP PHASE 6: USE CENTRALIZED API CLIENT (Handles App Check automatically)
+      const res = await apiClient.get(`/pdf/view/${pdfId}`, {
+        responseType: 'blob'
+      });
 
-      // ROADMAP PHASE 6: ATTACH APP CHECK SHIELD
-      try {
-        const { getAppCheck, getToken } = await import("firebase/app-check") as any;
-        const appCheck = getAppCheck();
-        const tokenResult = await getToken(appCheck, false);
-        if (tokenResult?.token) {
-          headers['X-Firebase-AppCheck'] = tokenResult.token;
-        }
-      } catch (e) {
-        // Fallback for ad-blockers
-      }
-
-      const res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, { headers });
-
-      if (res.status === 402) {
-        const data = await res.json().catch(() => ({}));
-        if (data.status === 'awaiting_approval') {
-          setAwaitingApproval(true);
-        } else {
-          setRequiresPayment(true);
-        }
-        if (!isPolling) setLoading(false);
-        return;
-      }
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({ error: 'Server error' }));
-        throw new Error(errData.error || `Failed to load document (${res.status})`);
-      }
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(res.data);
       setBlobUrl(url);
       setAwaitingApproval(false);
       setRequiresPayment(false);
@@ -124,10 +94,17 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
         clearInterval(pollIntervalRef.current);
         pollIntervalRef.current = null;
       }
-    } catch (err) {
-      if (!isPolling) {
+    } catch (err: any) {
+      if (err.response?.status === 402) {
+        const data = err.response.data;
+        if (data.status === 'awaiting_approval') {
+          setAwaitingApproval(true);
+        } else {
+          setRequiresPayment(true);
+        }
+      } else if (!isPolling) {
         console.error('SecurePdfViewer Fetch Error:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load document.');
+        setError(err.response?.data?.error || 'Failed to load document.');
       }
     } finally {
       if (!isPolling) setLoading(false);
