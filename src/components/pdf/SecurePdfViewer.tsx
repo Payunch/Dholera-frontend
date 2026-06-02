@@ -10,10 +10,11 @@ import { UpiQrModal } from '@/components/payment/UpiQrModal';
 interface SecurePdfViewerProps {
   pdfId: string;
   onClose: () => void;
+  onStartSelection?: () => void;
   refreshToken?: number;
 }
 
-export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewerProps) => {
+export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken }: SecurePdfViewerProps) => {
   const [mounted, setMounted] = useState(false);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -111,14 +112,10 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
   }, [blobUrl]);
 
   const handleNotifyAdmin = (finalAmount: number) => {
-    // Admin Phone: Strip ALL spaces and special chars
     const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
     const adminPhone = rawPhone.replace(/\D/g, ''); 
-    
-    const isPro = upiType === 'pro';
-    const subject = isPro ? 'PRO ACCESS (ALL DOCUMENTS)' : `SELECTED PDFS (QTY: ${finalAmount / 10})`;
+    const subject = upiType === 'pro' ? 'PRO ACCESS (ALL DOCUMENTS)' : `SELECTED PDFS (QTY: ${finalAmount / 10})`;
     const message = `Hello Admin, I have paid ₹${finalAmount} for ${subject}. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease unlock my access.`;
-    
     window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
@@ -209,6 +206,16 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
                    <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
+
+              {/* Option 3: Multi-select */}
+              {onStartSelection && (
+                <button 
+                  onClick={onStartSelection}
+                  className="mt-2 group flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-dashed border-slate-300 text-slate-500 hover:text-orange-600 hover:border-orange-600 transition-all"
+                >
+                  <span className="text-[10px] font-black uppercase tracking-widest text-center w-full">Select multiple from list</span>
+                </button>
+              )}
               
               <button onClick={onClose} className="mt-2 text-center text-xs font-bold text-slate-400 hover:text-slate-600 uppercase tracking-widest">Maybe Later</button>
             </div>
