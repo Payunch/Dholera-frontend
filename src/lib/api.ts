@@ -28,7 +28,15 @@ export const apiClient = axios.create({
 
 // ROADMAP PHASE 6: FIREBASE APP CHECK SHIELD
 apiClient.interceptors.request.use(async (config) => {
-  // Only attempt to get App Check token in the browser environment
+  // 1. Attach Lead Token if present in browser
+  if (typeof window !== "undefined") {
+    const leadToken = window.localStorage.getItem('lead_token');
+    if (leadToken && !config.headers['Authorization']) {
+      config.headers['Authorization'] = leadToken.startsWith('Bearer ') ? leadToken : `Bearer ${leadToken}`;
+    }
+  }
+
+  // 2. Attach App Check token in the browser environment
   if (typeof window !== "undefined") {
     try {
       const { getAppCheck, getToken } = await import("firebase/app-check") as any;
@@ -38,7 +46,7 @@ apiClient.interceptors.request.use(async (config) => {
         config.headers['X-Firebase-AppCheck'] = tokenResult.token;
       }
     } catch (e) {
-      // App check not initialized yet or failed
+      // App check might fail if blocked by ad-blocker or during hydration
     }
   }
   return config;
