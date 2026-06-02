@@ -10,9 +10,10 @@ import { useLead } from '@/providers/LeadProvider';
 interface SecurePdfViewerProps {
   pdfId: string;
   onClose: () => void;
+  refreshToken?: number;
 }
 
-export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
+export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewerProps) => {
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,6 +83,11 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
   }, [fetchPdf, pdfId]);
 
   useEffect(() => {
+    if (!pdfId || !refreshToken) return;
+    fetchPdf();
+  }, [fetchPdf, pdfId, refreshToken]);
+
+  useEffect(() => {
     return () => {
       if (blobUrl) URL.revokeObjectURL(blobUrl);
     };
@@ -89,6 +95,16 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
 
   const handlePayment = async () => {
     setPaymentLoading(true);
+    const paymentWindow = typeof window !== 'undefined'
+      ? window.open('', 'phonepe-payment', 'popup=yes,width=520,height=720,left=120,top=80')
+      : null;
+
+    if (paymentWindow) {
+      paymentWindow.document.write('<!doctype html><html><head><title>Opening PhonePe</title></head><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#0f172a;color:#fff;">Opening PhonePe payment...</body></html>');
+      paymentWindow.document.close();
+      paymentWindow.focus();
+    }
+
     try {
       const res = await fetch(`${API_BASE_URL}/payment/create-order`, {
         method: 'POST',
@@ -103,17 +119,25 @@ export const SecurePdfViewer = ({ pdfId, onClose }: SecurePdfViewerProps) => {
       if (!res.ok) throw new Error(data.error || 'Failed to initiate payment');
 
       if (data.alreadyPurchased) {
+        if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
         fetchPdf();
         return;
       }
 
       if (data.redirectUrl) {
         // Redirect to PhonePe payment page
-        window.location.href = data.redirectUrl;
+        if (paymentWindow && !paymentWindow.closed) {
+          paymentWindow.location.href = data.redirectUrl;
+          paymentWindow.focus();
+        } else {
+          window.location.href = data.redirectUrl;
+        }
       } else {
+        if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
         throw new Error('Payment gateway redirect URL missing');
       }
     } catch (err) {
+      if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
       setError(err instanceof Error ? err.message : 'Failed to initiate payment');
     } finally {
       setPaymentLoading(false);

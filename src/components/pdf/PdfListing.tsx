@@ -36,21 +36,47 @@ export function PdfListing() {
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
+  const [paymentRefreshToken, setPaymentRefreshToken] = useState(0);
+
+  const isPopupWindow = typeof window !== 'undefined' && window.opener && window.opener !== window;
 
   const status = searchParams.get('payment_status');
   const paymentPdfId = searchParams.get('pdfId');
   const hasPaymentSuccess = status === 'success' && Boolean(paymentPdfId);
-  const viewerPdfId = selectedPdfId ?? (hasPaymentSuccess ? paymentPdfId : null);
-  const viewerOpen = showViewer || hasPaymentSuccess;
+  const viewerPdfId = selectedPdfId ?? (hasPaymentSuccess && !isPopupWindow ? paymentPdfId : null);
+  const viewerOpen = showViewer || (hasPaymentSuccess && !isPopupWindow);
 
   useEffect(() => {
     if (status === 'success' && paymentPdfId) {
+      if (isPopupWindow && typeof window !== 'undefined' && window.opener) {
+        window.opener.postMessage(
+          { type: 'phonepe-payment-success', pdfId: paymentPdfId },
+          window.location.origin
+        );
+        window.close();
+        return;
+      }
       router.replace('/pdfs', { scroll: false });
     } else if (status === 'failed') {
       alert('Payment failed. Please try again.');
       router.replace('/pdfs', { scroll: false });
     }
-  }, [status, paymentPdfId, router]);
+  }, [isPopupWindow, paymentPdfId, router, status]);
+
+  useEffect(() => {
+    const handlePaymentMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+
+      if (event.data?.type === 'phonepe-payment-success' && event.data.pdfId) {
+        setSelectedPdfId(event.data.pdfId);
+        setShowViewer(true);
+        setPaymentRefreshToken(value => value + 1);
+      }
+    };
+
+    window.addEventListener('message', handlePaymentMessage);
+    return () => window.removeEventListener('message', handlePaymentMessage);
+  }, []);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/pdf/list`)
@@ -201,7 +227,11 @@ export function PdfListing() {
       )}
       
       {viewerOpen && viewerPdfId && (
-        <SecurePdfViewer pdfId={viewerPdfId} onClose={() => setShowViewer(false)} />
+        <SecurePdfViewer
+          pdfId={viewerPdfId}
+          onClose={() => setShowViewer(false)}
+          refreshToken={paymentRefreshToken}
+        />
       )}
     </section>
   );
