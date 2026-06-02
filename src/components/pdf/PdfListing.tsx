@@ -120,12 +120,13 @@ export function PdfListing() {
              <div className="text-center sm:text-left">
                <h4 className="text-sm font-black uppercase tracking-widest text-orange-500">Pro Intelligence</h4>
                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Unlimited Access to 50+ documents</p>
+               <p className="text-[9px] font-medium text-slate-500 uppercase mt-1 italic">Trial: 1 free document per user</p>
              </div>
              <button 
                onClick={handleManualAccess}
                className="bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-orange-600/20 whitespace-nowrap"
              >
-               {verifiedLead?.is_pro ? 'PRO ACTIVE' : 'Contact for Access'}
+               {verifiedLead?.is_pro ? 'PRO ACTIVE' : 'Unlock Hub'}
              </button>
           </div>
 

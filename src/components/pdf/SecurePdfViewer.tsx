@@ -5,6 +5,7 @@ import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, Mes
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 import { useLead } from '@/providers/LeadProvider';
+import { UpiQrModal } from '@/components/payment/UpiQrModal';
 
 interface SecurePdfViewerProps {
   pdfId: string;
@@ -19,6 +20,8 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
   const [requiresRegistration, setRequiresRegistration] = useState(false);
+  
+  const [showUpiModal, setShowUpiModal] = useState(false);
 
   const { logoutLead } = useLead();
 
@@ -111,9 +114,9 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
     };
   }, [blobUrl]);
 
-  const handleContactAdmin = () => {
-    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '9174358080310';
-    const message = `Hello Admin, I would like to unlock access to the document: ${pdfId}. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease let me know the process.`;
+  const handleNotifyAdmin = () => {
+    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
+    const message = `Hello Admin, I have paid ₹499 for PRO ACCESS to all archives. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease unlock my access.`;
     window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
@@ -147,30 +150,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
       <div className="flex-1 flex items-center justify-center p-4">
         {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
         
-        {requiresRegistration && (
-          <div className="max-w-md w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl animate-in zoom-in-95">
-            <div className="flex justify-center mb-6">
-               <div className="h-20 w-20 rounded-3xl bg-blue-50 flex items-center justify-center">
-                 <ShieldCheck className="h-10 w-10 text-blue-600" />
-               </div>
-            </div>
-            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Trial Limit Reached</h3>
-            <p className="text-slate-500 font-medium mb-8">
-              You have already viewed one document in trial mode. Please register with your own details for full platform access.
-            </p>
-            <button 
-              onClick={() => {
-                logoutLead();
-                onClose();
-              }}
-              className="w-full rounded-2xl bg-slate-900 py-5 text-white font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl flex items-center justify-center gap-3"
-            >
-              Register for Full Access
-            </button>
-            <button onClick={onClose} className="mt-4 text-sm font-bold text-slate-400 hover:text-slate-600">Maybe Later</button>
-          </div>
-        )}
-
         {requiresPayment && (
           <div className="max-w-md w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl animate-in zoom-in-95">
             <div className="flex justify-center mb-6">
@@ -178,18 +157,32 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
                  <Lock className="h-10 w-10 text-orange-600" />
                </div>
             </div>
-            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Premium Document</h3>
+            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Access Limit Reached</h3>
             <p className="text-slate-500 font-medium mb-8">
-              This official DSIRDA map/brochure is verified and gated. Please contact the Admin to unlock this document.
+              Only the test document is free. Please unlock the premium archive for unlimited access to DSIRDA maps & brochures.
             </p>
+            <div className="bg-slate-50 rounded-2xl p-6 mb-8 border-2 border-dashed border-slate-200">
+               <span className="block text-4xl font-black text-orange-600">₹499.00</span>
+               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Lifetime Intelligence Hub</span>
+            </div>
             <button 
-              onClick={handleContactAdmin}
+              onClick={() => setShowUpiModal(true)}
               className="w-full rounded-2xl bg-orange-600 py-5 text-white font-black uppercase tracking-widest hover:bg-orange-500 transition-all shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3"
             >
-              Request Access <MessageSquare className="h-5 w-5" />
+              Pay via UPI QR <ShieldCheck className="h-5 w-5" />
             </button>
             <button onClick={onClose} className="mt-4 text-sm font-bold text-slate-400 hover:text-slate-600">Cancel</button>
           </div>
+        )}
+
+        {showUpiModal && (
+          <UpiQrModal
+            upiId={process.env.ADMIN_UPI_ID || 'dholeraplatform@okicici'}
+            amount={499}
+            merchantName={process.env.ADMIN_NAME || 'Dholera Platform'}
+            onClose={() => setShowUpiModal(false)}
+            onNotify={handleNotifyAdmin}
+          />
         )}
 
         {displayError && !requiresPayment && (
