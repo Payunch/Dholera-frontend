@@ -156,7 +156,8 @@ export function PdfListing() {
               >
                 <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 flex items-center justify-center relative overflow-hidden border border-slate-50">
                    <FileText className="h-16 w-16 text-slate-200 group-hover:scale-110 transition-transform duration-500" />
-                   {(!verifiedLead || (!verifiedLead.is_pro && !pdf.createdAt)) && (
+                   {/* Hide lock if user is Pro OR if it's the free trial PDF (ID 19) */}
+                   {(!verifiedLead?.is_pro && String(pdf.id) !== '19') && (
                      <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
                        <Lock className="h-4 w-4" />
                      </div>

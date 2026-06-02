@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, MessageSquare } from 'lucide-react';
+import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, MessageSquare, ArrowRight } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 import { useLead } from '@/providers/LeadProvider';
@@ -19,9 +19,10 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
-  const [requiresRegistration, setRequiresRegistration] = useState(false);
   
   const [showUpiModal, setShowUpiModal] = useState(false);
+  const [upiAmount, setUpiAmount] = useState(499);
+  const [upiType, setUpiType] = useState<'single' | 'pro'>('pro');
 
   const { logoutLead } = useLead();
 
@@ -79,11 +80,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({ error: 'Server error' }));
-        if (errData.trialLimitReached) {
-          setRequiresRegistration(true);
-          setLoading(false);
-          return;
-        }
         throw new Error(errData.error || `Failed to load document (${res.status})`);
       }
 
@@ -114,10 +110,22 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
     };
   }, [blobUrl]);
 
-  const handleNotifyAdmin = () => {
-    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
-    const message = `Hello Admin, I have paid ₹499 for PRO ACCESS to all archives. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease unlock my access.`;
-    window.open(`https://wa.me/${adminPhone.replace(/\s+/g, '')}?text=${encodeURIComponent(message)}`, '_blank');
+  const handleNotifyAdmin = (finalAmount: number) => {
+    // Admin Phone: Strip ALL spaces and special chars
+    const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
+    const adminPhone = rawPhone.replace(/\D/g, ''); 
+    
+    const isPro = upiType === 'pro';
+    const subject = isPro ? 'PRO ACCESS (ALL DOCUMENTS)' : `SELECTED PDFS (QTY: ${finalAmount / 10})`;
+    const message = `Hello Admin, I have paid ₹${finalAmount} for ${subject}. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease unlock my access.`;
+    
+    window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
+  const openUpi = (type: 'single' | 'pro') => {
+    setUpiType(type);
+    setUpiAmount(type === 'pro' ? 499 : 10);
+    setShowUpiModal(true);
   };
 
   if (!mounted) return null;
@@ -131,7 +139,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
         <div className="flex items-center gap-3">
           <FileText className="h-5 w-5 text-orange-500" />
           <span className="text-xs font-black uppercase tracking-widest text-white hidden sm:inline">
-            Secure Viewer (Watermarked)
+            Secure Intelligence Hub
           </span>
         </div>
         <div className="flex items-center gap-4">
@@ -151,34 +159,66 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
         {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
         
         {requiresPayment && (
-          <div className="max-w-md w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl animate-in zoom-in-95">
-            <div className="flex justify-center mb-6">
-               <div className="h-20 w-20 rounded-3xl bg-orange-50 flex items-center justify-center">
-                 <Lock className="h-10 w-10 text-orange-600" />
-               </div>
+          <div className="max-w-xl w-full bg-white rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 flex flex-col md:flex-row">
+            {/* Left: Info */}
+            <div className="p-10 md:w-1/2 flex flex-col justify-center">
+              <div className="h-16 w-16 rounded-2xl bg-orange-50 flex items-center justify-center mb-6">
+                <Lock className="h-8 w-8 text-orange-600" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Premium Content</h3>
+              <p className="text-slate-500 font-medium text-sm leading-relaxed mb-6">
+                This document is part of our exclusive DSIRDA intelligence archive. Choose an option to unlock access.
+              </p>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                  <ShieldCheck className="h-4 w-4 text-green-500" /> 
+                  Instant Manual Unlock
+                </div>
+                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                  <ShieldCheck className="h-4 w-4 text-green-500" /> 
+                  Verified Documents
+                </div>
+              </div>
             </div>
-            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Access Limit Reached</h3>
-            <p className="text-slate-500 font-medium mb-8">
-              Only the test document is free. Please unlock the premium archive for unlimited access to DSIRDA maps & brochures.
-            </p>
-            <div className="bg-slate-50 rounded-2xl p-6 mb-8 border-2 border-dashed border-slate-200">
-               <span className="block text-4xl font-black text-orange-600">₹499.00</span>
-               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Lifetime Intelligence Hub</span>
+
+            {/* Right: Choices */}
+            <div className="bg-slate-50 p-8 md:w-1/2 flex flex-col gap-4 border-l border-slate-100">
+              {/* Option 1: Pro */}
+              <button 
+                onClick={() => openUpi('pro')}
+                className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1"
+              >
+                <span className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-1">Recommended</span>
+                <span className="text-lg font-black uppercase tracking-tight">Unlock Hub</span>
+                <span className="text-xs font-bold text-slate-400 group-hover:text-white/80">Lifetime access to all PDFs</span>
+                <div className="mt-4 flex items-center justify-between w-full">
+                   <span className="text-2xl font-black">₹499</span>
+                   <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
+
+              {/* Option 2: Single */}
+              <button 
+                onClick={() => openUpi('single')}
+                className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1"
+              >
+                <span className="text-lg font-black uppercase tracking-tight text-slate-900">Unlock This Only</span>
+                <span className="text-xs font-bold text-slate-400">Single document access</span>
+                <div className="mt-4 flex items-center justify-between w-full">
+                   <span className="text-2xl font-black text-slate-900">₹10</span>
+                   <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
+              
+              <button onClick={onClose} className="mt-2 text-center text-xs font-bold text-slate-400 hover:text-slate-600 uppercase tracking-widest">Maybe Later</button>
             </div>
-            <button 
-              onClick={() => setShowUpiModal(true)}
-              className="w-full rounded-2xl bg-orange-600 py-5 text-white font-black uppercase tracking-widest hover:bg-orange-500 transition-all shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3"
-            >
-              Pay via UPI QR <ShieldCheck className="h-5 w-5" />
-            </button>
-            <button onClick={onClose} className="mt-4 text-sm font-bold text-slate-400 hover:text-slate-600">Cancel</button>
           </div>
         )}
 
         {showUpiModal && (
           <UpiQrModal
-            upiId={process.env.ADMIN_UPI_ID || 'dholeraplatform@okicici'}
-            amount={499}
+            upiId={process.env.ADMIN_UPI_ID || '917435808310@ybl'}
+            amount={upiAmount}
             merchantName={process.env.ADMIN_NAME || 'Dholera Platform'}
             onClose={() => setShowUpiModal(false)}
             onNotify={handleNotifyAdmin}
@@ -205,7 +245,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
                ))}
             </div>
 
-            {/* Always try to show iframe, but provide a download/open button for mobile as backup */}
             <div className="flex-1 flex flex-col relative">
               {isMobile && (
                 <div className="absolute top-4 right-4 z-30">

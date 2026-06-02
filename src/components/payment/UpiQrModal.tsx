@@ -9,21 +9,24 @@ interface UpiQrModalProps {
   amount: number;
   merchantName: string;
   onClose: () => void;
-  onNotify: () => void;
+  onNotify: (totalAmount: number) => void;
 }
 
 export const UpiQrModal = ({
   upiId,
-  amount,
+  amount: baseAmount,
   merchantName,
   onClose,
   onNotify,
 }: UpiQrModalProps) => {
   const [copied, setCopied] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [count, setCount] = useState(1);
+
+  const totalAmount = baseAmount * count;
 
   // Simple UPI Link
-  const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&am=${amount.toFixed(2)}&cu=INR`;
+  const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(merchantName)}&am=${totalAmount.toFixed(2)}&cu=INR`;
 
   useEffect(() => {
     setMounted(true);
@@ -57,18 +60,38 @@ export const UpiQrModal = ({
 
         {/* QR Section */}
         <div className="p-8 text-center">
+          {/* Quantity Selector for Single PDF */}
+          {baseAmount === 10 && (
+            <div className="mb-6 flex flex-col items-center">
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Unlocking Multiple?</span>
+              <div className="flex items-center bg-slate-100 rounded-2xl p-1 border border-slate-200">
+                <button 
+                  onClick={() => setCount(Math.max(1, count - 1))}
+                  className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white hover:shadow-sm transition-all font-black text-slate-600"
+                >-</button>
+                <div className="px-6 text-sm font-black text-slate-900">{count} PDF{count > 1 ? 's' : ''}</div>
+                <button 
+                  onClick={() => setCount(count + 1)}
+                  className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white hover:shadow-sm transition-all font-black text-slate-600"
+                >+</button>
+              </div>
+            </div>
+          )}
+
           <div className="mb-6 inline-block rounded-3xl border-8 border-slate-50 bg-white p-4 shadow-inner">
-            <QRCodeSVG value={upiLink} size={200} level="H" />
+            <QRCodeSVG value={upiLink} size={180} level="H" />
           </div>
 
           <div className="mb-6 space-y-1">
-            <span className="block text-4xl font-black text-slate-900">₹{amount.toFixed(2)}</span>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600">Lifetime Pro Access</span>
+            <span className="block text-4xl font-black text-slate-900">₹{totalAmount.toFixed(2)}</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600">
+              {baseAmount === 499 ? 'Lifetime Pro Access' : `Unlocking ${count} Premium PDF${count > 1 ? 's' : ''}`}
+            </span>
           </div>
 
           {/* UPI ID Copy */}
-          <div className="mb-8 flex items-center justify-between rounded-2xl bg-slate-50 p-4 border border-slate-100">
-            <div className="text-left">
+          <div className="mb-8 flex items-center justify-between rounded-2xl bg-slate-50 p-4 border border-slate-100 text-left">
+            <div>
               <span className="block text-[10px] font-black uppercase tracking-widest text-slate-400">Admin UPI ID</span>
               <span className="text-sm font-bold text-slate-700">{upiId}</span>
             </div>
@@ -89,7 +112,7 @@ export const UpiQrModal = ({
             </a>
             
             <button
-              onClick={onNotify}
+              onClick={() => onNotify(totalAmount)}
               className="flex w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 py-4 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-slate-800"
             >
               <MessageSquare className="h-4 w-4" />
