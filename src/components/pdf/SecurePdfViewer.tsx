@@ -345,17 +345,16 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             </div>
           </div>
         )}
-
-        {showUpiModal && upiOrderDetails && (
-          <UpiQrModal
-            upiId={upiOrderDetails.upiId}
-            amount={upiOrderDetails.amount}
-            merchantName={upiOrderDetails.merchantName}
-            transactionId={upiOrderDetails.transactionId}
-            onClose={() => setShowUpiModal(false)}
-            onVerifyUtr={handleVerifyUtr}
-          />
-        )}
+{showUpiModal && upiOrderDetails && (
+  <UpiQrModal
+    upiId={upiOrderDetails.upiId}
+    amount={upiOrderDetails.amount}
+    merchantName={upiOrderDetails.merchantName}
+    transactionId={upiOrderDetails.transactionId}
+    onClose={() => setShowUpiModal(false)}
+    onVerifyUtr={handleVerifyUtr}
+  />
+)}
 
         {displayError && !requiresPayment && !awaitingApproval && (
           <div className="max-w-sm w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl">

@@ -145,8 +145,38 @@ export function PdfListing() {
     }
   };
 
+  const handleVerifyUtr = async (utr: string): Promise<boolean> => {
+    if (!upiOrderDetails || !verifiedLead) return false;
+    try {
+      const res = await fetch(`${API_BASE_URL}/payment/verify-utr`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': verifiedLead.token
+        },
+        body: JSON.stringify({ 
+          utr, 
+          transactionId: upiOrderDetails.transactionId,
+          leadToken: verifiedLead.token 
+        })
+      });
+
+      if (res.ok) {
+        setShowUpiModal(false);
+        setIsSelectionMode(false);
+        // Instant unlock notification
+        alert('Payment details submitted. Your documents will be unlocked as soon as the Admin approves.');
+        window.location.reload(); 
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error('UTR Submit Error:', err);
+      return false;
+    }
+  };
+
   const handleManualAccess = () => {
-    // If user is not Pro, we show the checkout modal by entering selection mode or showing pricing
     setIsSelectionMode(true);
   };
 
@@ -343,7 +373,6 @@ export function PdfListing() {
           merchantName={process.env.ADMIN_NAME || 'Dholera Platform'}
           transactionId={upiOrderDetails.transactionId}
           onClose={() => setShowUpiModal(false)}
-          onNotify={handleNotifyAdmin}
           onVerifyUtr={handleVerifyUtr}
         />
       )}
