@@ -76,7 +76,7 @@ export function PdfListing() {
   };
 
   const handleManualAccess = () => {
-    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '919876543210';
+    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '9174358080310';
     const message = `Hello Admin, I am interested in unlocking Pro Access to all intelligence archives. \n\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease guide me on the process.`;
     window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };

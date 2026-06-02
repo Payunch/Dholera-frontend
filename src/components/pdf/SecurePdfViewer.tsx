@@ -112,7 +112,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
   }, [blobUrl]);
 
   const handleContactAdmin = () => {
-    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '919876543210';
+    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '9174358080310';
     const message = `Hello Admin, I would like to unlock access to the document: ${pdfId}. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease let me know the process.`;
     window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
