@@ -75,12 +75,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <script
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+        <Script
+          id="google-adsense"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6979634293826789"
           crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
         <OrganizationSchema />
         <Script
@@ -98,8 +100,7 @@ export default function RootLayout({
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');`,
           }}
         />
-      </head>
-      <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+
         {CLARITY_ID && (
           <Script
             id="clarity-init"
