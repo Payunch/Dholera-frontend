@@ -107,8 +107,17 @@ export function PdfListing() {
       toggleSelection(pdfId);
       return;
     }
+    
+    const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID || '19';
+    const isFree = String(pdfId) === String(freeTrialId);
+
     setSelectedPdfId(pdfId);
-    if (verifiedLead) {
+    
+    // Logic: 
+    // 1. If it's free, just open it.
+    // 2. If it's premium, and we have a lead, open it (viewer will check purchase).
+    // 3. If it's premium and NO lead, show verification popup.
+    if (isFree || verifiedLead) {
       setShowViewer(true);
     } else {
       setShowVerifyPopup(true);
