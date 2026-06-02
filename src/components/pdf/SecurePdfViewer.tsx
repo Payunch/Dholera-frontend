@@ -14,6 +14,7 @@ interface SecurePdfViewerProps {
 }
 
 export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewerProps) => {
+  const [mounted, setMounted] = useState(false);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,20 +24,42 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
 
   const { logoutLead } = useLead();
 
-  const token = safeLocalStorage.getItem('lead_token');
-  const fingerprint = safeLocalStorage.getItem('visitorFingerprint');
-  const leadEmail = safeLocalStorage.getItem('lead_email') || 'Guest';
-  const leadPhone = safeLocalStorage.getItem('lead_phone') || 'Guest';
+  const [clientData, setClientData] = useState({
+    token: '',
+    fingerprint: '',
+    leadEmail: 'Guest',
+    leadPhone: 'Guest',
+    isMobile: false
+  });
 
-  const isMobile = useMemo(() => {
-    if (typeof navigator === 'undefined') return false;
-    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-      (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent));
+  useEffect(() => {
+    setMounted(true);
+    const token = safeLocalStorage.getItem('lead_token') || '';
+    const fingerprint = safeLocalStorage.getItem('visitorFingerprint') || '';
+    const leadEmail = safeLocalStorage.getItem('lead_email') || 'Guest';
+    const leadPhone = safeLocalStorage.getItem('lead_phone') || 'Guest';
+    
+    const checkMobile = () => {
+      if (typeof navigator === 'undefined') return false;
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+        (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent));
+    };
+
+    setClientData({
+      token,
+      fingerprint,
+      leadEmail,
+      leadPhone,
+      isMobile: checkMobile()
+    });
   }, []);
 
-  const directUrl = `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`;
+  const { token, fingerprint, leadEmail, leadPhone, isMobile } = clientData;
+
+  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
 
   const fetchPdf = useCallback(async () => {
+    if (!mounted) return;
     setLoading(true);
     setError(null);
     setRequiresPayment(false);
@@ -46,7 +69,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
       const res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
         headers: { 'Authorization': token || '' }
       });
-
+// ... (rest of fetchPdf logic remains same)
       if (res.status === 402) {
         setRequiresPayment(true);
         setLoading(false);
@@ -72,26 +95,25 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
     } finally {
       setLoading(false);
     }
-  }, [pdfId, token]);
+  }, [pdfId, token, mounted]);
 
   useEffect(() => {
-    if (!pdfId) return;
-    // Defer execution to avoid synchronous setState in effect warning
-    Promise.resolve().then(() => {
-      fetchPdf();
-    });
-  }, [fetchPdf, pdfId]);
-
-  useEffect(() => {
-    if (!pdfId || !refreshToken) return;
+    if (!pdfId || !mounted) return;
     fetchPdf();
-  }, [fetchPdf, pdfId, refreshToken]);
+  }, [fetchPdf, pdfId, mounted]);
+
+  useEffect(() => {
+    if (!pdfId || !refreshToken || !mounted) return;
+    fetchPdf();
+  }, [fetchPdf, pdfId, refreshToken, mounted]);
 
   useEffect(() => {
     return () => {
       if (blobUrl) URL.revokeObjectURL(blobUrl);
     };
   }, [blobUrl]);
+
+  if (!mounted) return null;
 
   const handlePayment = async () => {
     setPaymentLoading(true);

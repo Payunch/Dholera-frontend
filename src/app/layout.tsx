@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Script from "next/script";
 import { Instrument_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import ClientLayout from "@/components/layout/ClientLayout";
 import OrganizationSchema from "@/components/OrganizationSchema";
 
+const ClientLayout = dynamic(() => import("@/components/layout/ClientLayout"), {
+  ssr: false,
+});
+
 const instrumentSans = Instrument_Sans({
-  subsets: ["latin"],
+// ...
+
   variable: "--font-instrument-sans",
   display: "swap",
 });
@@ -76,7 +81,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+      <head>
+        <OrganizationSchema />
         <Script
           id="google-adsense"
           async
@@ -84,7 +90,6 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-        <OrganizationSchema />
         <Script
           id="gtm-consent-init"
           strategy="beforeInteractive"
@@ -100,7 +105,8 @@ export default function RootLayout({
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');`,
           }}
         />
-
+      </head>
+      <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`} suppressHydrationWarning>
         {CLARITY_ID && (
           <Script
             id="clarity-init"

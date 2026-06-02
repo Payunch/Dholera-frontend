@@ -88,7 +88,12 @@ export function HomeClient() {
 
       {/* PDF Listing Section (Intelligence Hub) */}
       <div id="documents" className="bg-white">
-        <React.Suspense fallback={<div className="py-32 text-center font-black uppercase tracking-widest text-slate-300 animate-pulse">Scanning Archives...</div>}>
+        <React.Suspense fallback={
+          <div className="flex flex-col items-center py-20 gap-4">
+            <div className="h-10 w-10 border-4 border-slate-100 border-t-orange-600 rounded-full animate-spin" />
+            <span className="font-black uppercase tracking-widest text-slate-400 animate-pulse">Scanning Archives...</span>
+          </div>
+        }>
           <PdfListing />
         </React.Suspense>
       </div>

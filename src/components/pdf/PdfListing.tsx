@@ -38,18 +38,27 @@ export function PdfListing() {
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
   const [paymentRefreshToken, setPaymentRefreshToken] = useState(0);
   const [popupPaymentStatus, setPopupPaymentStatus] = useState<'idle' | 'success' | 'failed'>('idle');
+const [isPopup, setIsPopup] = useState(false);
 
-  const isPopupWindow = typeof window !== 'undefined' && window.opener && window.opener !== window;
+useEffect(() => {
+  if (typeof window !== 'undefined' && window.opener && window.opener !== window) {
+    setIsPopup(true);
+  }
+}, []);
 
-  const status = searchParams.get('payment_status');
-  const paymentPdfId = searchParams.get('pdfId');
-  const hasPaymentSuccess = status === 'success' && Boolean(paymentPdfId);
-  const viewerPdfId = selectedPdfId ?? (hasPaymentSuccess && !isPopupWindow ? paymentPdfId : null);
-  const viewerOpen = showViewer || (hasPaymentSuccess && !isPopupWindow);
+const status = searchParams.get('payment_status');
+const paymentPdfId = searchParams.get('pdfId');
+const hasPaymentSuccess = status === 'success' && Boolean(paymentPdfId);
 
-  useEffect(() => {
-    if (status === 'success' && paymentPdfId) {
-      if (isPopupWindow && typeof window !== 'undefined' && window.opener) {
+// Use isPopup state which starts as false on both server and client (first render)
+const viewerPdfId = selectedPdfId ?? (hasPaymentSuccess && !isPopup ? paymentPdfId : null);
+const viewerOpen = showViewer || (hasPaymentSuccess && !isPopup);
+
+useEffect(() => {
+  if (status === 'success' && paymentPdfId) {
+    if (isPopup && typeof window !== 'undefined' && window.opener) {
+      // ...
+
         // Use wildcard targetOrigin in dev to ensure opener receives message after third-party redirect
         window.opener.postMessage(
           { type: 'phonepe-payment-success', pdfId: paymentPdfId },
@@ -60,14 +69,14 @@ export function PdfListing() {
       }
       router.replace('/pdfs', { scroll: false });
     } else if (status === 'failed') {
-      if (isPopupWindow) {
+      if (isPopup) {
         setPopupPaymentStatus('failed');
         return;
       }
       alert('Payment failed. Please try again.');
       router.replace('/pdfs', { scroll: false });
     }
-  }, [isPopupWindow, paymentPdfId, router, status]);
+  }, [isPopup, paymentPdfId, router, status]);
 
   useEffect(() => {
     const frontendOrigin = (typeof window !== 'undefined')
@@ -185,7 +194,7 @@ export function PdfListing() {
 
         {loading ? (
           <div className="flex flex-col items-center py-20 gap-4">
-            <Loader2 className="h-10 w-10 text-orange-600 animate-spin" />
+            <div className="h-10 w-10 border-4 border-slate-100 border-t-orange-600 rounded-full animate-spin" />
             <span className="font-black uppercase tracking-widest text-slate-400 animate-pulse">Scanning Archives...</span>
           </div>
         ) : (
@@ -254,7 +263,7 @@ export function PdfListing() {
         />
       )}
 
-      {isPopupWindow && popupPaymentStatus !== 'idle' && (
+      {isPopup && popupPaymentStatus !== 'idle' && (
         <div className="fixed inset-0 z-[500] flex items-center justify-center bg-slate-950/95 p-4 text-center">
           <div className="w-full max-w-md rounded-[2rem] bg-white p-8 shadow-2xl">
             <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-50 text-orange-600">

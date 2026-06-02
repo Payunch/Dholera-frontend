@@ -86,13 +86,22 @@ const translations: Record<Language, Record<string, string>> = {
 };
 
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-  const [lang, setLang] = useState<Language>(
-    (safeLocalStorage.getItem('preferred_lang') as Language) || 'en'
-  );
+  const [lang, setLang] = useState<Language>('en');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    safeLocalStorage.setItem('preferred_lang', lang);
-  }, [lang]);
+    const savedLang = safeLocalStorage.getItem('preferred_lang') as Language | null;
+    if (savedLang && translations[savedLang]) {
+      setLang(savedLang);
+    }
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      safeLocalStorage.setItem('preferred_lang', lang);
+    }
+  }, [lang, mounted]);
 
   const t = (key: string) => {
     return translations[lang]?.[key] || translations['en']?.[key] || key;
