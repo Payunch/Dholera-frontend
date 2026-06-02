@@ -34,10 +34,17 @@ export default function AdminLoginPage() {
 
     try {
       const csrf = await fetchCsrfToken();
+      
+      // Use the global apiClient but ensure CSRF is passed
+      // We pass headers here; apiClient interceptors will append others.
       await apiClient.post(
         "/auth/login", 
         { username, password, mfaCode },
-        { headers: { "X-CSRF-Token": csrf } }
+        { 
+          headers: { 
+            "X-CSRF-Token": csrf 
+          } 
+        }
       );
 
       setLoading(true);

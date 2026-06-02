@@ -5,10 +5,14 @@ const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
 const resolveApiBaseUrl = () => {
   const envValue =
     process.env.NEXT_PUBLIC_API_BASE_URL ||
-    process.env.NEXT_PUBLIC_API_URL ||
-    "";
+    process.env.NEXT_PUBLIC_API_URL;
 
-  return trimTrailingSlash(envValue || "https://api.dholeraplatform.com/api");
+  if (envValue && envValue.startsWith('http')) {
+    return trimTrailingSlash(envValue);
+  }
+
+  // Fallback to production default
+  return "https://api.dholeraplatform.com/api";
 };
 
 export const API_BASE_URL = resolveApiBaseUrl();

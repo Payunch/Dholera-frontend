@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight, Check } from 'lucide-react';
-import { API_BASE_URL } from '@/lib/api';
+import { API_BASE_URL, SITE_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 import { useLead } from '@/providers/LeadProvider';
 import { UpiQrModal } from '@/components/payment/UpiQrModal';
@@ -75,13 +75,27 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     if (!isPolling) setLoading(true);
     setError(null);
     setRequiresPayment(false);
-    // Note: don't reset awaitingApproval during polling to avoid flicker
+    
     try {
       if (!token) throw new Error('Verification required to access this document.');
 
-      const res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
-        headers: { 'Authorization': token || '' }
-      });
+      const headers: Record<string, string> = {
+        'Authorization': token || ''
+      };
+
+      // ROADMAP PHASE 6: ATTACH APP CHECK SHIELD
+      try {
+        const { getAppCheck, getToken } = await import("firebase/app-check") as any;
+        const appCheck = getAppCheck();
+        const tokenResult = await getToken(appCheck, false);
+        if (tokenResult?.token) {
+          headers['X-Firebase-AppCheck'] = tokenResult.token;
+        }
+      } catch (e) {
+        // Fallback for ad-blockers
+      }
+
+      const res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, { headers });
 
       if (res.status === 402) {
         const data = await res.json().catch(() => ({}));
@@ -124,8 +138,15 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     if (!token || !mounted) return;
 
     // Real-time Unlock via WebSockets (Roadmap Phase 1)
-    const socketUrl = API_BASE_URL.replace('/api', '');
-    const socket = io(socketUrl, { withCredentials: true });
+    // Use the SITE_BASE_URL (which is configured as the server root)
+    const socketUrl = (typeof window !== "undefined" && window.location.hostname === "localhost") 
+      ? "http://localhost:3001" 
+      : SITE_BASE_URL;
+
+    const socket = io(socketUrl, { 
+      withCredentials: true,
+      transports: ['websocket', 'polling']
+    });
     socketRef.current = socket;
 
     socket.on('connect', () => {
