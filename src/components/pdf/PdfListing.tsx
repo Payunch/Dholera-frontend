@@ -50,9 +50,10 @@ export function PdfListing() {
   useEffect(() => {
     if (status === 'success' && paymentPdfId) {
       if (isPopupWindow && typeof window !== 'undefined' && window.opener) {
+        // Use wildcard targetOrigin in dev to ensure opener receives message after third-party redirect
         window.opener.postMessage(
           { type: 'phonepe-payment-success', pdfId: paymentPdfId },
-          window.location.origin
+          '*'
         );
         setPopupPaymentStatus('success');
         return;
@@ -69,8 +70,22 @@ export function PdfListing() {
   }, [isPopupWindow, paymentPdfId, router, status]);
 
   useEffect(() => {
+    const frontendOrigin = (typeof window !== 'undefined')
+      ? (process.env.NEXT_PUBLIC_FRONTEND_ORIGIN || window.location.origin)
+      : '';
+    const landingOrigin = process.env.NEXT_PUBLIC_PAYMENT_LANDING_ORIGIN || '';
+
     const handlePaymentMessage = (event: MessageEvent) => {
-      if (event.origin !== window.location.origin) return;
+      const isProd = process.env.NODE_ENV === 'production';
+
+      if (isProd) {
+        const allowed = [frontendOrigin];
+        if (landingOrigin) allowed.push(landingOrigin);
+        if (!allowed.includes(event.origin)) return;
+      } else {
+        // In development accept the payment-success message from the landing page
+        if (event.data?.type !== 'phonepe-payment-success') return;
+      }
 
       if (event.data?.type === 'phonepe-payment-success' && event.data.pdfId) {
         setSelectedPdfId(event.data.pdfId);

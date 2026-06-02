@@ -95,8 +95,9 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
 
   const handlePayment = async () => {
     setPaymentLoading(true);
+    const popupName = `phonepe-payment-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
     const paymentWindow = typeof window !== 'undefined'
-      ? window.open('', 'phonepe-payment', 'popup=yes,width=520,height=720,left=120,top=80')
+      ? window.open('', popupName, 'width=520,height=720,left=120,top=80')
       : null;
 
     if (paymentWindow) {
