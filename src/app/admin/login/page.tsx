@@ -13,7 +13,7 @@ const parseAuthError = (err: unknown) => {
       : undefined;
 
   return {
-    message: responseData?.error || "Biometric authentication mismatch or invalid credentials.",
+    message: responseData?.error || "Access handshake failed. Verify credentials and network integrity.",
     mfaRequired: Boolean(responseData?.mfaRequired),
   };
 };
@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
       await apiClient.post(
         "/auth/login", 
         { username, password, mfaCode },
-        { headers: { "x-csrf-token": csrf } }
+        { headers: { "X-CSRF-Token": csrf } }
       );
 
       setLoading(true);
@@ -45,8 +45,10 @@ export default function AdminLoginPage() {
       // Clear cache and use a full page reload for maximum cookie reliability
       clearCsrfCache();
       
+      console.log("[Login] Success. Relocating to dashboard...");
       window.location.href = "/admin/dashboard";
     } catch (err) {
+      console.error("[Login] Authentication exception:", err);
       clearCsrfCache();
       const { message, mfaRequired } = parseAuthError(err);
       setMfaEnabled(mfaRequired);
@@ -148,4 +150,3 @@ export default function AdminLoginPage() {
     </div>
   );
 }
-

@@ -44,8 +44,11 @@ apiClient.interceptors.request.use(async (config) => {
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (typeof window !== "undefined" && (error.response?.status === 401 || error.response?.status === 403)) {
-      window.location.href = "/admin/login";
+    if (typeof window !== "undefined") {
+      const isLoginPage = window.location.pathname === "/admin/login";
+      if (!isLoginPage && (error.response?.status === 401 || error.response?.status === 403)) {
+        window.location.href = "/admin/login";
+      }
     }
     return Promise.reject(error);
   }
