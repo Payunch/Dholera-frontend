@@ -8,12 +8,14 @@ import {
   Settings, 
   LogOut,
   Activity,
-  Globe
+  Globe,
+  CheckSquare
 } from "lucide-react";
 import { Lead, WhatsAppStats } from "@/types/admin";
 import { LeadsStats } from "./LeadsStats";
 import { LeadsTable } from "./LeadsTable";
 import { UpdatesManagement } from "./UpdatesManagement";
+import { PaymentApprovals } from "./PaymentApprovals";
 import { cn } from "@/lib/utils";
 import { apiClient, API_BASE_URL } from "@/lib/api";
 import { fetchCsrfToken } from "@/utils/csrf";
@@ -27,11 +29,28 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
   const router = useRouter();
   const [activeTab, setActiveTab] = React.useState(0);
   const [isLoggingOut, setIsLoggingOut] = React.useState(false);
+  const [pendingCount, setPendingCount] = React.useState(0);
+
+  const fetchPendingCount = React.useCallback(async () => {
+    try {
+      const resp = await fetch(`${API_BASE_URL}/payment/admin/count-pending`, { credentials: 'include' });
+      if (resp.ok) {
+        const data = await resp.json();
+        setPendingCount(data.count || 0);
+      }
+    } catch (e) {}
+  }, []);
+
+  React.useEffect(() => {
+    fetchPendingCount();
+    const interval = setInterval(fetchPendingCount, 30000);
+    return () => clearInterval(interval);
+  }, [fetchPendingCount]);
 
   const tabs = [
     { label: "Leads", icon: Users },
+    { label: "Approvals", icon: CheckSquare, badge: pendingCount },
     { label: "Updates", icon: Globe },
-    { label: "Professionals", icon: ShieldCheck },
     { label: "Insights", icon: Activity },
     { label: "System", icon: Settings },
   ];
@@ -211,7 +230,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
                     key={tab.label}
                     onClick={() => setActiveTab(idx)}
                     className={cn(
-                      "flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-black uppercase tracking-widest transition-all",
+                      "relative flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-black uppercase tracking-widest transition-all",
                       activeTab === idx 
                         ? "bg-slate-900 text-white shadow-lg" 
                         : "text-slate-400 hover:bg-slate-100 hover:text-slate-600"
@@ -219,6 +238,11 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
                   >
                     <tab.icon className="h-4 w-4" />
                     {tab.label}
+                    {(tab as any).badge > 0 && (
+                      <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-orange-600 text-[8px] font-black text-white ring-2 ring-white">
+                        {(tab as any).badge}
+                      </span>
+                    )}
                   </button>
                 ))}
               </nav>
@@ -302,19 +326,9 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
           </>
         )}
 
-        {activeTab === 1 && <UpdatesManagement />}
+        {activeTab === 1 && <PaymentApprovals />}
 
-        {activeTab === 2 && (
-          <div className="flex flex-col items-center justify-center py-40 text-center space-y-6">
-             <div className="h-24 w-24 rounded-[2rem] bg-slate-100 flex items-center justify-center text-slate-300">
-                <ShieldCheck className="h-12 w-12" />
-             </div>
-             <div className="space-y-2">
-                <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900">{tabs[activeTab].label} Restricted</h3>
-                <p className="text-lg font-medium text-slate-500 italic">This sector of the Master Control is undergoing biometric verification alignment...</p>
-             </div>
-          </div>
-        )}
+        {activeTab === 2 && <UpdatesManagement />}
 
         {activeTab === 3 && (
           <div className="flex flex-col items-center justify-center py-40 text-center space-y-6">
@@ -366,7 +380,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
                   <h4 className="text-xs font-bold uppercase tracking-widest text-orange-600">PDF Intelligence Portability</h4>
                   <p className="text-sm text-slate-500 leading-relaxed">Manage specific PDF metadata. Use the Sync function to automatically discover new PDF files uploaded to the server.</p>
                   <div className="space-y-4">
-                    <div className="flex flex-wrap gap-4">
+                    <div className="flex wrap gap-4">
                       <button
                         onClick={handleExportPdfs}
                         className="rounded-xl border border-slate-200 px-6 py-3 text-xs font-black uppercase tracking-widest text-slate-600 transition-all hover:border-slate-900 hover:text-slate-900"

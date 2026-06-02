@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, MessageSquare, ArrowRight } from 'lucide-react';
+import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, MessageSquare, ArrowRight, Check } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 import { useLead } from '@/providers/LeadProvider';
@@ -20,6 +20,8 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
+  const [awaitingApproval, setAwaitingApproval] = useState(false);
+  const [requiresRegistration, setRequiresRegistration] = useState(false);
   
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [showUpiModal, setShowUpiModal] = useState(false);
@@ -72,6 +74,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     setLoading(true);
     setError(null);
     setRequiresPayment(false);
+    setAwaitingApproval(false);
     try {
       if (!token) throw new Error('Verification required to access this document.');
 
@@ -80,7 +83,12 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
       });
 
       if (res.status === 402) {
-        setRequiresPayment(true);
+        const data = await res.json().catch(() => ({}));
+        if (data.status === 'awaiting_approval') {
+          setAwaitingApproval(true);
+        } else {
+          setRequiresPayment(true);
+        }
         setLoading(false);
         return;
       }
@@ -121,10 +129,10 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
     const adminPhone = rawPhone.replace(/\D/g, ''); 
     
-    const subject = upiOrderDetails?.isPro ? 'PRO ACCESS (ALL DOCUMENTS)' : `SELECTED PDFS (QTY: ${finalAmount / 10})`;
-    const message = `Hello Admin, I have paid ₹${finalAmount} for ${subject}. \n\nTransaction ID: ${upiOrderDetails?.transactionId}\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease unlock my access.`;
+    const subject = upiOrderDetails?.isPro ? 'PRO ACCESS' : `SELECTED PDFS`;
+    const message = `Hello Admin, I have paid ₹${finalAmount} and submitted my UTR for ${subject}.\n\nTransaction ID: ${upiOrderDetails?.transactionId}\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease approve my access.`;
     
-    window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const startManualPayment = async (type: 'single' | 'pro') => {
@@ -187,12 +195,12 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
 
       if (res.ok) {
         setShowUpiModal(false);
-        fetchPdf(); // Refresh to unlock
+        setAwaitingApproval(true);
         return true;
       }
       return false;
     } catch (err) {
-      console.error('UTR Verify Error:', err);
+      console.error('UTR Submit Error:', err);
       return false;
     }
   };
@@ -227,7 +235,27 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
       <div className="flex-1 flex items-center justify-center p-4">
         {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
         
-        {requiresPayment && (
+        {awaitingApproval && (
+          <div className="max-w-md w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl animate-in zoom-in-95">
+            <div className="flex justify-center mb-6">
+               <div className="h-20 w-20 rounded-3xl bg-blue-50 flex items-center justify-center">
+                 <Loader2 className="h-10 w-10 text-blue-600 animate-spin" />
+               </div>
+            </div>
+            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Pending Approval</h3>
+            <p className="text-slate-500 font-medium mb-8 leading-relaxed">
+              Your payment details have been submitted. Admin is verifying the transaction in GPay/Bank. 
+              <br/><br/>
+              Access will be granted automatically once approved.
+            </p>
+            <button onClick={() => fetchPdf()} className="w-full rounded-2xl bg-slate-900 py-4 text-white font-black uppercase tracking-widest hover:bg-orange-600 transition-all">
+              Check Status
+            </button>
+            <button onClick={onClose} className="mt-4 text-sm font-bold text-slate-400 hover:text-slate-600">Close</button>
+          </div>
+        )}
+
+        {requiresPayment && !awaitingApproval && (
           <div className="max-w-xl w-full bg-white rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 flex flex-col md:flex-row">
             {/* Left: Info */}
             <div className="p-10 md:w-1/2 flex flex-col justify-center">
@@ -241,11 +269,11 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                   <ShieldCheck className="h-4 w-4 text-green-500" /> 
-                  Instant Manual Unlock
+                  Manual Approval
                 </div>
                 <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                   <ShieldCheck className="h-4 w-4 text-green-500" /> 
-                  Verified Documents
+                  Secure Verification
                 </div>
               </div>
             </div>
@@ -308,7 +336,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
           />
         )}
 
-        {displayError && !requiresPayment && (
+        {displayError && !requiresPayment && !awaitingApproval && (
           <div className="max-w-sm w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl">
             <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
             <h3 className="text-xl font-black text-slate-900 uppercase mb-2">Access Denied</h3>

@@ -123,19 +123,19 @@ export const UpiQrModal = ({
           </button>
 
           <div className="mb-6">
-            <h3 className="text-lg font-black uppercase tracking-tight text-slate-900">Instant Unlock</h3>
+            <h3 className="text-lg font-black uppercase tracking-tight text-slate-900">Admin Approval</h3>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed mt-1">
-              Paid already? Enter your 12-digit UTR / Ref No to gain instant access.
+              Paid already? Enter your Transaction ID / UTR No. for Admin verification.
             </p>
           </div>
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">UTR / Ref Number</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">UTR / Transaction ID</label>
               <input 
                 type="text"
-                placeholder="12-digit number"
-                maxLength={12}
+                placeholder="Enter 12-digit number"
+                maxLength={14}
                 value={utr}
                 onChange={(e) => setUtr(e.target.value.replace(/\D/g, ''))}
                 className="w-full bg-white border-2 border-slate-100 rounded-xl px-4 py-3 font-bold text-slate-900 outline-none focus:border-orange-600 transition-all"
@@ -145,29 +145,20 @@ export const UpiQrModal = ({
             {error && <p className="text-[9px] font-bold text-red-500 uppercase px-1">{error}</p>}
 
             <button 
-              disabled={isVerifying || utr.length < 12}
+              disabled={isVerifying || utr.length < 10}
               onClick={handleVerify}
               className="w-full bg-slate-900 hover:bg-orange-600 disabled:bg-slate-300 text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-2"
             >
-              {isVerifying ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Unlock Instantly <ArrowRight className="h-4 w-4" /></>}
+              {isVerifying ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Submit for Approval <Check className="h-4 w-4" /></>}
             </button>
 
-            <div className="relative py-2">
-               <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200"></div></div>
-               <div className="relative flex justify-center text-[8px] font-black uppercase tracking-widest text-slate-400 bg-transparent px-2">OR</div>
-            </div>
-
-            <button 
-              onClick={() => onNotify(totalAmount)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-slate-200 text-slate-600 hover:border-orange-600 hover:text-orange-600 transition-all text-[10px] font-black uppercase tracking-widest"
-            >
-              <MessageSquare className="h-4 w-4" /> Notify Admin
-            </button>
+            <p className="text-[9px] font-bold text-slate-500 uppercase text-center mt-4">
+              Access is usually granted within 5-10 minutes.
+            </p>
           </div>
 
           <p className="mt-8 text-[8px] font-bold leading-relaxed text-slate-400 uppercase tracking-widest text-center">
-            Verification is instant. <br/>
-            Fake UTRs will lead to permanent IP block.
+            Once submitted, Admin will verify the payment in GPay/Bank and unlock your documents.
           </p>
         </div>
       </div>
