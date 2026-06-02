@@ -49,10 +49,24 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (typeof window !== "undefined") {
-      const isLoginPage = window.location.pathname === "/admin/login";
-      if (!isLoginPage && (error.response?.status === 401 || error.response?.status === 403)) {
-        window.location.href = "/admin/login";
+      const pathname = window.location.pathname;
+      const requestUrl = error.config?.url || "";
+      
+      // Determine if this is an administrative request
+      const isAdminTask = pathname.startsWith('/admin') || 
+                          requestUrl.includes('/admin/') || 
+                          requestUrl.includes('/auth/login');
+
+      if (isAdminTask && (error.response?.status === 401 || error.response?.status === 403)) {
+        const isLoginPage = pathname === "/admin/login";
+        if (!isLoginPage) {
+          window.location.href = "/admin/login";
+        }
       }
+      
+      // For non-admin tasks (like PDF viewing), we do NOT redirect.
+      // The individual components (e.g., SecurePdfViewer) handle 401/403 errors
+      // by showing the appropriate user-login or payment UI.
     }
     return Promise.reject(error);
   }
