@@ -1,17 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Database, Table, Loader2, Search, ArrowLeft, Download, RefreshCcw } from 'lucide-react';
+import { Database, Table, Loader2, Search, ArrowLeft, RefreshCcw, ChevronDown, ChevronRight } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/api';
 import { cn } from '@/lib/utils';
 
 export const DatabaseExplorer = () => {
   const [tables, setTables] = useState<string[]>([]);
-  const [selectedTable, setSelectedLead] = useState<string | null>(null);
+  const [selectedTable, setSelectedTable] = useState<string | null>(null);
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(false);
   const [search, setSearch] = useState('');
+  const [isDbExpanded, setIsDbExpanded] = useState(true);
 
   const fetchTables = async () => {
     try {
@@ -32,7 +33,7 @@ export const DatabaseExplorer = () => {
       const res = await fetch(`${API_BASE_URL}/admin/db/raw/${tableName}`, { credentials: 'include' });
       const rows = await res.json();
       setData(Array.isArray(rows) ? rows : []);
-      setSelectedLead(tableName);
+      setSelectedTable(tableName);
     } catch (err) {
       console.error('Fetch table data failed', err);
     } finally {
@@ -51,94 +52,132 @@ export const DatabaseExplorer = () => {
   if (loading) return <div className="flex justify-center p-20"><Loader2 className="h-8 w-8 animate-spin text-orange-600" /></div>;
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      {!selectedTable ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-           {tables.map(table => (
-             <button
-               key={table}
-               onClick={() => fetchTableData(table)}
-               className="group bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:border-orange-200 transition-all text-left flex flex-col gap-4"
-             >
-                <div className="h-12 w-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-orange-600 group-hover:text-white transition-all">
-                   <Table className="h-6 w-6" />
-                </div>
-                <div>
-                   <h4 className="font-black uppercase tracking-tight text-slate-900 text-lg">{table}</h4>
-                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Database Table</p>
-                </div>
-                <div className="mt-auto pt-4 flex items-center justify-between">
-                   <span className="text-[10px] font-black text-orange-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">Explore Data →</span>
-                </div>
-             </button>
-           ))}
-        </div>
-      ) : (
-        <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
-          {/* Toolbar */}
-          <div className="bg-slate-900 p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-             <div className="flex items-center gap-4">
-                <button 
-                  onClick={() => setSelectedLead(null)}
-                  className="p-3 bg-white/5 rounded-2xl text-slate-400 hover:text-white hover:bg-white/10 transition-all"
-                >
-                   <ArrowLeft className="h-5 w-5" />
-                </button>
-                <div>
-                   <h3 className="text-xl font-black text-white uppercase tracking-tight">{selectedTable}</h3>
-                   <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Showing last 1000 records</p>
-                </div>
-             </div>
+    <div className="flex bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl overflow-hidden min-h-[70vh] max-h-[85vh]">
+      
+      {/* Sidebar: phpMyAdmin Style */}
+      <div className="w-72 bg-slate-50 border-r border-slate-100 flex flex-col shrink-0">
+         <div className="p-6 border-b border-slate-200 bg-white">
+            <div className="flex items-center gap-3 text-slate-900">
+               <Database className="h-5 w-5 text-orange-600" />
+               <span className="font-black uppercase tracking-tight text-sm">Server Database</span>
+            </div>
+         </div>
+         
+         <div className="flex-1 overflow-y-auto p-4">
+            <div className="space-y-1">
+               {/* Root Database Node */}
+               <button 
+                 onClick={() => setIsDbExpanded(!isDbExpanded)}
+                 className="w-full flex items-center gap-2 p-2 hover:bg-slate-200/50 rounded-lg transition-all text-left"
+               >
+                  {isDbExpanded ? <ChevronDown className="h-4 w-4 text-slate-400" /> : <ChevronRight className="h-4 w-4 text-slate-400" />}
+                  <Database className="h-4 w-4 text-slate-400" />
+                  <span className="text-xs font-black uppercase text-slate-600 tracking-wider">dholera_db</span>
+               </button>
 
-             <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className="relative flex-1 md:w-64">
-                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
-                   <input 
-                     type="text" 
-                     placeholder="Search records..."
-                     value={search}
-                     onChange={(e) => setSearch(e.target.value)}
-                     className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white outline-none focus:border-orange-600 transition-all"
-                   />
-                </div>
-                <button 
-                  onClick={() => fetchTableData(selectedTable)}
-                  className="p-3 bg-white/5 rounded-xl text-slate-400 hover:text-white transition-all"
-                >
-                   <RefreshCcw className={cn("h-4 w-4", dataLoading && "animate-spin")} />
-                </button>
+               {/* Table List */}
+               {isDbExpanded && (
+                 <div className="ml-6 space-y-1 mt-1 border-l-2 border-slate-200 pl-2">
+                    {tables.map(table => (
+                      <button
+                        key={table}
+                        onClick={() => fetchTableData(table)}
+                        className={cn(
+                          "w-full flex items-center gap-2 p-2 rounded-lg text-left transition-all",
+                          selectedTable === table ? "bg-orange-50 text-orange-600 shadow-sm" : "hover:bg-slate-200/50 text-slate-500"
+                        )}
+                      >
+                         <Table className={cn("h-3.5 w-3.5", selectedTable === table ? "text-orange-600" : "text-slate-400")} />
+                         <span className="text-[11px] font-bold truncate">{table}</span>
+                      </button>
+                    ))}
+                 </div>
+               )}
+            </div>
+         </div>
+      </div>
+
+      {/* Main Content: Table View */}
+      <div className="flex-1 flex flex-col overflow-hidden bg-white">
+        {!selectedTable ? (
+          <div className="flex-1 flex flex-col items-center justify-center p-20 text-center space-y-4">
+             <div className="h-20 w-20 rounded-[2rem] bg-slate-50 flex items-center justify-center text-slate-200">
+                <Database className="h-10 w-10" />
+             </div>
+             <div>
+                <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Database Explorer</h3>
+                <p className="text-sm font-medium text-slate-400 mt-1">Select a table from the sidebar to browse raw records.</p>
              </div>
           </div>
+        ) : (
+          <>
+            {/* Toolbar */}
+            <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6 bg-slate-50/50">
+               <div className="flex items-center gap-4">
+                  <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-orange-600">
+                     <Table className="h-5 w-5" />
+                  </div>
+                  <div>
+                     <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight">{selectedTable}</h3>
+                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Table Preview (Last 1000 Rows)</p>
+                  </div>
+               </div>
 
-          {/* Table Data */}
-          <div className="flex-1 overflow-auto">
-             {data.length === 0 ? (
-               <div className="p-20 text-center text-slate-400 font-bold uppercase text-xs tracking-widest">Table is empty</div>
-             ) : (
-               <table className="w-full text-left border-collapse">
-                  <thead className="sticky top-0 bg-slate-50 z-10">
-                     <tr>
-                        {Object.keys(data[0]).map(key => (
-                          <th key={key} className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100 whitespace-nowrap">{key}</th>
-                        ))}
-                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-50">
-                     {filteredData.map((row, i) => (
-                       <tr key={i} className="hover:bg-slate-50/50 transition-colors">
-                          {Object.values(row).map((val: any, j) => (
-                            <td key={j} className="px-6 py-4 text-xs font-medium text-slate-600 whitespace-nowrap max-w-xs overflow-hidden text-ellipsis">
-                               {typeof val === 'object' ? JSON.stringify(val) : String(val)}
-                            </td>
-                          ))}
-                       </tr>
-                     ))}
-                  </tbody>
-               </table>
-             )}
-          </div>
-        </div>
-      )}
+               <div className="flex items-center gap-4 w-full md:w-auto">
+                  <div className="relative flex-1 md:w-64">
+                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                     <input 
+                       type="text" 
+                       placeholder="Search table..."
+                       value={search}
+                       onChange={(e) => setSearch(e.target.value)}
+                       className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-900 outline-none focus:border-orange-600 transition-all"
+                     />
+                  </div>
+                  <button 
+                    onClick={() => fetchTableData(selectedTable)}
+                    className="p-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-orange-600 hover:border-orange-100 transition-all shadow-sm"
+                    title="Refresh Data"
+                  >
+                     <RefreshCcw className={cn("h-4 w-4", dataLoading && "animate-spin")} />
+                  </button>
+               </div>
+            </div>
+
+            {/* Grid */}
+            <div className="flex-1 overflow-auto p-1 bg-slate-50">
+               {data.length === 0 ? (
+                 <div className="flex-1 flex items-center justify-center p-20 text-slate-400 font-bold uppercase text-xs tracking-widest italic">Table is empty</div>
+               ) : (
+                 <div className="inline-block min-w-full align-middle">
+                    <div className="overflow-hidden border border-slate-200 sm:rounded-2xl shadow-sm bg-white">
+                      <table className="min-w-full divide-y divide-slate-200 text-left border-collapse">
+                         <thead className="bg-slate-50">
+                            <tr>
+                               {Object.keys(data[0]).map(key => (
+                                 <th key={key} className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-500 border-b border-slate-200 whitespace-nowrap">{key}</th>
+                               ))}
+                            </tr>
+                         </thead>
+                         <tbody className="divide-y divide-slate-100">
+                            {filteredData.map((row, i) => (
+                              <tr key={i} className="hover:bg-slate-50 transition-colors">
+                                 {Object.values(row).map((val: any, j) => (
+                                   <td key={j} className="px-4 py-3 text-[11px] font-medium text-slate-600 whitespace-nowrap max-w-xs overflow-hidden text-ellipsis border-r border-slate-50">
+                                      {typeof val === 'object' ? JSON.stringify(val) : String(val)}
+                                   </td>
+                                 ))}
+                              </tr>
+                            ))}
+                         </tbody>
+                      </table>
+                    </div>
+                 </div>
+               )}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };
