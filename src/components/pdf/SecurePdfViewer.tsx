@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight, Check } from 'lucide-react';
-import { API_BASE_URL, SITE_BASE_URL } from '@/lib/api';
+import { API_BASE_URL, SITE_BASE_URL, apiClient } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 import { useLead } from '@/providers/LeadProvider';
 import { UpiQrModal } from '@/components/payment/UpiQrModal';
