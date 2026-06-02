@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import Script from "next/script";
 import { Instrument_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import OrganizationSchema from "@/components/OrganizationSchema";
-
-const ClientLayout = dynamic(() => import("@/components/layout/ClientLayout"), {
-  ssr: false,
-});
+import SafeClientLayout from "@/components/layout/SafeClientLayout";
 
 const instrumentSans = Instrument_Sans({
 // ...
@@ -127,7 +123,7 @@ export default function RootLayout({
           />
         </noscript>
 
-        <ClientLayout>{children}</ClientLayout>
+        <SafeClientLayout>{children}</SafeClientLayout>
       </body>
     </html>
   );
