@@ -2,13 +2,13 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBN6qClTk28er9L_AoQnko6M8weNp4bLZk", // NOTE: User should rotate this
-  authDomain: "user-management-admin-1128f.firebaseapp.com",
-  projectId: "user-management-admin-1128f",
-  storageBucket: "user-management-admin-1128f.firebasestorage.app",
-  messagingSenderId: "536387058166",
-  appId: "1:536387058166:web:221d86e1db8169096d2fd7",
-  measurementId: "G-N7HCNRG5J1"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -16,10 +16,13 @@ const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 // Initialize App Check (Roadmap Phase 6)
 if (typeof window !== "undefined") {
-  initializeAppCheck(app, {
-    provider: new ReCaptchaEnterpriseProvider('6LcV6pYqAAAAANL-9I66S6-U3hW_6_n0v0W6-w6X'), // Site Key
-    isTokenAutoRefreshEnabled: true
-  });
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  if (siteKey) {
+    initializeAppCheck(app, {
+      provider: new ReCaptchaEnterpriseProvider(siteKey),
+      isTokenAutoRefreshEnabled: true
+    });
+  }
 }
 
 export { app };
