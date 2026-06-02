@@ -145,48 +145,9 @@ export function PdfListing() {
     }
   };
 
-  const handleNotifyAdmin = (finalAmount: number, utr?: string) => {
-    const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
-    const adminPhone = rawPhone.replace(/\D/g, ''); 
-    const utrSnippet = utr ? `\nUTR/Ref: ${utr}` : '';
-    const message = `Hello Admin, I have paid ₹${finalAmount} for ${upiOrderDetails?.title}.${utrSnippet}\n\nTransaction ID: ${upiOrderDetails?.transactionId}\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease unlock my access.`;
-    window.open(`https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(message)}`, '_blank');
-  };
-
-  const handleVerifyUtr = async (utr: string): Promise<boolean> => {
-    if (!upiOrderDetails || !verifiedLead) return false;
-    try {
-      const res = await fetch(`${API_BASE_URL}/payment/verify-utr`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': verifiedLead.token
-        },
-        body: JSON.stringify({ 
-          utr, 
-          transactionId: upiOrderDetails.transactionId,
-          leadToken: verifiedLead.token 
-        })
-      });
-
-      if (res.ok) {
-        setShowUpiModal(false);
-        setIsSelectionMode(false);
-        window.location.reload(); 
-        return true;
-      }
-      return false;
-    } catch (err) {
-      console.error('UTR Verify Error:', err);
-      return false;
-    }
-  };
-
   const handleManualAccess = () => {
-    const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
-    const adminPhone = rawPhone.replace(/\D/g, ''); 
-    const message = `Hello Admin, I am interested in unlocking Pro Access to all intelligence archives. \n\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease guide me on the process.`;
-    window.open(`https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(message)}`, '_blank');
+    // If user is not Pro, we show the checkout modal by entering selection mode or showing pricing
+    setIsSelectionMode(true);
   };
 
   const formatUploadedAt = (pdf: PDF) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { X, ShieldCheck, Copy, Check, MessageSquare, Loader2, ArrowRight } from "lucide-react";
+import { X, ShieldCheck, Copy, Check, Loader2, ArrowRight } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 
 interface UpiQrModalProps {
@@ -10,7 +10,6 @@ interface UpiQrModalProps {
   merchantName: string;
   transactionId: string;
   onClose: () => void;
-  onNotify: (totalAmount: number, utr?: string) => void;
   onVerifyUtr: (utr: string) => Promise<boolean>;
 }
 
@@ -20,7 +19,6 @@ export const UpiQrModal = ({
   merchantName,
   transactionId,
   onClose,
-  onNotify,
   onVerifyUtr
 }: UpiQrModalProps) => {
   const [copied, setCopied] = useState(false);
@@ -53,21 +51,19 @@ export const UpiQrModal = ({
   };
 
   const handleVerify = async () => {
-    if (!/^\d{12}$/.test(utr)) {
-      setError("Please enter the 12-digit UTR number from your payment app.");
+    if (!/^\d{10,14}$/.test(utr)) {
+      setError("Please enter a valid Transaction/UTR number.");
       return;
     }
     setError(null);
     setIsVerifying(true);
     try {
       const success = await onVerifyUtr(utr);
-      if (success) {
-        onNotify(totalAmount, utr); // Send WhatsApp as well for record
-      } else {
-        setError("Could not verify reference. Please check and try again.");
+      if (!success) {
+        setError("Could not submit request. Please try again.");
       }
     } catch (err) {
-      setError("Verification error. Please notify admin via WhatsApp.");
+      setError("Connection error. Please try again.");
     } finally {
       setIsVerifying(false);
     }

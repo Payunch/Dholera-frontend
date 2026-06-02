@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, MessageSquare, ArrowRight, Check } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight, Check } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 import { useLead } from '@/providers/LeadProvider';
@@ -33,6 +33,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     isPro?: boolean;
   } | null>(null);
 
+  const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { logoutLead } = useLead();
 
   const [clientData, setClientData] = useState({
@@ -69,12 +70,12 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
 
   const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
 
-  const fetchPdf = useCallback(async () => {
+  const fetchPdf = useCallback(async (isPolling = false) => {
     if (!mounted) return;
-    setLoading(true);
+    if (!isPolling) setLoading(true);
     setError(null);
     setRequiresPayment(false);
-    setAwaitingApproval(false);
+    // Note: don't reset awaitingApproval during polling to avoid flicker
     try {
       if (!token) throw new Error('Verification required to access this document.');
 
@@ -89,7 +90,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
         } else {
           setRequiresPayment(true);
         }
-        setLoading(false);
+        if (!isPolling) setLoading(false);
         return;
       }
 
@@ -101,13 +102,38 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       setBlobUrl(url);
+      setAwaitingApproval(false);
+      setRequiresPayment(false);
+      
+      // Stop polling on success
+      if (pollIntervalRef.current) {
+        clearInterval(pollIntervalRef.current);
+        pollIntervalRef.current = null;
+      }
     } catch (err) {
-      console.error('SecurePdfViewer Fetch Error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to load document.');
+      if (!isPolling) {
+        console.error('SecurePdfViewer Fetch Error:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load document.');
+      }
     } finally {
-      setLoading(false);
+      if (!isPolling) setLoading(false);
     }
   }, [pdfId, token, mounted]);
+
+  // Handle Polling
+  useEffect(() => {
+    if (awaitingApproval && !pollIntervalRef.current) {
+      pollIntervalRef.current = setInterval(() => {
+        fetchPdf(true);
+      }, 5000); // Poll every 5 seconds
+    }
+    return () => {
+      if (pollIntervalRef.current) {
+        clearInterval(pollIntervalRef.current);
+        pollIntervalRef.current = null;
+      }
+    };
+  }, [awaitingApproval, fetchPdf]);
 
   useEffect(() => {
     if (!pdfId || !mounted) return;
@@ -124,16 +150,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
       if (blobUrl) URL.revokeObjectURL(blobUrl);
     };
   }, [blobUrl]);
-
-  const handleNotifyAdmin = (finalAmount: number) => {
-    const rawPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
-    const adminPhone = rawPhone.replace(/\D/g, ''); 
-    
-    const subject = upiOrderDetails?.isPro ? 'PRO ACCESS' : `SELECTED PDFS`;
-    const message = `Hello Admin, I have paid ₹${finalAmount} and submitted my UTR for ${subject}.\n\nTransaction ID: ${upiOrderDetails?.transactionId}\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease approve my access.`;
-    
-    window.open(`https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(message)}`, '_blank');
-  };
 
   const startManualPayment = async (type: 'single' | 'pro') => {
     setPaymentLoading(true);
@@ -242,16 +258,22 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
                  <Loader2 className="h-10 w-10 text-blue-600 animate-spin" />
                </div>
             </div>
-            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Pending Approval</h3>
-            <p className="text-slate-500 font-medium mb-8 leading-relaxed">
-              Your payment details have been submitted. Admin is verifying the transaction in GPay/Bank. 
+            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Awaiting Approval</h3>
+            <p className="text-slate-500 font-medium mb-8 leading-relaxed text-sm">
+              Your payment is being verified by the Admin in GPay/Bank. 
               <br/><br/>
-              Access will be granted automatically once approved.
+              <b>This page will automatically unlock</b> as soon as approval is granted (usually 5-10 mins).
             </p>
-            <button onClick={() => fetchPdf()} className="w-full rounded-2xl bg-slate-900 py-4 text-white font-black uppercase tracking-widest hover:bg-orange-600 transition-all">
-              Check Status
-            </button>
-            <button onClick={onClose} className="mt-4 text-sm font-bold text-slate-400 hover:text-slate-600">Close</button>
+            <div className="flex flex-col gap-3">
+              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center gap-2">
+                 <div className="h-2 w-2 bg-blue-500 rounded-full animate-pulse" />
+                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Waiting for Admin to click Approve...</span>
+              </div>
+              <button onClick={() => fetchPdf()} className="w-full rounded-2xl bg-slate-900 py-4 text-white font-black uppercase tracking-widest hover:bg-orange-600 transition-all text-xs">
+                Refresh Status
+              </button>
+            </div>
+            <button onClick={onClose} className="mt-4 text-[10px] font-black text-slate-400 hover:text-slate-600 uppercase tracking-widest">Close Viewer</button>
           </div>
         )}
 
@@ -331,7 +353,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             merchantName={upiOrderDetails.merchantName}
             transactionId={upiOrderDetails.transactionId}
             onClose={() => setShowUpiModal(false)}
-            onNotify={handleNotifyAdmin}
             onVerifyUtr={handleVerifyUtr}
           />
         )}
