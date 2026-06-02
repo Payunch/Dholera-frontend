@@ -68,33 +68,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
   }, []);
 
   const socketRef = useRef<Socket | null>(null);
-
-  useEffect(() => {
-    if (!token || !mounted) return;
-
-    // Real-time Unlock via WebSockets (Roadmap Phase 1)
-    const socketUrl = API_BASE_URL.replace('/api', '');
-    const socket = io(socketUrl, { withCredentials: true });
-    socketRef.current = socket;
-
-    socket.on('connect', () => {
-      console.log('[Socket] Connected. Subscribing to lead channel...');
-      socket.emit('join_lead', token);
-    });
-
-    socket.on('payment_approved', (data) => {
-      console.log('[Socket] Access Granted Signal Received:', data);
-      fetchPdf(true); // Immediate re-fetch to unlock
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, [token, mounted, fetchPdf]);
-
-  const { fingerprint, leadEmail, leadPhone, isMobile } = clientData;
-
-  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
+  const { token, fingerprint, leadEmail, leadPhone, isMobile } = clientData;
 
   const fetchPdf = useCallback(async (isPolling = false) => {
     if (!mounted) return;
@@ -145,6 +119,31 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
       if (!isPolling) setLoading(false);
     }
   }, [pdfId, token, mounted]);
+
+  useEffect(() => {
+    if (!token || !mounted) return;
+
+    // Real-time Unlock via WebSockets (Roadmap Phase 1)
+    const socketUrl = API_BASE_URL.replace('/api', '');
+    const socket = io(socketUrl, { withCredentials: true });
+    socketRef.current = socket;
+
+    socket.on('connect', () => {
+      console.log('[Socket] Connected. Subscribing to lead channel...');
+      socket.emit('join_lead', token);
+    });
+
+    socket.on('payment_approved', (data) => {
+      console.log('[Socket] Access Granted Signal Received:', data);
+      fetchPdf(true); // Immediate re-fetch to unlock
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [token, mounted, fetchPdf]);
+
+  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
 
   // Handle Polling
   useEffect(() => {

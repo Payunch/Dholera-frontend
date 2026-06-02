@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getAppCheck, getToken } from "firebase/app-check";
 
 const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
 
@@ -25,14 +24,18 @@ export const apiClient = axios.create({
 
 // ROADMAP PHASE 6: FIREBASE APP CHECK SHIELD
 apiClient.interceptors.request.use(async (config) => {
-  try {
-    const appCheck = getAppCheck();
-    const tokenResult = await getToken(appCheck, false);
-    if (tokenResult?.token) {
-      config.headers['X-Firebase-AppCheck'] = tokenResult.token;
+  // Only attempt to get App Check token in the browser environment
+  if (typeof window !== "undefined") {
+    try {
+      const { getAppCheck, getToken } = await import("firebase/app-check") as any;
+      const appCheck = getAppCheck();
+      const tokenResult = await getToken(appCheck, false);
+      if (tokenResult?.token) {
+        config.headers['X-Firebase-AppCheck'] = tokenResult.token;
+      }
+    } catch (e) {
+      // App check not initialized yet or failed
     }
-  } catch (e) {
-    // App check not initialized yet or not on browser
   }
   return config;
 });
