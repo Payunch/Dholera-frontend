@@ -8,7 +8,7 @@ import { API_BASE_URL } from '@/lib/api';
 import { SecurePdfViewer } from '@/components/pdf/SecurePdfViewer';
 import { LeadPopup } from '@/components/leads/LeadPopup';
 import { useVisitorTracking } from '@/hooks/useVisitorTracking';
-import { Calendar, FileText, Lock, Search, Loader2 } from 'lucide-react';
+import { Calendar, FileText, Lock, Search, Loader2, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PDF {
@@ -37,6 +37,7 @@ export function PdfListing() {
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
   const [paymentRefreshToken, setPaymentRefreshToken] = useState(0);
+  const [popupPaymentStatus, setPopupPaymentStatus] = useState<'idle' | 'success' | 'failed'>('idle');
 
   const isPopupWindow = typeof window !== 'undefined' && window.opener && window.opener !== window;
 
@@ -53,11 +54,15 @@ export function PdfListing() {
           { type: 'phonepe-payment-success', pdfId: paymentPdfId },
           window.location.origin
         );
-        window.close();
+        setPopupPaymentStatus('success');
         return;
       }
       router.replace('/pdfs', { scroll: false });
     } else if (status === 'failed') {
+      if (isPopupWindow) {
+        setPopupPaymentStatus('failed');
+        return;
+      }
       alert('Payment failed. Please try again.');
       router.replace('/pdfs', { scroll: false });
     }
@@ -232,6 +237,31 @@ export function PdfListing() {
           onClose={() => setShowViewer(false)}
           refreshToken={paymentRefreshToken}
         />
+      )}
+
+      {isPopupWindow && popupPaymentStatus !== 'idle' && (
+        <div className="fixed inset-0 z-[500] flex items-center justify-center bg-slate-950/95 p-4 text-center">
+          <div className="w-full max-w-md rounded-[2rem] bg-white p-8 shadow-2xl">
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-50 text-orange-600">
+              <ShieldCheck className="h-8 w-8" />
+            </div>
+            <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900">
+              {popupPaymentStatus === 'success' ? 'Payment Successful' : 'Payment Failed'}
+            </h3>
+            <p className="mt-3 text-sm font-medium leading-6 text-slate-500">
+              {popupPaymentStatus === 'success'
+                ? 'Your document has been unlocked. You can close this window now.'
+                : 'The payment did not complete. You can close this window and try again.'}
+            </p>
+            <button
+              type="button"
+              onClick={() => window.close()}
+              className="mt-6 w-full rounded-2xl bg-orange-600 px-5 py-4 font-black uppercase tracking-widest text-white hover:bg-orange-500 transition-colors"
+            >
+              Close Window
+            </button>
+          </div>
+        </div>
       )}
     </section>
   );

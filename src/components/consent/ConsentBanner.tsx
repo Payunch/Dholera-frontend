@@ -84,7 +84,7 @@ export default function ConsentBanner() {
   return (
     <>
       {statusMessage && (
-        <div className="fixed inset-x-0 bottom-4 z-[200] px-4">
+        <div className="fixed inset-x-0 bottom-4 z-[400] px-4 pointer-events-auto">
           <div className="mx-auto max-w-md rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900 shadow-lg shadow-emerald-950/10 animate-fade-up">
             {statusMessage}
           </div>
@@ -92,7 +92,7 @@ export default function ConsentBanner() {
       )}
 
       {isVisible && (
-        <div className="fixed inset-x-0 bottom-0 z-[200] px-4 pb-4">
+        <div className="fixed inset-x-0 bottom-0 z-[400] px-4 pb-4 pointer-events-auto">
           <div className="mx-auto flex max-w-4xl flex-col gap-4 rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-2xl shadow-slate-900/10 backdrop-blur md:flex-row md:items-center md:justify-between animate-fade-up">
             <div className="space-y-1">
               <p className="text-sm font-semibold text-slate-900">Cookies and analytics</p>
