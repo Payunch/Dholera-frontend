@@ -130,6 +130,18 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
         if (paymentWindow && !paymentWindow.closed) {
           paymentWindow.location.href = data.redirectUrl;
           paymentWindow.focus();
+          // Monitor popup in case it is closed immediately by the browser or user
+          const popupMonitor = setInterval(() => {
+            try {
+              if (!paymentWindow || paymentWindow.closed) {
+                clearInterval(popupMonitor);
+                setPaymentLoading(false);
+                setError('Payment popup was closed or blocked. Please try again or allow popups for this site.');
+              }
+            } catch (e) {
+              // Accessing paymentWindow may throw if cross-origin; ignore and keep monitoring
+            }
+          }, 500);
         } else {
           window.location.href = data.redirectUrl;
         }
