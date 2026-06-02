@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Check, Loader2, IndianRupee, User, FileText, ShieldCheck } from 'lucide-react';
+import { Check, Loader2, IndianRupee, User, FileText, ShieldCheck, CheckCircle2, Clock } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/api';
 import { fetchCsrfToken } from "@/utils/csrf";
+import { cn } from "@/lib/utils";
 
 interface GroupedPendingPurchase {
   id: number;
   transaction_id: string;
   utr: string; 
   amount: number;
+  status: 'awaiting_approval' | 'completed';
   updatedAt: string;
   lead: {
     id: number;
@@ -21,24 +23,26 @@ interface GroupedPendingPurchase {
 }
 
 export const PaymentApprovals = () => {
-  const [pending, setPending] = useState<GroupedPendingPurchase[]>([]);
+  const [records, setRecords] = useState<GroupedPendingPurchase[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-  const fetchPending = async () => {
+  const fetchRecords = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/payment/admin/pending`, { credentials: 'include' });
       const data = await res.json();
-      setPending(Array.isArray(data) ? data : []);
+      setRecords(Array.isArray(data) ? data : []);
     } catch (err) {
-      console.error('Fetch pending error:', err);
+      console.error('Fetch records error:', err);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPending();
+    fetchRecords();
+    const interval = setInterval(fetchRecords, 30000); // Live sync history
+    return () => clearInterval(interval);
   }, []);
 
   const handleApprove = async (txnId: string) => {
@@ -55,7 +59,8 @@ export const PaymentApprovals = () => {
         credentials: 'include'
       });
       if (res.ok) {
-        setPending(prev => prev.filter(p => p.transaction_id !== txnId));
+        // Update local state status instantly
+        setRecords(prev => prev.map(r => r.transaction_id === txnId ? { ...r, status: 'completed' } : r));
       } else {
         const err = await res.json();
         alert(`Approval failed: ${err.error}`);
@@ -74,27 +79,38 @@ export const PaymentApprovals = () => {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-black uppercase tracking-tight text-slate-900 flex items-center gap-3">
           <ShieldCheck className="h-6 w-6 text-orange-600" />
-          Access Requests
+          Access History
         </h2>
-        <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-[10px] font-black uppercase">
-          {pending.length} Batch{pending.length !== 1 ? 'es' : ''} Awaiting Verification
-        </span>
+        <div className="flex gap-2">
+           <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-[10px] font-black uppercase">
+             {records.filter(r => r.status === 'awaiting_approval').length} Pending
+           </span>
+           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-black uppercase">
+             {records.filter(r => r.status === 'completed').length} Approved
+           </span>
+        </div>
       </div>
 
-      {pending.length === 0 ? (
+      {records.length === 0 ? (
         <div className="bg-slate-50 rounded-[2rem] p-12 text-center border-2 border-dashed border-slate-200">
            <div className="h-16 w-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-              <Check className="h-8 w-8 text-slate-300" />
+              <Clock className="h-8 w-8 text-slate-300" />
            </div>
-           <p className="text-slate-400 font-bold uppercase text-xs tracking-widest">No pending approvals found</p>
+           <p className="text-slate-400 font-bold uppercase text-xs tracking-widest">No access requests found in database</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 pb-20">
-          {pending.map((p) => (
-            <div key={p.transaction_id} className="bg-white rounded-[1.5rem] p-6 border border-slate-100 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          {records.map((p) => (
+            <div key={p.transaction_id} className={cn(
+              "bg-white rounded-[1.5rem] p-6 border transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm",
+              p.status === 'completed' ? "border-green-100 bg-green-50/10" : "border-slate-100"
+            )}>
                <div className="flex-1 flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-slate-50 flex items-center justify-center shrink-0">
-                     <User className="h-6 w-6 text-slate-400" />
+                  <div className={cn(
+                    "h-12 w-12 rounded-xl flex items-center justify-center shrink-0 transition-all",
+                    p.status === 'completed' ? "bg-green-100 text-green-600" : "bg-slate-50 text-slate-400"
+                  )}>
+                     {p.status === 'completed' ? <CheckCircle2 className="h-6 w-6" /> : <User className="h-6 w-6" />}
                   </div>
                   <div>
                      <div className="flex items-center gap-2 mb-1">
@@ -107,7 +123,10 @@ export const PaymentApprovals = () => {
                            {p.items.join(', ')}
                         </div>
                         <div className="flex items-center gap-3">
-                           <div className="text-[10px] font-black text-orange-600 uppercase">
+                           <div className={cn(
+                             "text-[10px] font-black uppercase",
+                             p.status === 'completed' ? "text-green-600" : "text-orange-600"
+                           )}>
                               UTR: {p.utr}
                            </div>
                            <div className="text-[10px] font-black text-slate-300 uppercase">
@@ -130,14 +149,20 @@ export const PaymentApprovals = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                     <button 
-                       onClick={() => handleApprove(p.transaction_id)}
-                       disabled={actionLoading === p.transaction_id}
-                       className="bg-slate-900 hover:bg-orange-600 text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
-                     >
-                        {actionLoading === p.transaction_id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
-                        Approve Access
-                     </button>
+                     {p.status === 'completed' ? (
+                       <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-green-600 text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-green-600/20">
+                          <Check className="h-3 w-3" /> Approved
+                       </div>
+                     ) : (
+                       <button 
+                         onClick={() => handleApprove(p.transaction_id)}
+                         disabled={actionLoading === p.transaction_id}
+                         className="bg-slate-900 hover:bg-orange-600 text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-slate-950/10"
+                       >
+                          {actionLoading === p.transaction_id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
+                          Approve Access
+                       </button>
+                     )}
                   </div>
                </div>
             </div>

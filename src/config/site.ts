@@ -10,7 +10,7 @@ export const siteConfig = {
     youtube: "https://www.youtube.com/@dholeraplatform",
   },
   contact: {
-    email: "info@dholeraplatform.com",
+    email: "gohelnaresh7707@gmail.com",
     phone: "+91-XXXXXXXXXX",
     phoneDisplay: "+91 XXXXXXXXXX",
   },

@@ -89,10 +89,10 @@ export function ClearanceClient() {
             </p>
           </div>
           <Link
-            href="/professional/dashboard"
+            href="/my-vault"
             className="group flex items-center gap-3 rounded-2xl bg-orange-600 px-8 py-5 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-500 shadow-xl shadow-orange-600/20"
           >
-            Create Professional Profile
+            Access My Vault
             <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>

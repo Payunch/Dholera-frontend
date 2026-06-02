@@ -20,7 +20,7 @@ export default function OrganizationSchema() {
       "@type": "ContactPoint",
       "telephone": "+91-XXXXXXXXXX", // This should be dynamic from site data
       "contactType": "customer service",
-      "email": "info@dholeraplatform.com",
+      "email": "gohelnaresh7707@gmail.com",
       "areaServed": "IN",
       "availableLanguage": ["en", "hi", "gu"]
     }
