@@ -45,10 +45,10 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                   <td className="px-8 py-5">
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                        <Clock className="h-3 w-3" /> {(lead as any).totalTimeSpent ? Math.round((lead as any).totalTimeSpent / 60) : 0} Mins
+                        <Clock className="h-3 w-3" /> {lead.totalTimeSpent ? Math.round(lead.totalTimeSpent / 60) : 0} Mins
                       </div>
                       <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                        <Eye className="h-3 w-3" /> {(lead as any).uniquePagesCount || 0} Pages
+                        <Eye className="h-3 w-3" /> {lead.visitedPages?.length || 0} Pages
                       </div>
                     </div>
                   </td>
@@ -104,9 +104,9 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                  {/* Intelligence Grid */}
                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     {[
-                      { icon: Clock, label: "Time Spent", value: `${Math.round(((selectedLead as any).totalTimeSpent || 0) / 60)}m` },
-                      { icon: Eye, label: "Views", value: `${(selectedLead as any).total_sessions || 0} Sessions` },
-                      { icon: MapPin, label: "Last IP", value: (selectedLead as any).sessions?.[0]?.ip || "Unknown" },
+                      { icon: Clock, label: "Time Spent", value: `${Math.round((selectedLead.totalTimeSpent || 0) / 60)}m` },
+                      { icon: Eye, label: "Views", value: `${selectedLead.total_sessions || 0} Sessions` },
+                      { icon: MapPin, label: "Last IP", value: selectedLead.sessions?.[0]?.ip || "Unknown" },
                       { icon: Globe, label: "Source", value: selectedLead.source || "Direct" },
                     ].map((item, i) => (
                       <div key={i} className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
@@ -133,8 +133,8 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                        <Calendar className="h-3 w-3" /> Activity History
                     </h4>
                     <div className="space-y-2">
-                       {(selectedLead as any).visitedPages?.length > 0 ? (
-                         (selectedLead as any).visitedPages.map((page: string, i: number) => (
+                       {selectedLead.visitedPages && selectedLead.visitedPages.length > 0 ? (
+                         selectedLead.visitedPages.map((page: string, i: number) => (
                            <div key={i} className="flex items-center gap-3 p-3 bg-white border border-slate-100 rounded-xl">
                               <div className="h-6 w-6 rounded-lg bg-orange-50 flex items-center justify-center text-[10px] font-black text-orange-600">{i+1}</div>
                               <span className="text-xs font-bold text-slate-700">{page}</span>

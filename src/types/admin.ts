@@ -6,6 +6,16 @@ export interface Lead {
   source: string;
   status: "New" | "Contacted" | "Converted" | "Qualified";
   createdAt: string;
+  is_pro?: boolean;
+  is_registered?: boolean;
+  is_trial?: boolean;
+  verified?: boolean;
+  browserFingerprint?: string;
+  totalTimeSpent?: number;
+  visitCount?: number;
+  total_sessions?: number;
+  visitedPages?: string[];
+  sessions?: any[];
 }
 
 export interface WhatsAppStats {
