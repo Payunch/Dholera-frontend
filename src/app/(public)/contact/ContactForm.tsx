@@ -28,11 +28,6 @@ export function ContactForm() {
     }
   };
 
-  const handleWhatsApp = () => {
-    const text = encodeURIComponent("Hello! I am interested in Dholera Smart City investment via Dholera Platform.");
-    window.open(`https://wa.me/911234567890?text=${text}`, "_blank");
-  };
-
   if (status === "success") {
     return (
       <div className="flex flex-col items-center justify-center space-y-8 rounded-[2.5rem] bg-white p-12 text-center shadow-2xl animate-in zoom-in-95 duration-500">
@@ -144,17 +139,6 @@ export function ContactForm() {
             </>
           )}
         </button>
-
-        <div className="pt-6 border-t border-slate-100">
-          <button
-            type="button"
-            onClick={handleWhatsApp}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-green-500 py-4 text-sm font-black uppercase tracking-[0.2em] text-white transition-all hover:bg-green-600 shadow-lg active:scale-95"
-          >
-            <MessageSquare className="h-5 w-5" />
-            Secure WhatsApp Portal
-          </button>
-        </div>
       </form>
     </div>
   );

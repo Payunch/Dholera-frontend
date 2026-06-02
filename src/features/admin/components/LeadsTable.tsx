@@ -71,12 +71,6 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                       >
                         <Info className="h-4 w-4" />
                       </button>
-                      <button 
-                        onClick={() => window.open(`https://wa.me/${lead.phone.replace(/\D/g, '')}`, '_blank')}
-                        className="rounded-xl border border-slate-200 p-2 text-slate-400 transition-all hover:bg-green-500 hover:text-white hover:border-green-500"
-                      >
-                        <MessageSquare className="h-4 w-4" />
-                      </button>
                     </div>
                   </td>
                 </tr>
