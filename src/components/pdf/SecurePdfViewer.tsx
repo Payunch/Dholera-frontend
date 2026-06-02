@@ -117,7 +117,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
   const handleNotifyAdmin = () => {
     const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '917435808310';
     const message = `Hello Admin, I have paid ₹499 for PRO ACCESS to all archives. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease unlock my access.`;
-    window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/${adminPhone.replace(/\s+/g, '')}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   if (!mounted) return null;
