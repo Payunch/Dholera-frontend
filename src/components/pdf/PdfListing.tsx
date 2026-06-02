@@ -8,8 +8,9 @@ import { API_BASE_URL } from '@/lib/api';
 import { SecurePdfViewer } from '@/components/pdf/SecurePdfViewer';
 import { LeadPopup } from '@/components/leads/LeadPopup';
 import { useVisitorTracking } from '@/hooks/useVisitorTracking';
-import { Calendar, FileText, Lock, Search, Loader2, ShieldCheck } from 'lucide-react';
+import { Calendar, FileText, Lock, Search, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 interface PDF {
   id: string;
@@ -18,8 +19,6 @@ interface PDF {
   createdAt?: string;
   documentDate?: string;
 }
-
-import { useSearchParams, useRouter } from 'next/navigation';
 
 export function PdfListing() {
   const { verifiedLead } = useLead();
@@ -36,76 +35,6 @@ export function PdfListing() {
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
-  const [paymentRefreshToken, setPaymentRefreshToken] = useState(0);
-  const [popupPaymentStatus, setPopupPaymentStatus] = useState<'idle' | 'success' | 'failed'>('idle');
-const [isPopup, setIsPopup] = useState(false);
-
-useEffect(() => {
-  if (typeof window !== 'undefined' && window.opener && window.opener !== window) {
-    setIsPopup(true);
-  }
-}, []);
-
-const status = searchParams.get('payment_status');
-const paymentPdfId = searchParams.get('pdfId');
-const hasPaymentSuccess = status === 'success' && Boolean(paymentPdfId);
-
-// Use isPopup state which starts as false on both server and client (first render)
-const viewerPdfId = selectedPdfId ?? (hasPaymentSuccess && !isPopup ? paymentPdfId : null);
-const viewerOpen = showViewer || (hasPaymentSuccess && !isPopup);
-
-useEffect(() => {
-  if (status === 'success' && paymentPdfId) {
-    if (isPopup && typeof window !== 'undefined' && window.opener) {
-      // ...
-
-        // Use wildcard targetOrigin in dev to ensure opener receives message after third-party redirect
-        window.opener.postMessage(
-          { type: 'phonepe-payment-success', pdfId: paymentPdfId },
-          '*'
-        );
-        setPopupPaymentStatus('success');
-        return;
-      }
-      router.replace('/pdfs', { scroll: false });
-    } else if (status === 'failed') {
-      if (isPopup) {
-        setPopupPaymentStatus('failed');
-        return;
-      }
-      alert('Payment failed. Please try again.');
-      router.replace('/pdfs', { scroll: false });
-    }
-  }, [isPopup, paymentPdfId, router, status]);
-
-  useEffect(() => {
-    const frontendOrigin = (typeof window !== 'undefined')
-      ? (process.env.NEXT_PUBLIC_FRONTEND_ORIGIN || window.location.origin)
-      : '';
-    const landingOrigin = process.env.NEXT_PUBLIC_PAYMENT_LANDING_ORIGIN || '';
-
-    const handlePaymentMessage = (event: MessageEvent) => {
-      const isProd = process.env.NODE_ENV === 'production';
-
-      if (isProd) {
-        const allowed = [frontendOrigin];
-        if (landingOrigin) allowed.push(landingOrigin);
-        if (!allowed.includes(event.origin)) return;
-      } else {
-        // In development accept the payment-success message from the landing page
-        if (event.data?.type !== 'phonepe-payment-success') return;
-      }
-
-      if (event.data?.type === 'phonepe-payment-success' && event.data.pdfId) {
-        setSelectedPdfId(event.data.pdfId);
-        setShowViewer(true);
-        setPaymentRefreshToken(value => value + 1);
-      }
-    };
-
-    window.addEventListener('message', handlePaymentMessage);
-    return () => window.removeEventListener('message', handlePaymentMessage);
-  }, []);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/pdf/list`)
@@ -146,6 +75,12 @@ useEffect(() => {
     }
   };
 
+  const handleManualAccess = () => {
+    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '919876543210';
+    const message = `Hello Admin, I am interested in unlocking Pro Access to all intelligence archives. \n\nMy Phone: ${verifiedLead?.phone}\nMy Email: ${verifiedLead?.email}\n\nPlease guide me on the process.`;
+    window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   const formatUploadedAt = (pdf: PDF) => {
     const value = pdf.documentDate || pdf.createdAt;
     if (!value) return 'Date unavailable';
@@ -180,6 +115,20 @@ useEffect(() => {
             </div>
           </div>
 
+          {/* Manual Access Card */}
+          <div className="bg-slate-950 rounded-3xl p-6 text-white shadow-2xl border border-white/10 flex flex-col sm:flex-row items-center gap-6">
+             <div className="text-center sm:text-left">
+               <h4 className="text-sm font-black uppercase tracking-widest text-orange-500">Pro Intelligence</h4>
+               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Unlimited Access to 50+ documents</p>
+             </div>
+             <button 
+               onClick={handleManualAccess}
+               className="bg-orange-600 hover:bg-orange-500 text-white px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-orange-600/20 whitespace-nowrap"
+             >
+               {verifiedLead?.is_pro ? 'PRO ACTIVE' : 'Contact for Access'}
+             </button>
+          </div>
+
           <div className="relative w-full md:w-96">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
             <input
@@ -206,7 +155,7 @@ useEffect(() => {
               >
                 <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 flex items-center justify-center relative overflow-hidden border border-slate-50">
                    <FileText className="h-16 w-16 text-slate-200 group-hover:scale-110 transition-transform duration-500" />
-                   {!verifiedLead && (
+                   {(!verifiedLead || (!verifiedLead.is_pro && !pdf.createdAt)) && (
                      <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
                        <Lock className="h-4 w-4" />
                      </div>
@@ -255,37 +204,11 @@ useEffect(() => {
         />
       )}
       
-      {viewerOpen && viewerPdfId && (
+      {showViewer && selectedPdfId && (
         <SecurePdfViewer
-          pdfId={viewerPdfId}
+          pdfId={selectedPdfId}
           onClose={() => setShowViewer(false)}
-          refreshToken={paymentRefreshToken}
         />
-      )}
-
-      {isPopup && popupPaymentStatus !== 'idle' && (
-        <div className="fixed inset-0 z-[500] flex items-center justify-center bg-slate-950/95 p-4 text-center">
-          <div className="w-full max-w-md rounded-[2rem] bg-white p-8 shadow-2xl">
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-50 text-orange-600">
-              <ShieldCheck className="h-8 w-8" />
-            </div>
-            <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900">
-              {popupPaymentStatus === 'success' ? 'Payment Successful' : 'Payment Failed'}
-            </h3>
-            <p className="mt-3 text-sm font-medium leading-6 text-slate-500">
-              {popupPaymentStatus === 'success'
-                ? 'Your document has been unlocked. You can close this window now.'
-                : 'The payment did not complete. You can close this window and try again.'}
-            </p>
-            <button
-              type="button"
-              onClick={() => window.close()}
-              className="mt-6 w-full rounded-2xl bg-orange-600 px-5 py-4 font-black uppercase tracking-widest text-white hover:bg-orange-500 transition-colors"
-            >
-              Close Window
-            </button>
-          </div>
-        </div>
       )}
     </section>
   );

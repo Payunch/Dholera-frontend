@@ -14,6 +14,7 @@ interface Lead {
   source?: string;
   is_registered?: boolean;
   is_trial?: boolean;
+  is_pro?: boolean;
   createdAt?: string;
   _offline?: boolean;
 }

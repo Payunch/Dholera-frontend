@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle } from 'lucide-react';
+import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, MessageSquare } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
-
 import { useLead } from '@/providers/LeadProvider';
 
 interface SecurePdfViewerProps {
@@ -20,7 +19,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
   const [requiresRegistration, setRequiresRegistration] = useState(false);
-  const [paymentLoading, setPaymentLoading] = useState(false);
 
   const { logoutLead } = useLead();
 
@@ -69,7 +67,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
       const res = await fetch(`${API_BASE_URL}/pdf/view/${pdfId}`, {
         headers: { 'Authorization': token || '' }
       });
-// ... (rest of fetchPdf logic remains same)
+
       if (res.status === 402) {
         setRequiresPayment(true);
         setLoading(false);
@@ -113,71 +111,13 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
     };
   }, [blobUrl]);
 
-  if (!mounted) return null;
-
-  const handlePayment = async () => {
-    setPaymentLoading(true);
-    const popupName = `phonepe-payment-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
-    const paymentWindow = typeof window !== 'undefined'
-      ? window.open('', popupName, 'width=520,height=720,left=120,top=80')
-      : null;
-
-    if (paymentWindow) {
-      paymentWindow.document.write('<!doctype html><html><head><title>Opening PhonePe</title></head><body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#0f172a;color:#fff;">Opening PhonePe payment...</body></html>');
-      paymentWindow.document.close();
-      paymentWindow.focus();
-    }
-
-    try {
-      const res = await fetch(`${API_BASE_URL}/payment/create-order`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token || ''
-        },
-        body: JSON.stringify({ pdfId, leadToken: token, fingerprint })
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to initiate payment');
-
-      if (data.alreadyPurchased) {
-        if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
-        fetchPdf();
-        return;
-      }
-
-      if (data.redirectUrl) {
-        // Redirect to PhonePe payment page
-        if (paymentWindow && !paymentWindow.closed) {
-          paymentWindow.location.href = data.redirectUrl;
-          paymentWindow.focus();
-          // Monitor popup in case it is closed immediately by the browser or user
-          const popupMonitor = setInterval(() => {
-            try {
-              if (!paymentWindow || paymentWindow.closed) {
-                clearInterval(popupMonitor);
-                setPaymentLoading(false);
-                setError('Payment popup was closed or blocked. Please try again or allow popups for this site.');
-              }
-            } catch (e) {
-              // Accessing paymentWindow may throw if cross-origin; ignore and keep monitoring
-            }
-          }, 500);
-        } else {
-          window.location.href = data.redirectUrl;
-        }
-      } else {
-        if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
-        throw new Error('Payment gateway redirect URL missing');
-      }
-    } catch (err) {
-      if (paymentWindow && !paymentWindow.closed) paymentWindow.close();
-      setError(err instanceof Error ? err.message : 'Failed to initiate payment');
-    } finally {
-      setPaymentLoading(false);
-    }
+  const handleContactAdmin = () => {
+    const adminPhone = process.env.NEXT_PUBLIC_ADMIN_PHONE || '919876543210';
+    const message = `Hello Admin, I would like to unlock access to the document: ${pdfId}. \n\nMy Phone: ${leadPhone}\nMy Email: ${leadEmail}\n\nPlease let me know the process.`;
+    window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
   };
+
+  if (!mounted) return null;
 
   const displayError = !pdfId ? 'Invalid document ID' : error;
 
@@ -240,18 +180,13 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
             </div>
             <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Premium Document</h3>
             <p className="text-slate-500 font-medium mb-8">
-              This official DSIRDA map/brochure is verified and gated. Pay a small fee of ₹10 to unlock lifetime access.
+              This official DSIRDA map/brochure is verified and gated. Please contact the Admin to unlock this document.
             </p>
-            <div className="bg-slate-50 rounded-2xl p-6 mb-8 border-2 border-dashed border-slate-200">
-               <span className="block text-4xl font-black text-orange-600">₹10.00</span>
-               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">One-time payment</span>
-            </div>
             <button 
-              disabled={paymentLoading}
-              onClick={handlePayment}
+              onClick={handleContactAdmin}
               className="w-full rounded-2xl bg-orange-600 py-5 text-white font-black uppercase tracking-widest hover:bg-orange-500 transition-all shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3"
             >
-              {paymentLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Pay Now & Unlock <ShieldCheck className="h-5 w-5" /></>}
+              Request Access <MessageSquare className="h-5 w-5" />
             </button>
             <button onClick={onClose} className="mt-4 text-sm font-bold text-slate-400 hover:text-slate-600">Cancel</button>
           </div>
