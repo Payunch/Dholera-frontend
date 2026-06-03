@@ -94,9 +94,10 @@ export default function AirportPage() {
           <p className="text-slate-400 max-w-xl mx-auto uppercase text-xs font-black tracking-widest leading-loose">
             Direct access to TP 1, TP 2, and upcoming airport development zones. Contact us for verified plots.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-            <a href="https://wa.me/917435808310" className="bg-[#25D366] text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-widest shadow-xl shadow-green-500/20">WhatsApp Us</a>
-            <a href="tel:+917435808310" className="bg-white text-slate-900 px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-widest">Call Owner</a>
+          <div className="flex justify-center pt-4">
+            <a href="https://wa.me/917435808310" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-green-500/20 hover:bg-[#128C7E] transition-colors">
+              +91 74358 08310
+            </a>
           </div>
         </div>
       </section>
