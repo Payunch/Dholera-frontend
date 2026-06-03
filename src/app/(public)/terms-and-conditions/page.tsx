@@ -24,10 +24,21 @@ export default function TermsAndConditions() {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-slate-800">3. Payments and Refunds</h2>
-        <p className="text-slate-600 leading-relaxed">
-          All payments for digital documents are final. Please ensure you select the correct document before completing the PhonePe transaction.
-        </p>
+        <h2 className="text-2xl font-semibold mb-4 text-slate-800">3. Payments, Access and Refunds</h2>
+        <div className="space-y-4 text-slate-600 leading-relaxed">
+          <p>
+            All payments for digital documents are final and non-refundable. 
+          </p>
+          <p>
+            <strong>One-Time View (₹5):</strong> Access to the document is granted for the current browser session only. If the browser is closed or the session expires, access is revoked.
+          </p>
+          <p>
+            <strong>Download Access (₹10):</strong> Access allows for a permanent download of the document to your device.
+          </p>
+          <p>
+            Payments are processed securely via Razorpay.
+          </p>
+        </div>
       </section>
 
       <section className="mb-8">

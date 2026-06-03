@@ -12,6 +12,7 @@ import { Calendar, FileText, Lock, Search, ShieldCheck, X, ArrowRight } from 'lu
 import { cn } from '@/lib/utils';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { UpiQrModal } from '@/components/payment/UpiQrModal';
+import { RazorpayCheckout } from '@/components/payment/RazorpayCheckout';
 import { safeLocalStorage } from '@/utils/storage';
 
 interface PDF {
@@ -45,14 +46,8 @@ export function PdfListing() {
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
   const [selectedPdfs, setSelectedPdfs] = useState<string[]>([]);
-  const [showUpiModal, setShowUpiModal] = useState(false);
+  const [showRazorpay, setShowRazorpay] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
-  const [upiOrderDetails, setUpiOrderDetails] = useState<{
-    amount: number;
-    title: string;
-    transactionId: string;
-    isPro?: boolean;
-  } | null>(null);
 
   const pricePerPdf = selectionType === 'download' ? 10 : 5;
   const selectionTotal = selectedPdfs.length * pricePerPdf;
@@ -128,90 +123,18 @@ export function PdfListing() {
   const handleAuthSuccess = (data?: any) => {
     setShowVerifyPopup(false);
     
-    // Logic:
-    // If handleAuthSuccess was called with new user data, we force update our understanding
-    // of the lead so that following checks (like in handleCheckout) don't fail due to state lag.
-    
     setTimeout(() => {
-      // Re-trigger the logic based on the action they wanted to do
       if (postLoginAction === 'view') {
         setShowViewer(true);
       } else if (postLoginAction === 'checkout') {
-        // We call the logic directly here to avoid verifiedLead lag
-        performCheckout();
+        setShowRazorpay(true);
       } else if (postLoginAction === 'buy_all') {
-        performBuyAll();
+        const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
+        setSelectedPdfs(allIds);
+        setShowRazorpay(true);
       }
       setPostLoginAction(null);
     }, 400);
-  };
-
-  const performCheckout = async () => {
-    const token = safeLocalStorage.getItem('lead_token');
-    if (!token) {
-      setShowVerifyPopup(true);
-      return;
-    }
-
-    setPaymentLoading(true);
-    try {
-      const res = await apiClient.post('/payment/request-manual', { 
-        pdfIds: selectedPdfs,
-        type: selectionType
-      });
-
-      const data = res.data;
-      if (data.alreadyPurchased) {
-        alert('You already have access to these documents.');
-        setIsSelectionMode(false);
-        fetchPurchases();
-        return;
-      }
-
-      setUpiOrderDetails({
-        amount: data.amount,
-        title: `SELECTED PDFS (${selectionType.toUpperCase()} - QTY: ${selectedPdfs.length})`,
-        transactionId: data.transactionId,
-        isPro: data.isPro
-      });
-      setShowUpiModal(true);
-
-    } catch (err: any) {
-      alert(err.response?.data?.error || 'Checkout failed');
-    } finally {
-      setPaymentLoading(false);
-    }
-  };
-
-  const performBuyAll = async () => {
-    const token = safeLocalStorage.getItem('lead_token');
-    if (!token) {
-      setShowVerifyPopup(true);
-      return;
-    }
-    
-    setPaymentLoading(true);
-    try {
-      // "Buy All" is essentially a bulk purchase of all filtered IDs
-      const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
-      const res = await apiClient.post('/payment/request-manual', { 
-        pdfIds: allIds,
-        type: selectionType
-      });
-
-      const data = res.data;
-      setUpiOrderDetails({
-        amount: data.amount,
-        title: `ALL DOCUMENTS (${selectionType.toUpperCase()})`,
-        transactionId: data.transactionId,
-      });
-      setShowUpiModal(true);
-
-    } catch (err: any) {
-      alert(err.response?.data?.error || 'Payment failed');
-    } finally {
-      setPaymentLoading(false);
-    }
   };
 
   const handleCheckout = async () => {
@@ -220,7 +143,7 @@ export function PdfListing() {
       setShowVerifyPopup(true);
       return;
     }
-    performCheckout();
+    setShowRazorpay(true);
   };
 
   const handleBuyAll = async () => {
@@ -229,29 +152,16 @@ export function PdfListing() {
       setShowVerifyPopup(true);
       return;
     }
-    performBuyAll();
+    const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
+    setSelectedPdfs(allIds);
+    setShowRazorpay(true);
   };
 
-  const handleVerifyUtr = async (utr: string): Promise<boolean> => {
-    if (!upiOrderDetails || !verifiedLead) return false;
-    try {
-      const res = await apiClient.post('/payment/verify-utr', { 
-        utr, 
-        transactionId: upiOrderDetails.transactionId 
-      });
-
-      if (res.status === 200) {
-        setShowUpiModal(false);
-        setIsSelectionMode(false);
-        alert('Payment details submitted. Your documents will be unlocked as soon as the Admin approves.');
-        fetchPurchases();
-        return true;
-      }
-      return false;
-    } catch (err) {
-      console.error('UTR Submit Error:', err);
-      return false;
-    }
+  const handlePaymentSuccess = () => {
+    setShowRazorpay(false);
+    setIsSelectionMode(false);
+    setSelectedPdfs([]);
+    fetchPurchases();
   };
 
   const formatUploadedAt = (pdf: PDF) => {
@@ -453,6 +363,15 @@ export function PdfListing() {
           fingerprint={fingerprint || undefined}
           compulsory={true}
           onSuccess={handleAuthSuccess}
+        />
+      )}
+
+      {showRazorpay && (
+        <RazorpayCheckout
+          pdfIds={selectedPdfs}
+          type={selectionType}
+          onSuccess={handlePaymentSuccess}
+          onClose={() => setShowRazorpay(false)}
         />
       )}
       

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, Languages, Home, FileText, Calculator, ShieldCheck } from "lucide-react";
+import { Menu, X, ChevronDown, Languages, Home, FileText, Calculator, ShieldCheck, Map, Plane, Construction } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SplitLogo } from "@/components/common/DynamicImages";
 import { useLanguage } from "@/providers/LanguageProvider";
@@ -16,9 +16,11 @@ export function Navbar() {
 
   const navItems = [
     { label: t('nav_home'), href: "/", icon: Home },
-    { label: t('nav_planning'), href: "/clearance-engine", icon: Calculator },
+    { label: "TP Maps", href: "/tp-maps", icon: Map },
+    { label: "Airport", href: "/airport", icon: Plane },
+    { label: "Infrastructure", href: "/infrastructure", icon: Construction },
     { label: t('nav_updates'), href: "/updates", icon: FileText },
-    { label: "My Vault", href: "/my-vault", icon: ShieldCheck },
+    { label: "Vault", href: "/my-vault", icon: ShieldCheck },
   ];
 
   const languages = [
