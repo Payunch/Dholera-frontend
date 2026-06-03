@@ -117,9 +117,30 @@ export function PdfListing() {
     );
   };
 
-  const handleCheckout = async () => {
-    if (!verifiedLead) {
-      setPostLoginAction('checkout');
+  const handleAuthSuccess = (data?: any) => {
+    setShowVerifyPopup(false);
+    
+    // Logic:
+    // If handleAuthSuccess was called with new user data, we force update our understanding
+    // of the lead so that following checks (like in handleCheckout) don't fail due to state lag.
+    
+    setTimeout(() => {
+      // Re-trigger the logic based on the action they wanted to do
+      if (postLoginAction === 'view') {
+        setShowViewer(true);
+      } else if (postLoginAction === 'checkout') {
+        // We call the logic directly here to avoid verifiedLead lag
+        performCheckout();
+      } else if (postLoginAction === 'buy_all') {
+        performBuyAll();
+      }
+      setPostLoginAction(null);
+    }, 400);
+  };
+
+  const performCheckout = async () => {
+    const token = safeLocalStorage.getItem('lead_token');
+    if (!token) {
       setShowVerifyPopup(true);
       return;
     }
@@ -153,9 +174,9 @@ export function PdfListing() {
     }
   };
 
-  const handleBuyAll = async () => {
-    if (!verifiedLead) {
-      setPostLoginAction('buy_all');
+  const performBuyAll = async () => {
+    const token = safeLocalStorage.getItem('lead_token');
+    if (!token) {
       setShowVerifyPopup(true);
       return;
     }
@@ -188,19 +209,22 @@ export function PdfListing() {
     }
   };
 
-  const handleAuthSuccess = () => {
-    setShowVerifyPopup(false);
-    // Use timeout to let the Provider update the state
-    setTimeout(() => {
-      if (postLoginAction === 'view') {
-        setShowViewer(true);
-      } else if (postLoginAction === 'checkout') {
-        handleCheckout();
-      } else if (postLoginAction === 'buy_all') {
-        handleBuyAll();
-      }
-      setPostLoginAction(null);
-    }, 500);
+  const handleCheckout = async () => {
+    if (!verifiedLead) {
+      setPostLoginAction('checkout');
+      setShowVerifyPopup(true);
+      return;
+    }
+    performCheckout();
+  };
+
+  const handleBuyAll = async () => {
+    if (!verifiedLead) {
+      setPostLoginAction('buy_all');
+      setShowVerifyPopup(true);
+      return;
+    }
+    performBuyAll();
   };
 
   const handleVerifyUtr = async (utr: string): Promise<boolean> => {
