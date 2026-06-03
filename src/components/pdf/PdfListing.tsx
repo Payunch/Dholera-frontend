@@ -12,6 +12,7 @@ import { Calendar, FileText, Lock, Search, ShieldCheck, X, ArrowRight } from 'lu
 import { cn } from '@/lib/utils';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { UpiQrModal } from '@/components/payment/UpiQrModal';
+import { safeLocalStorage } from '@/utils/storage';
 
 interface PDF {
   id: string;
