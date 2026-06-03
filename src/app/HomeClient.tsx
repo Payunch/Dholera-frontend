@@ -76,7 +76,7 @@ export function HomeClient() {
       author: "dholerahub@gmail.com",
       excerpt: "Dholera Plot Price 2026 is one of the most searched real estate topics among investors looking for opportunities in Gujarat. This guide highlights the latest price trends, best sectors to invest in, and how to verify zoning records.",
       image: "/images/fghj-300x200.jpeg",
-      link: "https://dholerahub.com/dholera-plot-price-2026/",
+      link: "/updates/1",
       tag: "Rates & Guide"
     },
     {
@@ -85,7 +85,7 @@ export function HomeClient() {
       author: "dholerahub@gmail.com",
       excerpt: "Real estate has always been one of the strongest wealth-building assets across generations. While stocks and digital investments may fluctuate, emerging land markets with heavy government capital expenditure provide massive long-term growth.",
       image: "/images/expressHighway.webp",
-      link: "https://dholerahub.com/why-smart-investors-are-turning-toward-emerging-real-estate-markets/",
+      link: "/updates/2",
       tag: "Market Trends"
     },
     {
@@ -94,7 +94,7 @@ export function HomeClient() {
       author: "dholerahub@gmail.com",
       excerpt: "Real estate has earned its reputation as one of the most dependable ways to build long-term wealth. Discover how infrastructure catalysts like the DMIC, dedicated corridors, and smart utilities create property value multiplication.",
       image: "/images/345-1-e1777985454613-300x271.jpeg",
-      link: "https://dholerahub.com/rsc-group-dholera-dholera-smart-city-gujrat/",
+      link: "/updates/3",
       tag: "Wealth Creation"
     }
   ];
@@ -341,15 +341,13 @@ export function HomeClient() {
 
                 {/* Post Action */}
                 <div className="p-6 pt-0">
-                  <a
+                  <Link
                     href={post.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-900 hover:text-orange-600 transition-colors group/btn"
                   >
                     {t('read_more')}
-                    <ExternalLink className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-                  </a>
+                    <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" />
+                  </Link>
                 </div>
               </div>
             ))}
