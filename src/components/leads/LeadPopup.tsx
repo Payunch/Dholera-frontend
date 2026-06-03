@@ -55,16 +55,16 @@ export const LeadPopup = ({
     setError('');
 
     try {
-      // Use the direct save route instead of OTP flow
-      const res = await apiClient.post('/leads/save-direct', {
+      // Use the frictionless onboard route
+      const res = await apiClient.post('/leads/onboard', {
         name: name.trim(),
         phone: cleanPhone,
         sessionId,
         browserFingerprint: fingerprint
       });
 
-      if (res.data.lead_token && res.data.lead) {
-        loginLead({ ...res.data.lead, token: res.data.lead_token });
+      if (res.data.lead_token) {
+        loginLead({ ...res.data, token: res.data.lead_token });
       }
       
       setStep('success');

@@ -438,21 +438,27 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
               />
               
               {/* Owner Contact Sticky Footer */}
-              <div className="absolute bottom-0 inset-x-0 bg-white/90 backdrop-blur-md border-t border-slate-200 p-3 flex items-center justify-center gap-4 z-30 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-                 <a 
-                   href="https://wa.me/917435808310" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="flex-1 max-w-[200px] flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-colors shadow-lg shadow-green-500/20"
-                 >
-                   WhatsApp Owner
-                 </a>
-                 <a 
-                   href="tel:+917435808310" 
-                   className="flex-1 max-w-[200px] flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-colors shadow-lg"
-                 >
-                   Call Owner
-                 </a>
+              <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 flex flex-col md:flex-row items-center justify-center gap-4 z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+                 <div className="flex flex-col items-center md:items-start mr-4">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Owner</span>
+                    <span className="text-sm font-black text-slate-900">Naresh Gohel • 7435808310</span>
+                 </div>
+                 <div className="flex items-center gap-3 w-full md:w-auto">
+                   <a 
+                     href="https://wa.me/917435808310" 
+                     target="_blank" 
+                     rel="noopener noreferrer"
+                     className="flex-1 md:w-48 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-xl shadow-green-500/20 active:scale-95"
+                   >
+                     WhatsApp Owner
+                   </a>
+                   <a 
+                     href="tel:+917435808310" 
+                     className="flex-1 md:w-48 flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-xl active:scale-95"
+                   >
+                     Call Owner
+                   </a>
+                 </div>
               </div>
             </div>
           </div>

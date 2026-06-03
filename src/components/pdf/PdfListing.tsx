@@ -43,6 +43,7 @@ export function PdfListing() {
 
   // Selection Mode State
   const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
   const [selectedPdfs, setSelectedPdfs] = useState<string[]>([]);
   const [showUpiModal, setShowUpiModal] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
@@ -52,6 +53,9 @@ export function PdfListing() {
     transactionId: string;
     isPro?: boolean;
   } | null>(null);
+
+  const pricePerPdf = selectionType === 'download' ? 10 : 5;
+  const selectionTotal = selectedPdfs.length * pricePerPdf;
 
   const fetchPurchases = React.useCallback(() => {
     if (!verifiedLead?.token) return;
@@ -153,7 +157,7 @@ export function PdfListing() {
     try {
       const res = await apiClient.post('/payment/request-manual', { 
         pdfIds: selectedPdfs,
-        type: 'download'
+        type: selectionType
       });
 
       const data = res.data;
@@ -166,7 +170,7 @@ export function PdfListing() {
 
       setUpiOrderDetails({
         amount: data.amount,
-        title: `SELECTED PDFS (QTY: ${selectedPdfs.length})`,
+        title: `SELECTED PDFS (${selectionType.toUpperCase()} - QTY: ${selectedPdfs.length})`,
         transactionId: data.transactionId,
         isPro: data.isPro
       });
@@ -188,22 +192,18 @@ export function PdfListing() {
     
     setPaymentLoading(true);
     try {
+      // "Buy All" is essentially a bulk purchase of all filtered IDs
+      const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
       const res = await apiClient.post('/payment/request-manual', { 
-        pdfId: 'all' 
+        pdfIds: allIds,
+        type: selectionType
       });
 
       const data = res.data;
-      if (data.alreadyPurchased) {
-        alert('You already have Pro (All Access) membership!');
-        fetchPurchases();
-        return;
-      }
-
       setUpiOrderDetails({
         amount: data.amount,
-        title: `PRO ACCESS (ALL DOCUMENTS)`,
+        title: `ALL DOCUMENTS (${selectionType.toUpperCase()})`,
         transactionId: data.transactionId,
-        isPro: true
       });
       setShowUpiModal(true);
 
@@ -388,7 +388,7 @@ export function PdfListing() {
       {/* Floating Checkout Bar */}
       {isSelectionMode && (
         <div className="fixed bottom-10 inset-x-0 z-[150] px-4 animate-in slide-in-from-bottom-10">
-           <div className="max-w-2xl mx-auto bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl">
+           <div className="max-w-4xl mx-auto bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
               <div className="flex items-center gap-6 pl-4">
                  <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-white transition-colors">
                     <X className="h-6 w-6" />
@@ -397,19 +397,50 @@ export function PdfListing() {
                     <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">Selection Mode</span>
                     <span className="text-sm font-bold text-white">{selectedPdfs.length} Documents Selected</span>
                  </div>
+                 <button 
+                  onClick={() => {
+                    const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
+                    setSelectedPdfs(allIds);
+                  }}
+                  className="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors border border-slate-700 px-3 py-1.5 rounded-lg"
+                 >
+                   Select All in Category
+                 </button>
               </div>
               
               <div className="flex items-center gap-6">
-                 <div className="text-right">
+                 {/* Type Toggle */}
+                 <div className="flex bg-slate-800 rounded-xl p-1 border border-white/5">
+                    <button 
+                      onClick={() => setSelectionType('view')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
+                        selectionType === 'view' ? "bg-orange-600 text-white shadow-lg" : "text-slate-400 hover:text-white"
+                      )}
+                    >
+                      View (₹5)
+                    </button>
+                    <button 
+                      onClick={() => setSelectionType('download')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
+                        selectionType === 'download' ? "bg-orange-600 text-white shadow-lg" : "text-slate-400 hover:text-white"
+                      )}
+                    >
+                      Download (₹10)
+                    </button>
+                 </div>
+
+                 <div className="text-right min-w-[80px]">
                     <span className="block text-[10px] font-black uppercase tracking-widest text-slate-500">Total</span>
-                    <span className="text-xl font-black text-white">₹{selectedPdfs.length * 10}</span>
+                    <span className="text-xl font-black text-white">₹{selectionTotal}</span>
                  </div>
                  <button 
                    disabled={selectedPdfs.length === 0 || paymentLoading}
                    onClick={handleCheckout}
                    className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20"
                  >
-                   {paymentLoading ? '...' : 'Pay Now & Unlock'}
+                   {paymentLoading ? '...' : 'Pay Now'}
                  </button>
               </div>
            </div>
