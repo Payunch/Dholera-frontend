@@ -9,12 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "@tanstack/react-query": "^5.100.14",
     "axios": "^1.16.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.3.0",
-    "f": "^1.4.0",
     "firebase": "^12.14.0",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.16.0",
