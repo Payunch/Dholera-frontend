@@ -82,11 +82,13 @@ export const useVisitorTracking = () => {
 
     const checkReturning = async () => {
       const existingToken = safeLocalStorage.getItem('lead_token');
-      if (!existingToken && activeFingerprint) {
+      // Only check if no token exists, fingerprint is available AND is valid
+      const isValidFingerprint = activeFingerprint && /^fp_[a-z0-9]+$/i.test(activeFingerprint);
+
+      if (!existingToken && isValidFingerprint) {
         try {
           const res = await fetch(`${API_BASE_URL}/leads/check-visitor/${activeFingerprint}`);
           if (!res.ok) {
-            // Not a network error, but a server error (e.g. 500)
             const errData = await res.json().catch(() => ({}));
             console.warn('Check visitor server error:', errData.error || res.statusText);
             return;
@@ -95,14 +97,13 @@ export const useVisitorTracking = () => {
           if (data.verified && data.lead_token) {
             safeLocalStorage.setItem('lead_token', data.lead_token);
             if (data.lead) {
-              safeLocalStorage.setItem('lead_email', data.lead.email || '');
               safeLocalStorage.setItem('lead_phone', data.lead.phone || '');
               safeLocalStorage.setItem('lead_name', data.lead.name || '');
             }
           }
         } catch (err) {
-          // This catches actual network errors (e.g. server offline)
-          console.error('Check visitor network error:', err);
+          // Silent fail for network errors to prevent console spam in dev/offline
+          console.debug('Visitor tracking: connection pending');
         }
       }
     };
