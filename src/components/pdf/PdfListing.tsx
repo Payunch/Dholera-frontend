@@ -11,7 +11,6 @@ import { useVisitorTracking } from '@/hooks/useVisitorTracking';
 import { Calendar, FileText, Lock, Search, ShieldCheck, X, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { UpiQrModal } from '@/components/payment/UpiQrModal';
 import { RazorpayCheckout } from '@/components/payment/RazorpayCheckout';
 import { safeLocalStorage } from '@/utils/storage';
 
@@ -386,17 +385,6 @@ export function PdfListing() {
               setSelectedPdfs(prev => [...prev, selectedPdfId]);
             }
           }}
-        />
-      )}
-
-      {showUpiModal && upiOrderDetails && (
-        <UpiQrModal
-          upiId={process.env.ADMIN_UPI_ID || '917435808310@ybl'}
-          amount={upiOrderDetails.amount}
-          merchantName={process.env.ADMIN_NAME || 'Dholera Platform'}
-          transactionId={upiOrderDetails.transactionId}
-          onClose={() => setShowUpiModal(false)}
-          onVerifyUtr={handleVerifyUtr}
         />
       )}
     </section>
