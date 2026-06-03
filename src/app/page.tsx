@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 import { HomeClient } from "./HomeClient";
 
 export const metadata: Metadata = {
-  title: "Official Dholera Platform | Infrastructure Intelligence & Planning Maps",
+  title: "Independent Dholera Platform | Infrastructure Intelligence & Planning Maps",
   description: "Access verified planning maps, TP maps, and development permission fee calculators for Dholera Smart City. India's first operational smart city intelligence portal.",
   keywords: [
     "Dholera Platform",
@@ -44,7 +44,7 @@ export default function HomePage() {
         <p>
           The Dholera Platform is the definitive source for intelligence on the Dholera Special Investment Region (DSIR). 
           We specialize in providing high-resolution planning maps, including Town Planning (TP) maps, Development Plan (DP) maps, 
-          and official DSIRDA documentation. Our goal is to provide investors and professionals with verified growth evidence 
+          and public DSIRDA documentation. Our goal is to provide investors and professionals with verified growth evidence 
           for India&apos;s first operational smart city.
         </p>
         <ul>

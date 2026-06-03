@@ -111,7 +111,7 @@ export default async function UpdateDetailPage({ params }: Props) {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-sm font-black uppercase tracking-tight text-slate-900">Dholera Growth Team</span>
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Official Analysis</span>
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Verified Analysis</span>
                 </div>
               </div>
 

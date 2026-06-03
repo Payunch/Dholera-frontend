@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { ClearanceClient } from "./ClearanceClient";
 
 export const metadata: Metadata = {
-  title: "Project Clearance & Fee Estimation Engine | Official Dholera Platform",
+  title: "Project Clearance & Fee Estimation Engine | Independent Dholera Platform",
   description: "Verify DSIRDA zoning compliance, calculate development permission fees, and plan project parking semantically. Ensure total clearance certainty for Dholera smart city projects.",
   keywords: [
     "Dholera Clearance Engine",

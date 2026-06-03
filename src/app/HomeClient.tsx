@@ -44,7 +44,7 @@ export function HomeClient() {
     "No broken links or missing documents in the planning flow.",
     "Clear visual hierarchy for maps, fees, and compliance signals.",
     "Mobile-first layouts with zero horizontal scroll.",
-    "Explicit upload timestamps for every official PDF release.",
+    "Explicit upload timestamps for every verified PDF release.",
     "Verified copy and labels aligned with DSIRDA terminology.",
   ];
 
@@ -55,7 +55,7 @@ export function HomeClient() {
         <div className="container relative z-10 mx-auto px-4 md:px-8">
           <div className="mx-auto max-w-4xl text-center space-y-10">
             <div className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-4 py-1.5 text-xs font-black uppercase tracking-[0.3em] text-orange-600 animate-fade-up">
-              Official Infrastructure Intelligence
+              Verified Infrastructure Intelligence
             </div>
 
             <h1 className="font-display text-5xl font-black tracking-tight text-slate-900 sm:text-7xl lg:text-8xl uppercase leading-[0.95] animate-fade-up">
@@ -145,7 +145,7 @@ export function HomeClient() {
               { 
                 icon: ShieldCheck, 
                 title: "Verified Compliance", 
-                desc: "Every map and document is checked against official DSIRDA sources." 
+                desc: "Every map and document is checked against public DSIRDA sources." 
               },
               { 
                 icon: TrendingUp, 

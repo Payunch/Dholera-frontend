@@ -17,14 +17,14 @@ export default function PrivacyPolicy() {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-slate-800">2. How We Use Your Information</h2>
         <p className="text-slate-600 leading-relaxed">
-          We use your information to provide our services, process payments via PhonePe, and verify your identity for official documentation access.
+          We use your information strictly to provide our services, process manual UPI verifications via UTR, and verify your identity for secure documentation access. Data minimization protocols are strictly enforced.
         </p>
       </section>
 
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-slate-800">3. Data Security</h2>
         <p className="text-slate-600 leading-relaxed">
-          We implement industry-standard security measures to protect your data. Payment information is handled securely by PhonePe.
+          We implement industry-standard security measures to protect your data. Payment information is handled securely via manual UPI QR flows. We do not store raw credit/debit card numbers, CVVs, or sensitive banking credentials in our local databases.
         </p>
       </section>
 

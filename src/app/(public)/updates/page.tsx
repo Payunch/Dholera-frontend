@@ -3,7 +3,7 @@ import { getUpdates } from "@/features/updates/api";
 import { UpdatesListing } from "@/features/updates/components/UpdatesListing";
 
 export const metadata: Metadata = {
-  title: "Dholera Growth Updates | Official Milestone Analysis",
+  title: "Dholera Growth Updates | Independent Milestone Analysis",
   description: "Explore verified milestones, infrastructure progress, and policy updates in Dholera Smart City. Strategic intel for DSIR land investors.",
 };
 
@@ -22,7 +22,7 @@ export default async function UpdatesPage() {
           </h1>
           <p className="max-w-2xl text-lg font-medium text-slate-500 leading-relaxed">
             Stay ahead of the curve with deep-dive analysis on Dholera SIR development, 
-            industrial land allotments, and official policy announcements.
+            industrial land allotments, and public policy announcements.
           </p>
         </header>
 

@@ -6,7 +6,7 @@ import OrganizationSchema from "@/components/OrganizationSchema";
 import SafeClientLayout from "@/components/layout/SafeClientLayout";
 
 const instrumentSans = Instrument_Sans({
-// ...
+  // ...
 
   variable: "--font-instrument-sans",
   display: "swap",
@@ -24,10 +24,10 @@ const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATIO
 
 export const metadata: Metadata = {
   title: {
-    default: "Dholera Platform | Official Infrastructure Intelligence & Planning Maps",
+    default: "Dholera Platform | Independent Infrastructure Intelligence & Planning Maps",
     template: "%s | Dholera Platform",
   },
-  description: "Official Dholera Platform for infrastructure intelligence, planning maps, TP maps, and land investment growth evidence in Dholera Smart City.",
+  description: "Independent Dholera Platform for infrastructure intelligence, planning maps, TP maps, and land investment growth evidence in Dholera Smart City.",
   keywords: ["Dholera Platform", "Dholera Smart City", "Dholera Maps", "Dholera Planning", "TP Map Dholera", "Dholera Investment", "Dholera Growth Evidence"],
   authors: [{ name: "Dholera Growth Team" }],
   creator: "Dholera Platform",
@@ -85,13 +85,6 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6979634293826789"
           crossOrigin="anonymous"
           strategy="afterInteractive"
-        />
-        <Script
-          id="gtm-consent-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || []; window.gtag = window.gtag || function(){window.dataLayer.push(arguments);}; gtag('consent', 'default', { 'ad_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied', 'analytics_storage': 'denied' });`,
-          }}
         />
 
         <Script
