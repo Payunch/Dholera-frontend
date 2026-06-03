@@ -33,6 +33,9 @@ export function PdfListing() {
   const [search, setSearch] = useState('');
   const [purchasedPdfIds, setPurchasedPdfIds] = useState<string[]>([]);
   
+  // Calculate if user is Pro based on both profile and purchase history
+  const isPro = verifiedLead?.is_pro || purchasedPdfIds.includes('0');
+  
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
