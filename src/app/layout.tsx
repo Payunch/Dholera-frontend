@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Instrument_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import OrganizationSchema from "@/components/OrganizationSchema";
+import OrganizationSchema from "@/components/common/OrganizationSchema";
 import SafeClientLayout from "@/components/layout/SafeClientLayout";
 
 const instrumentSans = Instrument_Sans({
