@@ -39,7 +39,6 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                         {lead.is_pro && <ShieldCheck className="h-3 w-3 text-orange-600" />}
                       </div>
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{lead.phone}</span>
-                      <span className="text-[10px] text-slate-300 font-medium">{lead.email}</span>
                     </div>
                   </td>
                   <td className="px-8 py-5">

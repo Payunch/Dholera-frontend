@@ -17,7 +17,6 @@ interface GroupedPendingPurchase {
     id: number;
     name: string;
     phone: string;
-    email: string;
   };
   items: string[];
 }
