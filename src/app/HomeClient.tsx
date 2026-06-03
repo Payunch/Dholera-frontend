@@ -27,6 +27,13 @@ export function HomeClient() {
   // Gallery Lightbox State
   const [activeImageIdx, setActiveImageIdx] = React.useState<number | null>(null);
 
+  // Newsletter Form State
+  const [newsEmail, setNewsEmail] = React.useState("");
+  const [newsName, setNewsName] = React.useState("");
+  const [newsPhone, setNewsPhone] = React.useState("");
+  const [subscribeStep, setSubscribeStep] = React.useState<"email" | "verify" | "success" | "error">("email");
+  const [newsLoading, setNewsLoading] = React.useState(false);
+
   const coreLoop = [
     {
       step: "01",
@@ -167,6 +174,37 @@ export function HomeClient() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeImageIdx]);
+
+  // Newsletter Actions
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsEmail) return;
+    setSubscribeStep("verify");
+  };
+
+  const handleVerifySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsName || !newsPhone) return;
+
+    setNewsLoading(true);
+    try {
+      const { apiClient } = await import("@/lib/api");
+      await apiClient.post("/leads", {
+        name: newsName,
+        phone: newsPhone,
+        email: newsEmail,
+        source: "Newsletter Subscription"
+      });
+      setSubscribeStep("success");
+      setNewsEmail("");
+      setNewsName("");
+      setNewsPhone("");
+    } catch {
+      setSubscribeStep("error");
+    } finally {
+      setNewsLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col bg-white">
@@ -502,7 +540,7 @@ export function HomeClient() {
             <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-150 shadow-xl bg-slate-100 min-h-[400px] flex">
               <div className="absolute top-6 right-6 z-10 bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-md flex items-center gap-2">
                 <Map className="h-4 w-4 text-orange-600" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-900">
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-905 font-display">
                   Pipali Junction Link
                 </span>
               </div>
@@ -513,6 +551,121 @@ export function HomeClient() {
                 loading="lazy"
                 allowFullScreen
               />
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Subscription Section */}
+      <section className="bg-white py-32 border-t border-slate-100">
+        <div className="container mx-auto px-4 md:px-8 max-w-4xl">
+          <div className="relative overflow-hidden bg-slate-900 rounded-[2.5rem] p-8 md:p-16 text-white text-center shadow-2xl">
+            <div className="absolute inset-0 bg-orange-600 opacity-5 blur-[120px] -translate-y-1/2" />
+            
+            <div className="space-y-4 relative z-10 mb-10">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-400">Newsletter</span>
+              <h2 className="font-display text-3xl font-black md:text-4xl uppercase leading-tight max-w-2xl mx-auto">
+                {t('subscribe_title')}
+              </h2>
+              <p className="text-slate-350 text-sm max-w-xl mx-auto leading-relaxed">
+                {t('subscribe_desc')}
+              </p>
+            </div>
+
+            <div className="relative z-10 max-w-md mx-auto">
+              {subscribeStep === "email" && (
+                <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    placeholder="EMAIL ADDRESS"
+                    required
+                    value={newsEmail}
+                    onChange={(e) => setNewsEmail(e.target.value)}
+                    className="flex-1 px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-xs font-black uppercase tracking-widest placeholder-white/30 text-white outline-none focus:border-orange-500 focus:bg-white/10 transition-all"
+                  />
+                  <button
+                    type="submit"
+                    className="px-8 py-4 rounded-xl bg-orange-600 text-white text-xs font-black uppercase tracking-widest hover:bg-orange-500 active:scale-95 transition-all shadow-lg shadow-orange-600/20"
+                  >
+                    {t('subscribe_btn')}
+                  </button>
+                </form>
+              )}
+
+              {subscribeStep === "verify" && (
+                <form onSubmit={handleVerifySubmit} className="space-y-4 bg-white/5 border border-white/10 rounded-2xl p-6 text-left animate-in zoom-in-95 duration-200">
+                  <p className="text-xs font-black uppercase tracking-wider text-orange-400 leading-normal">
+                    {t('subscribe_verification_req')}
+                  </p>
+                  
+                  <input
+                    type="text"
+                    placeholder="FULL NAME"
+                    required
+                    value={newsName}
+                    onChange={(e) => setNewsName(e.target.value)}
+                    className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-xs font-black uppercase tracking-widest placeholder-white/30 text-white outline-none focus:border-orange-500 focus:bg-white/10 transition-all"
+                  />
+                  <input
+                    type="tel"
+                    placeholder="PHONE NUMBER"
+                    required
+                    value={newsPhone}
+                    onChange={(e) => setNewsPhone(e.target.value)}
+                    className="w-full px-5 py-3.5 rounded-xl bg-white/5 border border-white/10 text-xs font-black uppercase tracking-widest placeholder-white/30 text-white outline-none focus:border-orange-500 focus:bg-white/10 transition-all"
+                  />
+
+                  <div className="flex gap-3 pt-2">
+                    <button
+                      type="submit"
+                      disabled={newsLoading}
+                      className="flex-1 py-3.5 rounded-xl bg-orange-600 text-white text-xs font-black uppercase tracking-widest hover:bg-orange-500 active:scale-95 transition-all shadow-lg shadow-orange-600/20 flex justify-center items-center font-display"
+                    >
+                      {newsLoading ? (
+                        <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        t('subscribe_complete')
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSubscribeStep("email")}
+                      className="px-5 py-3.5 rounded-xl bg-white/10 text-white text-xs font-black uppercase tracking-widest hover:bg-white/20 transition-all"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {subscribeStep === "success" && (
+                <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-6 text-center animate-in zoom-in-95 duration-200">
+                  <p className="text-sm font-black uppercase tracking-widest text-green-400">
+                    {t('subscribe_success_msg')}
+                  </p>
+                  <button
+                    onClick={() => setSubscribeStep("email")}
+                    className="mt-4 text-xs font-black uppercase tracking-widest text-white/50 hover:text-white transition-colors"
+                  >
+                    Subscribe another email
+                  </button>
+                </div>
+              )}
+
+              {subscribeStep === "error" && (
+                <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 text-center animate-in zoom-in-95 duration-200">
+                  <p className="text-sm font-black uppercase tracking-widest text-red-400">
+                    Neural Link Error. Please verify your connection or phone number and try again.
+                  </p>
+                  <button
+                    onClick={() => setSubscribeStep("verify")}
+                    className="mt-4 text-xs font-black uppercase tracking-widest text-white/50 hover:text-white transition-colors"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              )}
             </div>
 
           </div>

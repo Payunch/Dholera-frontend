@@ -79,6 +79,12 @@ const translations: Record<Language, Record<string, string>> = {
     book_plot_today: 'Inquire About Satyaja Plots',
     whatsapp_inquiry: 'Discuss on WhatsApp',
     read_more: 'Read Analysis',
+    subscribe_title: 'Sign up to receive email updates, fresh news and more!',
+    subscribe_desc: 'Get verified infrastructure tracking, real estate developments, and regulatory announcements in Dholera SIR.',
+    subscribe_btn: 'Subscribe',
+    subscribe_complete: 'Complete Subscription',
+    subscribe_success_msg: 'Subscription Activated! You have been added to the master updates queue.',
+    subscribe_verification_req: 'Verification Required: Please enter your name and phone number to verify your subscription.',
   },
   hi: {
     nav_home: 'होम',
@@ -145,6 +151,12 @@ const translations: Record<Language, Record<string, string>> = {
     book_plot_today: 'सत्यजा प्लॉट्स के बारे में पूछताछ करें',
     whatsapp_inquiry: 'व्हाट्सएप पर चर्चा करें',
     read_more: 'विश्लेषण पढ़ें',
+    subscribe_title: 'ईमेल अपडेट, ताजा समाचार और बहुत कुछ प्राप्त करने के लिए साइन अप करें!',
+    subscribe_desc: 'धोलेरा एसआईआर में सत्यापित बुनियादी ढांचा ट्रैकिंग, रियल एस्टेट विकास और विनियामक घोषणाओं के साथ अपडेट रहें।',
+    subscribe_btn: 'सदस्यता लें',
+    subscribe_complete: 'सदस्यता पूरी करें',
+    subscribe_success_msg: 'सदस्यता सक्रिय हो गई! आपको मास्टर अपडेट सूची में जोड़ दिया गया है।',
+    subscribe_verification_req: 'सत्यापन आवश्यक: सदस्यता पूरी करने के लिए कृपया अपना नाम और फोन नंबर दर्ज करें।',
   },
   gu: {
     nav_home: 'હોમ',
@@ -211,7 +223,13 @@ const translations: Record<Language, Record<string, string>> = {
     book_plot_today: 'સત્યજા પ્લોટ્સ વિશે પૂછપરછ કરો',
     whatsapp_inquiry: 'વોટ્સએપ પર ચર્ચા કરો',
     read_more: 'વિશ્લેષણ વાંચો',
-  }
+    subscribe_title: 'ઇમેઇલ અપડેટ્સ, તાજા સમાચાર અને વધુ મેળવવા માટે સાઇન અપ કરો!',
+    subscribe_desc: 'ધોલેરા SIR માં પ્રમાણિત ઇન્ફ્રાસ્ટ્રક્ચર ટ્રેકિંગ, રિયલ એસ્ટેટ ડેવલપમેન્ટ અને રેગ્યુલેટરી જાહેરાતો સાથે અપડેટ રહો.',
+    subscribe_btn: 'સબ્સ્ક્રાઇબ કરો',
+    subscribe_complete: 'સબ્સ્ક્રિપ્શન પૂર્ણ કરો',
+    subscribe_success_msg: 'સબ્સ્ક્રિપ્શન સક્રિય થયું! તમને માસ્ટર અપડેટ્સ કતારમાં ઉમેરવામાં આવ્યા છે.',
+    subscribe_verification_req: 'વેરિફિકેશન જરૂરી: સબ્સ્ક્રિપ્શન પૂર્ણ કરવા માટે કૃપા કરીને તમારું નામ અને ફોન નંબર દાખલ કરો.',
+  },
 };
 
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
