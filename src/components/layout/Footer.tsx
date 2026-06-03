@@ -104,7 +104,7 @@ export function Footer() {
 
         <div className="mt-12 border-t pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-400">
           <p className="text-[10px] sm:text-xs text-slate-500 normal-case tracking-normal max-w-4xl mx-auto font-medium leading-relaxed">
-            Disclaimer: This platform is a private, independent real estate, planning, and mapping information service. It is not affiliated with, maintained by, authorized by, or officially connected to the Government of Gujarat, the Dholera Special Investment Region Development Authority (DSIRDA), or any official state/central housing board.
+            Disclaimer: This platform is a private, independent real estate and planning information service. It is not affiliated with, maintained by, or officially associated with the Government of Gujarat or DSIRDA.
           </p>
           <p>
             &copy; 2026 {ownerDetails.brandName.toUpperCase()}. All rights reserved. Built for India&apos;s Growth.

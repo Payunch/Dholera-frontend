@@ -84,7 +84,7 @@ export const UpiQrModal = ({
           <div className="mb-4 space-y-1">
             <span className="block text-3xl font-black text-slate-900">₹{totalAmount.toFixed(2)}</span>
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600">
-              {baseAmount === 499 ? 'Lifetime Pro Access' : `Unlocking ${count} PDF${count > 1 ? 's' : ''}`}
+              Unlocking {count} PDF{count > 1 ? 's' : ''}
             </span>
           </div>
 

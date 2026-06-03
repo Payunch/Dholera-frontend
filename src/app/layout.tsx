@@ -79,6 +79,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <OrganizationSchema />
+
         <Script
           id="google-adsense"
           async

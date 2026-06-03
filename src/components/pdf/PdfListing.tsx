@@ -152,7 +152,8 @@ export function PdfListing() {
     setPaymentLoading(true);
     try {
       const res = await apiClient.post('/payment/request-manual', { 
-        pdfIds: selectedPdfs 
+        pdfIds: selectedPdfs,
+        type: 'download'
       });
 
       const data = res.data;
@@ -296,22 +297,8 @@ export function PdfListing() {
             </div>
           </div>
 
-          {/* Pro Membership Card */}
-          <div className="bg-slate-950 rounded-3xl p-6 text-white shadow-2xl border border-white/10 flex flex-col sm:flex-row items-center gap-6 animate-in fade-in slide-in-from-right-10 duration-700">
-             <div className="text-center sm:text-left">
-               <h4 className="text-sm font-black uppercase tracking-widest text-orange-500">Intelligence Pro</h4>
-               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Unlimited Access to all maps & archives</p>
-               <p className="text-[9px] font-medium text-slate-500 uppercase mt-1 italic">One-time: ₹499 Lifetime</p>
-             </div>
-             <button 
-               onClick={handleBuyAll}
-               disabled={verifiedLead?.is_pro || paymentLoading}
-               className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20 whitespace-nowrap"
-             >
-               {verifiedLead?.is_pro ? 'PRO ACTIVE' : paymentLoading ? '...' : 'Unlock All (₹499)'}
-             </button>
-          </div>
-
+          {/* Removed Pro Membership Card */}
+          
           <div className="relative w-full md:w-96">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
             <input

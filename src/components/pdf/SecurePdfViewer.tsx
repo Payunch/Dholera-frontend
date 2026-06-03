@@ -190,7 +190,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     };
   }, [blobUrl]);
 
-  const startManualPayment = async (type: 'single' | 'pro') => {
+  const startManualPayment = async (type: 'view' | 'download') => {
     setPaymentLoading(true);
     setError(null);
 
@@ -202,7 +202,8 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
           'Authorization': token || ''
         },
         body: JSON.stringify({ 
-          pdfId: type === 'pro' ? 'all' : pdfId, 
+          pdfId,
+          type, 
           leadToken: token, 
           fingerprint 
         })
@@ -341,29 +342,29 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
 
             {/* Right: Choices */}
             <div className="bg-slate-50 p-8 md:w-1/2 flex flex-col gap-4 border-l border-slate-100">
-              {/* Option 1: Pro */}
+              {/* Option 1: View Only */}
               <button 
                 disabled={paymentLoading}
-                onClick={() => startManualPayment('pro')}
+                onClick={() => startManualPayment('view')}
                 className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1 disabled:opacity-50"
               >
-                <span className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-1">Recommended</span>
-                <span className="text-lg font-black uppercase tracking-tight">Unlock Hub</span>
-                <span className="text-xs font-bold text-slate-400 group-hover:text-white/80">Lifetime access to all PDFs</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-1">One-Time Access</span>
+                <span className="text-lg font-black uppercase tracking-tight">View PDF</span>
+                <span className="text-[10px] font-bold text-slate-400 group-hover:text-white/80">If browser closes, access is lost.</span>
                 <div className="mt-4 flex items-center justify-between w-full">
-                   <span className="text-2xl font-black">{paymentLoading ? '...' : '₹499'}</span>
+                   <span className="text-2xl font-black">{paymentLoading ? '...' : '₹5'}</span>
                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
 
-              {/* Option 2: Single */}
+              {/* Option 2: Download */}
               <button 
                 disabled={paymentLoading}
-                onClick={() => startManualPayment('single')}
+                onClick={() => startManualPayment('download')}
                 className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1 disabled:opacity-50"
               >
-                <span className="text-lg font-black uppercase tracking-tight text-slate-900">Unlock This Only</span>
-                <span className="text-xs font-bold text-slate-400">Single document access</span>
+                <span className="text-lg font-black uppercase tracking-tight text-slate-900">Download PDF</span>
+                <span className="text-[10px] font-bold text-slate-400">Save permanently to your device</span>
                 <div className="mt-4 flex items-center justify-between w-full">
                    <span className="text-2xl font-black text-slate-900">{paymentLoading ? '...' : '₹10'}</span>
                    <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-transform" />
@@ -432,9 +433,27 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
               <div className="absolute top-0 inset-x-0 h-14 z-20 cursor-not-allowed" title="Toolbar restricted" />
               <iframe 
                 src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-                className="flex-1 w-full border-none h-full"
+                className="flex-1 w-full border-none h-full pb-16"
                 onContextMenu={(e) => e.preventDefault()}
               />
+              
+              {/* Owner Contact Sticky Footer */}
+              <div className="absolute bottom-0 inset-x-0 bg-white/90 backdrop-blur-md border-t border-slate-200 p-3 flex items-center justify-center gap-4 z-30 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+                 <a 
+                   href="https://wa.me/917435808310" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="flex-1 max-w-[200px] flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-colors shadow-lg shadow-green-500/20"
+                 >
+                   WhatsApp Owner
+                 </a>
+                 <a 
+                   href="tel:+917435808310" 
+                   className="flex-1 max-w-[200px] flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-colors shadow-lg"
+                 >
+                   Call Owner
+                 </a>
+              </div>
             </div>
           </div>
         )}
