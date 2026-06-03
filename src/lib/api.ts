@@ -68,7 +68,10 @@ apiClient.interceptors.response.use(
       if (isAdminTask && (error.response?.status === 401 || error.response?.status === 403)) {
         const isLoginPage = pathname === "/admin/login";
         if (!isLoginPage) {
-          window.location.href = "/admin/login";
+          // Delay redirect slightly to ensure backend 'Set-Cookie' (clearCookie) is processed
+          setTimeout(() => {
+            window.location.href = "/admin/login";
+          }, 300);
         }
       }
       
