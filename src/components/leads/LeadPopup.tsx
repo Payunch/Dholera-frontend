@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { X, Loader2, CheckCircle2, Mail, Phone, User, KeyRound, Lock } from 'lucide-react';
+import { X, Loader2, CheckCircle2, Mail, Phone, User, KeyRound, Lock, ArrowLeft } from 'lucide-react';
 import { useLead } from '@/providers/LeadProvider';
 import { API_BASE_URL } from '@/lib/api';
 import { safeLocalStorage, safeSessionStorage } from '@/utils/storage';
@@ -49,19 +49,34 @@ interface LeadPopupProps {
   sessionId?: string;
   fingerprint?: string;
   compulsory?: boolean;
+  initialStep?: 'details' | 'login';
   onSuccess?: (data: LeadAuthResponse) => void;
 }
 
-export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSuccess }: LeadPopupProps) => {
-  const { loginLead } = useLead();
+export const LeadPopup = ({ 
+  sessionId, 
+  fingerprint, 
+  compulsory = false, 
+  initialStep = 'details',
+  onSuccess 
+}: LeadPopupProps) => {
+  const { loginLead, verifiedLead } = useLead();
   const [open, setOpen] = useState(() => compulsory);
-  const [step, setStep] = useState<'details' | 'otp' | 'passcode' | 'login' | 'success'>('details');
+  const [step, setStep] = useState<'details' | 'otp' | 'passcode' | 'login' | 'success'>(initialStep);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [consentAccepted, setConsentAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [resendCountdown, setResendCountdown] = useState(0);
+
+  // If already logged in and popup is shown, just close it or show success
+  useEffect(() => {
+    if (verifiedLead && step !== 'success') {
+       setStep('success');
+       setTimeout(() => setOpen(false), 1000);
+    }
+  }, [verifiedLead, step]);
 
   useEffect(() => {
     if (compulsory) {
@@ -110,7 +125,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       return false;
     }
     if (!validatePhone(cleanPhone)) {
-      setError('Please enter a valid 10-digit Indian mobile number.');
+      setError('Please enter a valid 10-digit mobile number.');
       return false;
     }
     if (!validateEmail(cleanEmail)) {
@@ -118,7 +133,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       return false;
     }
     if (!consentAccepted) {
-      setError('Please accept the Terms & Conditions and Privacy Policy.');
+      setError('Please accept the Terms & Conditions.');
       return false;
     }
 
@@ -143,12 +158,10 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
 
       if (!res.ok) {
         if (data.alreadyRegistered) {
-          setError('You are already registered. Please login with your passcode.');
+          setError('Mobile number already registered.');
           setFormData((current) => ({
             ...current,
-            name: cleanName,
-            phone: cleanPhone,
-            email: cleanEmail
+            phone: cleanPhone
           }));
           setStep('login');
           return false;
@@ -158,11 +171,11 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       }
 
       setResendCountdown(30);
-      setStatusMessage(isResend ? 'A fresh verification code has been sent.' : data.message || 'Verification code sent.');
+      setStatusMessage(isResend ? 'Fresh code sent.' : data.message || 'Verification code sent.');
       setStep('otp');
       return true;
     } catch {
-      setError('Connection error. Please try again.');
+      setError('Network integrity failure.');
       return false;
     } finally {
       setLoading(false);
@@ -172,7 +185,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^\d{6}$/.test(formData.otp)) {
-      setError('Please enter the 6-digit code.');
+      setError('6-digit code required.');
       return;
     }
 
@@ -188,7 +201,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       const data = (await res.json()) as LeadAuthResponse;
 
       if (!res.ok) {
-        setError(data.error || 'Invalid verification code.');
+        setError(data.error || 'Invalid code.');
         return;
       }
 
@@ -199,7 +212,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
       }));
       setStep('passcode');
     } catch {
-      setError('Connection error.');
+      setError('Communication error.');
     } finally {
       setLoading(false);
     }
@@ -208,7 +221,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
   const handleSetupPasscode = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^\d{6}$/.test(formData.passcode)) {
-      setError('Passcode must be 6 digits.');
+      setError('6-digit passcode required.');
       return;
     }
 
@@ -224,10 +237,10 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
         })
       });
       const data = (await res.json()) as LeadAuthResponse;
-      if (!res.ok) throw new Error(data.error || 'Failed to set passcode.');
+      if (!res.ok) throw new Error(data.error || 'Passcode setup failed.');
       completeAuth(data);
     } catch (err) {
-      setError(getErrorMessage(err, 'Failed to set passcode.'));
+      setError(getErrorMessage(err, 'Passcode setup failed.'));
     } finally {
       setLoading(false);
     }
@@ -236,6 +249,7 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     try {
       const res = await fetch(`${API_BASE_URL}/leads/login-with-passcode`, {
         method: 'POST',
@@ -247,10 +261,10 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
         })
       });
       const data = (await res.json()) as LeadAuthResponse;
-      if (!res.ok) throw new Error(data.error || 'Login failed.');
+      if (!res.ok) throw new Error(data.error || 'Authentication failed.');
       completeAuth(data);
     } catch (err) {
-      setError(getErrorMessage(err, 'Login failed.'));
+      setError(getErrorMessage(err, 'Access denied. Verify passcode.'));
     } finally {
       setLoading(false);
     }
@@ -274,140 +288,181 @@ export const LeadPopup = ({ sessionId, fingerprint, compulsory = false, onSucces
 
     setStep('success');
     if (onSuccess) onSuccess(data);
-    setTimeout(() => setOpen(false), 2000);
+    setTimeout(() => {
+      setOpen(false);
+    }, 1500);
   };
 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/90 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-md overflow-hidden rounded-[2.5rem] bg-white shadow-2xl animate-in zoom-in-95 duration-300">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-4 transition-all animate-in fade-in duration-500">
+      <div className="relative w-full max-w-[440px] overflow-hidden rounded-[3rem] bg-white shadow-2xl border border-slate-100 animate-in zoom-in-95 duration-300">
+        
         {!compulsory && (
-          <button onClick={() => setOpen(false)} className="absolute right-6 top-6 text-slate-400 hover:text-slate-900 transition-colors">
+          <button onClick={() => setOpen(false)} className="absolute right-8 top-8 text-slate-300 hover:text-slate-900 transition-all z-20">
             <X className="h-6 w-6" />
           </button>
         )}
 
-        <div className="p-8 md:p-10">
-          <div className="flex justify-center mb-6">
-            <SplitLogo height={50} />
+        <div className="p-10 md:p-12">
+          <div className="flex justify-center mb-8">
+            <SplitLogo height={60} />
           </div>
 
-          <h2 className="text-center text-2xl font-black uppercase tracking-tight text-slate-900 mb-2">
-            {step === 'success' ? 'Welcome' : step === 'login' ? 'Welcome Back' : 'Exclusive Access'}
-          </h2>
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-black uppercase tracking-tighter text-slate-900 mb-2">
+              {step === 'success' ? 'Authenticated' : step === 'login' ? 'Sign In' : 'Investor Access'}
+            </h2>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+              {step === 'login' ? 'Enter credentials for the Intelligence Vault' : 'Verify identity to unlock DSIRDA archives'}
+            </p>
+          </div>
 
-          {error && <p className="text-center text-sm font-bold text-red-500 mb-4">{error}</p>}
-          {statusMessage && step !== 'success' && <p className="text-center text-sm font-bold text-green-600 mb-4">{statusMessage}</p>}
+          {error && (
+            <div className="flex items-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 mb-6 animate-in slide-in-from-top-2">
+               <Lock className="h-4 w-4 shrink-0" />
+               <span className="text-xs font-bold uppercase tracking-tight">{error}</span>
+            </div>
+          )}
+
+          {statusMessage && step !== 'success' && (
+            <div className="flex items-center gap-3 p-4 rounded-2xl bg-green-50 border border-green-100 text-green-600 mb-6 animate-in slide-in-from-top-2">
+               <CheckCircle2 className="h-4 w-4 shrink-0" />
+               <span className="text-xs font-bold uppercase tracking-tight">{statusMessage}</span>
+            </div>
+          )}
 
           {step === 'details' && (
             <form onSubmit={(e) => { e.preventDefault(); requestOtp(); }} className="space-y-4">
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                <User className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300" />
                 <input
                   type="text" placeholder="Full Name" required
-                  className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 py-4 pl-12 pr-4 font-bold outline-none focus:border-orange-600"
+                  className="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 py-5 pl-14 pr-6 font-black text-sm outline-none focus:border-orange-600 focus:bg-white transition-all"
                   value={formData.name} onChange={(e) => updateFormField('name', e.target.value)}
                 />
               </div>
               <div className="relative">
-                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                <Phone className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300" />
                 <input
                   type="tel" placeholder="Mobile Number" required
-                  className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 py-4 pl-12 pr-4 font-bold outline-none focus:border-orange-600"
+                  className="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 py-5 pl-14 pr-6 font-black text-sm outline-none focus:border-orange-600 focus:bg-white transition-all"
                   value={formData.phone} onChange={(e) => updateFormField('phone', sanitizeDigits(e.target.value, 10))}
                 />
               </div>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300" />
                 <input
                   type="email" placeholder="Email Address" required
-                  className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 py-4 pl-12 pr-4 font-bold outline-none focus:border-orange-600"
+                  className="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 py-5 pl-14 pr-6 font-black text-sm outline-none focus:border-orange-600 focus:bg-white transition-all"
                   value={formData.email} onChange={(e) => updateFormField('email', e.target.value)}
                 />
               </div>
-              <label className="flex items-start gap-3 cursor-pointer">
-                <input type="checkbox" checked={consentAccepted} onChange={(e) => setConsentAccepted(e.target.checked)} className="mt-1 h-4 w-4 rounded border-slate-300 text-orange-600" />
-                <span className="text-xs font-medium text-slate-500 leading-relaxed">
-                  I agree to the <Link href="/terms-and-conditions" className="text-orange-600 underline">T&C</Link> and <Link href="/privacy-policy" className="text-orange-600 underline">Privacy Policy</Link>.
+              
+              <label className="flex items-start gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors cursor-pointer group">
+                <input 
+                  type="checkbox" checked={consentAccepted} onChange={(e) => setConsentAccepted(e.target.checked)} 
+                  className="mt-1 h-5 w-5 rounded-lg border-slate-200 text-orange-600 transition-all cursor-pointer" 
+                />
+                <span className="text-[10px] font-bold text-slate-400 leading-normal uppercase tracking-widest group-hover:text-slate-600">
+                  I agree to the <Link href="/terms-and-conditions" className="text-orange-600 underline">Terms</Link> and <Link href="/privacy-policy" className="text-orange-600 underline">Privacy Policy</Link>.
                 </span>
               </label>
-              <button disabled={loading} className="w-full rounded-2xl bg-slate-900 py-4 font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 flex items-center justify-center gap-2">
-                {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Get Verification Code'}
+
+              <button disabled={loading} className="w-full rounded-2xl bg-slate-900 py-5 font-black uppercase tracking-[0.2em] text-xs text-white transition-all hover:bg-orange-600 shadow-xl shadow-slate-900/10 flex items-center justify-center gap-3">
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Begin Handshake'}
               </button>
-              <p className="text-center text-xs font-bold text-slate-500">
-                Already registered? <button type="button" onClick={() => setStep('login')} className="text-orange-600 underline">Sign In</button>
-              </p>
+
+              <div className="pt-4 text-center">
+                 <button type="button" onClick={() => setStep('login')} className="text-[10px] font-black uppercase tracking-widest text-orange-600 hover:text-orange-700 underline">
+                    Return to Login
+                 </button>
+              </div>
             </form>
           )}
 
           {step === 'otp' && (
-            <form onSubmit={handleVerifyOtp} className="space-y-6">
-              <p className="text-center text-sm font-medium text-slate-500">Enter code sent to {formData.email}</p>
-              <input
-                type="text" autoFocus required maxLength={6}
-                className="w-full text-center text-3xl font-black tracking-[0.5em] rounded-2xl border-2 border-slate-100 bg-slate-50 py-5 outline-none focus:border-orange-600"
-                value={formData.otp} onChange={(e) => updateFormField('otp', sanitizeDigits(e.target.value, 6))}
-              />
-              <button disabled={loading} className="w-full rounded-2xl bg-slate-900 py-4 font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600">
-                {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Verify Code'}
-              </button>
-              <div className="flex justify-between">
-                <button type="button" onClick={() => setStep('details')} className="text-xs font-bold text-slate-500">Edit Details</button>
-                <button type="button" disabled={resendCountdown > 0} onClick={() => requestOtp({ isResend: true })} className="text-xs font-bold text-orange-600">
-                   {resendCountdown > 0 ? `Resend in ${resendCountdown}s` : 'Resend Code'}
+            <form onSubmit={handleVerifyOtp} className="space-y-8">
+              <div className="space-y-6">
+                <input
+                  type="text" autoFocus required maxLength={6}
+                  className="w-full text-center text-5xl font-black tracking-[0.4em] rounded-3xl border-2 border-slate-100 bg-slate-50 py-8 outline-none focus:border-orange-600 transition-all"
+                  value={formData.otp} onChange={(e) => updateFormField('otp', sanitizeDigits(e.target.value, 6))}
+                />
+                <button disabled={loading} className="w-full rounded-2xl bg-slate-900 py-5 font-black uppercase tracking-[0.2em] text-xs text-white transition-all hover:bg-orange-600 shadow-xl shadow-slate-900/10">
+                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Authorize Identity'}
+                </button>
+              </div>
+              <div className="flex items-center justify-between px-2">
+                <button type="button" onClick={() => setStep('details')} className="flex items-center gap-2 text-[10px] font-black uppercase text-slate-400 hover:text-slate-900 transition-colors">
+                  <ArrowLeft className="h-3 w-3" /> Correction
+                </button>
+                <button type="button" disabled={resendCountdown > 0} onClick={() => requestOtp({ isResend: true })} className="text-[10px] font-black uppercase text-orange-600 disabled:text-slate-300">
+                   {resendCountdown > 0 ? `Retry in ${resendCountdown}s` : 'Resend Code'}
                 </button>
               </div>
             </form>
           )}
 
           {step === 'passcode' && (
-            <form onSubmit={handleSetupPasscode} className="space-y-6">
-              <p className="text-center text-sm font-medium text-slate-500">Set your 6-digit secure passcode</p>
-              <div className="relative">
-                <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-                <input
-                  type="password" autoFocus required maxLength={6}
-                  className="w-full text-center text-3xl tracking-[0.5em] rounded-2xl border-2 border-slate-100 bg-slate-50 py-5 outline-none focus:border-orange-600"
-                  value={formData.passcode} onChange={(e) => updateFormField('passcode', sanitizeDigits(e.target.value, 6))}
-                />
+            <form onSubmit={handleSetupPasscode} className="space-y-8">
+              <div className="space-y-6 text-center">
+                <div className="relative">
+                  <KeyRound className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-300" />
+                  <input
+                    type="password" autoFocus required maxLength={6}
+                    className="w-full text-center text-4xl font-black tracking-[0.5em] rounded-3xl border-2 border-slate-100 bg-slate-50 py-8 outline-none focus:border-orange-600 transition-all"
+                    value={formData.passcode} onChange={(e) => updateFormField('passcode', sanitizeDigits(e.target.value, 6))}
+                  />
+                </div>
+                <button disabled={loading} className="w-full rounded-2xl bg-slate-900 py-5 font-black uppercase tracking-[0.2em] text-xs text-white transition-all hover:bg-orange-600 shadow-xl shadow-slate-900/10">
+                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Save Secure Passcode'}
+                </button>
               </div>
-              <button disabled={loading} className="w-full rounded-2xl bg-slate-900 py-4 font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600">
-                {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Complete Setup'}
-              </button>
             </form>
           )}
 
           {step === 'login' && (
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="relative">
-                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-                <input
-                  type="tel" placeholder="Mobile Number" required
-                  className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 py-4 pl-12 pr-4 font-bold outline-none focus:border-orange-600"
-                  value={formData.phone} onChange={(e) => updateFormField('phone', sanitizeDigits(e.target.value, 10))}
-                />
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-4">
+                <div className="relative">
+                  <Phone className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300" />
+                  <input
+                    type="tel" placeholder="Mobile Number" required
+                    className="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 py-5 pl-14 pr-6 font-black text-sm outline-none focus:border-orange-600 focus:bg-white transition-all"
+                    value={formData.phone} onChange={(e) => updateFormField('phone', sanitizeDigits(e.target.value, 10))}
+                  />
+                </div>
+                <div className="relative">
+                  <Lock className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-300" />
+                  <input
+                    type="password" placeholder="Passcode" required maxLength={6}
+                    className="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 py-5 pl-14 pr-6 font-black text-sm outline-none focus:border-orange-600 focus:bg-white transition-all"
+                    value={formData.passcode} onChange={(e) => updateFormField('passcode', sanitizeDigits(e.target.value, 6))}
+                  />
+                </div>
               </div>
-              <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-                <input
-                  type="password" placeholder="Passcode" required maxLength={6}
-                  className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 py-4 pl-12 pr-4 font-bold outline-none focus:border-orange-600"
-                  value={formData.passcode} onChange={(e) => updateFormField('passcode', sanitizeDigits(e.target.value, 6))}
-                />
-              </div>
-              <button disabled={loading} className="w-full rounded-2xl bg-slate-900 py-4 font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600">
-                {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Sign In'}
+              <button disabled={loading} className="w-full rounded-2xl bg-slate-900 py-5 font-black uppercase tracking-[0.2em] text-xs text-white transition-all hover:bg-orange-600 shadow-xl shadow-slate-900/10">
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Unlock Vault'}
               </button>
-              <button type="button" onClick={() => setStep('details')} className="w-full text-center text-xs font-bold text-orange-600">New User? Join Here</button>
+              <div className="text-center">
+                 <button type="button" onClick={() => setStep('details')} className="text-[10px] font-black uppercase tracking-widest text-orange-600 underline">
+                    New User? Enroll Now
+                 </button>
+              </div>
             </form>
           )}
 
           {step === 'success' && (
-            <div className="flex flex-col items-center py-10 space-y-4 animate-in fade-in slide-in-from-bottom-4">
-               <CheckCircle2 className="h-20 w-20 text-green-500" />
-               <h3 className="text-2xl font-black text-slate-900 uppercase">Access Granted</h3>
-               <p className="font-medium text-slate-500">Redirecting to platform...</p>
+            <div className="flex flex-col items-center py-10 space-y-6 animate-in fade-in zoom-in-90 duration-500">
+               <div className="h-24 w-24 rounded-full bg-green-50 flex items-center justify-center text-green-500 shadow-inner">
+                  <CheckCircle2 className="h-12 w-12" />
+               </div>
+               <div className="text-center">
+                  <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight">Access Granted</h3>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2 italic">Synchronizing Intelligence Stream...</p>
+               </div>
             </div>
           )}
         </div>

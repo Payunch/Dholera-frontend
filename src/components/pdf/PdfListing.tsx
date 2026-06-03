@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { format, isValid, parseISO } from 'date-fns';
 import { useLead } from '@/providers/LeadProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
-import { API_BASE_URL } from '@/lib/api';
+import { API_BASE_URL, apiClient } from '@/lib/api';
 import { SecurePdfViewer } from '@/components/pdf/SecurePdfViewer';
 import { LeadPopup } from '@/components/leads/LeadPopup';
 import { useVisitorTracking } from '@/hooks/useVisitorTracking';
@@ -25,9 +25,7 @@ export function PdfListing() {
   const { verifiedLead } = useLead();
   const { t } = useLanguage();
   const { sessionId, fingerprint } = useVisitorTracking();
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
+  
   const [pdfs, setPdfs] = useState<PDF[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
@@ -37,6 +35,7 @@ export function PdfListing() {
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
+  const [postLoginAction, setPostLoginAction] = useState<'view' | 'checkout' | 'buy_all' | null>(null);
 
   // Selection Mode State
   const [isSelectionMode, setIsSelectionMode] = useState(false);
@@ -52,11 +51,9 @@ export function PdfListing() {
 
   const fetchPurchases = React.useCallback(() => {
     if (!verifiedLead?.token) return;
-    fetch(`${API_BASE_URL}/payment/my-purchases`, {
-      headers: { 'Authorization': verifiedLead.token }
-    })
-    .then(res => res.json())
-    .then(data => {
+    apiClient.get('/payment/my-purchases')
+    .then(res => {
+      const data = res.data;
       if (data.success && data.purchases) {
         const completed = data.purchases
           .filter((p: any) => p.status === 'completed')
@@ -68,22 +65,12 @@ export function PdfListing() {
   }, [verifiedLead?.token]);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/pdf/list`)
-      .then(async res => {
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}));
-          throw new Error(errData.error || `Server returned ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(data => setPdfs(Array.isArray(data) ? data : []))
-      .catch(err => {
-        console.error('PDF Listing Error:', err);
-      })
+    apiClient.get('/pdf/list')
+      .then(res => setPdfs(Array.isArray(res.data) ? res.data : []))
+      .catch(err => console.error('PDF Listing Error:', err))
       .finally(() => setLoading(false));
 
     fetchPurchases();
-    // Poll for approvals every 30 seconds while browsing
     const interval = setInterval(fetchPurchases, 30000);
     return () => clearInterval(interval);
   }, [fetchPurchases]);
@@ -113,13 +100,10 @@ export function PdfListing() {
 
     setSelectedPdfId(pdfId);
     
-    // Logic: 
-    // 1. If it's free, just open it.
-    // 2. If it's premium, and we have a lead, open it (viewer will check purchase).
-    // 3. If it's premium and NO lead, show verification popup.
     if (isFree || verifiedLead) {
       setShowViewer(true);
     } else {
+      setPostLoginAction('view');
       setShowVerifyPopup(true);
     }
   };
@@ -135,27 +119,18 @@ export function PdfListing() {
 
   const handleCheckout = async () => {
     if (!verifiedLead) {
+      setPostLoginAction('checkout');
       setShowVerifyPopup(true);
       return;
     }
 
     setPaymentLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/payment/request-manual`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': verifiedLead.token
-        },
-        body: JSON.stringify({ 
-          pdfIds: selectedPdfs, 
-          leadToken: verifiedLead.token 
-        })
+      const res = await apiClient.post('/payment/request-manual', { 
+        pdfIds: selectedPdfs 
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Checkout failed');
-
+      const data = res.data;
       if (data.alreadyPurchased) {
         alert('You already have access to these documents.');
         setIsSelectionMode(false);
@@ -171,8 +146,8 @@ export function PdfListing() {
       });
       setShowUpiModal(true);
 
-    } catch (err) {
-      alert(err instanceof Error ? err.message : 'Checkout failed');
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Checkout failed');
     } finally {
       setPaymentLoading(false);
     }
@@ -180,24 +155,18 @@ export function PdfListing() {
 
   const handleBuyAll = async () => {
     if (!verifiedLead) {
+      setPostLoginAction('buy_all');
       setShowVerifyPopup(true);
       return;
     }
     
     setPaymentLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/payment/request-manual`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': verifiedLead.token
-        },
-        body: JSON.stringify({ pdfId: 'all', leadToken: verifiedLead.token })
+      const res = await apiClient.post('/payment/request-manual', { 
+        pdfId: 'all' 
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to initiate purchase');
-
+      const data = res.data;
       if (data.alreadyPurchased) {
         alert('You already have Pro (All Access) membership!');
         fetchPurchases();
@@ -212,30 +181,37 @@ export function PdfListing() {
       });
       setShowUpiModal(true);
 
-    } catch (err) {
-      alert(err instanceof Error ? err.message : 'Payment failed');
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Payment failed');
     } finally {
       setPaymentLoading(false);
     }
   };
 
+  const handleAuthSuccess = () => {
+    setShowVerifyPopup(false);
+    // Use timeout to let the Provider update the state
+    setTimeout(() => {
+      if (postLoginAction === 'view') {
+        setShowViewer(true);
+      } else if (postLoginAction === 'checkout') {
+        handleCheckout();
+      } else if (postLoginAction === 'buy_all') {
+        handleBuyAll();
+      }
+      setPostLoginAction(null);
+    }, 500);
+  };
+
   const handleVerifyUtr = async (utr: string): Promise<boolean> => {
     if (!upiOrderDetails || !verifiedLead) return false;
     try {
-      const res = await fetch(`${API_BASE_URL}/payment/verify-utr`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': verifiedLead.token
-        },
-        body: JSON.stringify({ 
-          utr, 
-          transactionId: upiOrderDetails.transactionId,
-          leadToken: verifiedLead.token 
-        })
+      const res = await apiClient.post('/payment/verify-utr', { 
+        utr, 
+        transactionId: upiOrderDetails.transactionId 
       });
 
-      if (res.ok) {
+      if (res.status === 200) {
         setShowUpiModal(false);
         setIsSelectionMode(false);
         alert('Payment details submitted. Your documents will be unlocked as soon as the Admin approves.');
@@ -247,10 +223,6 @@ export function PdfListing() {
       console.error('UTR Submit Error:', err);
       return false;
     }
-  };
-
-  const handleManualAccess = () => {
-    setIsSelectionMode(true);
   };
 
   const formatUploadedAt = (pdf: PDF) => {
@@ -434,7 +406,7 @@ export function PdfListing() {
           sessionId={sessionId || undefined}
           fingerprint={fingerprint || undefined}
           compulsory={true}
-          onSuccess={() => { setShowVerifyPopup(false); setShowViewer(true); }}
+          onSuccess={handleAuthSuccess}
         />
       )}
       
