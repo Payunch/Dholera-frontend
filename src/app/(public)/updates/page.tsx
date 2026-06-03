@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Explore verified milestones, infrastructure progress, and policy updates in Dholera Smart City. Strategic intel for DSIR land investors.",
 };
 
+import { Translate } from "@/components/i18n/Translate";
+
 export default async function UpdatesPage() {
   const updates = await getUpdates();
 
@@ -18,7 +20,7 @@ export default async function UpdatesPage() {
             Real-Time Intelligence
           </div>
           <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 md:text-7xl uppercase leading-tight">
-            Growth <span className="text-orange-600 italic">Evidence</span> & Updates
+            Growth <span className="text-orange-600 italic"><Translate id="evidence" /></span> & Updates
           </h1>
           <p className="max-w-2xl text-lg font-medium text-slate-500 leading-relaxed">
             Stay ahead of the curve with deep-dive analysis on Dholera SIR development, 

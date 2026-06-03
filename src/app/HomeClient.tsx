@@ -11,8 +11,10 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { PdfListing } from "@/components/pdf/PdfListing";
+import { useLanguage } from '@/providers/LanguageProvider';
 
 export function HomeClient() {
+  const { t } = useLanguage();
   const coreLoop = [
     {
       step: "01",
@@ -59,7 +61,7 @@ export function HomeClient() {
             </div>
 
             <h1 className="font-display text-5xl font-black tracking-tight text-slate-900 sm:text-7xl lg:text-8xl uppercase leading-[0.95] animate-fade-up">
-              Decide with <span className="text-orange-600 italic">Certainty</span> in Dholera SIR
+              Decide with <span className="text-orange-600 italic">{t('certainty')}</span> in Dholera SIR
             </h1>
 
             <p className="mx-auto max-w-2xl text-lg font-medium text-slate-500 md:text-xl animate-fade-up-slow leading-relaxed">
@@ -91,7 +93,7 @@ export function HomeClient() {
         <React.Suspense fallback={
           <div className="flex flex-col items-center py-20 gap-4">
             <div className="h-10 w-10 border-4 border-slate-100 border-t-orange-600 rounded-full animate-spin" />
-            <span className="font-black uppercase tracking-widest text-slate-400 animate-pulse">Scanning Archives...</span>
+            <span className="font-black uppercase tracking-widest text-slate-400 animate-pulse">{t('scanning_archives')}</span>
           </div>
         }>
           <PdfListing />
@@ -102,9 +104,9 @@ export function HomeClient() {
       <section className="bg-slate-50 py-32 border-y border-slate-100">
         <div className="container mx-auto px-4 md:px-8">
           <div className="mb-24 text-center space-y-6">
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">The Loop</p>
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">{t('the_loop')}</p>
             <h2 className="font-display text-4xl font-black text-slate-900 md:text-6xl uppercase">
-              How we turn data into <span className="text-orange-600 italic">Proof</span>
+              How we turn data into <span className="text-orange-600 italic">{t('proof')}</span>
             </h2>
           </div>
 
@@ -117,7 +119,7 @@ export function HomeClient() {
                 <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-[2rem] bg-slate-50 text-orange-600 border border-slate-100 group-hover:bg-orange-600 group-hover:text-white transition-colors">
                   <item.icon className="h-8 w-8" />
                 </div>
-                <span className="mb-4 text-xs font-black uppercase tracking-widest text-slate-400 group-hover:text-orange-600 transition-colors">Step {item.step}</span>
+                <span className="mb-4 text-xs font-black uppercase tracking-widest text-slate-400 group-hover:text-orange-600 transition-colors">{t('step')}{item.step}</span>
                 <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 mb-4">{item.title}</h3>
                 <p className="text-sm font-medium text-slate-500 leading-relaxed">{item.desc}</p>
               </div>
@@ -130,9 +132,9 @@ export function HomeClient() {
       <section className="bg-white py-32">
         <div className="container mx-auto px-4 md:px-8">
           <div className="mx-auto max-w-3xl text-center mb-20 space-y-6">
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">Evidence Signals</p>
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">{t('evidence_signals')}</p>
             <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight">
-              Designed to <span className="text-orange-600 italic">Remove</span> Guesswork
+              Designed to <span className="text-orange-600 italic">{t('remove')}</span> Guesswork
             </h2>
             <p className="text-lg font-medium text-slate-500 leading-relaxed">
               We translate complex planning records into a clean decision surface. Each module is tuned for
@@ -177,23 +179,23 @@ export function HomeClient() {
           <div className="grid gap-16 lg:grid-cols-2 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-400">Institutional Integrity</p>
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-400">{t('institutional_integrity')}</p>
                 <h2 className="font-display text-4xl font-black md:text-6xl uppercase leading-tight">
-                  The Quality <span className="text-orange-400 italic">Bar</span>
+                  The Quality <span className="text-orange-400 italic">{t('bar')}</span>
                 </h2>
               </div>
               <p className="text-xl text-slate-300 leading-relaxed font-medium">
-                As the primary <span className="font-bold text-white uppercase italic tracking-wider">Dholera Platform</span>, we bridge the gap between 
+                As the primary <span className="font-bold text-white uppercase italic tracking-wider">{t('dholera_platform')}</span>, we bridge the gap between 
                 complex urban planning data and investor accessibility.
               </p>
               <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/10">
                  <div className="space-y-1">
                     <p className="text-4xl font-black text-white italic tracking-tighter uppercase">5,000+</p>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Hectares Monitored</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t('hectares_monitored')}</p>
                  </div>
                  <div className="space-y-1">
                     <p className="text-4xl font-black text-white italic tracking-tighter uppercase">100%</p>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Verified Data</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t('verified_data')}</p>
                  </div>
               </div>
             </div>

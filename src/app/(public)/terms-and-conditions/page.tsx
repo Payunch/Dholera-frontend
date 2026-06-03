@@ -1,10 +1,13 @@
+"use client";
 import React from 'react';
+import { useLanguage } from '@/providers/LanguageProvider';
 
 export default function TermsAndConditions() {
+  const { t } = useLanguage();
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-6 text-slate-900">Terms and Conditions</h1>
-      <p className="mb-4 text-slate-600">Last updated: May 20, 2026</p>
+      <h1 className="text-3xl font-bold mb-6 text-slate-900">{t('terms_and_conditions')}</h1>
+      <p className="mb-4 text-slate-600">{t('last_updated')}</p>
       
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-slate-800">1. Acceptance of Terms</h2>
@@ -36,7 +39,7 @@ export default function TermsAndConditions() {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-slate-800">5. Notice and Takedown Policy (IT Act 2000, Sec 79)</h2>
         <p className="text-slate-600 leading-relaxed">
-          This platform acts as an intermediary for third-party mapping and planning data. If you are a government official, copyright owner, or authorized representative and believe any content on this platform infringes upon your rights or official data policies, please submit a formal takedown request to <a href="mailto:support@dholeraplatform.com" className="text-orange-600 hover:underline">support@dholeraplatform.com</a>. We will review and remove disputed content within 36 hours of verification.
+          This platform acts as an intermediary for third-party mapping and planning data. If you are a government official, copyright owner, or authorized representative and believe any content on this platform infringes upon your rights or official data policies, please submit a formal takedown request to <a href="mailto:support@dholeraplatform.com" className="text-orange-600 hover:underline">{t('support_email')}</a>. We will review and remove disputed content within 36 hours of verification.
         </p>
       </section>
     </div>

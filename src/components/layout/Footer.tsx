@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Globe, Radio, Camera, PlayCircle, Mail, Phone, User } from "lucide-react";
 import { siteConfig } from "@/config/site";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 const ownerDetails = {
   brandName: "dholera platform",
@@ -20,6 +21,7 @@ declare global {
 const OPEN_CONSENT_EVENT = "open-consent-banner";
 
 export function Footer() {
+  const { t } = useLanguage();
   const handleCookieSettings = () => {
     if (typeof window === "undefined") {
       return;
@@ -58,22 +60,22 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">Platform</h4>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">{t('platform')}</h4>
             <ul className="space-y-4 text-sm font-semibold">
-              <li><Link href="/" className="hover:text-orange-600 transition-colors">Home</Link></li>
-              <li><Link href="/clearance-engine" className="hover:text-orange-600 transition-colors">Clearance Engine</Link></li>
-              <li><Link href="/updates" className="hover:text-orange-600 transition-colors">Growth Updates</Link></li>
-              <li><Link href="/my-vault" className="hover:text-orange-600 transition-colors">My Vault</Link></li>
+              <li><Link href="/" className="hover:text-orange-600 transition-colors">{t('nav_home')}</Link></li>
+              <li><Link href="/clearance-engine" className="hover:text-orange-600 transition-colors">{t('clearance_engine')}</Link></li>
+              <li><Link href="/updates" className="hover:text-orange-600 transition-colors">{t('growth_updates')}</Link></li>
+              <li><Link href="/my-vault" className="hover:text-orange-600 transition-colors">{t('my_vault')}</Link></li>
             </ul>
           </div>
 
           {/* Legal */}
           <div>
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">Legal</h4>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">{t('legal')}</h4>
             <ul className="space-y-4 text-sm font-semibold">
-              <li><Link href="/privacy-policy" className="hover:text-orange-600 transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms-and-conditions" className="hover:text-orange-600 transition-colors">Terms of Service</Link></li>
-              <li><Link href="/contact" className="hover:text-orange-600 transition-colors">Contact</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-orange-600 transition-colors">{t('privacy_policy')}</Link></li>
+              <li><Link href="/terms-and-conditions" className="hover:text-orange-600 transition-colors">{t('terms_of_service')}</Link></li>
+              <li><Link href="/contact" className="hover:text-orange-600 transition-colors">{t('contact')}</Link></li>
               <li>
                 <button type="button" onClick={handleCookieSettings} className="hover:text-orange-600 transition-colors">
                   Cookie settings
@@ -84,7 +86,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">Owner Details</h4>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">{t('footer_owner')}</h4>
             <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
               <User className="h-5 w-5 text-orange-600 shrink-0" />
               <span>{ownerDetails.operatorName}</span>
