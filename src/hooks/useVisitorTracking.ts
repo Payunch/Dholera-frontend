@@ -124,21 +124,6 @@ export const useVisitorTracking = () => {
             timeSpent: 15
           })
         }).catch(err => console.warn('Tracking error (returning):', err.message));
-      } else {
-        fetch(`${API_BASE_URL}/track`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sessionId: activeSessionId,
-            browserFingerprint: activeFingerprint,
-            page: pathname,
-            timeSpent: 15,
-            source: typeof document !== 'undefined' ? document.referrer : 'Direct',
-            deviceType: typeof navigator !== 'undefined' && /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'
-          })
-        }).catch(err => console.warn('Tracking error (anonymous):', err.message));
       }
     }, 15000);
 
