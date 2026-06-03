@@ -27,6 +27,9 @@ export function HomeClient() {
   // Gallery Lightbox State
   const [activeImageIdx, setActiveImageIdx] = React.useState<number | null>(null);
 
+  // Project Showcase State
+  const [activeProject, setActiveProject] = React.useState<"satyaja" | "dream_world">("satyaja");
+
   // Newsletter Form State
   const [newsEmail, setNewsEmail] = React.useState("");
   const [newsName, setNewsName] = React.useState("");
@@ -138,7 +141,14 @@ export function HomeClient() {
     gu: "ધોલેરા સ્માર્ટ સિટીમાં રોકાણ કરવું એ ભવિષ્ય માટે એક સમજદારીભર્યો નિર્ણય છે. સત્યજાના પ્રોજેક્ટ્સ જેવા કે Bliss 107, Bliss Grandeur, Bliss Rung અને Prelude Industrial Park સુરક્ષિત અને ઊંચા વળતર આપતા રોકાણના વિકલ્પો પ્રદાન કરે છે. ઝડપી ઇન્ફ્રાસ્ટ્રક્ચર વિકાસને કારણે મિલકતના મૂલ્યોમાં મોટો વધારો થવાની સંભાવના છે. આજે જ તમારો પ્લોટ બુક કરો અને તમારું ભવિષ્ય સુરક્ષિત કરો."
   };
 
+  const dreamWorldDescription: Record<string, string> = {
+    en: "Located strategically in Dholera SIR, Dream World City offers planned residential plots ranging from 144 to 300 sq.yd., designed for luxury villas and secure long-term capital appreciation.",
+    hi: "धोलेरा एसआईआर में रणनीतिक रूप से स्थित, ड्रीम वर्ल्ड सिटी 144 से 300 वर्ग गज के नियोजित आवासीय प्लॉट प्रदान करता है, जो लक्जरी विला और सुरक्षित दीर्घकालिक पूंजी वृद्धि के लिए डिज़ाइन किए गए हैं।",
+    gu: "ધોલેરા SIR માં વ્યૂહાત્મક રીતે સ્થિત, ડ્રીમ વર્લ્ડ સિટી 144 થી 300 વારના આયોજિત રેસિડેન્શિયલ પ્લોટ્સ ઓફર કરે છે, જે લક્ઝરી વિલા અને સુરક્ષિત લાંબા ગાળાના મૂડી વધારા માટે ડિઝાઇન કરવામાં આવ્યા છે।"
+  };
+
   const activeSatyajaDesc = satyajaDescription[lang] || satyajaDescription.en;
+  const activeDreamWorldDesc = dreamWorldDescription[lang] || dreamWorldDescription.en;
 
   // Handle lightbox navigational controls
   const handlePrev = (e: React.MouseEvent) => {
@@ -469,88 +479,261 @@ export function HomeClient() {
         </div>
       )}
 
-      {/* Verified Land Opportunities (Satyaja Plots Bliss Grandeur) */}
+      {/* Verified Land Opportunities (Satyaja Plots & Dream World City) */}
       <section id="plots" className="bg-slate-50 py-32 border-y border-slate-100">
         <div className="container mx-auto px-4 md:px-8">
           
           <div className="mb-20 text-center space-y-4 max-w-3xl mx-auto">
             <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">
-              {t('satyaja_plots')}
+              {t('platform')} PROPOSITIONS
             </p>
             <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight">
-              {t('book_plot_today')}
+              Verified Land <span className="text-orange-600 italic">Opportunities</span>
             </h2>
             <p className="text-sm font-medium text-slate-500 leading-relaxed">
-              {t('satyaja_tagline')}
+              Explore residential developments and plotted infrastructure within the active investment zones.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-            
-            {/* Left Card: Plot Project Details */}
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 md:p-12 shadow-xl shadow-slate-200/50 flex flex-col justify-between space-y-8">
-              <div className="space-y-6">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-green-100 shadow-sm">
-                    <ShieldCheck className="h-3.5 w-3.5" />
-                    RERA Approved
-                  </span>
-                  <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-blue-100 shadow-sm">
-                    <MapPin className="h-3.5 w-3.5" />
-                    Pipali Highway
-                  </span>
+          {/* Project Tabs */}
+          <div className="flex justify-center gap-4 mb-16">
+            <button
+              onClick={() => setActiveProject("satyaja")}
+              className={`px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                activeProject === "satyaja"
+                  ? "bg-slate-900 text-white shadow-lg shadow-slate-950/20"
+                  : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              Satyaja Bliss Grandeur
+            </button>
+            <button
+              onClick={() => setActiveProject("dream_world")}
+              className={`px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                activeProject === "dream_world"
+                  ? "bg-slate-900 text-white shadow-lg shadow-slate-950/20"
+                  : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              {t('dream_world_city')}
+            </button>
+          </div>
+
+          {activeProject === "satyaja" ? (
+            <div className="grid lg:grid-cols-2 gap-12 items-stretch animate-in fade-in-50 duration-300">
+              {/* Satyaja Plots Details */}
+              <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 md:p-12 shadow-xl shadow-slate-200/50 flex flex-col justify-between space-y-8">
+                <div className="space-y-6">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-green-100 shadow-sm">
+                      <ShieldCheck className="h-3.5 w-3.5" />
+                      RERA Approved
+                    </span>
+                    <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-blue-100 shadow-sm">
+                      <MapPin className="h-3.5 w-3.5" />
+                      Pipali Highway
+                    </span>
+                  </div>
+
+                  <h3 className="font-display text-3xl font-black uppercase tracking-tight text-slate-900">
+                    Satyaja Bliss Grandeur 1 & 2
+                  </h3>
+
+                  <p className="text-slate-500 text-sm font-semibold leading-relaxed">
+                    {activeSatyajaDesc}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Available Sizes</span>
+                      <p className="text-sm font-black text-slate-800 uppercase">100 - 500 Sq. Yards</p>
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Type</span>
+                      <p className="text-sm font-black text-slate-800 uppercase">Residential Plots</p>
+                    </div>
+                  </div>
                 </div>
 
-                <h3 className="font-display text-3xl font-black uppercase tracking-tight text-slate-900">
-                  Satyaja Bliss Grandeur 1 & 2
+                <div>
+                  <a
+                    href="https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20am%20interested%20in%20Satyaja%20Plots%20(Bliss%20Grandeur%201%20%26%202).%20Please%20send%20more%20information%20about%20rates,%20availability,%20and%20brochure."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white text-sm font-black uppercase tracking-widest hover:bg-[#128C7E] transition-all shadow-xl shadow-green-500/10 hover:shadow-green-500/20"
+                  >
+                    <MessageSquare className="h-5 w-5" />
+                    {t('whatsapp_inquiry')}
+                  </a>
+                </div>
+              </div>
+
+              {/* Satyaja Map Embed */}
+              <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-150 shadow-xl bg-slate-100 min-h-[400px] flex">
+                <div className="absolute top-6 right-6 z-10 bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-md flex items-center gap-2">
+                  <Map className="h-4 w-4 text-orange-600" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-900 font-display">
+                    Pipali Junction Link
+                  </span>
+                </div>
+                <iframe
+                  title="Satyaja Dholera Plots Pipali Highway Map Location"
+                  src="https://maps.google.com/maps?q=Pipali%20Junction,%20Dholera,%20Gujarat,%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  className="w-full h-full min-h-[400px] border-0"
+                  loading="lazy"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="grid lg:grid-cols-2 gap-12 items-stretch animate-in fade-in-50 duration-300">
+              {/* Dream World City Details */}
+              <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 md:p-12 shadow-xl shadow-slate-200/50 flex flex-col justify-between space-y-8">
+                <div className="space-y-6">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-green-100 shadow-sm">
+                      <ShieldCheck className="h-3.5 w-3.5" />
+                      Premium Zone
+                    </span>
+                    <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-blue-100 shadow-sm">
+                      <MapPin className="h-3.5 w-3.5" />
+                      Dholera Residential
+                    </span>
+                  </div>
+
+                  <h3 className="font-display text-3xl font-black uppercase tracking-tight text-slate-900">
+                    {t('dream_world_city')}
+                  </h3>
+
+                  <p className="text-slate-500 text-sm font-semibold leading-relaxed">
+                    {activeDreamWorldDesc}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Available Sizes</span>
+                      <p className="text-sm font-black text-slate-800 uppercase">144 - 300 Sq. Yards</p>
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Offering</span>
+                      <p className="text-sm font-black text-slate-800 uppercase">Plots & Villas</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <a
+                    href="https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20am%20interested%20in%20Dream%20World%20City%20Plots%20and%20Villas.%20Please%20send%20more%20information%20about%20rates,%20availability,%20and%20layout."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white text-sm font-black uppercase tracking-widest hover:bg-[#128C7E] transition-all shadow-xl shadow-green-500/10 hover:shadow-green-500/20"
+                  >
+                    <MessageSquare className="h-5 w-5" />
+                    {t('whatsapp_inquiry')}
+                  </a>
+                </div>
+              </div>
+
+              {/* Dream World City Map / Showcase Embed */}
+              <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-150 shadow-xl bg-slate-100 min-h-[400px] flex">
+                <div className="absolute top-6 right-6 z-10 bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-md flex items-center gap-2">
+                  <Map className="h-4 w-4 text-orange-600" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-900 font-display">
+                    Dholera Residential Zone
+                  </span>
+                </div>
+                <iframe
+                  title="Dream World City Dholera Map Location"
+                  src="https://maps.google.com/maps?q=Dholera,%20Gujarat,%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  className="w-full h-full min-h-[400px] border-0"
+                  loading="lazy"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Investor Advantages Section */}
+      <section className="bg-white py-32 border-t border-slate-100">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="mb-20 text-center space-y-4 max-w-3xl mx-auto">
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">
+              {t('benefits_title')}
+            </p>
+            <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight">
+              Strategic Investment <span className="text-orange-600 italic">Advantages</span>
+            </h2>
+            <p className="text-sm font-medium text-slate-500 leading-relaxed">
+              {t('benefits_desc')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            {/* Advantage 1: Site Visit & Stay */}
+            <div className="flex flex-col md:flex-row gap-6 p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 shadow-sm hover:shadow-md transition-all">
+              <div className="flex-shrink-0 flex items-center justify-center h-20 w-20 rounded-[2rem] bg-white border border-slate-100 text-orange-600 shadow-sm">
+                <div className="relative h-12 w-12">
+                  <Image
+                    src="/images/free-visit.png"
+                    alt="Free Site Visit Icon"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900">
+                  {t('free_visit')}
                 </h3>
-
-                <p className="text-slate-500 text-sm font-semibold leading-relaxed">
-                  {activeSatyajaDesc}
+                <p className="text-xs font-semibold text-slate-500 leading-relaxed">
+                  {t('free_visit_desc')}
                 </p>
-
-                <div className="grid grid-cols-2 gap-6 pt-6 border-t border-slate-100">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Available Sizes</span>
-                    <p className="text-sm font-black text-slate-805 uppercase">100 - 500 Sq. Yards</p>
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Type</span>
-                    <p className="text-sm font-black text-slate-805 uppercase">Residential Plots</p>
-                  </div>
+                <div className="pt-2">
+                  <a
+                    href="https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20want%20to%20book%20a%20site%20visit.%20Please%20share%20details%20about%20your%20pick-up%20services%20and%20guest%20stay."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-slate-900 hover:text-orange-600 transition-colors group"
+                  >
+                    Schedule Visit
+                    <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </a>
                 </div>
               </div>
-
-              <div>
-                <a
-                  href="https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20am%20interested%20in%20Satyaja%20Plots%20(Bliss%20Grandeur%201%20%26%202).%20Please%20send%20more%20information%20about%20rates,%20availability,%20and%20brochure."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white text-sm font-black uppercase tracking-widest hover:bg-[#128C7E] transition-all shadow-xl shadow-green-500/10 hover:shadow-green-500/20"
-                >
-                  <MessageSquare className="h-5 w-5" />
-                  {t('whatsapp_inquiry')}
-                </a>
-              </div>
             </div>
 
-            {/* Right Card: Google Map Embed Frame */}
-            <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-150 shadow-xl bg-slate-100 min-h-[400px] flex">
-              <div className="absolute top-6 right-6 z-10 bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-md flex items-center gap-2">
-                <Map className="h-4 w-4 text-orange-600" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-905 font-display">
-                  Pipali Junction Link
-                </span>
+            {/* Advantage 2: Strategic Location */}
+            <div className="flex flex-col md:flex-row gap-6 p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 shadow-sm hover:shadow-md transition-all">
+              <div className="flex-shrink-0 flex items-center justify-center h-20 w-20 rounded-[2rem] bg-white border border-slate-100 text-orange-600 shadow-sm">
+                <div className="relative h-12 w-12">
+                  <Image
+                    src="/images/strategic-location.png"
+                    alt="Strategic Location Icon"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
-              <iframe
-                title="Satyaja Dholera Plots Pipali Highway Map Location"
-                src="https://maps.google.com/maps?q=Pipali%20Junction,%20Dholera,%20Gujarat,%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-full min-h-[400px] border-0"
-                loading="lazy"
-                allowFullScreen
-              />
+              <div className="space-y-3">
+                <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900">
+                  {t('strategic_loc')}
+                </h3>
+                <p className="text-xs font-semibold text-slate-500 leading-relaxed">
+                  {t('strategic_loc_desc')}
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href="/clearance-engine"
+                    className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-slate-900 hover:text-orange-600 transition-colors group"
+                  >
+                    Analyze Zones
+                    <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                </div>
+              </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -736,6 +919,95 @@ export function HomeClient() {
                 </div>
                 <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900">{item.title}</h3>
                 <p className="text-base font-medium text-slate-500 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Established Industrial Giants & Anchors Grid */}
+      <section className="bg-slate-50 py-32 border-t border-slate-100">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="mb-20 text-center space-y-4 max-w-3xl mx-auto">
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">
+              {t('established_giants')}
+            </p>
+            <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight">
+              Major Corporate <span className="text-orange-600 italic">Anchors</span>
+            </h2>
+            <p className="text-sm font-medium text-slate-500 leading-relaxed">
+              {t('established_giants_desc')}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                logo: "/images/tata.png",
+                name: "Tata Group",
+                role: "Semiconductor & Solar Energy",
+                desc: "Establishing India's first commercial semiconductor fabrication facility (with PSMC) and developing a massive 4,000 MW solar park."
+              },
+              {
+                logo: "/images/vedanta.png",
+                name: "Vedanta Group",
+                role: "Electronics Cluster",
+                desc: "Participating in Dholera's high-tech electronics manufacturing and display hub, driving local hardware ecosystem creation."
+              },
+              {
+                logo: "/images/larsen-toubro.png",
+                name: "Larsen & Toubro (L&T)",
+                role: "Master Infrastructure",
+                desc: "Selected to engineer and deploy the master infrastructure, smart roads, utility ducts, and underground networks for the Activation Area."
+              },
+              {
+                logo: "/images/torrent.png",
+                name: "Torrent Power",
+                role: "Grid Infrastructure",
+                desc: "Implementing the primary distribution system, substations, and smart grid elements to guarantee 24/7 industrial electricity."
+              },
+              {
+                logo: "/images/renew.png",
+                name: "ReNew Power",
+                role: "Green Tech Manufacturing",
+                desc: "Setting up a gigawatt-scale manufacturing plant for solar cells and modules to fuel the renewable energy requirements of the smart city."
+              },
+              {
+                logo: "/images/hp.png",
+                name: "Hindustan Petroleum (HP)",
+                role: "Freight Fueling & Infrastructure",
+                desc: "Constructing high-capacity fueling centers, terminal logistics depots, and auxiliary service stations along critical expressway links."
+              }
+            ].map((giant, idx) => (
+              <div 
+                key={idx}
+                className="group flex flex-col justify-between p-8 rounded-[2rem] bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300"
+              >
+                <div className="space-y-6">
+                  {/* Logo Container */}
+                  <div className="relative h-20 w-full flex items-center justify-center p-2 bg-slate-50/50 rounded-2xl border border-slate-100 group-hover:bg-orange-50/20 group-hover:border-orange-100 transition-all duration-300">
+                    <div className="relative h-14 w-32">
+                      <Image
+                        src={giant.logo}
+                        alt={`${giant.name} logo`}
+                        fill
+                        className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <span className="text-[9px] font-black uppercase tracking-wider text-orange-600">
+                      {giant.role}
+                    </span>
+                    <h3 className="font-display text-xl font-bold uppercase tracking-tight text-slate-900">
+                      {giant.name}
+                    </h3>
+                    <p className="text-xs font-semibold text-slate-500 leading-relaxed">
+                      {giant.desc}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
