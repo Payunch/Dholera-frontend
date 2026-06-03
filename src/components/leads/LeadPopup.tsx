@@ -5,6 +5,7 @@ import { X, Loader2, CheckCircle2, Phone, User, ArrowRight } from 'lucide-react'
 import { useLead } from '@/providers/LeadProvider';
 import { apiClient } from '@/lib/api';
 import { SplitLogo } from '@/components/common/DynamicImages';
+import Link from 'next/link';
 
 const sanitizeDigits = (value: string, maxLength: number) => value.replace(/\D/g, '').slice(0, maxLength);
 const validateName = (name: string) => name.trim().length >= 2;
@@ -29,6 +30,7 @@ export const LeadPopup = ({
   const [open, setOpen] = useState(true);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [step, setStep] = useState<'details' | 'success'>('details');
@@ -50,6 +52,7 @@ export const LeadPopup = ({
     
     if (!validateName(name)) return setError('Please enter your full name.');
     if (!validatePhone(cleanPhone)) return setError('Please enter a valid 10-digit mobile number.');
+    if (!agreedToTerms) return setError('Please agree to the Terms and Privacy Policy.');
 
     setLoading(true);
     setError('');
@@ -103,10 +106,10 @@ export const LeadPopup = ({
           
           <div className="text-center mb-8">
             <h2 className="text-2xl font-black uppercase tracking-tighter text-slate-900 mb-2">
-              {step === 'success' ? 'Access Granted' : 'Unlock Access'}
+              {step === 'success' ? 'Access Granted' : 'Investor Access'}
             </h2>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-              {step === 'success' ? 'Opening PDF...' : 'Please provide your details to view this PDF'}
+              {step === 'success' ? 'Opening Archives...' : 'Verify identity to unlock DSIRDA archives'}
             </p>
           </div>
 
@@ -122,7 +125,7 @@ export const LeadPopup = ({
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <input
                   type="text" 
-                  placeholder="Your Full Name" 
+                  placeholder="Full Name" 
                   required
                   autoFocus
                   className="w-full rounded-xl border-2 border-slate-100 bg-slate-50 py-4 pl-12 pr-4 font-bold text-sm outline-none focus:border-orange-600 focus:bg-white transition-all text-slate-900 placeholder:text-slate-400"
@@ -141,6 +144,19 @@ export const LeadPopup = ({
                   onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
                 />
               </div>
+
+              <div className="flex items-start gap-3 pt-2">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  className="mt-1 h-4 w-4 rounded border-slate-300 text-orange-600 focus:ring-orange-600 cursor-pointer"
+                  checked={agreedToTerms}
+                  onChange={(e) => setAgreedToTerms(e.target.checked)}
+                />
+                <label htmlFor="terms" className="text-[10px] font-medium text-slate-500 leading-relaxed cursor-pointer">
+                  I agree to the <Link href="/terms-and-conditions" className="text-orange-600 hover:underline">Terms</Link> and <Link href="/privacy-policy" className="text-orange-600 hover:underline">Privacy Policy</Link>.
+                </label>
+              </div>
               
               <button 
                 disabled={loading} 
@@ -150,7 +166,7 @@ export const LeadPopup = ({
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <>
-                    Continue <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    Begin Handshake <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
               </button>
@@ -162,6 +178,7 @@ export const LeadPopup = ({
                <div className="h-20 w-20 rounded-full bg-green-50 flex items-center justify-center text-green-500">
                  <CheckCircle2 className="h-10 w-10" />
                </div>
+               <p className="text-sm font-black uppercase tracking-widest text-slate-900">Access Granted</p>
             </div>
           )}
         </div>

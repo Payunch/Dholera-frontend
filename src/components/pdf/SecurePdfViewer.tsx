@@ -5,7 +5,7 @@ import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, Arr
 import { API_BASE_URL, SITE_BASE_URL, apiClient } from '@/lib/api';
 import { safeLocalStorage } from '@/utils/storage';
 import { useLead } from '@/providers/LeadProvider';
-import { UpiQrModal } from '@/components/payment/UpiQrModal';
+import { RazorpayCheckout } from '@/components/payment/RazorpayCheckout';
 import { io, Socket } from 'socket.io-client';
 
 interface SecurePdfViewerProps {
@@ -21,26 +21,16 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
-  const [awaitingApproval, setAwaitingApproval] = useState(false);
-  const [requiresRegistration, setRequiresRegistration] = useState(false);
   
   const [paymentLoading, setPaymentLoading] = useState(false);
-  const [showUpiModal, setShowUpiModal] = useState(false);
-  const [upiOrderDetails, setUpiOrderDetails] = useState<{
-    upiId: string;
-    merchantName: string;
-    amount: number;
-    transactionId: string;
-    isPro?: boolean;
-  } | null>(null);
+  const [showRazorpay, setShowRazorpay] = useState(false);
+  const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
 
-  const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const { logoutLead } = useLead();
 
   const [clientData, setClientData] = useState({
     token: '',
     fingerprint: '',
-    leadEmail: 'Guest',
     leadPhone: 'Guest',
     isMobile: false
   });
@@ -49,7 +39,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     setMounted(true);
     const token = safeLocalStorage.getItem('lead_token') || '';
     const fingerprint = safeLocalStorage.getItem('visitorFingerprint') || '';
-    const leadEmail = safeLocalStorage.getItem('lead_email') || 'Guest';
     const leadPhone = safeLocalStorage.getItem('lead_phone') || 'Guest';
     
     const checkMobile = () => {
@@ -61,18 +50,17 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     setClientData({
       token,
       fingerprint,
-      leadEmail,
       leadPhone,
       isMobile: checkMobile()
     });
   }, []);
 
   const socketRef = useRef<Socket | null>(null);
-  const { token, fingerprint, leadEmail, leadPhone, isMobile } = clientData;
+  const { token, fingerprint, leadPhone, isMobile } = clientData;
 
-  const fetchPdf = useCallback(async (isPolling = false) => {
+  const fetchPdf = useCallback(async () => {
     if (!mounted) return;
-    if (!isPolling) setLoading(true);
+    setLoading(true);
     setError(null);
     setRequiresPayment(false);
     
@@ -84,25 +72,16 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
         throw new Error('Verification required to access this document.');
       }
 
-      // ROADMAP PHASE 6: USE CENTRALIZED API CLIENT (Handles App Check automatically)
       const res = await apiClient.get(`/pdf/view/${pdfId}`, {
         responseType: 'blob'
       });
 
       const url = URL.createObjectURL(res.data);
       setBlobUrl(url);
-      setAwaitingApproval(false);
       setRequiresPayment(false);
-      
-      // Stop polling on success
-      if (pollIntervalRef.current) {
-        clearInterval(pollIntervalRef.current);
-        pollIntervalRef.current = null;
-      }
     } catch (err: any) {
       let errorData = err.response?.data;
 
-      // Since responseType is 'blob', we must convert error blob back to text/json
       if (errorData instanceof Blob) {
         try {
           const text = await errorData.text();
@@ -113,25 +92,19 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
       }
 
       if (err.response?.status === 402) {
-        if (errorData?.status === 'awaiting_approval') {
-          setAwaitingApproval(true);
-        } else {
-          setRequiresPayment(true);
-        }
-      } else if (!isPolling) {
+        setRequiresPayment(true);
+      } else {
         console.error('SecurePdfViewer Fetch Error:', err);
         setError(errorData?.error || 'Failed to load document.');
       }
     } finally {
-      if (!isPolling) setLoading(false);
+      setLoading(false);
     }
   }, [pdfId, token, mounted]);
 
   useEffect(() => {
     if (!token || !mounted) return;
 
-    // Real-time Unlock via WebSockets (Roadmap Phase 1)
-    // Use the SITE_BASE_URL (which is configured as the server root)
     const socketUrl = (typeof window !== "undefined" && window.location.hostname === "localhost") 
       ? "http://localhost:3001" 
       : SITE_BASE_URL;
@@ -143,13 +116,11 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     socketRef.current = socket;
 
     socket.on('connect', () => {
-      console.log('[Socket] Connected. Subscribing to lead channel...');
       socket.emit('join_lead', token);
     });
 
     socket.on('payment_approved', (data) => {
-      console.log('[Socket] Access Granted Signal Received:', data);
-      fetchPdf(true); // Immediate re-fetch to unlock
+      fetchPdf(); // Immediate re-fetch to unlock
     });
 
     return () => {
@@ -158,21 +129,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
   }, [token, mounted, fetchPdf]);
 
   const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
-
-  // Handle Polling
-  useEffect(() => {
-    if (awaitingApproval && !pollIntervalRef.current) {
-      pollIntervalRef.current = setInterval(() => {
-        fetchPdf(true);
-      }, 5000); // Poll every 5 seconds
-    }
-    return () => {
-      if (pollIntervalRef.current) {
-        clearInterval(pollIntervalRef.current);
-        pollIntervalRef.current = null;
-      }
-    };
-  }, [awaitingApproval, fetchPdf]);
 
   useEffect(() => {
     if (!pdfId || !mounted) return;
@@ -190,75 +146,9 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     };
   }, [blobUrl]);
 
-  const startManualPayment = async (type: 'view' | 'download') => {
-    setPaymentLoading(true);
-    setError(null);
-
-    try {
-      const res = await fetch(`${API_BASE_URL}/payment/request-manual`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token || ''
-        },
-        body: JSON.stringify({ 
-          pdfId,
-          type, 
-          leadToken: token, 
-          fingerprint 
-        })
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Request failed');
-
-      if (data.alreadyPurchased) {
-        fetchPdf();
-        return;
-      }
-
-      setUpiOrderDetails({
-        upiId: data.upiId,
-        merchantName: data.merchantName,
-        amount: data.amount,
-        transactionId: data.transactionId,
-        isPro: data.isPro
-      });
-      setShowUpiModal(true);
-
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to initiate payment');
-    } finally {
-      setPaymentLoading(false);
-    }
-  };
-
-  const handleVerifyUtr = async (utr: string): Promise<boolean> => {
-    if (!upiOrderDetails?.transactionId) return false;
-    try {
-      const res = await fetch(`${API_BASE_URL}/payment/verify-utr`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token || ''
-        },
-        body: JSON.stringify({ 
-          utr, 
-          transactionId: upiOrderDetails.transactionId,
-          leadToken: token 
-        })
-      });
-
-      if (res.ok) {
-        setShowUpiModal(false);
-        setAwaitingApproval(true);
-        return true;
-      }
-      return false;
-    } catch (err) {
-      console.error('UTR Submit Error:', err);
-      return false;
-    }
+  const handlePaymentSuccess = () => {
+    setShowRazorpay(false);
+    fetchPdf();
   };
 
   if (!mounted) return null;
@@ -291,33 +181,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
       <div className="flex-1 flex items-center justify-center p-4">
         {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
         
-        {awaitingApproval && (
-          <div className="max-w-md w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl animate-in zoom-in-95">
-            <div className="flex justify-center mb-6">
-               <div className="h-20 w-20 rounded-3xl bg-blue-50 flex items-center justify-center">
-                 <Loader2 className="h-10 w-10 text-blue-600 animate-spin" />
-               </div>
-            </div>
-            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Awaiting Approval</h3>
-            <p className="text-slate-500 font-medium mb-8 leading-relaxed text-sm">
-              Your payment is being verified by the Admin in GPay/Bank. 
-              <br/><br/>
-              <b>This page will automatically unlock</b> as soon as approval is granted (usually 5-10 mins).
-            </p>
-            <div className="flex flex-col gap-3">
-              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center gap-2">
-                 <div className="h-2 w-2 bg-blue-500 rounded-full animate-pulse" />
-                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Waiting for Admin to click Approve...</span>
-              </div>
-              <button onClick={() => fetchPdf()} className="w-full rounded-2xl bg-slate-900 py-4 text-white font-black uppercase tracking-widest hover:bg-orange-600 transition-all text-xs">
-                Refresh Status
-              </button>
-            </div>
-            <button onClick={onClose} className="mt-4 text-[10px] font-black text-slate-400 hover:text-slate-600 uppercase tracking-widest">Close Viewer</button>
-          </div>
-        )}
-
-        {requiresPayment && !awaitingApproval && (
+        {requiresPayment && (
           <div className="max-w-xl w-full bg-white rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 flex flex-col md:flex-row">
             {/* Left: Info */}
             <div className="p-10 md:w-1/2 flex flex-col justify-center">
@@ -331,7 +195,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                   <ShieldCheck className="h-4 w-4 text-green-500" /> 
-                  Manual Approval
+                  Instant Access
                 </div>
                 <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                   <ShieldCheck className="h-4 w-4 text-green-500" /> 
@@ -344,29 +208,27 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             <div className="bg-slate-50 p-8 md:w-1/2 flex flex-col gap-4 border-l border-slate-100">
               {/* Option 1: View Only */}
               <button 
-                disabled={paymentLoading}
-                onClick={() => startManualPayment('view')}
-                className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1 disabled:opacity-50"
+                onClick={() => { setSelectionType('view'); setShowRazorpay(true); }}
+                className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1"
               >
                 <span className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-1">One-Time Access</span>
                 <span className="text-lg font-black uppercase tracking-tight">View PDF</span>
-                <span className="text-[10px] font-bold text-slate-400 group-hover:text-white/80">If browser closes, access is lost.</span>
+                <span className="text-[10px] font-bold text-slate-400 group-hover:text-white/80">Instant unlock after payment.</span>
                 <div className="mt-4 flex items-center justify-between w-full">
-                   <span className="text-2xl font-black">{paymentLoading ? '...' : '₹5'}</span>
+                   <span className="text-2xl font-black">₹5</span>
                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
 
               {/* Option 2: Download */}
               <button 
-                disabled={paymentLoading}
-                onClick={() => startManualPayment('download')}
-                className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1 disabled:opacity-50"
+                onClick={() => { setSelectionType('download'); setShowRazorpay(true); }}
+                className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1"
               >
                 <span className="text-lg font-black uppercase tracking-tight text-slate-900">Download PDF</span>
                 <span className="text-[10px] font-bold text-slate-400">Save permanently to your device</span>
                 <div className="mt-4 flex items-center justify-between w-full">
-                   <span className="text-2xl font-black text-slate-900">{paymentLoading ? '...' : '₹10'}</span>
+                   <span className="text-2xl font-black text-slate-900">₹10</span>
                    <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
@@ -385,18 +247,17 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             </div>
           </div>
         )}
-{showUpiModal && upiOrderDetails && (
-  <UpiQrModal
-    upiId={upiOrderDetails.upiId}
-    amount={upiOrderDetails.amount}
-    merchantName={upiOrderDetails.merchantName}
-    transactionId={upiOrderDetails.transactionId}
-    onClose={() => setShowUpiModal(false)}
-    onVerifyUtr={handleVerifyUtr}
-  />
-)}
 
-        {displayError && !requiresPayment && !awaitingApproval && (
+        {showRazorpay && (
+          <RazorpayCheckout
+            pdfIds={[pdfId]}
+            type={selectionType}
+            onSuccess={handlePaymentSuccess}
+            onClose={() => setShowRazorpay(false)}
+          />
+        )}
+
+        {displayError && !requiresPayment && (
           <div className="max-w-sm w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl">
             <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
             <h3 className="text-xl font-black text-slate-900 uppercase mb-2">Access Denied</h3>
@@ -411,7 +272,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.03] grid grid-cols-2 md:grid-cols-3 grid-rows-4 overflow-hidden">
                {[...Array(12)].map((_, i) => (
                  <div key={i} className="flex items-center justify-center -rotate-45 text-[10px] md:text-sm font-black text-slate-950 uppercase text-center">
-                   {leadPhone} <br/> {leadEmail}
+                   {leadPhone}
                  </div>
                ))}
             </div>
