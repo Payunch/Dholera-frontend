@@ -65,6 +65,11 @@ const translations: Record<Language, Record<string, string>> = {
     privacy_policy: 'Privacy Policy',
     terms_of_service: 'Terms of Service',
     contact: 'Contact',
+    airport_title: 'Dholera International Airport',
+    airport_subtitle: 'The gateway to India’s first smart city.',
+    infra_title: 'Smart Infrastructure',
+    infra_subtitle: 'World-class industrial ecosystem.',
+    tp_maps_title: 'Official TP Maps',
   },
   hi: {
     nav_home: 'होम',
@@ -117,6 +122,11 @@ const translations: Record<Language, Record<string, string>> = {
     privacy_policy: 'गोपनीयता नीति',
     terms_of_service: 'सेवा की शर्तें',
     contact: 'संपर्क करें',
+    airport_title: 'धोलेरा अंतर्राष्ट्रीय हवाई अड्डा',
+    airport_subtitle: 'भारत के पहले स्मार्ट शहर का प्रवेश द्वार।',
+    infra_title: 'स्मार्ट इन्फ्रास्ट्रक्चर',
+    infra_subtitle: 'विश्व स्तरीय औद्योगिक पारिस्थितिकी तंत्र।',
+    tp_maps_title: 'आधिकारिक टीपी मैप्स',
   },
   gu: {
     nav_home: 'હોમ',
@@ -169,6 +179,11 @@ const translations: Record<Language, Record<string, string>> = {
     privacy_policy: 'ગોપનીયતા નીતિ',
     terms_of_service: 'સેવાની શરતો',
     contact: 'સંપર્ક કરો',
+    airport_title: 'ધોલેરા આંતરરાષ્ટ્રીય એરપોર્ટ',
+    airport_subtitle: 'ભારતના પ્રથમ સ્માર્ટ સિટીનું પ્રવેશદ્વાર.',
+    infra_title: 'સ્માર્ટ ઈન્ફ્રાસ્ટ્રક્ચર',
+    infra_subtitle: 'વિશ્વસ્તરીય ઔદ્યોગિક ઇકોસિસ્ટમ.',
+    tp_maps_title: 'સત્તાવાર ટીપી મેપ્સ',
   }
 };
 
