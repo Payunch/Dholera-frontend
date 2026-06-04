@@ -475,10 +475,10 @@ export function HomeClient() {
                     Exclusive Offer
                 </div>
                 <h2 className="font-display text-4xl font-black text-white md:text-5xl uppercase leading-[1.1]">
-                  Free Site Visit <br/> <span className="text-[#FF7A00] italic">& Luxury Stay</span>
+                  Talk to <br/> <span className="text-[#FF7A00] italic">Owner</span>
                 </h2>
                 <p className="text-sm font-medium text-slate-400 leading-relaxed tracking-wide">
-                  Experience the Dholera miracle firsthand. We provide pick-up, guided site tours, and overnight guest house stay—completely on us.
+                  Experience the Dholera miracle firsthand. We provide priority connection directly with the founder for verified inquiries.
                 </p>
                 <div className="space-y-4 pt-4 border-t border-slate-800">
                   <div className="flex items-center gap-4">
@@ -534,22 +534,24 @@ export function HomeClient() {
                   </div>
                 ) : (
                   <>
-                    <h3 className="text-xl font-black text-white uppercase mb-6 text-center">Secure Your Slot</h3>
+                    <h3 className="text-xl font-black text-white uppercase mb-6 text-center">Priority Connection</h3>
                     <form className="space-y-4" onSubmit={handleVisitSubmit}>
-                      <div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Full Identity</label>
                         <input 
                           type="text" 
-                          placeholder="FULL NAME" 
+                          placeholder="ENTER NAME" 
                           required 
                           value={visitForm.name}
                           onChange={(e) => setVisitForm({...visitForm, name: e.target.value})}
                           className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
                       </div>
-                      <div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Verified Mobile</label>
                         <input 
                           type="tel" 
-                          placeholder="PHONE NUMBER (10 DIGITS)" 
+                          placeholder="10-DIGIT MOBILE" 
                           required 
                           pattern="[0-9]{10}"
                           maxLength={10}
@@ -560,8 +562,8 @@ export function HomeClient() {
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1 flex justify-between">
-                          <span>Date</span>
-                          <span className="text-orange-500/50">*Within 7 days</span>
+                          <span>Deployment Date</span>
+                          <span className="text-orange-500/50">*Must be within 7 days</span>
                         </label>
                         <input 
                           type="date" 
@@ -581,7 +583,7 @@ export function HomeClient() {
                         {visitStatus === 'loading' ? (
                           <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : (
-                          "Book Now"
+                          "Establish Connection"
                         )}
                       </button>
                     </form>
