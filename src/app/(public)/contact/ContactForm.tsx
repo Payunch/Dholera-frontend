@@ -4,9 +4,23 @@ import * as React from "react";
 import Link from "next/link";
 import { User, Phone, Mail, Send, CheckCircle2, AlertCircle, MessageSquare } from "lucide-react";
 import { apiClient } from "@/lib/api";
+import { useLead } from "@/providers/LeadProvider";
 
 export function ContactForm() {
+  const { verifiedLead } = useLead();
   const [formData, setFormData] = React.useState({ name: "", phone: "", email: "" });
+
+  // Pre-fill form if lead is already verified
+  React.useEffect(() => {
+    if (verifiedLead) {
+      setFormData(prev => ({
+        ...prev,
+        name: verifiedLead.name || prev.name,
+        phone: verifiedLead.phone || prev.phone,
+        email: verifiedLead.email || prev.email
+      }));
+    }
+  }, [verifiedLead]);
   const [status, setStatus] = React.useState<"idle" | "loading" | "success" | "error" | "consent-error" | "validation-error">("idle");
   const [consentAccepted, setConsentAccepted] = React.useState(false);
 

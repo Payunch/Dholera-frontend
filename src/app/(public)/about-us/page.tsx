@@ -21,8 +21,10 @@ import {
 } from "lucide-react";
 import { apiClient } from "@/lib/api";
 import { cn } from "@/lib/utils";
+import { useLead } from "@/providers/LeadProvider";
 
 export default function AboutUsPage() {
+  const { verifiedLead } = useLead();
   const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   const today = new Date().toISOString().split('T')[0];
   const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -33,6 +35,22 @@ export default function AboutUsPage() {
 
   // Site Visit Form State
   const [visitForm, setVisitForm] = React.useState({ name: "", phone: "", date: tomorrow });
+
+  // Pre-fill forms if lead is already verified
+  React.useEffect(() => {
+    if (verifiedLead) {
+      setContactForm(prev => ({
+        ...prev,
+        name: verifiedLead.name || prev.name,
+        phone: verifiedLead.phone || prev.phone
+      }));
+      setVisitForm(prev => ({
+        ...prev,
+        name: verifiedLead.name || prev.name,
+        phone: verifiedLead.phone || prev.phone
+      }));
+    }
+  }, [verifiedLead]);
   const [visitStatus, setVisitStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'contact' | 'visit') => {

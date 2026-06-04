@@ -17,13 +17,26 @@ import {
 import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
 import { useLanguage } from "@/providers/LanguageProvider";
+import { useLead } from "@/providers/LeadProvider";
 import { apiClient } from "@/lib/api";
 
 export function HomeClient() {
   const { t } = useLanguage();
+  const { verifiedLead } = useLead();
   const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   // Site Visit Form State
   const [visitForm, setVisitForm] = React.useState({ name: "", phone: "", date: tomorrow });
+
+  // Pre-fill form if lead is already verified
+  React.useEffect(() => {
+    if (verifiedLead) {
+      setVisitForm(prev => ({
+        ...prev,
+        name: verifiedLead.name || prev.name,
+        phone: verifiedLead.phone || prev.phone
+      }));
+    }
+  }, [verifiedLead]);
   const [visitStatus, setVisitFormStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");
   const [hoveredGrid, setHoveredGrid] = React.useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
