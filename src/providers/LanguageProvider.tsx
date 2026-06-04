@@ -16,10 +16,16 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const translations: Record<Language, Record<string, string>> = {
   en: {
     nav_home: 'Home',
+    nav_tp_maps: 'TP Maps',
+    nav_pdf: 'PDF Hub',
+    nav_portals: 'Portals',
+    nav_projects: 'Projects',
+    nav_airport: 'Airport',
+    nav_infrastructure: 'Infrastructure',
     nav_updates: 'Blogs',
-    nav_planning: 'Planning',
-    nav_investment: 'Investment',
     nav_contact: 'Contact Us',
+    nav_clearance: 'Clearance Engine',
+    nav_vault: 'My Vault',
     btn_unlock: 'Unlock Now',
     btn_view: 'View Map',
     btn_get_touch: 'Contact Us',

@@ -11,6 +11,7 @@ import {
   Building,
   ArrowRight,
   X,
+  AlertCircle,
   Calendar as CalendarIcon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -49,7 +50,7 @@ export function HomeClient() {
   const handleVisitSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!visitForm.name || visitForm.phone.length !== 10) return;
-    setVisitStatus("loading");
+    setVisitFormStatus("loading");
     
     try {
       await apiClient.post("/leads", { 
@@ -57,11 +58,11 @@ export function HomeClient() {
         source: "Website Site Visit Request",
         notes: `Requested site visit for: ${visitForm.date}`
       });
-      setVisitStatus("success");
+      setVisitFormStatus("success");
       setVisitForm({ name: "", phone: "", date: "" });
     } catch (err) {
       console.error("Site visit submission error:", err);
-      setVisitStatus("error");
+      setVisitFormStatus("error");
     }
   };
 

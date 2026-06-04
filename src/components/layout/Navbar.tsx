@@ -16,13 +16,13 @@ export function Navbar() {
 
   const navItems = [
     { label: t('nav_home'), href: "/", icon: Home },
-    { label: "TP Maps", href: "/tp-maps", icon: Map },
-    { label: "PDF", href: "/pdf", icon: ShieldCheck },
-    { label: "Portals", href: "/portals", icon: Landmark },
-    { label: "Projects", href: "/projects", icon: Grid },
-    { label: "Airport", href: "/airport", icon: Plane },
-    { label: "Infrastructure", href: "/infrastructure", icon: Construction },
-    { label: "Blogs", href: "/blogs", icon: FileText },
+    { label: t('nav_tp_maps'), href: "/tp-maps", icon: Map },
+    { label: t('nav_pdf'), href: "/pdf", icon: ShieldCheck },
+    { label: t('nav_portals'), href: "/portals", icon: Landmark },
+    { label: t('nav_projects'), href: "/projects", icon: Grid },
+    { label: t('nav_airport'), href: "/airport", icon: Plane },
+    { label: t('nav_infrastructure'), href: "/infrastructure", icon: Construction },
+    { label: t('nav_updates'), href: "/blogs", icon: FileText },
   ];
 
   const languages = [
