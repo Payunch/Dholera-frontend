@@ -16,6 +16,7 @@ export function Navbar() {
 
   const navItems = [
     { label: t('nav_home'), href: "/", icon: Home },
+    { label: t('nav_about'), href: "/about-us", icon: Users },
     { label: t('nav_tp_maps'), href: "/tp-maps", icon: Map },
     { label: t('nav_pdf'), href: "/pdf", icon: ShieldCheck },
     { label: t('nav_portals'), href: "/portals", icon: Landmark },
