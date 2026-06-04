@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ExternalLink, ShieldCheck, MapPin, Scale, Search, Shield } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -16,7 +17,7 @@ export default function PortalsPage() {
         {
           name: "Gujarat AnyROR (Urban)",
           desc: "Official state portal to check property cards and 7/12 extracts for urban plots.",
-          url: "https://anyror.gujarat.gov.in/emilkat/GeneralReport_ID.aspx"
+          url: "https://anyror.gujarat.gov.in/"
         },
         {
           name: "Gujarat AnyROR (Rural)",
@@ -39,12 +40,12 @@ export default function PortalsPage() {
         {
           name: "Gujarat RERA Portal",
           desc: "Check developer track records, project registration status, and legal encumbrances.",
-          url: "https://gujrera.gujarat.gov.in/"
+          url: "https://gujrera.gujarat.gov.in/#/"
         },
         {
           name: "RERA Registered Projects Search",
           desc: "Direct link to search and verify active residential/commercial projects in Dholera.",
-          url: "https://gujrera.gujarat.gov.in/projectSearch"
+          url: "https://gujrera.gujarat.gov.in/#/project-search"
         }
       ]
     },
@@ -57,7 +58,7 @@ export default function PortalsPage() {
         {
           name: "Official DSIRDA Website",
           desc: "Dholera Special Investment Region Development Authority official announcements.",
-          url: "https://dholerasir.com/"
+          url: "https://dholera.gujarat.gov.in/"
         },
         {
           name: "GIDC Industrial Allotment",
@@ -74,11 +75,21 @@ export default function PortalsPage() {
   ];
 
   return (
-    <div className="bg-slate-50 min-h-screen font-sans">
+    <div className="bg-slate-50 min-h-screen font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
-      <section className="bg-[#0B132B] pt-32 pb-24 border-b border-slate-800">
-        <div className="container mx-auto px-4 md:px-8 text-center">
+      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image 
+            src="/images/futuristic_dholera.png" 
+            alt="Dholera Strategic Infrastructure" 
+            fill 
+            className="object-cover"
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center">
            <div className="max-w-4xl mx-auto space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#10B981]">
                 <ShieldCheck className="h-4 w-4" /> Third-Party Verification
@@ -86,7 +97,7 @@ export default function PortalsPage() {
               <h1 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
                 VERIFIED LAND & <span className="text-[#FF7A00] italic">PROJECT PORTALS</span>
               </h1>
-              <p className="text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
+              <p className="text-base sm:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
                 Direct access to official government directories. Cross-check land titles, developer compliance, and planning regulations.
               </p>
            </div>

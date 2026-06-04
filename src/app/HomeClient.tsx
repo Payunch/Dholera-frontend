@@ -21,8 +21,9 @@ import { apiClient } from "@/lib/api";
 
 export function HomeClient() {
   const { t } = useLanguage();
+  const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   // Site Visit Form State
-  const [visitForm, setVisitForm] = React.useState({ name: "", phone: "", date: "" });
+  const [visitForm, setVisitForm] = React.useState({ name: "", phone: "", date: tomorrow });
   const [visitStatus, setVisitFormStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");
   const [hoveredGrid, setHoveredGrid] = React.useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -73,7 +74,7 @@ export function HomeClient() {
         notes: `Requested site visit for: ${visitForm.date}`
       });
       setVisitFormStatus("success");
-      setVisitForm({ name: "", phone: "", date: "" });
+      setVisitForm({ name: "", phone: "", date: tomorrow });
     } catch (err) {
       console.error("Site visit submission error:", err);
       setVisitFormStatus("error");
