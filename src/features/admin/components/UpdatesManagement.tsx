@@ -199,7 +199,7 @@ export function UpdatesManagement() {
 
             <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100">
                <a 
-                 href={`/updates/${update.id}`} 
+                 href={`/blogs/${update.id}`} 
                  target="_blank" 
                  rel="noopener noreferrer"
                  className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 flex items-center gap-1"

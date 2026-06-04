@@ -13,6 +13,25 @@ try {
 }
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/updates",
+        destination: "/blogs",
+        permanent: true,
+      },
+      {
+        source: "/updates/:path*",
+        destination: "/blogs/:path*",
+        permanent: true,
+      },
+      {
+        source: "/my-vault",
+        destination: "/pdf",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

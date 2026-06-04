@@ -64,8 +64,8 @@ export function Footer() {
             <ul className="space-y-4 text-sm font-semibold">
               <li><Link href="/" className="hover:text-orange-600 transition-colors">{t('nav_home')}</Link></li>
               <li><Link href="/clearance-engine" className="hover:text-orange-600 transition-colors">{t('clearance_engine')}</Link></li>
-              <li><Link href="/updates" className="hover:text-orange-600 transition-colors">{t('growth_updates')}</Link></li>
-              <li><Link href="/my-vault" className="hover:text-orange-600 transition-colors">{t('my_vault')}</Link></li>
+              <li><Link href="/blogs" className="hover:text-orange-600 transition-colors">{t('growth_updates')}</Link></li>
+              <li><Link href="/pdf" className="hover:text-orange-600 transition-colors">{t('nav_pdf')}</Link></li>
             </ul>
           </div>
 

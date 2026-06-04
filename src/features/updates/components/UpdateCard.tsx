@@ -30,7 +30,7 @@ export function UpdateCard({ update }: UpdateCardProps) {
 
   return (
     <Link
-      href={`/updates/${update.id}`}
+      href={`/blogs/${update.id}`}
       className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white transition-all hover:-translate-y-2 hover:shadow-2xl hover:border-orange-200"
     >
       {/* Image or Banner */}
