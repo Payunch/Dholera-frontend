@@ -16,11 +16,13 @@ import {
 import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
 import { useLanguage } from "@/providers/LanguageProvider";
+import { apiClient } from "@/lib/api";
 
 export function HomeClient() {
+  const { t } = useLanguage();
   // Site Visit Form State
   const [visitForm, setVisitForm] = React.useState({ name: "", phone: "", date: "" });
-  const [visitStatus, setVisitFormStatus] = React.useState<"idle" | "loading" | "success">("idle");
+  const [visitStatus, setVisitFormStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");
   const [hoveredGrid, setHoveredGrid] = React.useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
@@ -44,16 +46,23 @@ export function HomeClient() {
     setVisitForm({ ...visitForm, phone: val });
   };
 
-  const handleVisitSubmit = (e: React.FormEvent) => {
+  const handleVisitSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!visitForm.name || visitForm.phone.length !== 10) return;
-    setVisitFormStatus("loading");
+    setVisitStatus("loading");
     
-    // Simulate API call
-    setTimeout(() => {
-      setVisitFormStatus("success");
+    try {
+      await apiClient.post("/leads", { 
+        ...visitForm, 
+        source: "Website Site Visit Request",
+        notes: `Requested site visit for: ${visitForm.date}`
+      });
+      setVisitStatus("success");
       setVisitForm({ name: "", phone: "", date: "" });
-    }, 1500);
+    } catch (err) {
+      console.error("Site visit submission error:", err);
+      setVisitStatus("error");
+    }
   };
 
   return (
@@ -165,6 +174,13 @@ export function HomeClient() {
             >
               <X className="h-6 w-6" />
             </button>
+
+            {visitStatus === 'error' && (
+              <div className="mb-6 flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-[10px] font-bold text-red-500 uppercase tracking-wider">
+                <AlertCircle className="h-4 w-4 shrink-0" />
+                Connection Error. Neural link failed. Please try again.
+              </div>
+            )}
 
             {visitStatus === 'success' ? (
               <div className="text-center py-10 space-y-6">
@@ -296,18 +312,98 @@ export function HomeClient() {
         </div>
       </section>
 
-      {/* Placeholder for intermediate sections if needed to match design visually, but minimal */}
-      <section className="py-24 bg-slate-50">
-        <div className="container mx-auto px-4 text-center">
-            <h2 className="font-display text-4xl font-black uppercase text-slate-900 mb-6">Explore Key Zones</h2>
-            <div className="flex flex-wrap justify-center gap-4">
-                <Link href="/tp-maps" className="px-8 py-4 bg-white border border-slate-200 rounded-xl font-bold text-slate-900 hover:border-[#FF7A00] transition-colors shadow-sm flex items-center gap-2">
-                    TP Maps Matrix <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link href="/projects" className="px-8 py-4 bg-white border border-slate-200 rounded-xl font-bold text-slate-900 hover:border-[#FF7A00] transition-colors shadow-sm flex items-center gap-2">
-                    Verified Projects <ArrowRight className="w-4 h-4" />
-                </Link>
-            </div>
+      {/* 1.25 FEATURED PROJECTS SECTION */}
+      <section className="py-24 bg-slate-50 border-b border-slate-100">
+        <div className="container mx-auto px-4 md:px-8">
+          
+          <div className="mb-16 text-center space-y-4 max-w-3xl mx-auto">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
+              VERIFIED PORTFOLIO
+            </span>
+            <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight">
+              Featured <span className="text-[#FF7A00] italic">Developments</span>
+            </h2>
+            <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest leading-relaxed">
+              Explore verified residential communities, airport logistics zones, and industrial parks in Dholera SIR.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+            {projects.slice(0, 3).map((project) => {
+              const projectDesc = t(project.descKey);
+              return (
+                <div
+                  key={project.slug}
+                  className="group bg-white border border-slate-100 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Project Image */}
+                    <div className="relative h-52 w-full bg-slate-100 overflow-hidden">
+                      <Image
+                        src={project.image}
+                        alt={project.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/10 group-hover:bg-slate-950/0 transition-colors duration-300" />
+                      
+                      {/* Category Badge */}
+                      <span className="absolute top-4 left-4 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl shadow-md z-10">
+                        {project.category}
+                      </span>
+
+                      {project.reraApproved && (
+                        <span className="absolute top-4 right-4 bg-green-50 text-green-700 border border-green-200 text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg shadow-sm z-10">
+                          RERA
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-8 space-y-4">
+                      <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-wider text-[#FF7A00]">
+                        <MapPin className="h-3.5 w-3.5" />
+                        {project.location.split(",")[0]}
+                      </div>
+
+                      <h3 className="font-display text-xl font-bold uppercase tracking-tight text-slate-900 group-hover:text-[#FF7A00] transition-colors">
+                        {project.name}
+                      </h3>
+
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 leading-none">
+                        {t(project.taglineKey)}
+                      </p>
+
+                      <p className="text-xs font-semibold text-slate-500 leading-relaxed line-clamp-3">
+                        {projectDesc}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="p-8 pt-0">
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-[#FF7A00] transition-all group/btn shadow-md"
+                    >
+                      Analyze Project Specs
+                      <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="/projects" className="px-8 py-4 bg-slate-900 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-[#FF7A00] transition-all shadow-md flex items-center gap-2">
+              Browse All Projects <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link href="/tp-maps" className="px-8 py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-[#FF7A00] hover:text-[#FF7A00] transition-all shadow-sm flex items-center gap-2">
+              TP Maps Matrix <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
         </div>
       </section>
 
@@ -349,6 +445,12 @@ export function HomeClient() {
             </div>
 
             <div className="bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden">
+                {visitStatus === 'error' && (
+                  <div className="mb-6 flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-[10px] font-bold text-red-500 uppercase tracking-wider">
+                    <AlertCircle className="h-4 w-4 shrink-0" />
+                    Connection Error. Transmission failed.
+                  </div>
+                )}
                 {visitStatus === 'success' ? (
                   <div className="text-center py-12 space-y-6 animate-in zoom-in-95 duration-300">
                     <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6">

@@ -7,12 +7,13 @@ import { apiClient } from "@/lib/api";
 
 export function ContactForm() {
   const [formData, setFormData] = React.useState({ name: "", phone: "", email: "" });
-  const [status, setStatus] = React.useState<"idle" | "loading" | "success" | "error" | "consent-error">("idle");
+  const [status, setStatus] = React.useState<"idle" | "loading" | "success" | "error" | "consent-error" | "validation-error">("idle");
   const [consentAccepted, setConsentAccepted] = React.useState(false);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\D/g, '').slice(0, 10);
     setFormData({ ...formData, phone: val });
+    if (status === "validation-error" && val.length === 10) setStatus("idle");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -23,7 +24,7 @@ export function ContactForm() {
     }
 
     if (formData.phone.length !== 10) {
-      setStatus("error");
+      setStatus("validation-error");
       return;
     }
 
@@ -33,7 +34,8 @@ export function ContactForm() {
       setStatus("success");
       setFormData({ name: "", phone: "", email: "" });
       setConsentAccepted(false);
-    } catch {
+    } catch (err) {
+      console.error("Submission error:", err);
       setStatus("error");
     }
   };
@@ -65,7 +67,14 @@ export function ContactForm() {
       {status === "error" && (
         <div className="mb-8 flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-xs font-bold text-red-600 uppercase tracking-wider">
           <AlertCircle className="h-4 w-4 shrink-0" />
-          Neural Link Error. Please verify your connection and try again.
+          Neural Link Error. Please verify your connection to the Dholera Intelligence Network and try again.
+        </div>
+      )}
+
+      {status === "validation-error" && (
+        <div className="mb-8 flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-xs font-bold text-red-600 uppercase tracking-wider">
+          <AlertCircle className="h-4 w-4 shrink-0" />
+          Validation Error. A 10-digit mobile number is required for verified transmission.
         </div>
       )}
 
