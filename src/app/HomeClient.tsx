@@ -130,7 +130,7 @@ export function HomeClient() {
         <div className="container relative z-10 px-4 md:px-8 mx-auto py-20 flex justify-center">
           <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden">
             {/* Background Image for the Content Box */}
-            <div className="absolute inset-0 z-0 opacity-50 mix-blend-overlay pointer-events-none">
+            <div className="absolute inset-0 z-0 opacity-100 mix-blend-overlay pointer-events-none">
                <Image 
                  src="/images/futuristic_dholera.png" 
                  alt="Dholera Future Vision" 
@@ -461,13 +461,14 @@ export function HomeClient() {
           <div className="bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden">
             
             {/* Background Image Overlay */}
-            <div className="absolute inset-0 z-0 opacity-50 mix-blend-overlay pointer-events-none">
+            <div className="absolute inset-0 z-0 opacity-100 pointer-events-none">
               <Image 
                 src="/images/arialviewdholeraexpress.webp" 
                 alt="Dholera Aerial Vision" 
                 fill 
                 className="object-cover"
               />
+              <div className="absolute inset-0 bg-[#0B132B]/60" />
             </div>
 
             <div className="space-y-8 relative z-10">
@@ -598,3 +599,4 @@ export function HomeClient() {
     </div>
   );
 }
+
