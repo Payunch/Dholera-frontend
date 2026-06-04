@@ -16,6 +16,9 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   useEffect(() => {
+    // Import Bootstrap JS on client side
+    import("bootstrap/dist/js/bootstrap.bundle.min.js");
+
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         for (const registration of registrations) {
