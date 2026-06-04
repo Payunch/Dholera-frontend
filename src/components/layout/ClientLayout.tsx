@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ClientProviders } from "@/providers/ClientProviders";
 import { VisitorTracker } from "@/components/common/VisitorTracker";
+import { UniversalConnect } from "@/components/common/UniversalConnect";
 import ConsentBanner from "@/components/consent/ConsentBanner";
 
 import { Phone, MessageCircle } from "lucide-react";

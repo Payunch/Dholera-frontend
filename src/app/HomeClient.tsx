@@ -164,10 +164,10 @@ export function HomeClient() {
 
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <button
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => window.dispatchEvent(new Event('openUniversalConnect'))}
                   className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/20 active:scale-95"
                 >
-                  Book Free Site Visit
+                  Talk To Owner
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
                 <Link
