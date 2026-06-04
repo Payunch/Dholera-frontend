@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { format, isValid, parseISO } from 'date-fns';
 import { ShieldCheck, FileText, Search, Download, Filter, CheckCircle2 } from 'lucide-react';
 import { API_BASE_URL, apiClient } from '@/lib/api';
