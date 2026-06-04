@@ -31,7 +31,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full border-t bg-slate-50 text-slate-900">
+    <footer className="w-full border-t bg-slate-50 text-slate-900 pb-24 md:pb-0">
       <div className="container mx-auto px-4 py-12 md:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand & Mission */}

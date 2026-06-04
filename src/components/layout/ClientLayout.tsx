@@ -42,7 +42,7 @@ export default function ClientLayout({
       <ConsentBanner />
 
       {/* Sticky Owner Contact FAB */}
-      <div className="fixed bottom-6 right-6 z-[140] flex flex-col gap-3 group items-end">
+      <div className="fixed bottom-24 right-6 md:bottom-6 z-[140] flex flex-col gap-3 group items-end">
          <a
            href="https://wa.me/917435808310"
            target="_blank"
