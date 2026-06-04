@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
-import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight, Check } from 'lucide-react';
+import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight } from 'lucide-react';
 import { API_BASE_URL, SITE_BASE_URL, apiClient } from '@/lib/api';
 import { getCookie } from '@/utils/cookies';
-import { useLead } from '@/providers/LeadProvider';
 import { RazorpayCheckout } from '@/components/payment/RazorpayCheckout';
 import { io, Socket } from 'socket.io-client';
 
@@ -22,11 +21,8 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
   
-  const [paymentLoading, setPaymentLoading] = useState(false);
   const [showRazorpay, setShowRazorpay] = useState(false);
   const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
-
-  const { logoutLead } = useLead();
 
   const [clientData, setClientData] = useState({
     token: '',
@@ -35,31 +31,10 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     isMobile: false
   });
 
-  useEffect(() => {
-    setMounted(true);
-    const token = getCookie('lead_token') || '';
-    const fingerprint = getCookie('visitorFingerprint') || '';
-    const leadPhone = getCookie('lead_phone') || 'Guest';
-    
-    const checkMobile = () => {
-      if (typeof navigator === 'undefined') return false;
-      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-        (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent));
-    };
-
-    setClientData({
-      token,
-      fingerprint,
-      leadPhone,
-      isMobile: checkMobile()
-    });
-  }, []);
-
   const socketRef = useRef<Socket | null>(null);
-  const { token, fingerprint, leadPhone, isMobile } = clientData;
 
   const fetchPdf = useCallback(async () => {
-    if (!mounted) return;
+    const token = getCookie('lead_token') || '';
     setLoading(true);
     setError(null);
     setRequiresPayment(false);
@@ -78,7 +53,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
 
       const url = URL.createObjectURL(res.data);
       setBlobUrl(url);
-      setRequiresPayment(false);
     } catch (err: any) {
       let errorData = err.response?.data;
 
@@ -100,10 +74,35 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     } finally {
       setLoading(false);
     }
-  }, [pdfId, token, mounted]);
+  }, [pdfId]);
 
   useEffect(() => {
-    if (!token || !mounted) return;
+    setMounted(true);
+    const token = getCookie('lead_token') || '';
+    const fingerprint = getCookie('visitorFingerprint') || '';
+    const leadPhone = getCookie('lead_phone') || 'Guest';
+    
+    const checkMobile = () => {
+      if (typeof navigator === 'undefined') return false;
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+        (navigator.maxTouchPoints > 0 && /Macintosh/i.test(navigator.userAgent));
+    };
+
+    setClientData({
+      token,
+      fingerprint,
+      leadPhone,
+      isMobile: checkMobile()
+    });
+
+    // Initial fetch
+    if (pdfId) {
+      fetchPdf();
+    }
+  }, [pdfId, fetchPdf]);
+
+  useEffect(() => {
+    if (!clientData.token || !mounted) return;
 
     const socketUrl = (typeof window !== "undefined" && window.location.hostname === "localhost") 
       ? "http://localhost:3001" 
@@ -116,29 +115,23 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     socketRef.current = socket;
 
     socket.on('connect', () => {
-      socket.emit('join_lead', token);
+      socket.emit('join_lead', clientData.token);
     });
 
-    socket.on('payment_approved', (data) => {
-      fetchPdf(); // Immediate re-fetch to unlock
+    socket.on('payment_approved', () => {
+      fetchPdf();
     });
 
     return () => {
       socket.disconnect();
     };
-  }, [token, mounted, fetchPdf]);
-
-  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
+  }, [clientData.token, mounted, fetchPdf]);
 
   useEffect(() => {
-    if (!pdfId || !mounted) return;
-    fetchPdf();
-  }, [fetchPdf, pdfId, mounted]);
-
-  useEffect(() => {
-    if (!pdfId || !refreshToken || !mounted) return;
-    fetchPdf();
-  }, [fetchPdf, pdfId, refreshToken, mounted]);
+    if (refreshToken && mounted && pdfId) {
+      fetchPdf();
+    }
+  }, [refreshToken, mounted, pdfId, fetchPdf]);
 
   useEffect(() => {
     return () => {
@@ -150,6 +143,9 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     setShowRazorpay(false);
     fetchPdf();
   };
+
+  const { token, leadPhone, isMobile } = clientData;
+  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
 
   if (!mounted) return null;
 
@@ -183,7 +179,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
         
         {requiresPayment && (
           <div className="max-w-xl w-full bg-white rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 flex flex-col md:flex-row">
-            {/* Left: Info */}
             <div className="p-10 md:w-1/2 flex flex-col justify-center">
               <div className="h-16 w-16 rounded-2xl bg-orange-50 flex items-center justify-center mb-6">
                 <Lock className="h-8 w-8 text-orange-600" />
@@ -204,9 +199,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
               </div>
             </div>
 
-            {/* Right: Choices */}
             <div className="bg-slate-50 p-8 md:w-1/2 flex flex-col gap-4 border-l border-slate-100">
-              {/* Option 1: View Only */}
               <button 
                 onClick={() => { setSelectionType('view'); setShowRazorpay(true); }}
                 className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1"
@@ -220,7 +213,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
                 </div>
               </button>
 
-              {/* Option 2: Download */}
               <button 
                 onClick={() => { setSelectionType('download'); setShowRazorpay(true); }}
                 className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1"
@@ -233,7 +225,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
                 </div>
               </button>
 
-              {/* Option 3: Multi-select */}
               {onStartSelection && (
                 <button 
                   onClick={onStartSelection}
@@ -268,7 +259,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
 
         {!loading && !displayError && blobUrl && (
           <div className="relative w-full h-full max-w-6xl bg-white shadow-2xl overflow-hidden rounded-xl flex flex-col">
-            {/* Watermark Overlay */}
             <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.03] grid grid-cols-2 md:grid-cols-3 grid-rows-4 overflow-hidden">
                {[...Array(12)].map((_, i) => (
                  <div key={i} className="flex items-center justify-center -rotate-45 text-[10px] md:text-sm font-black text-slate-950 uppercase text-center">
@@ -295,10 +285,8 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
               <iframe 
                 src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`}
                 className="flex-1 w-full border-none h-full pb-16"
-                onContextMenu={(e) => e.preventDefault()}
               />
               
-              {/* Owner Contact Sticky Footer */}
               <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 flex flex-col md:flex-row items-center justify-center gap-4 z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
                  <div className="flex flex-col items-center md:items-start mr-4">
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Owner</span>

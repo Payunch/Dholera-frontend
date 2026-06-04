@@ -1,18 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { projects, Project } from "@/data/projects";
+import { apiClient } from "@/lib/api";
 import { useLanguage } from "@/providers/LanguageProvider";
-import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight } from "lucide-react";
+import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight, Loader2 } from "lucide-react";
+
+interface Project {
+  slug: string;
+  name: string;
+  category: string;
+  taglineKey: string;
+  descKey: string;
+  location: string;
+  image: string;
+  reraApproved: boolean;
+}
 
 export default function ProjectsPage() {
   const { lang, t } = useLanguage();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const categories = ["All", "Residential", "Commercial", "Industrial"];
+
+  const fetchProjects = useCallback(async () => {
+    try {
+      const response = await apiClient.get("/content/projects");
+      setProjects(response.data);
+    } catch (err) {
+      console.error("Failed to fetch projects:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   // Filter projects based on query and category
   const filteredProjects = projects.filter((project) => {
@@ -85,7 +113,12 @@ export default function ProjectsPage() {
         </div>
 
         {/* Projects Grid */}
-        {filteredProjects.length > 0 ? (
+        {loading ? (
+           <div className="flex flex-col items-center justify-center py-20">
+             <Loader2 className="h-12 w-12 text-orange-600 animate-spin" />
+             <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-400">Scanning Platform Archives...</p>
+           </div>
+        ) : filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {filteredProjects.map((project: Project) => {
               const projectDesc = t(project.descKey);
@@ -99,7 +132,7 @@ export default function ProjectsPage() {
                     {/* Project Image */}
                     <div className="relative h-64 w-full bg-slate-100 overflow-hidden">
                       <Image
-                        src={project.image}
+                        src={project.image.startsWith('/') ? project.image : `/images/${project.image}`}
                         alt={project.name}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
