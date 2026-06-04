@@ -163,7 +163,7 @@ export default async function UpdateDetailPage({ params }: Props) {
                 href="/projects"
                 className="rounded-full border-2 border-slate-900 px-10 py-4 font-black uppercase tracking-widest text-slate-900 transition-all hover:bg-slate-900 hover:text-white"
               >
-                View Verified Plots
+                View Verified Projects
               </Link>
             </div>
           </footer>

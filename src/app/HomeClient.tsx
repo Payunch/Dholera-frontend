@@ -21,6 +21,21 @@ export function HomeClient() {
   const [visitStatus, setVisitFormStatus] = React.useState<"idle" | "loading" | "success">("idle");
   const [hoveredGrid, setHoveredGrid] = React.useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+
+  const heroImages = [
+    "/images/a1.jpg",
+    "/images/a2.jpg",
+    "/images/a3.jpg",
+    "/images/a4.jpg"
+  ];
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\D/g, '').slice(0, 10);
@@ -44,19 +59,28 @@ export function HomeClient() {
       
       {/* 1.1 HERO SECTION */}
       <section className="relative w-full min-h-[90vh] bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
-        {/* Futuristic Dholera Smart City Background Image */}
+        {/* Animated Hero Carousel */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/futuristic_dholera.png"
-            alt="Futuristic Dholera Smart City"
-            fill
-            priority
-            className="object-cover object-center opacity-30 transition-transform duration-[10000ms] ease-out hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-slate-950/50 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-[#0B132B]/40 to-[#0B132B] pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B132B] via-transparent to-[#0B132B]/80 pointer-events-none" />
-          {/* Interactive Grid on top of the image */}
+          {heroImages.map((img, idx) => (
+            <div
+              key={idx}
+              className={cn(
+                "absolute inset-0 transition-opacity duration-1000 ease-in-out",
+                currentImageIndex === idx ? "opacity-40" : "opacity-0"
+              )}
+            >
+              <Image
+                src={img}
+                alt={`Dholera SIR Vision ${idx + 1}`}
+                fill
+                priority={idx === 0}
+                className="object-cover object-center transform scale-105"
+              />
+            </div>
+          ))}
+          <div className="absolute inset-0 bg-slate-950/40 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-[#0B132B] pointer-events-none" />
+          {/* Interactive Grid on top */}
           <div className="absolute inset-0 grid grid-cols-6 sm:grid-cols-12 md:grid-cols-20 grid-rows-12 gap-px opacity-15">
             {Array.from({ length: 240 }).map((_, i) => (
               <div 
@@ -155,7 +179,7 @@ export function HomeClient() {
                   <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
                     Instant Booking
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">Free Site Visit <span className="text-[#FF7A00] italic">& Stay</span></h3>
+                  <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">Exclusive <span className="text-[#FF7A00] italic">Offer</span></h3>
                 </div>
 
                 <form className="space-y-4" onSubmit={handleVisitSubmit}>
@@ -237,14 +261,14 @@ export function HomeClient() {
               <div key={idx} className="group relative h-16 w-40 grayscale hover:grayscale-0 opacity-50 hover:opacity-100 transition-all duration-500">
                 <Image
                   src={giant.logo}
-                  alt={giant.name}
+                  alt={`${giant.name} ${giant.name}`}
                   fill
                   className="object-contain"
                   onError={(e: any) => {
                     e.target.style.display = 'none';
                   }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center text-sm font-black uppercase tracking-widest text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity bg-white">
+                <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity bg-white">
                   {giant.name}
                 </div>
               </div>

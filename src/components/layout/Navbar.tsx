@@ -17,7 +17,7 @@ export function Navbar() {
   const navItems = [
     { label: t('nav_home'), href: "/", icon: Home },
     { label: "TP Maps", href: "/tp-maps", icon: Map },
-    { label: "Vault", href: "/vault", icon: ShieldCheck },
+    { label: "PDF", href: "/pdf", icon: ShieldCheck },
     { label: "Portals", href: "/portals", icon: Landmark },
     { label: "Projects", href: "/projects", icon: Grid },
     { label: "Airport", href: "/airport", icon: Plane },

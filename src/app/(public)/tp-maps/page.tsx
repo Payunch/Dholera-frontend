@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Map, Layers, Download, CheckCircle2, Search, Filter, ShieldCheck, MapPin, ArrowRight } from 'lucide-react';
+import { Map, Layers, Search, Filter, ShieldCheck, ArrowRight, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -84,15 +84,12 @@ export default function TpMapsPage() {
     <div className="bg-white min-h-screen font-sans">
       
       {/* Header Section */}
-      <section className="bg-[#0B132B] pt-32 pb-24 border-b border-slate-800">
+      <section className="bg-[#0B132B] pt-32 pb-16 border-b border-slate-800">
         <div className="container mx-auto px-4 md:px-8 text-center">
-           <div className="max-w-4xl mx-auto space-y-6">
+           <div className="max-w-4xl mx-auto">
               <h1 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
-                OFFICIAL DHOLERA SIR <span className="text-[#FF7A00] inline-block border-b-4 border-[#FF7A00] pb-2">TP MAPS</span>
+                DHOLERA SIR <span className="text-[#FF7A00] italic">TP MAPS MATRIX</span>
               </h1>
-              <p className="text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
-                All spatial data cross-verified with official DSIRDA releases. Access the verified town planning matrix.
-              </p>
            </div>
         </div>
       </section>
@@ -165,6 +162,12 @@ export default function TpMapsPage() {
                       <div className="h-16 w-16 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 group-hover:bg-slate-900 group-hover:text-white transition-colors">
                         <Map className="h-8 w-8" />
                       </div>
+                      <div className="group/info relative cursor-help">
+                        <HelpCircle className="h-6 w-6 text-slate-300 hover:text-[#FF7A00] transition-colors" />
+                        <div className="absolute right-0 top-8 w-48 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest p-3 rounded-lg opacity-0 pointer-events-none group-hover/info:opacity-100 transition-opacity z-20">
+                           Verify exact plot boundaries, road widths, and zoning use-cases for this specific Town Planning scheme.
+                        </div>
+                      </div>
                    </div>
 
                    <h3 className="font-display text-2xl font-black text-slate-900 mb-4 uppercase tracking-tight group-hover:text-[#FF7A00] transition-colors">{tp.title}</h3>
@@ -179,10 +182,10 @@ export default function TpMapsPage() {
                    </div>
 
                    <Link 
-                     href="/vault" 
+                     href="/pdf" 
                      className="w-full h-14 rounded-xl bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-900/10"
                    >
-                     Access Documents Vault <ArrowRight className="h-4 w-4" />
+                     Access Documents PDF <ArrowRight className="h-4 w-4" />
                    </Link>
                 </div>
               ))}
