@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { PdfListing } from "@/components/pdf/PdfListing";
 import { useLanguage } from '@/providers/LanguageProvider';
+import { cn } from "@/lib/utils";
 
 export function HomeClient() {
   const { lang, t } = useLanguage();
