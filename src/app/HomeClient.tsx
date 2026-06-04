@@ -381,41 +381,43 @@ export function HomeClient() {
             {projects.slice(0, 3).map((project) => {
               const projectDesc = t(project.descKey);
               return (
-                <div
+                <Link
                   key={project.slug}
-                  className="group bg-white border border-slate-100 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                  href={`/projects/${project.slug}`}
+                  className="group bg-white border border-slate-100 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
                 >
                   <div>
                     {/* Project Image */}
-                    <div className="relative h-52 w-full bg-slate-100 overflow-hidden">
+                    <div className="relative h-56 w-full bg-slate-100 overflow-hidden">
                       <Image
                         src={project.image}
                         alt={project.name}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-slate-950/10 group-hover:bg-slate-950/0 transition-colors duration-300" />
+                      <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors duration-500" />
                       
                       {/* Category Badge */}
-                      <span className="absolute top-4 left-4 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl shadow-md z-10">
+                      <span className="absolute top-5 left-5 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg z-10 transition-transform group-hover:scale-110">
                         {project.category}
                       </span>
 
                       {project.reraApproved && (
-                        <span className="absolute top-4 right-4 bg-green-50 text-green-700 border border-green-200 text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg shadow-sm z-10">
-                          RERA
+                        <span className="absolute top-5 right-5 bg-green-500 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg z-10 transition-transform group-hover:scale-110">
+                          RERA VERIFIED
                         </span>
                       )}
                     </div>
 
                     {/* Content */}
-                    <div className="p-8 space-y-4">
-                      <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-wider text-[#FF7A00]">
+                    <div className="p-8 space-y-5">
+                      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#FF7A00]">
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#FF7A00] animate-pulse" />
                         <MapPin className="h-3.5 w-3.5" />
                         {project.location.split(",")[0]}
                       </div>
 
-                      <h3 className="font-display text-xl font-bold uppercase tracking-tight text-slate-900 group-hover:text-[#FF7A00] transition-colors">
+                      <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 group-hover:text-[#FF7A00] transition-colors duration-300">
                         {project.name}
                       </h3>
 
@@ -423,23 +425,20 @@ export function HomeClient() {
                         {t(project.taglineKey)}
                       </p>
 
-                      <p className="text-xs font-semibold text-slate-500 leading-relaxed line-clamp-3">
+                      <p className="text-sm font-medium text-slate-500 leading-relaxed line-clamp-3 opacity-80 group-hover:opacity-100 transition-opacity">
                         {projectDesc}
                       </p>
                     </div>
                   </div>
 
-                  {/* Actions */}
+                  {/* Actions (Visual Button) */}
                   <div className="p-8 pt-0">
-                    <Link
-                      href={`/projects/${project.slug}`}
-                      className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-[#FF7A00] transition-all group/btn shadow-md"
-                    >
+                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
                       Analyze Project Specs
-                      <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                    </Link>
+                      <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
+                    </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
