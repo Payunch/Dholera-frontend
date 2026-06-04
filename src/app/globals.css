@@ -1,6 +1,29 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "tailwindcss";
 
+/* Bootstrap Overrides to maintain original aesthetics */
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
+
+/* Fix Navbar/Global button text being overridden by Bootstrap colors */
+header nav a,
+header .btn,
+.btn-primary,
+.btn-secondary {
+  color: inherit;
+}
+
+header nav a:hover {
+  color: #ff7a00 !important;
+}
+
+/* Restore attractive navigation button contrast */
+header .container a.rounded-full {
+  color: #ffffff !important;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #1e293b;

@@ -128,9 +128,9 @@ export function HomeClient() {
         </div>
 
         <div className="container relative z-10 px-4 md:px-8 mx-auto py-20 flex justify-center">
-          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/60 p-6 sm:p-10 md:p-16 rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden">
+          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden">
             {/* Background Image for the Content Box */}
-            <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+            <div className="absolute inset-0 z-0 opacity-40 mix-blend-overlay pointer-events-none">
                <Image 
                  src="/images/futuristic_dholera.png" 
                  alt="Dholera Future Vision" 
@@ -335,7 +335,7 @@ export function HomeClient() {
                     { logo: "/images/torrent.png", name: "Torrent Power" },
                     { logo: "/images/renew.png", name: "ReNew Power" }
                   ].map((giant, idx) => (
-                    <div key={`${i}-${idx}`} className="relative h-12 w-40 flex-shrink-0 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500">
+                    <div key={`${i}-${idx}`} className="relative h-12 w-40 flex-shrink-0 opacity-100 transition-all duration-500 hover:scale-110">
                       <Image
                         src={giant.logo}
                         alt={`${giant.name} logo`}

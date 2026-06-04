@@ -113,35 +113,36 @@ export default async function BlogsAggregatorPage() {
                            <Link 
                              key={post.id} 
                              href={`/blogs/${post.id}`}
-                             className="group bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:border-[#FF7A00] transition-all duration-500 flex flex-col overflow-hidden"
+                             className="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col overflow-hidden"
                            >
                               {imgSrc && (
-                                <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
+                                <div className="relative h-56 w-full bg-slate-100 overflow-hidden">
                                    <Image 
                                      src={imgSrc}
                                      alt={post.title}
                                      fill
-                                     className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                                    />
+                                   <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors duration-500" />
                                 </div>
                               )}
-                              <div className="p-8 flex-1 flex flex-col">
-                                 <div className="flex items-center justify-between mb-4">
-                                    <span className="text-[9px] font-black uppercase tracking-widest text-[#FF7A00] bg-orange-50 px-3 py-1 rounded-md">
+                              <div className="p-10 flex-1 flex flex-col">
+                                 <div className="flex items-center justify-between mb-6">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00] bg-orange-50 px-4 py-1.5 rounded-xl border border-orange-100/50">
                                       {post.category}
                                     </span>
-                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                                       {format(new Date(post.publishedAt || post.createdAt), "MMM d, yyyy")}
                                     </span>
                                  </div>
-                                 <h3 className="font-display text-xl font-black text-slate-900 uppercase leading-snug group-hover:text-[#FF7A00] transition-colors line-clamp-3 mb-4">
+                                 <h3 className="font-display text-2xl font-black text-slate-900 uppercase leading-snug group-hover:text-[#FF7A00] transition-colors duration-300 line-clamp-3 mb-6">
                                    {post.title}
                                  </h3>
-                                 <p className="text-xs font-medium text-slate-500 leading-relaxed line-clamp-3 mb-8">
-                                   {post.content.replace(/<[^>]*>?/gm, '').slice(0, 120)}...
+                                 <p className="text-sm font-medium text-slate-500 leading-relaxed line-clamp-3 mb-10 opacity-80 group-hover:opacity-100 transition-opacity">
+                                   {post.content.replace(/<[^>]*>?/gm, '').slice(0, 140)}...
                                  </p>
-                                 <div className="mt-auto pt-4 border-t border-slate-100 text-[10px] font-black uppercase tracking-widest text-[#FF7A00] flex items-center justify-between">
-                                    Read Analysis <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                                 <div className="mt-auto pt-6 border-t border-slate-50 group-hover:border-orange-500/10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 group-hover:text-[#FF7A00] flex items-center justify-between transition-all duration-300">
+                                    Analyze Report <ArrowRight className="h-4 w-4 transform group-hover:translate-x-2 transition-transform" />
                                  </div>
                               </div>
                            </Link>

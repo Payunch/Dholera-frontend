@@ -164,44 +164,50 @@ export default function PdfPage() {
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Broaden your search or change type.</p>
              </div>
            ) : (
-             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {filteredPdfs.map(pdf => (
-                  <div 
+                  <a 
                     key={pdf.id}
-                    className="group bg-white rounded-xl border border-slate-200 p-4 flex flex-col shadow-sm hover:shadow-xl hover:border-[#FF7A00] transition-all duration-300"
+                    href={`${API_BASE_URL}/pdf/view/${pdf.id}?token=${verifiedLead?.token || 'guest'}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group bg-white rounded-3xl border border-slate-100 p-6 flex flex-col shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500"
                   >
-                     <div className="flex items-center justify-between mb-4">
-                        <div className="h-10 w-10 rounded-lg bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-orange-50 group-hover:text-[#FF7A00] transition-colors border border-slate-100">
-                           <FileText className="h-5 w-5" />
+                     <div className="flex items-center justify-between mb-6">
+                        <div className="h-12 w-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-white transition-all duration-300">
+                           <FileText className="h-6 w-6" />
                         </div>
-                        <span className="text-[7px] font-black uppercase tracking-widest text-slate-400">
-                             {pdf.fileSize}
-                        </span>
+                        <div className="flex flex-col items-end">
+                           <span className="text-[8px] font-black uppercase tracking-widest text-slate-400 group-hover:text-[#FF7A00] transition-colors">
+                                {pdf.fileSize}
+                           </span>
+                           <div className="h-1 w-8 bg-slate-100 rounded-full mt-1 overflow-hidden">
+                              <div className="h-full bg-[#FF7A00] w-0 group-hover:w-full transition-all duration-700" />
+                           </div>
+                        </div>
                      </div>
                      
-                     <div className="flex-1 mb-4">
-                        <span className="text-[7px] font-black uppercase tracking-[0.2em] text-[#FF7A00] block mb-1">
+                     <div className="flex-1 mb-6">
+                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[#FF7A00] block mb-2 opacity-80 group-hover:opacity-100">
                           {pdf.category.split('(')[0].trim() || "Official"}
                         </span>
-                        <h4 className="font-display text-sm font-black text-slate-900 uppercase leading-tight line-clamp-2">
+                        <h4 className="font-display text-base font-black text-slate-900 uppercase leading-tight line-clamp-3 group-hover:text-[#FF7A00] transition-colors duration-300">
                           {pdf.title}
                         </h4>
                      </div>
                      
-                     <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-50">
-                        <span className="text-[7px] font-bold text-slate-400 uppercase tracking-wider">
-                          {formatUploadedAt(pdf)}
-                        </span>
-                        <a 
-                            href={`${API_BASE_URL}/pdf/view/${pdf.id}?token=${verifiedLead?.token || 'guest'}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-lg bg-slate-100 text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-white transition-all shadow-sm"
-                        >
-                            <Download className="h-3.5 w-3.5" />
-                        </a>
+                     <div className="flex items-center justify-between gap-4 pt-4 border-t border-slate-50 group-hover:border-orange-500/10 transition-colors">
+                        <div className="flex items-center gap-2">
+                           <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                           <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">
+                             {formatUploadedAt(pdf)}
+                           </span>
+                        </div>
+                        <div className="p-2.5 rounded-xl bg-slate-900 text-white group-hover:bg-[#FF7A00] transition-all shadow-lg shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                            <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+                        </div>
                      </div>
-                  </div>
+                  </a>
                 ))}
              </div>
            )}

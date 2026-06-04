@@ -149,59 +149,63 @@ export default function TpMapsPage() {
            </div>
 
            {/* Interactive Zone Cards Grid */}
-           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
               {filteredList.map((tp) => (
-                <div 
+                <Link 
                   key={tp.id} 
-                  className="group relative p-8 rounded-[2rem] bg-white border-2 border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-300"
+                  href={`/pdf?search=${tp.title.split(' ')[tp.title.split(' ').length - 1]}`}
+                  className="group relative p-10 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
                 >
                    {/* Psychology Badges */}
-                   <div className="absolute -top-4 right-4 flex flex-col gap-2 z-10 items-end">
+                   <div className="absolute -top-4 right-6 flex flex-col gap-2 z-10 items-end transition-transform group-hover:scale-110">
                       {tp.badges.map((badge, bIdx) => (
                          <span 
                            key={bIdx} 
                            className={cn(
-                             "backdrop-blur-sm text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-md border",
+                             "backdrop-blur-md text-[8px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg border",
                              badge.type === 'compliance' 
-                               ? "bg-[#10B981]/90 text-white border-[#10B981]" 
-                               : "bg-[#D97706]/90 text-white border-[#D97706]"
+                               ? "bg-[#10B981] text-white border-[#10B981]" 
+                               : "bg-[#D97706] text-white border-[#D97706]"
                            )}
                          >
-                           [ {badge.text} ]
+                           {badge.text}
                          </span>
                        ))}
                    </div>
 
-                   <div className="flex justify-between items-start mb-10 pt-4">
-                      <div className="h-16 w-16 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 group-hover:bg-slate-900 group-hover:text-white transition-colors">
-                        <Map className="h-8 w-8" />
-                      </div>
-                      <div className="group/info relative cursor-help">
-                        <HelpCircle className="h-6 w-6 text-slate-300 hover:text-[#FF7A00] transition-colors" />
-                        <div className="absolute right-0 top-8 w-48 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest p-3 rounded-lg opacity-0 pointer-events-none group-hover/info:opacity-100 transition-opacity z-20">
-                           Verify exact plot boundaries, road widths, and zoning use-cases for this specific Town Planning scheme.
+                   <div>
+                     <div className="flex justify-between items-start mb-10 pt-4">
+                        <div className="h-16 w-16 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
+                          <Map className="h-8 w-8" />
                         </div>
-                      </div>
+                        <div className="group/info relative cursor-help">
+                          <HelpCircle className="h-6 w-6 text-slate-300 hover:text-[#FF7A00] transition-colors" />
+                          <div className="absolute right-0 top-8 w-48 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest p-4 rounded-xl opacity-0 pointer-events-none group-hover/info:opacity-100 transition-all duration-300 z-20 shadow-2xl">
+                             Verify exact plot boundaries, road widths, and zoning use-cases for this specific Town Planning scheme.
+                          </div>
+                        </div>
+                     </div>
+
+                     <h3 className="font-display text-2xl font-black text-slate-900 mb-6 uppercase tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
+                        {tp.title}
+                     </h3>
+                     
+                     <div className="space-y-4 mb-10 p-6 bg-slate-50 rounded-[1.5rem] group-hover:bg-slate-100/50 transition-colors border border-transparent group-hover:border-orange-500/10">
+                        <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">
+                           <Layers className="h-4 w-4 text-slate-400 group-hover:text-orange-500 transition-colors" /> 
+                           {tp.area}
+                        </div>
+                        <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00]">
+                           <ShieldCheck className="h-4 w-4 animate-pulse" /> 
+                           {tp.focus}
+                        </div>
+                     </div>
                    </div>
 
-                   <h3 className="font-display text-2xl font-black text-slate-900 mb-4 uppercase tracking-tight group-hover:text-[#FF7A00] transition-colors">{tp.title}</h3>
-                   
-                   <div className="space-y-4 mb-10 p-4 bg-slate-50 rounded-xl group-hover:bg-slate-100/50 transition-colors">
-                      <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-slate-600">
-                         <Layers className="h-4 w-4 text-slate-400" /> {tp.area}
-                      </div>
-                      <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#FF7A00]">
-                         <ShieldCheck className="h-4 w-4" /> {tp.focus}
-                      </div>
+                   <div className="w-full h-14 rounded-2xl bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                     Explore Data Matrix <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                    </div>
-
-                   <Link 
-                     href="/pdf" 
-                     className="w-full h-14 rounded-xl bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-900/10"
-                   >
-                     Access Documents PDF <ArrowRight className="h-4 w-4" />
-                   </Link>
-                </div>
+                </Link>
               ))}
            </div>
            
