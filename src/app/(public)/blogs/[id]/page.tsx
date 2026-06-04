@@ -77,7 +77,7 @@ export default async function UpdateDetailPage({ params }: Props) {
         <div className="mx-auto max-w-4xl">
           {/* Back Navigation */}
           <Link
-            href="/updates"
+            href="/blogs"
             className="mb-12 inline-flex items-center gap-2 text-sm font-black uppercase tracking-[0.2em] text-slate-400 transition-colors hover:text-orange-600"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -154,16 +154,16 @@ export default async function UpdateDetailPage({ params }: Props) {
             <h4 className="mb-6 text-xl font-black uppercase tracking-tight text-slate-900">Ready to invest in Dholera SIR?</h4>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
-                href="/clearance-engine"
-                className="rounded-full bg-orange-600 px-10 py-4 font-black uppercase tracking-widest text-white transition-transform hover:scale-105"
+                href="/#site-visit"
+                className="rounded-full bg-[#FF7A00] px-10 py-4 font-black uppercase tracking-widest text-white transition-transform hover:scale-105 shadow-lg shadow-orange-600/20"
               >
-                Verify Zoning Compliance
+                Book Free Site Visit
               </Link>
               <Link
-                href="/contact"
+                href="/projects"
                 className="rounded-full border-2 border-slate-900 px-10 py-4 font-black uppercase tracking-widest text-slate-900 transition-all hover:bg-slate-900 hover:text-white"
               >
-                Get Expert Advice
+                View Verified Plots
               </Link>
             </div>
           </footer>

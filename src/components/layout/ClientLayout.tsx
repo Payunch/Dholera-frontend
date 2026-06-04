@@ -41,8 +41,28 @@ export default function ClientLayout({
       </React.Suspense>
       <ConsentBanner />
 
-      {/* Sticky Owner Contact FAB */}
-      <div className="fixed bottom-24 right-6 md:bottom-6 z-[140] flex flex-col gap-3 group items-end">
+      {/* Global Mobile Conversion Runtime Utilities (Sticky Bottom Action Bar) */}
+      <div className="fixed bottom-0 left-0 right-0 z-[180] flex h-14 w-full md:hidden bg-white border-t border-slate-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <a
+          href="tel:+917435808310"
+          className="flex-1 flex items-center justify-center gap-2 bg-slate-900 text-white font-bold tracking-wide active:bg-slate-800"
+        >
+          <Phone className="h-5 w-5" />
+          <span>Call Expert</span>
+        </a>
+        <a
+          href="https://wa.me/917435808310"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] text-white font-bold tracking-wide active:bg-[#128C7E]"
+        >
+          <MessageCircle className="h-5 w-5" />
+          <span>WhatsApp Chat</span>
+        </a>
+      </div>
+
+      {/* Desktop Sticky Owner Contact FAB */}
+      <div className="fixed bottom-6 right-6 z-[140] hidden md:flex flex-col gap-3 group items-end">
          <a
            href="https://wa.me/917435808310"
            target="_blank"
