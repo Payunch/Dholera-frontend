@@ -27,9 +27,7 @@ export function HomeClient() {
   // Gallery Lightbox State
   const [activeImageIdx, setActiveImageIdx] = React.useState<number | null>(null);
 
-  // Project Showcase State
-  const [activeProject, setActiveProject] = React.useState<"satyaja" | "dream_world">("satyaja");
-
+  
   // Newsletter Form State
   const [newsEmail, setNewsEmail] = React.useState("");
   const [newsName, setNewsName] = React.useState("");
@@ -135,20 +133,8 @@ export function HomeClient() {
     }
   ];
 
-  const satyajaDescription: Record<string, string> = {
-    en: "Investing in Dholera Smart City is a smart decision for the future. Satyaja's projects like Bliss 107, Bliss Grandeur, Bliss Rung, and Prelude Industrial Park offer secure, high-yield investment options. Property values are poised for high appreciation due to rapid infrastructural developments. Secure your land assets now.",
-    hi: "धोलेरा स्मार्ट सिटी में निवेश करना भविष्य के लिए एक समझदारी भरा निर्णय है। Satyaja के सभी प्रोजेक्ट्स जैसे Bliss 107, Bliss Grandeur, Bliss Rung और Prelude Industrial Park आपको सुरक्षित और लाभदायक निवेश का अवसर प्रदान करते हैं। यहां तेजी से विकास हो रहा है, जिससे आने वाले समय में प्रॉपर्टी की कीमतों में बड़ा उछाल देखने को मिलेगा। अभी निवेश करने का सही समय है।",
-    gu: "ધોલેરા સ્માર્ટ સિટીમાં રોકાણ કરવું એ ભવિષ્ય માટે એક સમજદારીભર્યો નિર્ણય છે. સત્યજાના પ્રોજેક્ટ્સ જેવા કે Bliss 107, Bliss Grandeur, Bliss Rung અને Prelude Industrial Park સુરક્ષિત અને ઊંચા વળતર આપતા રોકાણના વિકલ્પો પ્રદાન કરે છે. ઝડપી ઇન્ફ્રાસ્ટ્રક્ચર વિકાસને કારણે મિલકતના મૂલ્યોમાં મોટો વધારો થવાની સંભાવના છે. આજે જ તમારો પ્લોટ બુક કરો અને તમારું ભવિષ્ય સુરક્ષિત કરો."
-  };
+  // Obsolete Satyaja descriptions removed. Specs are now handled inside the dynamic routes.
 
-  const dreamWorldDescription: Record<string, string> = {
-    en: "Located strategically in Dholera SIR, Dream World City offers planned residential plots ranging from 144 to 300 sq.yd., designed for luxury villas and secure long-term capital appreciation.",
-    hi: "धोलेरा एसआईआर में रणनीतिक रूप से स्थित, ड्रीम वर्ल्ड सिटी 144 से 300 वर्ग गज के नियोजित आवासीय प्लॉट प्रदान करता है, जो लक्जरी विला और सुरक्षित दीर्घकालिक पूंजी वृद्धि के लिए डिज़ाइन किए गए हैं।",
-    gu: "ધોલેરા SIR માં વ્યૂહાત્મક રીતે સ્થિત, ડ્રીમ વર્લ્ડ સિટી 144 થી 300 વારના આયોજિત રેસિડેન્શિયલ પ્લોટ્સ ઓફર કરે છે, જે લક્ઝરી વિલા અને સુરક્ષિત લાંબા ગાળાના મૂડી વધારા માટે ડિઝાઇન કરવામાં આવ્યા છે।"
-  };
-
-  const activeSatyajaDesc = satyajaDescription[lang] || satyajaDescription.en;
-  const activeDreamWorldDesc = dreamWorldDescription[lang] || dreamWorldDescription.en;
 
   // Handle lightbox navigational controls
   const handlePrev = (e: React.MouseEvent) => {
@@ -479,179 +465,126 @@ export function HomeClient() {
         </div>
       )}
 
-      {/* Verified Land Opportunities (Satyaja Plots & Dream World City) */}
+      {/* Featured Projects Grid */}
       <section id="plots" className="bg-slate-50 py-32 border-y border-slate-100">
         <div className="container mx-auto px-4 md:px-8">
           
           <div className="mb-20 text-center space-y-4 max-w-3xl mx-auto">
             <p className="text-xs font-black uppercase tracking-[0.3em] text-orange-600">
-              {t('platform')} PROPOSITIONS
+              FEATURED OPPORTUNITIES
             </p>
-            <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight">
-              Verified Land <span className="text-orange-600 italic">Opportunities</span>
+            <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight animate-fade-up">
+              Verified Land & <span className="text-orange-600 italic">Project Portals</span>
             </h2>
-            <p className="text-sm font-medium text-slate-500 leading-relaxed">
-              Explore residential developments and plotted infrastructure within the active investment zones.
+            <p className="text-sm font-medium text-slate-500 leading-relaxed animate-fade-up-slow">
+              Select any verified land development to check detailed dimensions, road layouts, and geographic zoning.
             </p>
           </div>
 
-          {/* Project Tabs */}
-          <div className="flex justify-center gap-4 mb-16">
-            <button
-              onClick={() => setActiveProject("satyaja")}
-              className={`px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                activeProject === "satyaja"
-                  ? "bg-slate-900 text-white shadow-lg shadow-slate-950/20"
-                  : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"
-              }`}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                slug: "satyaja-bliss-grandeur",
+                name: "Satyaja Bliss Grandeur 1 & 2",
+                category: "Residential",
+                tagline: "Prime Plotted Investment on Pipali Highway",
+                sizes: "100 - 500 Sq. Yards",
+              },
+              {
+                slug: "dream-world-city",
+                name: "Dream World City",
+                category: "Residential",
+                tagline: "Premium Residential Plots & Villas",
+                sizes: "144 - 300 Sq. Yards",
+              },
+              {
+                slug: "breeze-residency",
+                name: "Breeze Residency",
+                category: "Residential",
+                tagline: "Planned Plotted Community in Prime Sector",
+                sizes: "120 - 250 Sq. Yards",
+              },
+              {
+                slug: "aerocity-hub",
+                name: "Aerocity Hub",
+                category: "Commercial",
+                tagline: "Commercial & Airport Proximity Plots",
+                sizes: "200 - 600 Sq. Yards",
+              },
+              {
+                slug: "imperial-tp4b2",
+                name: "Imperial TP4B2",
+                category: "Industrial",
+                tagline: "Heavy Industrial & Manufacturing Land Blocks",
+                sizes: "500 - 2000 Sq. Yards",
+              }
+            ].map((project) => (
+              <div
+                key={project.slug}
+                className="group bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  {/* Blank Image Block */}
+                  <div className="relative h-44 w-full bg-slate-100 border-b border-slate-100 flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="/images/dream-world-city.jpg" // 1x1 white pixel PNG
+                      alt={project.name}
+                      fill
+                      className="object-cover opacity-80"
+                    />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-50/70">
+                      <div className="h-8 w-8 rounded-xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center mb-1.5 shadow-sm group-hover:text-orange-600 transition-all duration-300">
+                        {project.category === "Residential" && <Grid className="h-4 w-4" />}
+                        {project.category === "Commercial" && <Building className="h-4 w-4" />}
+                        {project.category === "Industrial" && <Landmark className="h-4 w-4" />}
+                      </div>
+                      <span className="text-[7px] font-black uppercase tracking-widest text-slate-400 font-display">Placeholder Image</span>
+                    </div>
+                    
+                    <span className="absolute top-3 left-3 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg z-10 font-display">
+                      {project.category}
+                    </span>
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-6 space-y-3">
+                    <h3 className="font-display text-lg font-bold uppercase tracking-tight text-slate-900 group-hover:text-orange-600 transition-colors">
+                      {project.name}
+                    </h3>
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none font-display">
+                      {project.tagline}
+                    </p>
+                    <div className="pt-2 border-t border-slate-50 flex items-center justify-between text-[9px] font-bold uppercase tracking-wider text-slate-500 font-display">
+                      <span>Plot Sizes</span>
+                      <span className="font-black text-slate-800">{project.sizes}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 pt-0">
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="flex h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all font-display"
+                  >
+                    View Project Details
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* View All Projects CTA */}
+          <div className="mt-16 text-center">
+            <Link
+              href="/projects"
+              className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border-2 border-slate-200 bg-white px-8 text-xs font-black uppercase tracking-widest text-slate-900 hover:border-slate-400 transition-all shadow-sm font-display"
             >
-              Satyaja Bliss Grandeur
-            </button>
-            <button
-              onClick={() => setActiveProject("dream_world")}
-              className={`px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                activeProject === "dream_world"
-                  ? "bg-slate-900 text-white shadow-lg shadow-slate-950/20"
-                  : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50"
-              }`}
-            >
-              {t('dream_world_city')}
-            </button>
+              Browse All Projects
+              <ChevronRight className="h-4 w-4" />
+            </Link>
           </div>
 
-          {activeProject === "satyaja" ? (
-            <div className="grid lg:grid-cols-2 gap-12 items-stretch animate-in fade-in-50 duration-300">
-              {/* Satyaja Plots Details */}
-              <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 md:p-12 shadow-xl shadow-slate-200/50 flex flex-col justify-between space-y-8">
-                <div className="space-y-6">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-green-100 shadow-sm">
-                      <ShieldCheck className="h-3.5 w-3.5" />
-                      RERA Approved
-                    </span>
-                    <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-blue-100 shadow-sm">
-                      <MapPin className="h-3.5 w-3.5" />
-                      Pipali Highway
-                    </span>
-                  </div>
-
-                  <h3 className="font-display text-3xl font-black uppercase tracking-tight text-slate-900">
-                    Satyaja Bliss Grandeur 1 & 2
-                  </h3>
-
-                  <p className="text-slate-500 text-sm font-semibold leading-relaxed">
-                    {activeSatyajaDesc}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-6 pt-6 border-t border-slate-100">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Available Sizes</span>
-                      <p className="text-sm font-black text-slate-800 uppercase">100 - 500 Sq. Yards</p>
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Type</span>
-                      <p className="text-sm font-black text-slate-800 uppercase">Residential Plots</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <a
-                    href="https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20am%20interested%20in%20Satyaja%20Plots%20(Bliss%20Grandeur%201%20%26%202).%20Please%20send%20more%20information%20about%20rates,%20availability,%20and%20brochure."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white text-sm font-black uppercase tracking-widest hover:bg-[#128C7E] transition-all shadow-xl shadow-green-500/10 hover:shadow-green-500/20"
-                  >
-                    <MessageSquare className="h-5 w-5" />
-                    {t('whatsapp_inquiry')}
-                  </a>
-                </div>
-              </div>
-
-              {/* Satyaja Map Embed */}
-              <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-150 shadow-xl bg-slate-100 min-h-[400px] flex">
-                <div className="absolute top-6 right-6 z-10 bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-md flex items-center gap-2">
-                  <Map className="h-4 w-4 text-orange-600" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-900 font-display">
-                    Pipali Junction Link
-                  </span>
-                </div>
-                <iframe
-                  title="Satyaja Dholera Plots Pipali Highway Map Location"
-                  src="https://maps.google.com/maps?q=Pipali%20Junction,%20Dholera,%20Gujarat,%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                  className="w-full h-full min-h-[400px] border-0"
-                  loading="lazy"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="grid lg:grid-cols-2 gap-12 items-stretch animate-in fade-in-50 duration-300">
-              {/* Dream World City Details */}
-              <div className="bg-white rounded-[2.5rem] border border-slate-100 p-8 md:p-12 shadow-xl shadow-slate-200/50 flex flex-col justify-between space-y-8">
-                <div className="space-y-6">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-green-100 shadow-sm">
-                      <ShieldCheck className="h-3.5 w-3.5" />
-                      Premium Zone
-                    </span>
-                    <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider px-3 py-1.5 rounded-xl border border-blue-100 shadow-sm">
-                      <MapPin className="h-3.5 w-3.5" />
-                      Dholera Residential
-                    </span>
-                  </div>
-
-                  <h3 className="font-display text-3xl font-black uppercase tracking-tight text-slate-900">
-                    {t('dream_world_city')}
-                  </h3>
-
-                  <p className="text-slate-500 text-sm font-semibold leading-relaxed">
-                    {activeDreamWorldDesc}
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-6 pt-6 border-t border-slate-100">
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Available Sizes</span>
-                      <p className="text-sm font-black text-slate-800 uppercase">144 - 300 Sq. Yards</p>
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Offering</span>
-                      <p className="text-sm font-black text-slate-800 uppercase">Plots & Villas</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <a
-                    href="https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20am%20interested%20in%20Dream%20World%20City%20Plots%20and%20Villas.%20Please%20send%20more%20information%20about%20rates,%20availability,%20and%20layout."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white text-sm font-black uppercase tracking-widest hover:bg-[#128C7E] transition-all shadow-xl shadow-green-500/10 hover:shadow-green-500/20"
-                  >
-                    <MessageSquare className="h-5 w-5" />
-                    {t('whatsapp_inquiry')}
-                  </a>
-                </div>
-              </div>
-
-              {/* Dream World City Map / Showcase Embed */}
-              <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-150 shadow-xl bg-slate-100 min-h-[400px] flex">
-                <div className="absolute top-6 right-6 z-10 bg-white border border-slate-100 rounded-xl px-4 py-2 shadow-md flex items-center gap-2">
-                  <Map className="h-4 w-4 text-orange-600" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-900 font-display">
-                    Dholera Residential Zone
-                  </span>
-                </div>
-                <iframe
-                  title="Dream World City Dholera Map Location"
-                  src="https://maps.google.com/maps?q=Dholera,%20Gujarat,%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                  className="w-full h-full min-h-[400px] border-0"
-                  loading="lazy"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          )}
         </div>
       </section>
 

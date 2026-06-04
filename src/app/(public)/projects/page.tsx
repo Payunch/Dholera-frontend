@@ -1,0 +1,170 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { projects, Project } from "@/data/projects";
+import { useLanguage } from "@/providers/LanguageProvider";
+import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight } from "lucide-react";
+
+export default function ProjectsPage() {
+  const { lang, t } = useLanguage();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  const categories = ["All", "Residential", "Commercial", "Industrial"];
+
+  // Filter projects based on query and category
+  const filteredProjects = projects.filter((project) => {
+    const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          t(project.taglineKey).toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || project.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  return (
+    <div className="bg-slate-50 min-h-screen pt-12 pb-24">
+      <div className="container mx-auto px-4 md:px-8">
+        
+        {/* Header Block */}
+        <div className="mb-16 text-center space-y-4 max-w-3xl mx-auto">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-600">
+            OFFICIAL PLATFORM ARCHIVES
+          </span>
+          <h1 className="font-display text-4xl font-black text-slate-900 md:text-6xl uppercase leading-tight">
+            Verified Plotted <span className="text-orange-600 italic">Developments</span>
+          </h1>
+          <p className="text-sm font-semibold text-slate-500 leading-relaxed">
+            Scan and select verified residential communities, airport logistics zones, and industrial parks in Dholera SIR.
+          </p>
+        </div>
+
+        {/* Filter Controls */}
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl p-6 border border-slate-100 shadow-sm mb-12 flex flex-col md:flex-row gap-4 items-center justify-between">
+          {/* Categories */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                  selectedCategory === cat
+                    ? "bg-slate-900 text-white shadow-md shadow-slate-950/15"
+                    : "bg-slate-50 border border-slate-150 text-slate-600 hover:bg-slate-100"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Input */}
+          <div className="relative w-full md:w-72">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <input
+              type="text"
+              placeholder="SEARCH BY PROJECT..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-11 pr-5 py-3 rounded-xl bg-slate-50 border border-slate-150 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-800 outline-none focus:bg-white focus:border-orange-500 transition-all"
+            />
+          </div>
+        </div>
+
+        {/* Projects Grid */}
+        {filteredProjects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {filteredProjects.map((project: Project) => {
+              const projectDesc = t(project.descKey);
+              return (
+                <div
+                  key={project.slug}
+                  className="group bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Blank Image Area */}
+                    <div className="relative h-48 w-full bg-slate-100 border-b border-slate-100 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="/images/dream-world-city.jpg" // this is a 1x1 solid white PNG placeholder
+                        alt={project.name}
+                        fill
+                        className="object-cover opacity-80"
+                      />
+                      {/* Wireframe Placeholder Indicator */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-50/70 backdrop-blur-[1px]">
+                        <div className="h-10 w-10 rounded-2xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center mb-2 shadow-sm group-hover:scale-110 group-hover:border-orange-200 group-hover:text-orange-600 transition-all duration-300">
+                          {project.category === "Residential" && <Grid className="h-5 w-5" />}
+                          {project.category === "Commercial" && <Building className="h-5 w-5" />}
+                          {project.category === "Industrial" && <Landmark className="h-5 w-5" />}
+                        </div>
+                        <span className="text-[8px] font-black uppercase tracking-widest text-slate-400">
+                          Image Block
+                        </span>
+                        <span className="text-[7px] font-bold text-slate-350">
+                          [Placeholder: public/images/dream-world-city.jpg]
+                        </span>
+                      </div>
+                      
+                      {/* Category Badge */}
+                      <span className="absolute top-4 left-4 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl shadow-md z-10">
+                        {project.category}
+                      </span>
+
+                      {project.reraApproved && (
+                        <span className="absolute top-4 right-4 bg-green-50 text-green-700 border border-green-200 text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg shadow-sm z-10">
+                          RERA
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-8 space-y-4">
+                      <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-wider text-orange-600">
+                        <MapPin className="h-3.5 w-3.5" />
+                        {project.location.split(",")[0]}
+                      </div>
+
+                      <h3 className="font-display text-xl font-bold uppercase tracking-tight text-slate-900 group-hover:text-orange-600 transition-colors">
+                        {project.name}
+                      </h3>
+
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 leading-none">
+                        {t(project.taglineKey)}
+                      </p>
+
+                      <p className="text-xs font-semibold text-slate-500 leading-relaxed line-clamp-3">
+                        {projectDesc}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="p-8 pt-0">
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all group/btn shadow-md"
+                    >
+                      Analyze Project Specs
+                      <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-white border border-slate-100 rounded-3xl max-w-xl mx-auto space-y-4 shadow-sm">
+            <Grid className="h-10 w-10 text-slate-300 mx-auto" />
+            <h3 className="font-display text-xl font-black uppercase tracking-tight text-slate-800">
+              No Projects Found
+            </h3>
+            <p className="text-sm font-semibold text-slate-500 px-8">
+              Adjust your search keywords or categories to scan other verified platform options.
+            </p>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
