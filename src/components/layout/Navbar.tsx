@@ -13,23 +13,15 @@ export function Navbar() {
   const { lang, setLang, t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isLangOpen, setIsLangOpen] = React.useState(false);
-  const [isHubOpen, setIsHubOpen] = React.useState(false);
 
   const navItems = [
     { label: t('nav_home'), href: "/", icon: Home },
     { label: "TP Maps", href: "/tp-maps", icon: Map },
     { label: "Projects", href: "/projects", icon: Grid },
-    { label: "Updates", href: "/updates", icon: FileText },
+    { label: "Airport", href: "/airport", icon: Plane },
+    { label: "Infrastructure", href: "/infrastructure", icon: Construction },
+    { label: t('nav_updates'), href: "/updates", icon: FileText },
     { label: "Vault", href: "/my-vault", icon: ShieldCheck },
-  ];
-
-  const hubItems = [
-    { label: "Smart City", href: "/smart-city", icon: Landmark },
-    { label: "Plots for Sale", href: "/plots-for-sale", icon: Grid },
-    { label: "Investment Guide", href: "/investment-guide", icon: Calculator },
-    { label: "Travel & Lifestyle", href: "/travel-lifestyle", icon: Plane },
-    { label: "Government Schemes", href: "/government-schemes", icon: ShieldCheck },
-    { label: "About DSIR", href: "/about", icon: Users },
   ];
 
   const languages = [
@@ -40,7 +32,6 @@ export function Navbar() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleLang = () => setIsLangOpen(!isLangOpen);
-  const toggleHub = () => setIsHubOpen(!isHubOpen);
 
   return (
     <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
@@ -50,7 +41,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden xl:flex items-center space-x-6 text-[10px] font-black uppercase tracking-wider font-display">
+        <nav className="hidden md:flex items-center space-x-8 text-[10px] font-black uppercase tracking-wider font-display">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -63,43 +54,6 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
-
-          {/* Hub Dropdown */}
-          <div className="relative group">
-            <button
-              onClick={toggleHub}
-              onMouseEnter={() => setIsHubOpen(true)}
-              className={cn(
-                "flex items-center gap-1.5 transition-colors hover:text-orange-600",
-                hubItems.some(h => pathname === h.href) || isHubOpen ? "text-orange-600" : "text-slate-500"
-              )}
-            >
-              Dholera Hub <ChevronDown className={cn("h-3 w-3 transition-transform", isHubOpen && "rotate-180")} />
-            </button>
-            {isHubOpen && (
-              <div 
-                onMouseLeave={() => setIsHubOpen(false)}
-                className="absolute left-0 mt-4 w-64 rounded-2xl border border-slate-100 bg-white p-3 shadow-2xl animate-in fade-in zoom-in-95"
-              >
-                <div className="grid gap-1">
-                  {hubItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setIsHubOpen(false)}
-                      className={cn(
-                        "flex items-center gap-3 rounded-xl px-4 py-3 text-[9px] font-black uppercase tracking-widest transition-all",
-                        pathname === item.href ? "bg-orange-600 text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                      )}
-                    >
-                      <item.icon className="h-4 w-4 shrink-0" />
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
 
           <div className="h-4 w-px bg-slate-100" />
 
@@ -142,85 +96,60 @@ export function Navbar() {
           </Link>
         </nav>
 
-        {/* Mobile/Tablet Nav Toggle */}
-        <button className="xl:hidden text-slate-900" onClick={toggleMenu}>
+        {/* Mobile Nav Toggle */}
+        <button className="md:hidden text-slate-900" onClick={toggleMenu}>
           {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="xl:hidden fixed inset-0 top-20 z-[140] bg-white overflow-y-auto font-display">
-          <div className="container mx-auto px-4 py-8 space-y-10">
-            {/* Primary Links */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={cn(
-                    "flex items-center gap-4 p-4 rounded-2xl border transition-all",
-                    pathname === item.href ? "bg-orange-600 border-orange-600 text-white" : "bg-slate-50 border-slate-100 text-slate-600"
-                  )}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em]">{item.label}</span>
-                </Link>
-              ))}
-            </div>
-
-            {/* Hub Links */}
-            <div className="space-y-4">
-               <span className="text-slate-400 font-black uppercase text-[10px] tracking-[0.3em] px-2">Dholera Hub Explorer</span>
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {hubItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={cn(
-                        "flex items-center gap-4 p-4 rounded-2xl border transition-all",
-                        pathname === item.href ? "bg-slate-900 border-slate-900 text-white" : "bg-white border-slate-100 text-slate-500"
-                      )}
-                    >
-                      <item.icon className="h-5 w-5" />
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em]">{item.label}</span>
-                    </Link>
-                  ))}
-               </div>
-            </div>
-
-            <div className="pt-10 border-t border-slate-100 space-y-8">
-              <div className="space-y-4">
-                <span className="text-slate-400 font-black uppercase text-[10px] tracking-[0.3em] px-2">Language Interface</span>
-                <div className="grid grid-cols-3 gap-3">
-                  {languages.map((l) => (
-                    <button
-                      key={l.code}
-                      onClick={() => {
-                        setLang(l.code);
-                        setIsMenuOpen(false);
-                      }}
-                      className={cn(
-                        "rounded-xl py-4 text-[10px] font-black uppercase tracking-widest border transition-all",
-                        lang === l.code ? "bg-orange-600 border-orange-600 text-white shadow-lg shadow-orange-600/20" : "border-slate-150 text-slate-500 bg-slate-50"
-                      )}
-                    >
-                      {l.code.toUpperCase()}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
+        <div className="md:hidden border-t border-slate-100 bg-white px-4 py-8 space-y-8 animate-in slide-in-from-top-4 duration-300 font-display">
+          <div className="flex flex-col gap-6">
+            {navItems.map((item) => (
               <Link
-                href="/contact"
+                key={item.href}
+                href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="flex w-full h-16 items-center justify-center rounded-2xl bg-slate-900 text-sm font-black uppercase tracking-[0.3em] text-white transition-all hover:bg-orange-600 shadow-xl shadow-slate-950/10"
+                className={cn(
+                  "flex items-center gap-4 text-sm font-black uppercase tracking-widest transition-colors",
+                  pathname === item.href ? "text-orange-600" : "text-slate-600"
+                )}
               >
-                {t('nav_contact')}
+                <item.icon className="h-5 w-5" />
+                {item.label}
               </Link>
+            ))}
+          </div>
+
+          <div className="pt-8 border-t border-slate-100 space-y-6">
+            <div className="space-y-4">
+              <span className="text-slate-400 font-black uppercase text-[10px] tracking-[0.2em]">Select Language</span>
+              <div className="grid grid-cols-3 gap-2">
+                {languages.map((l) => (
+                  <button
+                    key={l.code}
+                    onClick={() => {
+                      setLang(l.code);
+                      setIsMenuOpen(false);
+                    }}
+                    className={cn(
+                      "rounded-lg py-3 text-[10px] font-black uppercase tracking-widest border transition-all",
+                      lang === l.code ? "bg-orange-600 border-orange-600 text-white" : "border-slate-200 text-slate-500"
+                    )}
+                  >
+                    {l.code.toUpperCase()}
+                  </button>
+                ))}
+              </div>
             </div>
+            <Link
+              href="/contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="block w-full rounded-lg bg-slate-900 py-4 text-center text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600"
+            >
+              {t('nav_contact')}
+            </Link>
           </div>
         </div>
       )}
