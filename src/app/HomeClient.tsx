@@ -461,7 +461,7 @@ export function HomeClient() {
           <div className="bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden">
             
             {/* Background Image Overlay */}
-            <div className="absolute inset-0 z-0 opacity-10 mix-blend-overlay pointer-events-none">
+            <div className="absolute inset-0 z-0 opacity-50 mix-blend-overlay pointer-events-none">
               <Image 
                 src="/images/arialviewdholeraexpress.webp" 
                 alt="Dholera Aerial Vision" 
