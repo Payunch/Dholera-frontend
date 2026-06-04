@@ -83,7 +83,6 @@ export default function AboutUsPage() {
       <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-100 pointer-events-none">
           <Image src="/images/futuristic_dholera.png" alt="Dholera Vision" fill className="object-cover" />
-          <div className="absolute inset-0 bg-[#0B132B]/70" />
         </div>
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
           <div className="inline-flex items-center rounded-full bg-orange-600 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-white">
@@ -128,13 +127,14 @@ export default function AboutUsPage() {
         <div className="relative bg-slate-900 rounded-[3rem] p-10 md:p-14 border border-slate-800 shadow-xl mb-32 flex flex-col lg:flex-row items-center gap-12 group hover:shadow-2xl transition-all duration-500 overflow-hidden">
            
            {/* Background Image (ng1.png) */}
-           <div className="absolute inset-0 z-0 opacity-100 group-hover:opacity-30 transition-opacity duration-700 pointer-events-none mix-blend-overlay">
+           <div className="absolute inset-0 z-0 opacity-100 transition-opacity duration-700 pointer-events-none">
               <Image 
                 src="/images/ng1.png" 
                 alt="Naresh Gohel Dholera Site" 
                 fill 
                 className="object-cover" 
               />
+              <div className="absolute inset-0 bg-slate-900/80 group-hover:bg-slate-900/70 transition-colors duration-500" />
            </div>
 
            {/* Founder Image (ng.png) */}
