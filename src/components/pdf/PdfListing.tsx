@@ -179,7 +179,11 @@ export function PdfListing() {
             <h2 className="font-display text-4xl font-black uppercase tracking-tight text-slate-900">
               Verified <span className="text-orange-600 italic">Intelligence</span>
             </h2>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-400 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-lg w-fit">
+              <ShieldCheck className="h-3 w-3 text-green-600" />
+              All maps cross-verified with official DSIRDA releases
+            </div>
+            <div className="flex flex-wrap gap-2 pt-2">
               {tabs.map(tab => (
                 <button
                   key={tab.id}

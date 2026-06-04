@@ -38,6 +38,10 @@ export function HomeClient() {
   const [subscribeStep, setSubscribeStep] = React.useState<"email" | "verify" | "success" | "error">("email");
   const [newsLoading, setNewsLoading] = React.useState(false);
 
+  // Site Visit Form State
+  const [visitForm, setVisitForm] = React.useState({ name: "", phone: "", date: "" });
+  const [visitStatus, setVisitFormStatus] = React.useState<"idle" | "loading" | "success">("idle");
+
   const coreLoop = [
     {
       step: "01",
@@ -208,13 +212,13 @@ export function HomeClient() {
   return (
     <div className="flex flex-col bg-white">
       {/* Sticky Mobile Contact Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-[160] bg-white/95 backdrop-blur-md border-t border-slate-100 p-4 flex gap-3 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-[180] bg-white/95 backdrop-blur-md border-t border-slate-100 p-4 flex gap-3 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
         <a
           href="tel:+917435808310"
-          className="flex-1 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest active:scale-95 transition-all"
+          className="flex-1 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] active:scale-95 transition-all shadow-lg"
         >
-          <div className="h-4 w-4 bg-white/10 rounded-lg flex items-center justify-center">
-            <svg className="h-2.5 w-2.5 fill-current" viewBox="0 0 24 24"><path d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.018-4.547-.19-5.859-2.29s-1.129-4.73.551-6.522c.012-.013.011-.013 2.022-2.164l-4.518-6.57c-1.819 1.159-4.532 3.868-4.609 7.029-.086 3.511 1.448 8.01 4.75 12.352 3.321 4.364 7.237 7.376 11.235 7.337 2.308-.022 5.035-1.581 7.013-3.389z"/></svg>
+          <div className="h-5 w-5 bg-white/10 rounded-lg flex items-center justify-center">
+            <svg className="h-3 w-3 fill-current" viewBox="0 0 24 24"><path d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.018-4.547-.19-5.859-2.29s-1.129-4.73.551-6.522c.012-.013.011-.013 2.022-2.164l-4.518-6.57c-1.819 1.159-4.532 3.868-4.609 7.029-.086 3.511 1.448 8.01 4.75 12.352 3.321 4.364 7.237 7.376 11.235 7.337 2.308-.022 5.035-1.581 7.013-3.389z"/></svg>
           </div>
           Call Now
         </a>
@@ -222,9 +226,9 @@ export function HomeClient() {
           href="https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20am%20interested%20in%20learning%20more%20about%20Dholera%20SIR%20investments."
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 h-12 rounded-xl bg-green-600 text-white flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest active:scale-95 transition-all"
+          className="flex-1 h-14 rounded-xl bg-green-600 text-white flex items-center justify-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] active:scale-95 transition-all shadow-lg"
         >
-          <MessageSquare className="h-4 w-4" />
+          <MessageSquare className="h-5 w-5" />
           WhatsApp
         </a>
       </div>
@@ -378,7 +382,10 @@ export function HomeClient() {
                 category: "Residential",
                 tagline: "Prime Plotted Investment on Pipali Highway",
                 sizes: "100 - 500 Sq. Yards",
-                badges: ["NA/NOC Approved", "Near Activation Zone"]
+                badges: [
+                  { text: "NA/NOC Approved", type: "compliance" },
+                  { text: "Near Activation Zone", type: "location" }
+                ]
               },
               {
                 slug: "dream-world-city",
@@ -386,7 +393,10 @@ export function HomeClient() {
                 category: "Residential",
                 tagline: "Premium Residential Plots & Villas",
                 sizes: "144 - 300 Sq. Yards",
-                badges: ["RERA Registered", "TP 1 Location"]
+                badges: [
+                  { text: "RERA Registered", type: "compliance" },
+                  { text: "TP 1 Location", type: "location" }
+                ]
               },
               {
                 slug: "breeze-residency",
@@ -394,7 +404,10 @@ export function HomeClient() {
                 category: "Residential",
                 tagline: "Planned Plotted Community in Prime Sector",
                 sizes: "120 - 250 Sq. Yards",
-                badges: ["Ready Possession", "Bordering TP 2"]
+                badges: [
+                  { text: "Ready Possession", type: "compliance" },
+                  { text: "Bordering TP 2", type: "location" }
+                ]
               },
               {
                 slug: "aerocity-hub",
@@ -402,7 +415,10 @@ export function HomeClient() {
                 category: "Commercial",
                 tagline: "Commercial & Airport Proximity Plots",
                 sizes: "200 - 600 Sq. Yards",
-                badges: ["Airport Road Frontage", "High ROI Potential"]
+                badges: [
+                  { text: "Airport Road Frontage", type: "location" },
+                  { text: "High ROI Potential", type: "location" }
+                ]
               },
               {
                 slug: "imperial-tp4b2",
@@ -410,7 +426,10 @@ export function HomeClient() {
                 category: "Industrial",
                 tagline: "Heavy Industrial & Manufacturing Land Blocks",
                 sizes: "500 - 2000 Sq. Yards",
-                badges: ["Industrial Zoning", "Power Grid Proximity"]
+                badges: [
+                  { text: "Industrial Zoning", type: "compliance" },
+                  { text: "Power Grid Proximity", type: "location" }
+                ]
               }
             ].map((project) => (
               <div
@@ -440,8 +459,16 @@ export function HomeClient() {
 
                     <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-1.5 z-10">
                        {project.badges.map((badge, bIdx) => (
-                         <span key={bIdx} className="bg-white/90 backdrop-blur-sm text-slate-900 text-[7px] font-black uppercase tracking-widest px-2 py-1 rounded-lg shadow-sm border border-slate-200/50">
-                           {badge}
+                         <span 
+                           key={bIdx} 
+                           className={cn(
+                             "backdrop-blur-sm text-[7px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg shadow-sm border",
+                             badge.type === 'compliance' 
+                               ? "bg-green-50/90 text-green-700 border-green-100" 
+                               : "bg-amber-50/90 text-amber-700 border-amber-100"
+                           )}
+                         >
+                           {badge.text}
                          </span>
                        ))}
                     </div>
@@ -528,41 +555,93 @@ export function HomeClient() {
                  <div className="absolute -top-6 -right-6 h-20 w-20 bg-orange-600 rounded-3xl flex items-center justify-center text-white shadow-xl rotate-12 animate-bounce">
                     <span className="text-center text-[10px] font-black leading-tight uppercase">Limited <br/> Slots</span>
                  </div>
-                 <h3 className="text-2xl font-black text-slate-900 uppercase mb-8">Book Your Experience</h3>
                  
-                 <form className="space-y-4" onSubmit={(e) => {
-                    e.preventDefault();
-                    window.open(`https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20want%20to%20book%20a%20site%20visit.%20Please%20share%20details.`, '_blank');
-                 }}>
-                    <div className="grid gap-4">
-                       <input 
-                         type="text" 
-                         placeholder="FULL NAME" 
-                         required 
-                         className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-100 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-900 outline-none focus:border-orange-500 transition-all"
-                       />
-                       <input 
-                         type="tel" 
-                         placeholder="PHONE NUMBER" 
-                         required 
-                         className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-100 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-900 outline-none focus:border-orange-500 transition-all"
-                       />
-                       <input 
-                         type="date" 
-                         required 
-                         className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-100 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-900 outline-none focus:border-orange-500 transition-all"
-                       />
-                    </div>
-                    <button 
-                      type="submit"
-                      className="w-full h-16 rounded-2xl bg-slate-900 text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 transition-all shadow-xl shadow-slate-900/10 mt-4"
-                    >
-                      Instant Booking Request
-                    </button>
-                    <p className="text-center text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-4">
-                      No strings attached. Pure transparency.
-                    </p>
-                 </form>
+                 {visitStatus === 'success' ? (
+                   <div className="text-center py-10 space-y-6 animate-in zoom-in-95 duration-300">
+                      <div className="h-20 w-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <CheckCircle2 className="h-10 w-10" />
+                      </div>
+                      <h3 className="text-2xl font-black text-slate-900 uppercase">Request Received!</h3>
+                      <p className="text-sm font-bold text-slate-500 uppercase leading-relaxed max-w-[240px] mx-auto">
+                        Our Dholera expert will call you within 15 minutes to confirm details.
+                      </p>
+                      <button 
+                        onClick={() => setVisitFormStatus('idle')}
+                        className="text-[10px] font-black uppercase tracking-widest text-orange-600 hover:text-orange-700 pt-4"
+                      >
+                        Book Another Slot
+                      </button>
+                   </div>
+                 ) : (
+                   <>
+                    <h3 className="text-2xl font-black text-slate-900 uppercase mb-8">Book Your Experience</h3>
+                    <form className="space-y-4" onSubmit={async (e) => {
+                        e.preventDefault();
+                        if (!visitForm.name || !visitForm.phone) return;
+                        setVisitFormStatus('loading');
+                        
+                        try {
+                          const { apiClient } = await import("@/lib/api");
+                          await apiClient.post("/leads", {
+                            name: visitForm.name,
+                            phone: visitForm.phone,
+                            details: `Requested Site Visit for: ${visitForm.date}`,
+                            source: "Site Visit Form"
+                          });
+                          
+                          // Also trigger WhatsApp for instant engagement
+                          window.open(`https://wa.me/917435808310?text=Hi%20Dholera%20Platform,%20I%20just%20submitted%20a%20site%20visit%20request%20for%20${visitForm.date}.`, '_blank');
+                          setVisitFormStatus('success');
+                          setVisitForm({ name: "", phone: "", date: "" });
+                        } catch (err) {
+                          setVisitFormStatus('idle');
+                          alert("Failed to submit request. Please try again or WhatsApp us directly.");
+                        }
+                    }}>
+                        <div className="grid gap-4">
+                          <input 
+                            type="text" 
+                            placeholder="FULL NAME" 
+                            required 
+                            value={visitForm.name}
+                            onChange={(e) => setVisitForm({...visitForm, name: e.target.value})}
+                            className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-100 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-900 outline-none focus:border-orange-500 transition-all"
+                          />
+                          <input 
+                            type="tel" 
+                            placeholder="PHONE NUMBER (10 DIGITS)" 
+                            required 
+                            pattern="[0-9]{10}"
+                            value={visitForm.phone}
+                            onChange={(e) => setVisitForm({...visitForm, phone: e.target.value.replace(/\D/g, '').slice(0, 10)})}
+                            className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-100 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-900 outline-none focus:border-orange-500 transition-all"
+                          />
+                          <input 
+                            type="date" 
+                            required 
+                            value={visitForm.date}
+                            min={new Date().toISOString().split('T')[0]}
+                            onChange={(e) => setVisitForm({...visitForm, date: e.target.value})}
+                            className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-100 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-900 outline-none focus:border-orange-500 transition-all"
+                          />
+                        </div>
+                        <button 
+                          type="submit"
+                          disabled={visitStatus === 'loading'}
+                          className="w-full h-16 rounded-2xl bg-slate-900 text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-400 transition-all shadow-xl shadow-slate-900/10 mt-4 flex items-center justify-center"
+                        >
+                          {visitStatus === 'loading' ? (
+                            <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          ) : (
+                            "Instant Booking Request"
+                          )}
+                        </button>
+                        <p className="text-center text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-4">
+                          No strings attached. Pure transparency.
+                        </p>
+                    </form>
+                   </>
+                 )}
               </div>
            </div>
         </div>
