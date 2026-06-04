@@ -123,8 +123,59 @@ export default function AboutUsPage() {
           ))}
         </div>
 
+        {/* Founder Profile Section */}
+        <div className="bg-white rounded-[3rem] p-10 md:p-14 border border-slate-100 shadow-xl mb-32 flex flex-col lg:flex-row items-center gap-12 group hover:shadow-2xl transition-all duration-500">
+           
+           {/* Founder Image (ng.png) */}
+           <div className="relative w-full lg:w-1/3 aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lg group-hover:-translate-y-2 transition-transform duration-500 border border-slate-100">
+              <Image 
+                src="/images/ng.png" 
+                alt="Naresh Gohel - Founder" 
+                fill 
+                className="object-cover group-hover:scale-105 transition-transform duration-700" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+              <div className="absolute bottom-6 left-6">
+                 <h3 className="text-2xl font-black text-white uppercase tracking-tight">Naresh Gohel</h3>
+                 <p className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00]">Founder & Director</p>
+              </div>
+           </div>
+
+           {/* Content & Secondary Image (ng1.png) */}
+           <div className="flex-1 space-y-8">
+              <div className="inline-flex items-center rounded-full bg-slate-900 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-white">
+                 Visionary Leadership
+              </div>
+              <h2 className="font-display text-4xl md:text-5xl font-black text-slate-900 uppercase leading-[1.1] tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
+                 Dholera <span className="italic text-[#FF7A00]">Platform</span>
+              </h2>
+              <div className="relative">
+                 {/* Quote Mark Decoration */}
+                 <div className="absolute -top-6 -left-6 text-8xl font-serif text-slate-100 opacity-50 z-0">"</div>
+                 <p className="relative z-10 text-lg md:text-xl text-slate-600 font-medium leading-relaxed italic border-l-4 border-[#FF7A00] pl-6">
+                    Leveraging comprehensive GIS planning data and deep structural insights into the DSIR master plan, 
+                    Naresh Gohel empowers institutional and private investors to navigate Dholera’s land market with 
+                    absolute clarity, data-backed transparency, and zero ambiguity.
+                 </p>
+              </div>
+              
+              {/* Secondary Image integration (ng1.png) - e.g., working or site picture */}
+              <div className="mt-8 flex gap-6 pt-8 border-t border-slate-100">
+                 <div className="relative w-32 h-24 rounded-2xl overflow-hidden border border-slate-200 shadow-sm opacity-80 group-hover:opacity-100 transition-opacity">
+                    <Image src="/images/ng1.png" alt="Naresh Gohel Dholera Site" fill className="object-cover" />
+                 </div>
+                 <div className="flex flex-col justify-center">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Pioneering</span>
+                    <span className="text-sm font-black text-slate-900 uppercase tracking-widest">DSIR Investment Strategy</span>
+                 </div>
+              </div>
+           </div>
+
+        </div>
+
         {/* Action Cards (Contact + Site Visit) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
           
           {/* Contact Card */}
           <div className="bg-white rounded-[3rem] p-10 md:p-14 border border-slate-100 shadow-2xl relative overflow-hidden group">

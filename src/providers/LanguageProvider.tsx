@@ -23,6 +23,7 @@ const translations: Record<Language, Record<string, string>> = {
     nav_airport: 'Airport',
     nav_infrastructure: 'Infrastructure',
     nav_updates: 'Blogs',
+    nav_about: 'About Us',
     nav_contact: 'Contact Us',
     nav_clearance: 'Clearance Engine',
     nav_vault: 'My Vault',
@@ -113,6 +114,7 @@ const translations: Record<Language, Record<string, string>> = {
   hi: {
     nav_home: 'होम',
     nav_updates: 'ब्लॉग',
+    nav_about: 'हमारे बारे में',
     nav_planning: 'योजना',
     nav_investment: 'निवेश',
     nav_contact: 'संपर्क करें',
@@ -203,6 +205,7 @@ const translations: Record<Language, Record<string, string>> = {
   gu: {
     nav_home: 'હોમ',
     nav_updates: 'બ્લોગ્સ',
+    nav_about: 'અમારા વિશે',
     nav_planning: 'પ્લાનિંગ',
     nav_investment: 'રોકાણ',
     nav_contact: 'સંપર્ક કરો',
