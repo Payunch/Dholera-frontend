@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { safeLocalStorage } from "@/utils/storage";
+import { setCookie, getCookie } from "@/utils/cookies";
 
 type ConsentChoice = "accepted" | "rejected";
 
@@ -44,7 +44,7 @@ export default function ConsentBanner() {
 
   useEffect(() => {
     setMounted(true);
-    const storedChoice = safeLocalStorage.getItem(CONSENT_STORAGE_KEY) as ConsentChoice | null;
+    const storedChoice = getCookie(CONSENT_STORAGE_KEY) as ConsentChoice | null;
     
     // Only show if no choice has been made
     if (storedChoice !== "accepted" && storedChoice !== "rejected") {
@@ -73,7 +73,7 @@ export default function ConsentBanner() {
   }, []);
 
   const handleChoice = (choice: ConsentChoice) => {
-    safeLocalStorage.setItem(CONSENT_STORAGE_KEY, choice);
+    setCookie(CONSENT_STORAGE_KEY, choice, 365); // 1 year
     updateGoogleConsent(choice);
     clearFeedbackTimer();
     setStatusMessage(choice === "accepted" ? "Preferences saved. Analytics enabled." : "Preferences saved. Analytics disabled.");

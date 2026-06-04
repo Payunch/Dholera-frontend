@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Loader2, ShieldCheck, ArrowRight } from 'lucide-react';
 import { apiClient } from '@/lib/api';
+import { getCookie } from '@/utils/cookies';
 
 interface RazorpayCheckoutProps {
   pdfIds: string[];
@@ -73,8 +74,8 @@ export const RazorpayCheckout = ({ pdfIds, type, onSuccess, onClose }: RazorpayC
           }
         },
         prefill: {
-          name: localStorage.getItem('lead_name') || '',
-          contact: localStorage.getItem('lead_phone') || '',
+          name: getCookie('lead_name') || '',
+          contact: getCookie('lead_phone') || '',
         },
         theme: {
           color: "#ea580c"

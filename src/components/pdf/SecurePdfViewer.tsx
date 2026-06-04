@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight, Check } from 'lucide-react';
 import { API_BASE_URL, SITE_BASE_URL, apiClient } from '@/lib/api';
-import { safeLocalStorage } from '@/utils/storage';
+import { getCookie } from '@/utils/cookies';
 import { useLead } from '@/providers/LeadProvider';
 import { RazorpayCheckout } from '@/components/payment/RazorpayCheckout';
 import { io, Socket } from 'socket.io-client';
@@ -37,9 +37,9 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
 
   useEffect(() => {
     setMounted(true);
-    const token = safeLocalStorage.getItem('lead_token') || '';
-    const fingerprint = safeLocalStorage.getItem('visitorFingerprint') || '';
-    const leadPhone = safeLocalStorage.getItem('lead_phone') || 'Guest';
+    const token = getCookie('lead_token') || '';
+    const fingerprint = getCookie('visitorFingerprint') || '';
+    const leadPhone = getCookie('lead_phone') || 'Guest';
     
     const checkMobile = () => {
       if (typeof navigator === 'undefined') return false;

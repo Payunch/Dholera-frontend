@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "@/utils/cookies";
 
 const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
 
@@ -30,7 +31,7 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(async (config) => {
   // 1. Attach Lead Token if present in browser
   if (typeof window !== "undefined") {
-    const leadToken = window.localStorage.getItem('lead_token');
+    const leadToken = getCookie('lead_token');
     if (leadToken && !config.headers['Authorization']) {
       config.headers['Authorization'] = leadToken.startsWith('Bearer ') ? leadToken : `Bearer ${leadToken}`;
     }

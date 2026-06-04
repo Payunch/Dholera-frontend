@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { API_BASE_URL } from '@/lib/api';
-import { safeLocalStorage } from '@/utils/storage';
+import { setCookie, getCookie, removeCookie } from '@/utils/cookies';
 
 interface Lead {
   id?: number;
@@ -33,20 +33,20 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const loginLead = useCallback((leadData: Lead) => {
-    if (leadData.id) safeLocalStorage.setItem('lead_id', String(leadData.id));
-    if (leadData.email) safeLocalStorage.setItem('lead_email', leadData.email);
-    safeLocalStorage.setItem('lead_phone', leadData.phone);
-    safeLocalStorage.setItem('lead_name', leadData.name);
-    safeLocalStorage.setItem('lead_token', leadData.token);
+    if (leadData.id) setCookie('lead_id', String(leadData.id));
+    if (leadData.email) setCookie('lead_email', leadData.email);
+    setCookie('lead_phone', leadData.phone);
+    setCookie('lead_name', leadData.name);
+    setCookie('lead_token', leadData.token);
     setVerifiedLead(leadData);
   }, []);
 
   const logoutLead = useCallback(() => {
-    safeLocalStorage.removeItem('lead_token');
-    safeLocalStorage.removeItem('lead_name');
-    safeLocalStorage.removeItem('lead_phone');
-    safeLocalStorage.removeItem('lead_email');
-    safeLocalStorage.removeItem('lead_id');
+    removeCookie('lead_token');
+    removeCookie('lead_name');
+    removeCookie('lead_phone');
+    removeCookie('lead_email');
+    removeCookie('lead_id');
     setVerifiedLead(null);
   }, []);
 
@@ -54,7 +54,7 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
     let cancelled = false;
 
     const verifySession = async () => {
-      const token = safeLocalStorage.getItem('lead_token');
+      const token = getCookie('lead_token');
 
       if (!token) {
         if (!cancelled) setLoading(false);
@@ -71,10 +71,10 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
         if (response.ok) {
           const data = await response.json();
           if (data?.lead) {
-            if (data.lead.id) safeLocalStorage.setItem('lead_id', String(data.lead.id));
-            if (data.lead.email) safeLocalStorage.setItem('lead_email', data.lead.email);
-            safeLocalStorage.setItem('lead_phone', data.lead.phone || '');
-            safeLocalStorage.setItem('lead_name', data.lead.name || '');
+            if (data.lead.id) setCookie('lead_id', String(data.lead.id));
+            if (data.lead.email) setCookie('lead_email', data.lead.email);
+            setCookie('lead_phone', data.lead.phone || '');
+            setCookie('lead_name', data.lead.name || '');
           }
           setVerifiedLead({ ...data.lead, token });
         } else {
@@ -83,10 +83,11 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
       } catch (err) {
         if (cancelled) return;
         console.error('Failed to verify lead session:', err);
-        const name = safeLocalStorage.getItem('lead_name');
-        const phone = safeLocalStorage.getItem('lead_phone');
-        const email = safeLocalStorage.getItem('lead_email') || undefined;
-        const id = Number.parseInt(safeLocalStorage.getItem('lead_id') || '', 10);
+        const name = getCookie('lead_name');
+        const phone = getCookie('lead_phone');
+        const email = getCookie('lead_email') || undefined;
+        const idStr = getCookie('lead_id');
+        const id = idStr ? Number.parseInt(idStr, 10) : NaN;
         if (name && phone) {
             setVerifiedLead({
               id: Number.isFinite(id) ? id : undefined,

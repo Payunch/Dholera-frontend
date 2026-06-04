@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { API_BASE_URL } from '@/lib/api';
-import { safeLocalStorage, safeSessionStorage } from '@/utils/storage';
+import { setCookie, getCookie } from '@/utils/cookies';
 
 const generateSessionId = () => {
   return '_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
@@ -54,19 +54,19 @@ export const useVisitorTracking = () => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    let nextSessionId = safeSessionStorage.getItem('visitorSessionId');
-    let nextFingerprint = safeLocalStorage.getItem('visitorFingerprint');
+    let nextSessionId = getCookie('visitorSessionId');
+    let nextFingerprint = getCookie('visitorFingerprint');
 
     if (isAdminPath) return;
 
     if (!nextSessionId) {
       nextSessionId = generateSessionId();
-      safeSessionStorage.setItem('visitorSessionId', nextSessionId);
+      setCookie('visitorSessionId', nextSessionId, 1); // 1 day
     }
 
     if (!nextFingerprint) {
       nextFingerprint = getBrowserFingerprint();
-      safeLocalStorage.setItem('visitorFingerprint', nextFingerprint);
+      setCookie('visitorFingerprint', nextFingerprint, 365); // 1 year
     }
 
     const activeSessionId = nextSessionId;
@@ -81,7 +81,7 @@ export const useVisitorTracking = () => {
     }
 
     const checkReturning = async () => {
-      const existingToken = safeLocalStorage.getItem('lead_token');
+      const existingToken = getCookie('lead_token');
       // Only check if no token exists, fingerprint is available AND is valid
       const isValidFingerprint = activeFingerprint && /^fp_[a-z0-9]+$/i.test(activeFingerprint);
 
@@ -95,10 +95,10 @@ export const useVisitorTracking = () => {
           }
           const data = await res.json();
           if (data.verified && data.lead_token) {
-            safeLocalStorage.setItem('lead_token', data.lead_token);
+            setCookie('lead_token', data.lead_token);
             if (data.lead) {
-              safeLocalStorage.setItem('lead_phone', data.lead.phone || '');
-              safeLocalStorage.setItem('lead_name', data.lead.name || '');
+              setCookie('lead_phone', data.lead.phone || '');
+              setCookie('lead_name', data.lead.name || '');
             }
           }
         } catch (err) {
@@ -111,7 +111,7 @@ export const useVisitorTracking = () => {
     checkReturning();
 
     const interval = setInterval(() => {
-      const token = safeLocalStorage.getItem('lead_token');
+      const token = getCookie('lead_token');
 
       if (token) {
         fetch(`${API_BASE_URL}/leads/track-returning`, {
