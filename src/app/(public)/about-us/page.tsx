@@ -81,8 +81,9 @@ export default function AboutUsPage() {
       
       {/* Header Section */}
       <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+        <div className="absolute inset-0 z-0 opacity-100 pointer-events-none">
           <Image src="/images/futuristic_dholera.png" alt="Dholera Vision" fill className="object-cover" />
+          <div className="absolute inset-0 bg-[#0B132B]/70" />
         </div>
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
           <div className="inline-flex items-center rounded-full bg-orange-600 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-white">
@@ -318,6 +319,12 @@ export default function AboutUsPage() {
               <Phone className="h-4 w-4" /> +91 74358 08031
            </a>
         </div>
+
+      </div>
+    </div>
+  );
+}
+
 
       </div>
     </div>
