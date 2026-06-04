@@ -81,7 +81,7 @@ export default function AboutUsPage() {
       
       {/* Header Section */}
       <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-100 pointer-events-none">
+        <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image src="/images/futuristic_dholera.png" alt="Dholera Vision" fill className="object-cover" />
         </div>
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
@@ -127,7 +127,7 @@ export default function AboutUsPage() {
         <div className="relative bg-slate-900 rounded-[3rem] p-10 md:p-14 border border-slate-800 shadow-xl mb-32 flex flex-col lg:flex-row items-center gap-12 group hover:shadow-2xl transition-all duration-500 overflow-hidden">
            
            {/* Background Image (ng1.png) */}
-           <div className="absolute inset-0 z-0 opacity-100 transition-opacity duration-700 pointer-events-none">
+           <div className="absolute inset-0 z-0 opacity-60 transition-opacity duration-700 pointer-events-none">
               <Image 
                 src="/images/ng1.png" 
                 alt="Naresh Gohel Dholera Site" 
@@ -230,7 +230,7 @@ export default function AboutUsPage() {
 
           {/* Site Visit Card (The ARD user mentioned) */}
           <div className="bg-slate-900 rounded-[3rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden group border border-white/5">
-             <div className="absolute inset-0 z-0 opacity-10 pointer-events-none group-hover:scale-105 transition-transform duration-1000">
+             <div className="absolute inset-0 z-0 opacity-60 pointer-events-none group-hover:scale-105 transition-transform duration-1000">
                 <Image src="/images/arialviewdholeraexpress.webp" alt="Visit" fill className="object-cover" />
              </div>
              

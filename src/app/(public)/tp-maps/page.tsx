@@ -87,7 +87,7 @@ export default function TpMapsPage() {
       {/* Header Section */}
       <section className="relative bg-[#0B132B] pt-32 pb-16 border-b border-slate-800 overflow-hidden">
         {/* Background Image Overlay */}
-        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+        <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
             src="/images/airportVision.webp" 
             alt="Dholera Strategic Vision" 

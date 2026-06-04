@@ -26,7 +26,7 @@ export default function AirportPage() {
             src="/images/airportVision.webp" 
             alt="Dholera International Airport Vision" 
             fill 
-            className="object-cover opacity-40"
+            className="object-cover opacity-60"
             priority
           />
         </div>

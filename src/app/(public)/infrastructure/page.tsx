@@ -48,7 +48,7 @@ export default function InfrastructurePage() {
     <div className="bg-white min-h-screen w-full overflow-x-hidden">
       {/* Hero */}
       <section className="relative h-[50vh] flex items-center bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-30">
+        <div className="absolute inset-0 z-0 opacity-60">
           <Image 
             src="/images/arialviewdholeraexpress.webp" 
             alt="Dholera Smart Infrastructure" 
