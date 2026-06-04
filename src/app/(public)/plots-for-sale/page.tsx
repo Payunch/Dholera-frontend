@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { ShieldCheck, MapPin, Grid, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -9,21 +10,35 @@ export const metadata: Metadata = {
 
 export default function PlotsForSalePage() {
   return (
-    <div className="bg-slate-50 min-h-screen pt-24 pb-32">
-      <div className="container mx-auto px-4 md:px-8">
-        <header className="mb-16 space-y-4 max-w-4xl">
-          <div className="inline-flex items-center rounded-full bg-orange-50 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 border border-orange-200">
+    <div className="bg-slate-50 min-h-screen pb-32 w-full overflow-x-hidden">
+      
+      {/* Header Block */}
+      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image 
+            src="/images/airportVision.webp" 
+            alt="Dholera Plotted Investments" 
+            fill 
+            className="object-cover"
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
+          <div className="inline-flex items-center rounded-full bg-orange-600/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 border border-orange-500/30">
             Real Estate Inventory
           </div>
-          <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 md:text-7xl uppercase leading-tight">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-tight">
             Plotted <span className="text-orange-600 italic">Investments</span> & Land
           </h1>
-          <p className="max-w-2xl text-lg font-medium text-slate-500 leading-relaxed">
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
             Direct access to verified residential, commercial, and industrial plots within the Dholera SIR jurisdiction. 
             Analyze zoning, DP regulations, and TP-wise land availability.
           </p>
-        </header>
+        </div>
+      </section>
 
+      <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Quick Categories */}
           {[

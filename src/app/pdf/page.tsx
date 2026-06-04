@@ -81,16 +81,26 @@ export default function PdfPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
-      <div className="bg-[#0B132B] pt-32 pb-16 px-4 md:px-8 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto text-center space-y-8">
+      <div className="relative bg-[#0B132B] pt-32 pb-16 px-4 md:px-8 border-b border-slate-800 overflow-hidden">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image 
+            src="/images/airportVision.webp" 
+            alt="Dholera Strategic Archive" 
+            fill 
+            className="object-cover"
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto text-center space-y-8 relative z-10">
            <div className="space-y-4">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#10B981]">
                 <ShieldCheck className="h-4 w-4" /> Secure Document Archive
               </div>
-              <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white uppercase tracking-tight leading-tight">
                 DHOLERA <span className="text-[#FF7A00] italic">PDF HUB</span>
               </h1>
            </div>

@@ -23,22 +23,35 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="bg-slate-50 min-h-screen pt-12 pb-24">
-      <div className="container mx-auto px-4 md:px-8">
-        
-        {/* Header Block */}
-        <div className="mb-16 text-center space-y-4 max-w-3xl mx-auto">
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-600">
+    <div className="bg-slate-50 min-h-screen pb-24 w-full overflow-x-hidden">
+      
+      {/* Header Block */}
+      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image 
+            src="/images/arialviewdholeraexpress.webp" 
+            alt="Dholera Strategic Growth" 
+            fill 
+            className="object-cover"
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
+          <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400">
             OFFICIAL PLATFORM ARCHIVES
           </span>
-          <h1 className="font-display text-4xl font-black text-slate-900 md:text-6xl uppercase leading-tight">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight leading-tight">
             Verified Plotted <span className="text-orange-600 italic">Developments</span>
           </h1>
-          <p className="text-sm font-semibold text-slate-500 leading-relaxed">
+          <p className="text-sm sm:text-lg font-medium text-slate-300 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
             Scan and select verified residential communities, airport logistics zones, and industrial parks in Dholera SIR.
           </p>
         </div>
+      </section>
 
+      <div className="container mx-auto px-4 md:px-8">
+        
         {/* Filter Controls */}
         <div className="max-w-4xl mx-auto bg-white rounded-3xl p-6 border border-slate-100 shadow-sm mb-12 flex flex-col md:flex-row gap-4 items-center justify-between">
           {/* Categories */}

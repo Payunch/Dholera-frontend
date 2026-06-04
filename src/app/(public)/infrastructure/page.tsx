@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { Cpu, Zap, Road, CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -44,19 +45,27 @@ export default function InfrastructurePage() {
   ];
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen w-full overflow-x-hidden">
       {/* Hero */}
       <section className="relative h-[50vh] flex items-center bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-30 bg-[url('https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&q=80')] bg-cover bg-center" />
+        <div className="absolute inset-0 z-0 opacity-30">
+          <Image 
+            src="/images/arialviewdholeraexpress.webp" 
+            alt="Dholera Smart Infrastructure" 
+            fill 
+            className="object-cover"
+            priority
+          />
+        </div>
         <div className="container relative z-10 mx-auto px-4 md:px-8">
           <div className="max-w-3xl space-y-6">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 bg-orange-600/20 px-4 py-1.5 rounded-full border border-orange-500/30">
               Future Proof City
             </span>
-            <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-none">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
               Dholera <span className="text-orange-600 italic">Smart</span> Infrastructure
             </h1>
-            <p className="text-lg text-slate-300 font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
               India's most advanced industrial ecosystem with trunk infrastructure worth ₹3,000+ Crore already in place.
             </p>
           </div>

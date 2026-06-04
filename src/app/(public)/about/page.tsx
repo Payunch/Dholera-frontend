@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { ShieldCheck, Users, Target, History } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -8,20 +9,34 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="bg-white min-h-screen pt-24 pb-32">
-      <div className="container mx-auto px-4 md:px-8">
-        <header className="mb-24 space-y-6 max-w-3xl">
+    <div className="bg-white min-h-screen pb-32 w-full overflow-x-hidden">
+      
+      {/* Header Block */}
+      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image 
+            src="/images/futuristic_dholera.png" 
+            alt="Dholera Strategic Hub" 
+            fill 
+            className="object-cover"
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
           <div className="inline-flex items-center rounded-full bg-orange-600 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-white">
              Our Mission
           </div>
-          <h1 className="font-display text-5xl font-black tracking-tight text-slate-900 md:text-8xl uppercase leading-[0.9]">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-white uppercase leading-[0.9]">
             The <span className="text-orange-600 italic">Intelligence</span> Hub
           </h1>
-          <p className="text-xl font-medium text-slate-500 leading-relaxed uppercase tracking-widest">
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
             Transparency. Verification. Growth.
           </p>
-        </header>
+        </div>
+      </section>
 
+      <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start mb-32">
            <div className="space-y-12">
               <p className="text-2xl font-bold text-slate-900 leading-relaxed uppercase tracking-tight">

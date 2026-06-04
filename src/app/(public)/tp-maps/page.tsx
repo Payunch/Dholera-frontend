@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Map, Layers, Search, Filter, ShieldCheck, ArrowRight, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -81,15 +82,28 @@ export default function TpMapsPage() {
   });
 
   return (
-    <div className="bg-white min-h-screen font-sans">
+    <div className="bg-white min-h-screen font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
-      <section className="bg-[#0B132B] pt-32 pb-16 border-b border-slate-800">
-        <div className="container mx-auto px-4 md:px-8 text-center">
+      <section className="relative bg-[#0B132B] pt-32 pb-16 border-b border-slate-800 overflow-hidden">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image 
+            src="/images/airportVision.webp" 
+            alt="Dholera Strategic Vision" 
+            fill 
+            className="object-cover"
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center">
            <div className="max-w-4xl mx-auto">
-              <h1 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
                 DHOLERA SIR <span className="text-[#FF7A00] italic">TP MAPS MATRIX</span>
               </h1>
+              <p className="mt-6 text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
+                Access verified Town Planning records, road widths, and zoning use-cases for the entire Dholera Special Investment Region.
+              </p>
            </div>
         </div>
       </section>

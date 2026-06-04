@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { ContactForm } from "./ContactForm";
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
 
@@ -9,24 +10,38 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="bg-white pt-24 pb-32 min-h-screen">
+    <div className="bg-white pb-32 min-h-screen w-full overflow-x-hidden">
+      
+      {/* Header Block */}
+      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image 
+            src="/images/futuristic_dholera.png" 
+            alt="Dholera Intelligence Network" 
+            fill 
+            className="object-cover"
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
+          <div className="inline-flex items-center rounded-full bg-orange-600/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 border border-orange-500/30">
+            Connect with Intelligence
+          </div>
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-tight">
+            Contact our <span className="text-orange-600 italic">Experts</span>
+          </h1>
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
+            Ready to secure your stake in India&apos;s most ambitious smart city project? 
+            Our team provides verified data and on-ground support for all your DSIR queries.
+          </p>
+        </div>
+      </section>
+
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
           {/* Left Column: Info */}
           <div className="space-y-12">
-            <header className="space-y-4">
-              <div className="inline-flex items-center rounded-full bg-orange-50 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 border border-orange-200">
-                Connect with Intelligence
-              </div>
-              <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 md:text-7xl uppercase leading-tight">
-                Contact our <span className="text-orange-600 italic">Experts</span>
-              </h1>
-              <p className="max-w-xl text-lg font-medium text-slate-500 leading-relaxed">
-                Ready to secure your stake in India&apos;s most ambitious smart city project? 
-                Our team provides verified data and on-ground support for all your DSIR queries.
-              </p>
-            </header>
-
             <div className="space-y-6">
               <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 transition-all hover:bg-white hover:shadow-xl hover:shadow-slate-200/40 group">
                 <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white shadow-md border border-slate-100 transition-all group-hover:bg-orange-600 group-hover:text-white">

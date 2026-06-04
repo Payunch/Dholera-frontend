@@ -49,19 +49,29 @@ export default async function BlogsAggregatorPage() {
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen font-sans">
+    <div className="bg-slate-50 min-h-screen font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
-      <section className="bg-[#0B132B] pt-32 pb-24 border-b border-slate-800">
-        <div className="container mx-auto px-4 md:px-8 text-center">
+      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
+        {/* Background Image Overlay */}
+        <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+          <Image 
+            src="/images/dholerasirGujrat.webp" 
+            alt="Dholera Intelligence Hub" 
+            fill 
+            className="object-cover"
+          />
+        </div>
+
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
            <div className="max-w-4xl mx-auto space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#FF7A00]/30 bg-[#FF7A00]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#FF7A00]">
                 Market Intelligence
               </div>
-              <h1 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
+              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
                 DSIR <span className="text-[#FF7A00] italic">Insights & Analysis</span>
               </h1>
-              <p className="text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed">
+              <p className="text-base sm:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
                 Structural analytics, market forecasts, and growth tracking milestones. The definitive source for Dholera intelligence.
               </p>
            </div>

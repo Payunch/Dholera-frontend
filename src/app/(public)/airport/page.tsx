@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { Plane, CheckCircle2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -17,20 +18,28 @@ export default function AirportPage() {
   ];
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen w-full overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">
-        <div className="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1436491865332-7a61a109c053?auto=format&fit=crop&q=80')] bg-cover bg-center" />
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/images/airportVision.webp" 
+            alt="Dholera International Airport Vision" 
+            fill 
+            className="object-cover opacity-40"
+            priority
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent" />
         
         <div className="container relative z-10 mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-orange-600/20 border border-orange-500/30 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-orange-400 mb-6">
             <Plane className="h-3 w-3" /> International Infrastructure
           </div>
-          <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-6 leading-[0.9]">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter mb-6 leading-[0.9]">
             Dholera <span className="text-orange-600 italic">International</span> Airport
           </h1>
-          <p className="max-w-2xl mx-auto text-lg text-slate-300 font-medium">
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
             The multi-modal logistic hub and gateway to India's first Platinum-rated Green Smart City.
           </p>
         </div>

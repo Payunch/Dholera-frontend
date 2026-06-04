@@ -29,27 +29,41 @@ export function HomeClient() {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
 
   const heroImages = [
-    "/images/a1.jpg",
-    "/images/a2.jpg",
-    "/images/a3.jpg",
-    "/images/a4.jpg"
+    "/images/arialviewdholeraexpress.webp",
+    "/images/airportVision.webp",
+    "/images/expressHighway.webp",
+    "/images/dholerasirGujrat.webp"
   ];
 
   React.useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
   }, []);
+
+  const today = new Date().toISOString().split('T')[0];
+  const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\D/g, '').slice(0, 10);
     setVisitForm({ ...visitForm, phone: val });
+    if (visitStatus === 'error') setVisitFormStatus('idle');
   };
 
   const handleVisitSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!visitForm.name || visitForm.phone.length !== 10) return;
+    
+    // Date validation: must be within a week
+    const selectedDate = new Date(visitForm.date);
+    const maxDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    
+    if (selectedDate > maxDate) {
+       setVisitFormStatus("error");
+       return;
+    }
+
     setVisitFormStatus("loading");
     
     try {
@@ -67,93 +81,112 @@ export function HomeClient() {
   };
 
   return (
-    <div className="flex flex-col bg-white">
+    <div className="flex flex-col bg-white overflow-x-hidden w-full">
       
       {/* 1.1 HERO SECTION */}
-      <section className="relative w-full min-h-[90vh] bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
-        {/* Animated Hero Carousel */}
+      <section className="relative w-full min-h-[95vh] bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
+        {/* Animated Hero Carousel with HIGH-RES IMAGES */}
         <div className="absolute inset-0 z-0">
           {heroImages.map((img, idx) => (
             <div
               key={idx}
               className={cn(
-                "absolute inset-0 transition-opacity duration-1000 ease-in-out",
-                currentImageIndex === idx ? "opacity-40" : "opacity-0"
+                "absolute inset-0 transition-opacity duration-[2000ms] ease-in-out",
+                currentImageIndex === idx ? "opacity-50" : "opacity-0"
               )}
             >
               <Image
                 src={img}
-                alt={`Dholera SIR Vision ${idx + 1}`}
+                alt={`Dholera SIR Infrastructure ${idx + 1}`}
                 fill
                 priority={idx === 0}
-                className="object-cover object-center transform scale-105"
+                className="object-cover object-center transform scale-110 motion-safe:animate-[pulse_10s_infinite]"
               />
             </div>
           ))}
-          <div className="absolute inset-0 bg-slate-950/40 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-[#0B132B] pointer-events-none" />
+          <div className="absolute inset-0 bg-[#0B132B]/40 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-[#0B132B]/80 pointer-events-none" />
+          
+          {/* Subtle Dholera Vector Overlay (Simulated with a tech grid) */}
+          <div className="absolute inset-0 bg-[url('/images/logo.png')] bg-no-repeat bg-center opacity-5 grayscale invert scale-[2] pointer-events-none" />
+
           {/* Interactive Grid on top */}
-          <div className="absolute inset-0 grid grid-cols-6 sm:grid-cols-12 md:grid-cols-20 grid-rows-12 gap-px opacity-15">
+          <div className="absolute inset-0 grid grid-cols-8 sm:grid-cols-12 md:grid-cols-20 grid-rows-12 gap-px opacity-10">
             {Array.from({ length: 240 }).map((_, i) => (
               <div 
                 key={i} 
                 onMouseEnter={() => setHoveredGrid(i)}
                 onMouseLeave={() => setHoveredGrid(null)}
                 className={cn(
-                  "w-full h-full border border-slate-800 transition-all duration-300",
-                  hoveredGrid === i ? "bg-[#FF7A00] shadow-[0_0_15px_#FF7A00] opacity-100" : "bg-transparent"
+                  "w-full h-full border border-slate-700/50 transition-all duration-500",
+                  hoveredGrid === i ? "bg-[#FF7A00] shadow-[0_0_20px_#FF7A00] opacity-80" : "bg-transparent"
                 )}
               />
             ))}
           </div>
         </div>
 
-        <div className="container relative z-10 px-4 md:px-8 mx-auto mt-20">
-          <div className="max-w-4xl backdrop-blur-md bg-slate-950/40 p-8 md:p-12 rounded-[2rem] border border-slate-800 shadow-2xl">
-            <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-8">
-              <div className="relative h-5 w-5">
-                <Image 
-                  src="/images/hp.png" 
-                  alt="Independent Investment Intelligence" 
-                  fill 
-                  className="object-contain"
-                />
-              </div>
-              Independent Investment Intelligence
+        <div className="container relative z-10 px-4 md:px-8 mx-auto py-20 flex justify-center">
+          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/60 p-6 sm:p-10 md:p-16 rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden">
+            {/* Background Image for the Content Box */}
+            <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay pointer-events-none">
+               <Image 
+                 src="/images/futuristic_dholera.png" 
+                 alt="Dholera Future Vision" 
+                 fill 
+                 className="object-cover"
+               />
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-[1.1] mb-6">
-              Decide with <span className="text-[#FF7A00] italic">Certainty</span> in Dholera SIR
-            </h1>
-
-            <p className="max-w-2xl text-lg font-medium text-slate-300 md:text-xl leading-relaxed mb-10">
-              The definitive platform for verified TP maps, infrastructure progress, and industrial plot analytics. 
-              Move from data to decisions with zero ambiguity.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/20"
-              >
-                Book Free Site Visit
-                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
-              <Link
-                href="/projects"
-                className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-transparent px-10 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-white/5 sm:w-auto"
-              >
-                View Verified Projects
-              </Link>
-            </div>
-            
-            <div className="flex items-center gap-4 pt-8 opacity-80">
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="h-10 w-10 rounded-full border-2 border-slate-900 bg-slate-700" />
-                ))}
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2.5 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-8 animate-fade-in">
+                <div className="relative h-6 w-6 shrink-0">
+                  <Image 
+                    src="/images/hp.png" 
+                    alt="Independent Investment Intelligence" 
+                    fill 
+                    className="object-contain"
+                  />
+                </div>
+                <span className="hidden sm:inline">Independent Investment Intelligence</span>
+                <span className="sm:hidden">DSIR Intelligence</span>
               </div>
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-300">Trusted by 12,000+ Global Investors</p>
+
+              <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-white uppercase leading-[0.95] mb-8">
+                Decide with <span className="text-[#FF7A00] italic">Certainty</span> <br/> in Dholera SIR
+              </h1>
+
+              <p className="max-w-2xl text-base sm:text-lg md:text-xl font-medium text-slate-200 leading-relaxed mb-12 opacity-90">
+                The definitive platform for verified TP maps, infrastructure progress, and industrial plot analytics. 
+                Move from data to decisions with zero ambiguity.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/20 active:scale-95"
+                >
+                  Book Free Site Visit
+                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </button>
+                <Link
+                  href="/projects"
+                  className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-md px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-white/10 sm:w-auto active:scale-95"
+                >
+                  View Verified Projects
+                </Link>
+              </div>
+              
+              <div className="flex items-center gap-4 pt-10 opacity-60">
+                <div className="flex -space-x-3">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[8px] font-bold text-white">
+                      {i}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-300">Trusted by 12,000+ Global Investors</p>
+              </div>
             </div>
           </div>
         </div>
@@ -162,101 +195,115 @@ export function HomeClient() {
       {/* SITE VISIT MODAL */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-[250] flex items-center justify-center p-4 md:p-8 bg-[#0B132B]/90 backdrop-blur-md animate-in fade-in duration-300"
+          className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-[#0B132B]/95 backdrop-blur-xl animate-in fade-in duration-300"
           onClick={() => { if (visitStatus !== 'loading') setIsModalOpen(false); }}
         >
           <div 
-            className="bg-[#0B132B] rounded-[2.5rem] p-8 md:p-12 border border-slate-800 shadow-[0_0_50px_rgba(0,0,0,0.5)] w-full max-w-lg relative animate-in zoom-in-95 duration-300"
+            className="bg-[#0B132B] rounded-[3rem] p-8 sm:p-12 border border-white/10 shadow-[0_0_80px_rgba(0,0,0,0.8)] w-full max-w-lg relative animate-in zoom-in-95 duration-500 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Modal Background Polish */}
+            <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 bg-orange-600/10 blur-[100px] rounded-full pointer-events-none" />
+
             <button 
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-6 right-6 p-2 text-slate-400 hover:text-white transition-colors"
+              className="absolute top-8 right-8 p-2 text-slate-500 hover:text-white transition-colors z-20"
             >
               <X className="h-6 w-6" />
             </button>
 
             {visitStatus === 'error' && (
-              <div className="mb-6 flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-[10px] font-bold text-red-500 uppercase tracking-wider">
-                <AlertCircle className="h-4 w-4 shrink-0" />
-                Connection Error. Neural link failed. Please try again.
+              <div className="mb-8 flex flex-col gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-[10px] font-bold text-red-400 uppercase tracking-widest leading-relaxed">
+                <div className="flex items-center gap-3">
+                  <AlertCircle className="h-5 w-5 shrink-0" />
+                  <span>Transmission Link Failed</span>
+                </div>
+                <p className="text-[9px] text-red-500/80 pl-8">
+                  {new Date(visitForm.date) > new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) 
+                    ? "Date must be within 7 days of today." 
+                    : "Please verify your connection and try again."}
+                </p>
               </div>
             )}
 
             {visitStatus === 'success' ? (
-              <div className="text-center py-10 space-y-6">
-                <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30">
-                  <CheckCircle2 className="h-10 w-10 animate-in zoom-in-50 duration-500" />
+              <div className="text-center py-12 space-y-8">
+                <div className="h-24 w-24 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
+                  <CheckCircle2 className="h-12 w-12 animate-in zoom-in-50 duration-700" />
                 </div>
-                <h3 className="text-3xl font-black text-white uppercase tracking-tight">Request Received!</h3>
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest leading-relaxed max-w-[280px] mx-auto">
-                  Our Dholera expert will call you within 15 minutes to confirm details.
+                <h3 className="text-3xl font-black text-white uppercase tracking-tight">Transmission <span className="text-[#FF7A00]">Success</span></h3>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] leading-relaxed max-w-[280px] mx-auto">
+                  Our Dholera strategist will contact you via secure line within 15 minutes.
                 </p>
                 <button 
                   onClick={() => { setIsModalOpen(false); setVisitFormStatus('idle'); }}
-                  className="mt-8 px-10 py-4 bg-[#FF7A00] text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-all"
+                  className="mt-8 px-12 py-5 bg-[#FF7A00] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl shadow-orange-600/20"
                 >
-                  Close Window
+                  Return to Dashboard
                 </button>
               </div>
             ) : (
               <>
-                <div className="text-center mb-10">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
-                    Instant Booking
+                <div className="text-center mb-12 relative z-10">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00] mb-6">
+                    Priority Connection
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">Exclusive <span className="text-[#FF7A00] italic">Offer</span></h3>
+                  <h3 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight leading-none">Exclusive <span className="text-[#FF7A00] italic">Offer</span></h3>
                 </div>
 
-                <form className="space-y-4" onSubmit={handleVisitSubmit}>
+                <form className="space-y-5 relative z-10" onSubmit={handleVisitSubmit}>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Full Name</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Full Identity</label>
                     <input 
                       type="text" 
-                      placeholder="ENTER YOUR NAME" 
+                      placeholder="ENTER NAME" 
                       required 
                       value={visitForm.name}
                       onChange={(e) => setVisitForm({...visitForm, name: e.target.value})}
-                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-700 text-white outline-none focus:border-[#FF7A00] transition-all"
+                      className="w-full px-6 py-5 rounded-2xl bg-slate-950 border border-slate-800 text-[10px] font-bold uppercase tracking-widest placeholder-slate-700 text-white outline-none focus:border-[#FF7A00] focus:ring-1 focus:ring-[#FF7A00] transition-all"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Phone Number</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Verified Mobile</label>
                     <input 
                       type="tel" 
-                      placeholder="10-DIGIT MOBILE NUMBER" 
+                      placeholder="10-DIGIT MOBILE" 
                       required 
                       pattern="[0-9]{10}"
                       maxLength={10}
                       value={visitForm.phone}
                       onChange={handlePhoneChange}
-                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-700 text-white outline-none focus:border-[#FF7A00] transition-all"
+                      className="w-full px-6 py-5 rounded-2xl bg-slate-950 border border-slate-800 text-[10px] font-bold uppercase tracking-widest placeholder-slate-700 text-white outline-none focus:border-[#FF7A00] focus:ring-1 focus:ring-[#FF7A00] transition-all"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Preferred Date</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1 flex justify-between">
+                      <span>Deployment Date</span>
+                      <span className="text-orange-500/50">*Must be within 7 days</span>
+                    </label>
                     <input 
                       type="date" 
                       required 
                       value={visitForm.date}
-                      min={new Date().toISOString().split('T')[0]}
+                      min={today}
+                      max={nextWeek}
                       onChange={(e) => setVisitForm({...visitForm, date: e.target.value})}
-                      className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-700 text-white outline-none focus:border-[#FF7A00] transition-all"
+                      className="w-full px-6 py-5 rounded-2xl bg-slate-950 border border-slate-800 text-[10px] font-bold uppercase tracking-widest placeholder-slate-700 text-white outline-none focus:border-[#FF7A00] focus:ring-1 focus:ring-[#FF7A00] transition-all"
                     />
                   </div>
                   <button 
                     type="submit"
                     disabled={visitStatus === 'loading' || visitForm.phone.length !== 10}
-                    className="w-full h-16 mt-6 rounded-2xl bg-[#FF7A00] text-white text-sm font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-800 disabled:text-slate-600 transition-all shadow-[0_0_30px_rgba(255,122,0,0.3)] flex items-center justify-center"
+                    className="w-full h-16 mt-8 rounded-2xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-900 disabled:text-slate-700 transition-all shadow-[0_0_50px_rgba(255,122,0,0.3)] flex items-center justify-center active:scale-95"
                   >
                     {visitStatus === 'loading' ? (
                       <div className="h-6 w-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
-                      "Confirm Booking Request"
+                      "Establish Connection"
                     )}
                   </button>
-                  <p className="text-center text-[8px] font-bold text-slate-500 uppercase tracking-widest mt-6">
-                    Professional pick-up and premium stay included.
+                  <p className="text-center text-[7px] font-bold text-slate-600 uppercase tracking-[0.3em] mt-8">
+                    Guided site tours and premium hospitality included.
                   </p>
                 </form>
               </>
@@ -411,9 +458,19 @@ export function HomeClient() {
       {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
       <section id="site-visit" className="bg-slate-100 py-32 relative overflow-hidden">
         <div className="container mx-auto px-4 md:px-8 relative z-10 flex justify-center">
-          <div className="bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800">
+          <div className="bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden">
             
-            <div className="space-y-8">
+            {/* Background Image Overlay */}
+            <div className="absolute inset-0 z-0 opacity-10 mix-blend-overlay pointer-events-none">
+              <Image 
+                src="/images/arialviewdholeraexpress.webp" 
+                alt="Dholera Aerial Vision" 
+                fill 
+                className="object-cover"
+              />
+            </div>
+
+            <div className="space-y-8 relative z-10">
                 <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
                     Exclusive Offer
                 </div>
@@ -445,16 +502,23 @@ export function HomeClient() {
                 </div>
             </div>
 
-            <div className="bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden">
+            <div className="bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden z-10">
                 {visitStatus === 'error' && (
-                  <div className="mb-6 flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-[10px] font-bold text-red-500 uppercase tracking-wider">
-                    <AlertCircle className="h-4 w-4 shrink-0" />
-                    Connection Error. Transmission failed.
+                  <div className="mb-8 flex flex-col gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-[10px] font-bold text-red-400 uppercase tracking-widest leading-relaxed">
+                    <div className="flex items-center gap-3">
+                      <AlertCircle className="h-4 w-4 shrink-0" />
+                      <span>Transmission Link Failed</span>
+                    </div>
+                    <p className="text-[9px] text-red-500/80 pl-8">
+                      {new Date(visitForm.date) > new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) 
+                        ? "Date must be within 7 days of today." 
+                        : "Please verify your connection and try again."}
+                    </p>
                   </div>
                 )}
                 {visitStatus === 'success' ? (
                   <div className="text-center py-12 space-y-6 animate-in zoom-in-95 duration-300">
-                    <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30">
                       <CheckCircle2 className="h-10 w-10" />
                     </div>
                     <h3 className="text-2xl font-black text-white uppercase">Request Received!</h3>
@@ -494,12 +558,17 @@ export function HomeClient() {
                           className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
                       </div>
-                      <div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1 flex justify-between">
+                          <span>Date</span>
+                          <span className="text-orange-500/50">*Within 7 days</span>
+                        </label>
                         <input 
                           type="date" 
                           required 
                           value={visitForm.date}
-                          min={new Date().toISOString().split('T')[0]}
+                          min={today}
+                          max={nextWeek}
                           onChange={(e) => setVisitForm({...visitForm, date: e.target.value})}
                           className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
@@ -507,7 +576,7 @@ export function HomeClient() {
                       <button 
                         type="submit"
                         disabled={visitStatus === 'loading' || visitForm.phone.length !== 10}
-                        className="w-full h-14 mt-4 rounded-xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-700 disabled:text-slate-400 transition-all shadow-xl shadow-orange-600/20 flex items-center justify-center"
+                        className="w-full h-14 mt-4 rounded-xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-700 disabled:text-slate-400 transition-all shadow-xl shadow-orange-600/20 flex items-center justify-center active:scale-95"
                       >
                         {visitStatus === 'loading' ? (
                           <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
