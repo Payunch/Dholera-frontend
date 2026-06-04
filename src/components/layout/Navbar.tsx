@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, Languages, Home, FileText, Calculator, ShieldCheck, Map, Plane, Construction, Grid } from "lucide-react";
+import { Menu, X, ChevronDown, Languages, Home, FileText, Calculator, ShieldCheck, Map, Plane, Construction, Grid, Landmark, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SplitLogo } from "@/components/common/DynamicImages";
 import { useLanguage } from "@/providers/LanguageProvider";
