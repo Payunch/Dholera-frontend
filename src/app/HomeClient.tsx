@@ -16,7 +16,10 @@ import {
   Calendar,
   MessageSquare,
   ExternalLink,
-  Map
+  Map,
+  Building,
+  Landmark,
+  Grid
 } from "lucide-react";
 import { PdfListing } from "@/components/pdf/PdfListing";
 import { useLanguage } from '@/providers/LanguageProvider';
