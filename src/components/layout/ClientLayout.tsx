@@ -76,6 +76,8 @@ export default function ClientLayout({
            +91 74358 08031
          </a>
       </div>
+      
+      <UniversalConnect />
     </ClientProviders>
   );
 }
