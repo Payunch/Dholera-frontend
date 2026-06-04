@@ -14,6 +14,8 @@ import {
   Calendar as CalendarIcon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { projects } from "@/data/projects";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 export function HomeClient() {
   // Site Visit Form State
@@ -98,8 +100,15 @@ export function HomeClient() {
 
         <div className="container relative z-10 px-4 md:px-8 mx-auto mt-20">
           <div className="max-w-4xl backdrop-blur-md bg-slate-950/40 p-8 md:p-12 rounded-[2rem] border border-slate-800 shadow-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-6">
-              <ShieldCheck className="h-4 w-4" />
+            <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-8">
+              <div className="relative h-5 w-5">
+                <Image 
+                  src="/images/hp.png" 
+                  alt="Independent Investment Intelligence" 
+                  fill 
+                  className="object-contain"
+                />
+              </div>
               Independent Investment Intelligence
             </div>
 
@@ -240,7 +249,7 @@ export function HomeClient() {
       )}
 
       {/* 1.2 TRUST BANNER */}
-      <section className="bg-white py-20 border-b border-slate-100">
+      <section className="bg-white py-16 border-b border-slate-100 overflow-hidden">
         <div className="container mx-auto px-4 md:px-8">
           <div className="mb-12 text-center space-y-3 max-w-3xl mx-auto">
             <h2 className="text-xl md:text-2xl font-black text-slate-900 uppercase leading-tight">
@@ -251,28 +260,38 @@ export function HomeClient() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-10 md:gap-20">
-            {[
-              { logo: "/images/tata.png", name: "Tata Electronics" },
-              { logo: "/images/larsen-toubro.png", name: "L&T Infrastructure" },
-              { logo: "/images/torrent.png", name: "Torrent Power" },
-              { logo: "/images/renew.png", name: "ReNew Power" }
-            ].map((giant, idx) => (
-              <div key={idx} className="group relative h-16 w-40 grayscale hover:grayscale-0 opacity-50 hover:opacity-100 transition-all duration-500">
-                <Image
-                  src={giant.logo}
-                  alt={`${giant.name} ${giant.name}`}
-                  fill
-                  className="object-contain"
-                  onError={(e: any) => {
-                    e.target.style.display = 'none';
-                  }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity bg-white">
-                  {giant.name}
-                </div>
-              </div>
-            ))}
+          <div className="relative flex overflow-hidden group">
+            <div className="flex animate-marquee whitespace-nowrap gap-16 md:gap-32 items-center py-4">
+              {[...Array(2)].map((_, i) => (
+                <React.Fragment key={i}>
+                  {[
+                    { logo: "/images/tata.png", name: "Tata Electronics" },
+                    { logo: "/images/larsen-toubro.png", name: "L&T Infrastructure" },
+                    { logo: "/images/torrent.png", name: "Torrent Power" },
+                    { logo: "/images/renew.png", name: "ReNew Power" }
+                  ].map((giant, idx) => (
+                    <div key={`${i}-${idx}`} className="relative h-12 w-40 flex-shrink-0 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-500">
+                      <Image
+                        src={giant.logo}
+                        alt={`${giant.name} logo`}
+                        fill
+                        className="object-contain"
+                        onError={(e: any) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                      <div className="absolute -bottom-8 inset-x-0 text-center text-[8px] font-black uppercase tracking-widest text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {giant.name}
+                      </div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+            
+            {/* Gradient Overlays for smooth edges */}
+            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
+            <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
           </div>
         </div>
       </section>

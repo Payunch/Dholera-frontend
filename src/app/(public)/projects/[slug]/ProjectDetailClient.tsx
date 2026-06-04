@@ -78,31 +78,16 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               </p>
             </div>
 
-            {/* Blank Image Header Placeholder */}
-            <div className="relative h-64 md:h-96 w-full bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm flex items-center justify-center">
+            {/* Project Image */}
+            <div className="relative h-64 md:h-96 w-full bg-slate-100 border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
               <Image
-                src="/images/dream-world-city.jpg" // solid white PNG
+                src={project.image}
                 alt={project.name}
                 fill
-                className="object-cover opacity-90"
+                className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-slate-50/50">
-                <div className="h-16 w-16 rounded-[1.5rem] bg-white border border-slate-150 text-slate-700 flex items-center justify-center mb-3 shadow-md">
-                  {project.category === "Residential" && <Grid className="h-8 w-8 text-orange-600" />}
-                  {project.category === "Commercial" && <Building className="h-8 w-8 text-orange-600" />}
-                  {project.category === "Industrial" && <Landmark className="h-8 w-8 text-orange-600" />}
-                </div>
-                <h3 className="font-display text-lg font-black uppercase tracking-widest text-slate-700">
-                  {project.name} Layout
-                </h3>
-                <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">
-                  Placeholder Image Block
-                </p>
-                <p className="text-[9px] font-semibold text-slate-350 mt-0.5">
-                  [Drop custom rendering to: public/images/dream-world-city.jpg]
-                </p>
-              </div>
+              <div className="absolute inset-0 bg-slate-950/10" />
             </div>
 
             {/* Overview / Story Card */}

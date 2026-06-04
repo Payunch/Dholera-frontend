@@ -82,28 +82,15 @@ export default function ProjectsPage() {
                   className="group bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    {/* Blank Image Area */}
-                    <div className="relative h-48 w-full bg-slate-100 border-b border-slate-100 flex items-center justify-center overflow-hidden">
+                    {/* Project Image */}
+                    <div className="relative h-56 w-full bg-slate-100 border-b border-slate-100 overflow-hidden">
                       <Image
-                        src="/images/dream-world-city.jpg" // this is a 1x1 solid white PNG placeholder
+                        src={project.image}
                         alt={project.name}
                         fill
-                        className="object-cover opacity-80"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      {/* Wireframe Placeholder Indicator */}
-                      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-slate-50/70 backdrop-blur-[1px]">
-                        <div className="h-10 w-10 rounded-2xl bg-white border border-slate-200 text-slate-700 flex items-center justify-center mb-2 shadow-sm group-hover:scale-110 group-hover:border-orange-200 group-hover:text-orange-600 transition-all duration-300">
-                          {project.category === "Residential" && <Grid className="h-5 w-5" />}
-                          {project.category === "Commercial" && <Building className="h-5 w-5" />}
-                          {project.category === "Industrial" && <Landmark className="h-5 w-5" />}
-                        </div>
-                        <span className="text-[8px] font-black uppercase tracking-widest text-slate-400">
-                          Image Block
-                        </span>
-                        <span className="text-[7px] font-bold text-slate-350">
-                          [Placeholder: public/images/dream-world-city.jpg]
-                        </span>
-                      </div>
+                      <div className="absolute inset-0 bg-slate-950/10 group-hover:bg-slate-950/0 transition-colors duration-300" />
                       
                       {/* Category Badge */}
                       <span className="absolute top-4 left-4 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-xl shadow-md z-10">

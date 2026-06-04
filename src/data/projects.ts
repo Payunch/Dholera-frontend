@@ -13,6 +13,7 @@ export interface Project {
   mapUrl: string;
   whatsappText: string;
   location: string;
+  image: string;
 }
 
 export const projects: Project[] = [
@@ -30,7 +31,8 @@ export const projects: Project[] = [
     reraApproved: true,
     mapUrl: "https://maps.google.com/maps?q=Pipali%20Junction,%20Dholera,%20Gujarat,%20India&t=&z=13&ie=UTF8&iwloc=&output=embed",
     whatsappText: "Hi Dholera Platform, I am interested in Satyaja Plots (Bliss Grandeur 1 & 2). Please send more information about rates, availability, and brochure.",
-    location: "Pipali Highway, Dholera SIR"
+    location: "Pipali Highway, Dholera SIR",
+    image: "/images/bliss_grandeur.jpg"
   },
   {
     slug: "dream-world-city",
@@ -46,7 +48,8 @@ export const projects: Project[] = [
     reraApproved: false,
     mapUrl: "https://maps.google.com/maps?q=Dholera,%20Gujarat,%20India&t=&z=13&ie=UTF8&iwloc=&output=embed",
     whatsappText: "Hi Dholera Platform, I am interested in Dream World City Plots and Villas. Please send more information about rates, availability, and layout.",
-    location: "Residential Zone, Dholera SIR"
+    location: "Residential Zone, Dholera SIR",
+    image: "/images/345-1-e1777985454613-300x271.jpeg"
   },
   {
     slug: "breeze-residency",
@@ -62,7 +65,8 @@ export const projects: Project[] = [
     reraApproved: false,
     mapUrl: "https://maps.google.com/maps?q=Dholera,%20Gujarat,%20India&t=&z=12&ie=UTF8&iwloc=&output=embed",
     whatsappText: "Hi Dholera Platform, I am interested in Breeze Residency Plots. Please send more information about location, pricing, and site plan.",
-    location: "Strategic Sector, Dholera SIR"
+    location: "Strategic Sector, Dholera SIR",
+    image: "/images/fghj-300x200.jpeg"
   },
   {
     slug: "aerocity-hub",
@@ -78,7 +82,8 @@ export const projects: Project[] = [
     reraApproved: false,
     mapUrl: "https://maps.google.com/maps?q=Dholera%20International%20Airport,%20Gujarat,%20India&t=&z=12&ie=UTF8&iwloc=&output=embed",
     whatsappText: "Hi Dholera Platform, I am interested in Aerocity Hub Commercial Plots. Please send details regarding commercial feasibility, pricing, and highway connectivity.",
-    location: "Airport Proximity, Dholera SIR"
+    location: "Airport Proximity, Dholera SIR",
+    image: "/images/airportFeatureimage.webp"
   },
   {
     slug: "imperial-tp4b2",
@@ -94,6 +99,7 @@ export const projects: Project[] = [
     reraApproved: false,
     mapUrl: "https://maps.google.com/maps?q=Dholera%20SIR,%20Gujarat,%20India&t=&z=11&ie=UTF8&iwloc=&output=embed",
     whatsappText: "Hi Dholera Platform, I am interested in Imperial TP4B2 Industrial and Warehousing plots. Please send commercial brochure, power feasibility specs, and site layout map.",
-    location: "TP4 B2 Industrial Zone, Dholera SIR"
+    location: "TP4 B2 Industrial Zone, Dholera SIR",
+    image: "/images/dholeraexpress.webp"
   }
 ];
