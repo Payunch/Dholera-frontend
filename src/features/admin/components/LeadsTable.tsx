@@ -37,6 +37,14 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                       <div className="flex items-center gap-2">
                         <span className="font-black text-slate-900">{lead.name}</span>
                         {lead.is_pro && <ShieldCheck className="h-3 w-3 text-orange-600" />}
+                        {lead.score !== undefined && lead.score > 0 && (
+                          <span className={cn(
+                            "ml-2 rounded-md px-1.5 py-0.5 text-[8px] font-black uppercase tracking-tight",
+                            lead.score > 150 ? "bg-red-600 text-white" : "bg-orange-500 text-white"
+                          )}>
+                            Score: {lead.score}
+                          </span>
+                        )}
                       </div>
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{lead.phone}</span>
                     </div>
@@ -109,6 +117,45 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                       </div>
                     ))}
                  </div>
+
+                 {/* AI Interest Analysis */}
+                 {selectedLead.interest_profile && (
+                    <div className="space-y-4">
+                       <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 flex items-center gap-2">
+                          <ShieldCheck className="h-3 w-3" /> AI Interest Analysis
+                       </h4>
+                       <div className="bg-orange-50/50 border border-orange-100 rounded-3xl p-6">
+                          {(() => {
+                             try {
+                                const profile = JSON.parse(selectedLead.interest_profile);
+                                return (
+                                   <div className="space-y-4">
+                                      <div className="flex items-center justify-between">
+                                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Lead Category</span>
+                                         <span className={cn(
+                                            "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest",
+                                            profile.category === "Hot" ? "bg-red-100 text-red-600" :
+                                            profile.category === "Warm" ? "bg-orange-100 text-orange-600" :
+                                            "bg-blue-100 text-blue-600"
+                                         )}>{profile.category}</span>
+                                      </div>
+                                      <div className="flex items-center justify-between">
+                                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Top Interests</span>
+                                         <div className="flex gap-1">
+                                            {profile.topInterests.map((interest: string, idx: number) => (
+                                               <span key={idx} className="bg-white border border-slate-100 px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-tight text-slate-700">{interest}</span>
+                                            ))}
+                                         </div>
+                                      </div>
+                                   </div>
+                                );
+                             } catch (e) {
+                                return <p className="text-xs text-slate-400">Analysis pending...</p>;
+                             }
+                          })()}
+                       </div>
+                    </div>
+                 )}
 
                  {/* Technical Details */}
                  <div className="space-y-4">
