@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import { useLanguage } from '@/providers/LanguageProvider';
 
 export default function BlogsAggregatorPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [updates, setUpdates] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,11 +35,16 @@ export default function BlogsAggregatorPage() {
   ];
 
   useEffect(() => {
-    apiClient.get('/content/updates')
+    setLoading(true);
+    apiClient.get(`/content/updates?lang=${lang}`)
       .then(res => setUpdates(res.data))
-      .catch(err => console.error(err))
+      .catch(err => {
+         console.error(err);
+         // Fallback without lang if the backend doesn't support it yet
+         apiClient.get('/content/updates').then(r => setUpdates(r.data)).catch(console.error);
+      })
       .finally(() => setLoading(false));
-  }, []);
+  }, [lang]);
   
   // Distribute updates into silos
   const siloData = SILOS.map(silo => ({

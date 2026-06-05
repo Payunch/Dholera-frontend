@@ -356,7 +356,7 @@ export function HomeClient() {
             {/* Background Image Overlay */}
             <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
               <Image 
-                src="/images/arialviewdholeraexpress.webp" 
+                src="/images/ng1.png" 
                 alt="Dholera Aerial Vision" 
                 fill 
                 className="object-cover"

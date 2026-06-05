@@ -49,6 +49,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     type: "website",
   },
+  icons: {
+    icon: "/icon.png",
+  },
   twitter: {
     card: "summary_large_image",
     title: "Dholera Platform | Growth Evidence & Planning Maps",

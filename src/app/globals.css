@@ -26,11 +26,11 @@ header .container a.rounded-full {
 
 :root {
   --background: #ffffff;
-  --foreground: #1e293b;
+  --foreground: #000000;
   --accent: #ff7a00;
   --accent-2: #10b981;
   --accent-3: #d97706;
-  --primary-base: #0b132b;
+  --primary-base: #ffffff;
   --panel: #f8fafc;
   --muted: #64748b;
   --line: #e2e8f0;
@@ -54,19 +54,19 @@ header .container a.rounded-full {
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --background: #0b132b;
+    --background: #000000;
     --foreground: #ffffff;
-    --panel: #1e293b;
-    --line: #334155;
+    --panel: #111111;
+    --line: #222222;
     --ring: #ff7a00;
   }
 }
 
 .dark {
-  --background: #0b132b;
+  --background: #000000;
   --foreground: #ffffff;
-  --panel: #1e293b;
-  --line: #334155;
+  --panel: #111111;
+  --line: #222222;
   --ring: #ff7a00;
 }
 

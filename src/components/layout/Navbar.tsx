@@ -39,7 +39,7 @@ export function Navbar() {
     <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <SplitLogo height={35} isFull />
+          <SplitLogo height={50} isFull />
         </Link>
 
         {/* Desktop Nav */}
@@ -50,7 +50,7 @@ export function Navbar() {
               href={item.href}
               className={cn(
                 "transition-colors hover:text-orange-600",
-                pathname === item.href ? "text-orange-600" : "text-slate-500"
+                (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) ? "text-orange-600" : "text-slate-500"
               )}
             >
               {item.label}
@@ -126,7 +126,7 @@ export function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
                 className={cn(
                   "flex items-center gap-4 text-sm font-black uppercase tracking-widest transition-colors",
-                  pathname === item.href ? "text-orange-600" : "text-slate-600"
+                  (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) ? "text-orange-600" : "text-slate-600"
                 )}
               >
                 <item.icon className="h-5 w-5" />
