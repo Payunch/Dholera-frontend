@@ -25,7 +25,12 @@ export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
-  const categories = ["All", "Residential", "Commercial", "Industrial"];
+  const categories = [
+    { label: t('all'), key: "All" },
+    { label: t('residential'), key: "Residential" },
+    { label: t('commercial'), key: "Commercial" },
+    { label: t('industrial'), key: "Industrial" }
+  ];
 
   const fetchProjects = useCallback(async () => {
     try {
@@ -67,13 +72,13 @@ export default function ProjectsPage() {
 
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
           <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400">
-            OFFICIAL PLATFORM ARCHIVES
+            {t('official_archives')}
           </span>
           <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight leading-tight">
-            Verified Plotted <span className="text-orange-600 italic">Developments</span>
+            {t('verified_plotted_title').split(' ').slice(0, 2).join(' ')} <span className="text-orange-600 italic">{t('verified_plotted_title').split(' ').slice(2).join(' ')}</span>
           </h1>
           <p className="text-sm sm:text-lg font-medium text-slate-300 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
-            Scan and select verified residential communities, airport logistics zones, and industrial parks in Dholera SIR.
+            {t('verified_plotted_desc')}
           </p>
         </div>
       </section>
@@ -86,15 +91,15 @@ export default function ProjectsPage() {
           <div className="flex flex-wrap gap-2 justify-center">
             {categories.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                key={cat.key}
+                onClick={() => setSelectedCategory(cat.key)}
                 className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                  selectedCategory === cat
+                  selectedCategory === cat.key
                     ? "bg-slate-900 text-white shadow-md shadow-slate-950/15"
                     : "bg-slate-50 border border-slate-150 text-slate-600 hover:bg-slate-100"
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -104,7 +109,7 @@ export default function ProjectsPage() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
-              placeholder="SEARCH BY PROJECT..."
+              placeholder={t('search_by_project')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-11 pr-5 py-3 rounded-xl bg-slate-50 border border-slate-150 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-800 outline-none focus:bg-white focus:border-orange-500 transition-all"
@@ -188,10 +193,10 @@ export default function ProjectsPage() {
           <div className="text-center py-20 bg-white border border-slate-100 rounded-3xl max-w-xl mx-auto space-y-4 shadow-sm">
             <Grid className="h-10 w-10 text-slate-300 mx-auto" />
             <h3 className="font-display text-xl font-black uppercase tracking-tight text-slate-800">
-              No Projects Found
+              {t('no_projects_found')}
             </h3>
             <p className="text-sm font-semibold text-slate-500 px-8">
-              Adjust your search keywords or categories to scan other verified platform options.
+              {t('adjust_search')}
             </p>
           </div>
         )}

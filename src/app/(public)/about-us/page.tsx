@@ -146,10 +146,10 @@ export default function AboutUsPage() {
         {/* Founder Profile Section */}
         <div className="relative bg-slate-900 rounded-[3rem] p-10 md:p-14 border border-slate-800 shadow-xl mb-32 flex flex-col lg:flex-row items-center gap-12 group hover:shadow-2xl transition-all duration-500 overflow-hidden">
            
-           {/* Background Image (ng1.png) */}
+           {/* Background Image (a1.jpg) */}
            <div className="absolute inset-0 z-0 opacity-60 transition-opacity duration-700 pointer-events-none">
               <Image 
-                src="/images/ng1.png" 
+                src="/images/a1.jpg" 
                 alt="Naresh Gohel Dholera Site" 
                 fill 
                 className="object-cover" 

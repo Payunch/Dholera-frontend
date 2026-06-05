@@ -330,6 +330,7 @@ export function HomeClient() {
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </div>
                   </div>
+
                 </Link>
               );
             })}

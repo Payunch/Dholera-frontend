@@ -21,17 +21,35 @@ export function ArticleBody({ content }: ArticleBodyProps) {
               const trimmedLine = line.trim();
               if (!trimmedLine) return null;
 
-              // Check for headers (starts with emoji or ends with colon)
-              const isHeader = /^(?:[\u{1F300}-\u{1FAFF}]|[#•\-])+/u.test(trimmedLine) || trimmedLine.endsWith(":");
+              // Check for headers (starts with # or ends with colon)
+              const isHeader = /^#+\s/.test(trimmedLine) || trimmedLine.endsWith(":");
+              
+              // Check for list items
+              const isListItem = /^[•\-\*]\s/.test(trimmedLine);
 
               if (isHeader) {
+                // Remove leading # for markdown headers
+                const headerText = trimmedLine.replace(/^#+\s/, '');
                 return (
                   <h3
                     key={li}
-                    className="text-2xl font-black tracking-tight text-slate-900 md:text-3xl"
+                    className="text-2xl font-black tracking-tight text-slate-900 md:text-3xl mt-6"
                   >
-                    {trimmedLine}
+                    {headerText}
                   </h3>
+                );
+              }
+
+              if (isListItem) {
+                // Remove bullet symbol
+                const listText = trimmedLine.replace(/^[•\-\*]\s/, '');
+                return (
+                  <div key={li} className="flex items-start gap-3 ml-4">
+                    <span className="text-orange-600 mt-1.5">•</span>
+                    <p className="text-lg leading-relaxed text-slate-700 md:text-xl md:leading-loose">
+                      {listText}
+                    </p>
+                  </div>
                 );
               }
 

@@ -35,7 +35,7 @@
   "terms_of_service": "Terms of Service",
   "footer_owner": "Contact Owner",
   "growth_updates": "Growth Updates",
-  "clearance_engine": "Clearance Engine",
+  "clearance_engine": "Clearance Engine (Legal & RERA)",
   "hero_title": "Invest in Dholera SIR with Certainty",
   "hero_desc": "The definitive platform for verified maps, progress, and plot analytics.",
   "view_projects": "View Projects",
@@ -100,7 +100,7 @@
   "verified_plotted_title": "Verified Plotted Developments",
   "verified_plotted_desc": "Scan and select verified residential communities, airport logistics zones, and industrial parks in Dholera SIR.",
   "commercial": "Commercial",
-  "search_by_project": "Search by project...",
+  "search_by_project": "SEARCH BY PROJECT...",
   "no_projects_found": "No Projects Found",
   "adjust_search": "Adjust your search keywords or categories to scan other verified platform options.",
   "airport_title": "Dholera International Airport",
@@ -159,5 +159,7 @@
   "strategic_roi_desc": "Data-driven insights to maximize your land appreciation.",
   "trust_record_desc": "Over 5 years of tracking Dholera's infrastructure milestones.",
   "visionary_leadership_title": "Visionary Leadership",
-  "visionary_leadership_desc": "Leveraging comprehensive GIS planning data and deep structural insights into the DSIR master plan, Naresh Gohel empowers institutional and private investors to navigate Dholera’s land market with absolute clarity, data-backed transparency, and zero ambiguity."
+  "visionary_leadership_desc": "Leveraging comprehensive GIS planning data and deep structural insights into the DSIR master plan, Naresh Gohel empowers institutional and private investors to navigate Dholera’s land market with absolute clarity, data-backed transparency, and zero ambiguity.",
+  "official_archives": "OFFICIAL PLATFORM ARCHIVES",
+  "whatsapp_hello": "Hi, I am interested in investing in Dholera SIR. I saw your platform. Please guide me."
 }
