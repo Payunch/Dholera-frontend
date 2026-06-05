@@ -90,11 +90,11 @@ export default async function UpdateDetailPage({ params }: Props) {
               <span className={cn("rounded-full border px-4 py-1.5 text-[10px] font-black uppercase tracking-widest", catColor)}>
                 {update.category}
               </span>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 <Calendar className="h-4 w-4" />
                 {format(new Date(update.publishedAt || update.createdAt), "MMMM d, yyyy, h:mm a")}
               </div>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 <Clock className="h-4 w-4" />
                 5 min read
               </div>
@@ -106,7 +106,7 @@ export default async function UpdateDetailPage({ params }: Props) {
 
             <div className="flex items-center justify-between border-y border-slate-100 py-6">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-slate-900 flex items-center justify-center text-white font-black text-xs">
+                <div className="h-10 w-10 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-slate-900 dark:text-white font-black text-xs">
                   DP
                 </div>
                 <div className="flex flex-col">
@@ -161,7 +161,7 @@ export default async function UpdateDetailPage({ params }: Props) {
               </Link>
               <Link
                 href="/projects"
-                className="rounded-full border-2 border-slate-900 px-10 py-4 font-black uppercase tracking-widest text-slate-900 transition-all hover:bg-slate-900 hover:text-white"
+                className="rounded-full border-2 border-slate-900 px-10 py-4 font-black uppercase tracking-widest text-slate-900 transition-all hover:bg-white dark:bg-slate-900 hover:text-white"
               >
                 View Verified Projects
               </Link>

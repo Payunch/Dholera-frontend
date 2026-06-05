@@ -104,7 +104,7 @@ export const RazorpayCheckout = ({ pdfIds, type, onSuccess, onClose }: RazorpayC
               <Loader2 className="h-12 w-12 text-orange-600 animate-spin" />
             </div>
             <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Initializing Secure Payment</h3>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Please wait while we connect to Razorpay...</p>
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Please wait while we connect to Razorpay...</p>
           </div>
         ) : error ? (
           <div className="space-y-6">
@@ -115,7 +115,7 @@ export const RazorpayCheckout = ({ pdfIds, type, onSuccess, onClose }: RazorpayC
             </div>
             <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Payment Error</h3>
             <p className="text-sm font-medium text-slate-500">{error}</p>
-            <button onClick={onClose} className="w-full bg-slate-900 text-white py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+            <button onClick={onClose} className="w-full bg-white dark:bg-slate-900 text-white py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
               Go Back
             </button>
           </div>
@@ -127,7 +127,7 @@ export const RazorpayCheckout = ({ pdfIds, type, onSuccess, onClose }: RazorpayC
               </div>
             </div>
             <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Secure Checkout Active</h3>
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Complete the payment in the Razorpay window to unlock your PDFs instantly.</p>
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Complete the payment in the Razorpay window to unlock your PDFs instantly.</p>
           </div>
         )}
       </div>

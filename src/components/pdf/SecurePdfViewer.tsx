@@ -154,10 +154,10 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
   return (
     <div className="fixed inset-0 z-[200] flex flex-col bg-slate-950/95 backdrop-blur-md">
       {/* Header */}
-      <div className="flex items-center justify-between bg-slate-900 px-4 py-3 border-b border-white/5">
+      <div className="flex items-center justify-between bg-white dark:bg-slate-900 px-4 py-3 border-b border-white/5">
         <div className="flex items-center gap-3">
           <FileText className="h-5 w-5 text-orange-500" />
-          <span className="text-xs font-black uppercase tracking-widest text-white hidden sm:inline">
+          <span className="text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white hidden sm:inline">
             Secure Intelligence Hub
           </span>
         </div>
@@ -188,11 +188,11 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
                 This document is part of our exclusive DSIRDA intelligence archive. Choose an option to unlock access.
               </p>
               <div className="space-y-3">
-                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                   <ShieldCheck className="h-4 w-4 text-green-500" /> 
                   Instant Access
                 </div>
-                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                   <ShieldCheck className="h-4 w-4 text-green-500" /> 
                   Secure Verification
                 </div>
@@ -202,11 +202,11 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             <div className="bg-slate-50 p-8 md:w-1/2 flex flex-col gap-4 border-l border-slate-100">
               <button 
                 onClick={() => { setSelectionType('view'); setShowRazorpay(true); }}
-                className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1"
+                className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-white dark:bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1"
               >
                 <span className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-1">One-Time Access</span>
                 <span className="text-lg font-black uppercase tracking-tight">View PDF</span>
-                <span className="text-[10px] font-bold text-slate-400 group-hover:text-white/80">Instant unlock after payment.</span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white/80">Instant unlock after payment.</span>
                 <div className="mt-4 flex items-center justify-between w-full">
                    <span className="text-2xl font-black">₹5</span>
                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -218,7 +218,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
                 className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1"
               >
                 <span className="text-lg font-black uppercase tracking-tight text-slate-900">Download PDF</span>
-                <span className="text-[10px] font-bold text-slate-400">Save permanently to your device</span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">Save permanently to your device</span>
                 <div className="mt-4 flex items-center justify-between w-full">
                    <span className="text-2xl font-black text-slate-900">₹10</span>
                    <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-transform" />
@@ -253,7 +253,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
             <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
             <h3 className="text-xl font-black text-slate-900 uppercase mb-2">Access Denied</h3>
             <p className="text-slate-500 font-medium mb-8">{displayError}</p>
-            <button onClick={onClose} className="w-full rounded-2xl bg-slate-900 py-4 text-white font-black uppercase tracking-widest">Close Viewer</button>
+            <button onClick={onClose} className="w-full rounded-2xl bg-white dark:bg-slate-900 py-4 text-white font-black uppercase tracking-widest">Close Viewer</button>
           </div>
         )}
 
@@ -289,7 +289,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
               
               <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 flex flex-col md:flex-row items-center justify-center gap-4 z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
                  <div className="flex flex-col items-center md:items-start mr-4">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Owner</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Project Owner</span>
                     <span className="text-sm font-black text-slate-900">Naresh Gohel</span>
                  </div>
                  <div className="flex items-center gap-3 w-full md:w-auto">

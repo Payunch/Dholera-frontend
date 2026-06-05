@@ -12,7 +12,7 @@ export default function AboutPage() {
     <div className="bg-white min-h-screen pb-32 w-full overflow-x-hidden">
       
       {/* Header Block */}
-      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -24,13 +24,13 @@ export default function AboutPage() {
         </div>
 
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
-          <div className="inline-flex items-center rounded-full bg-orange-600 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-white">
+          <div className="inline-flex items-center rounded-full bg-orange-600 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-slate-900 dark:text-white">
              Our Mission
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-white uppercase leading-[0.9]">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-[0.9]">
             The <span className="text-orange-600 italic">Intelligence</span> Hub
           </h1>
-          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
             Transparency. Verification. Growth.
           </p>
         </div>
@@ -73,9 +73,9 @@ export default function AboutPage() {
            </div>
         </div>
 
-        <div className="bg-slate-900 rounded-[3rem] p-12 md:p-24 text-white text-center">
+        <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-12 md:p-24 text-slate-900 dark:text-white text-center">
            <h2 className="text-3xl font-black uppercase mb-8 tracking-tighter md:text-5xl">Building the Future, <br/> <span className="text-orange-600 italic">One Decoded Map</span> at a Time.</h2>
-           <p className="text-slate-400 font-medium max-w-2xl mx-auto uppercase tracking-widest text-xs leading-loose">
+           <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto uppercase tracking-widest text-xs leading-loose">
               Join the elite circle of investors who rely on data-driven clarity to build their wealth in India's most ambitious industrial city.
            </p>
         </div>

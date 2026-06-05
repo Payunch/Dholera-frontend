@@ -13,7 +13,7 @@ export default function InvestmentGuidePage() {
     <div className="bg-slate-50 min-h-screen pb-32 w-full overflow-x-hidden">
       
       {/* Header Block */}
-      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -28,10 +28,10 @@ export default function InvestmentGuidePage() {
           <div className="inline-flex items-center rounded-full bg-green-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-green-500 border border-green-500/30">
             Strategic Alpha
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-tight">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight">
             Investment <span className="text-orange-600 italic">Playbook</span>
           </h1>
-          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
             Maximize your ROI with verified data on Dholera SIR industrial growth, infrastructure timelines, and land appreciation cycles.
           </p>
         </div>
@@ -61,17 +61,17 @@ export default function InvestmentGuidePage() {
                  </div>
               </section>
 
-              <section className="bg-slate-900 rounded-[2.5rem] p-12 text-white shadow-2xl relative overflow-hidden group">
+              <section className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 text-white shadow-2xl relative overflow-hidden group">
                  <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 bg-orange-600/10 blur-[100px] rounded-full pointer-events-none" />
                  <h2 className="text-2xl font-black uppercase mb-8 relative z-10">Investment Zones</h2>
                  <div className="space-y-6 relative z-10">
                     <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300">
                        <h3 className="text-orange-500 font-black uppercase text-sm mb-3">Activation Area (22.5 sq km)</h3>
-                       <p className="text-sm text-slate-400 font-medium leading-relaxed">The core priority zone for immediate development and industrial operations. Direct connectivity to the 4500MW Solar Park.</p>
+                       <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">The core priority zone for immediate development and industrial operations. Direct connectivity to the 4500MW Solar Park.</p>
                     </div>
                     <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300">
                        <h3 className="text-orange-500 font-black uppercase text-sm mb-3">TP1 & TP2 (Residential Hubs)</h3>
-                       <p className="text-sm text-slate-400 font-medium leading-relaxed">Focus for residential communities, housing societies, and social infrastructure. Most vibrant zone for individual investors.</p>
+                       <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Focus for residential communities, housing societies, and social infrastructure. Most vibrant zone for individual investors.</p>
                     </div>
                  </div>
               </section>
@@ -83,15 +83,15 @@ export default function InvestmentGuidePage() {
                  <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8 uppercase tracking-widest text-[10px]">
                     Ensure your investment is safe with our AI-powered risk scoring engine.
                  </p>
-                 <Link href="/clearance-engine" className="flex h-14 w-full items-center justify-center bg-slate-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-lg active:scale-95">
+                 <Link href="/clearance-engine" className="flex h-14 w-full items-center justify-center bg-white dark:bg-slate-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-lg active:scale-95">
                     Run Clearance Check
                  </Link>
               </div>
 
-              <div className="bg-orange-600 rounded-[2.5rem] p-10 text-white shadow-xl shadow-orange-600/20 hover:-translate-y-1 transition-all duration-500">
+              <div className="bg-orange-600 rounded-[2.5rem] p-10 text-slate-900 dark:text-white shadow-xl shadow-orange-600/20 hover:-translate-y-1 transition-all duration-500">
                  <ShieldCheck className="h-12 w-12 text-white mb-6 animate-pulse" />
                  <h3 className="text-xl font-black uppercase mb-4">Legal Advisory</h3>
-                 <p className="text-xs font-bold text-white/80 leading-relaxed mb-8 uppercase tracking-widest">
+                 <p className="text-xs font-bold text-slate-900 dark:text-white/80 leading-relaxed mb-8 uppercase tracking-widest">
                     Professional support for title verification, NA permissions, and RERA compliance documentation.
                  </p>
                  <Link href="/contact" className="text-[10px] font-black uppercase tracking-widest text-white flex items-center gap-2 group">

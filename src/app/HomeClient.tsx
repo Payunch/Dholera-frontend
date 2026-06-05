@@ -98,7 +98,7 @@ export function HomeClient() {
     <div className="flex flex-col bg-white dark:bg-slate-950 overflow-x-hidden w-full transition-colors">
       
       {/* 1.1 HERO SECTION */}
-      <section className="relative w-full min-h-[95vh] bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
+      <section className="relative w-full min-h-[95vh] bg-slate-50 dark:bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
         {/* Animated Hero Carousel with HIGH-RES IMAGES */}
         <div className="absolute inset-0 z-0">
           {heroImages.map((img, idx) => (
@@ -118,7 +118,7 @@ export function HomeClient() {
               />
             </div>
           ))}
-          <div className="absolute inset-0 bg-[#0B132B]/40 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-white dark:bg-[#0B132B]/40 mix-blend-multiply" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-[#0B132B]/80 pointer-events-none" />
           
           {/* Subtle Dholera Vector Overlay (Simulated with a tech grid) */}
@@ -166,11 +166,11 @@ export function HomeClient() {
                 <span className="sm:hidden">{t('verified_data')}</span>
               </div>
 
-              <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-white uppercase leading-[0.95] mb-8">
+              <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-slate-900 dark:text-white uppercase leading-[0.95] mb-8">
                 {t('hero_title')}
               </h1>
 
-              <p className="max-w-2xl text-base sm:text-lg md:text-xl font-medium text-slate-200 leading-relaxed mb-12 opacity-90">
+              <p className="max-w-2xl text-base sm:text-lg md:text-xl font-medium text-slate-700 dark:text-slate-200 leading-relaxed mb-12 opacity-90">
                 {t('hero_desc')}
               </p>
 
@@ -193,12 +193,12 @@ export function HomeClient() {
               <div className="flex items-center gap-4 pt-10 opacity-60">
                 <div className="flex -space-x-3">
                   {[1, 2, 3, 4].map(i => (
-                    <div key={i} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[8px] font-bold text-white">
+                    <div key={i} className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[8px] font-bold text-slate-900 dark:text-white">
                       {i}
                     </div>
                   ))}
                 </div>
-                <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-300">{t('trusted_by')}</p>
+                <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('trusted_by')}</p>
               </div>
             </div>
           </div>
@@ -209,10 +209,10 @@ export function HomeClient() {
       <section className="bg-white dark:bg-slate-950 py-16 border-b border-slate-100 dark:border-slate-800 overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8">
           <div className="mb-12 text-center space-y-3 max-w-3xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-black text-white uppercase leading-tight">
+            <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white uppercase leading-tight">
               {t('institutional_anchors_title')}
             </h2>
-            <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+            <p className="text-sm font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest">
               {t('institutional_anchors_desc')}
             </p>
           </div>
@@ -237,7 +237,7 @@ export function HomeClient() {
                           e.target.style.display = 'none';
                         }}
                       />
-                      <div className="absolute -bottom-8 inset-x-0 text-center text-[8px] font-black uppercase tracking-widest text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute -bottom-8 inset-x-0 text-center text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
                         {giant.name}
                       </div>
                     </div>
@@ -261,10 +261,10 @@ export function HomeClient() {
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
               {t('verified_portfolio_title')}
             </span>
-            <h2 className="font-display text-4xl font-black text-white md:text-5xl uppercase leading-tight">
+            <h2 className="font-display text-4xl font-black text-slate-900 dark:text-white md:text-5xl uppercase leading-tight">
               {t('featured_developments').split(' ').slice(0, 1).join(' ')} <span className="text-[#FF7A00] italic">{t('featured_developments').split(' ').slice(1).join(' ')}</span>
             </h2>
-            <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
+            <p className="text-sm font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
               {t('explore_verified_desc')}
             </p>
           </div>
@@ -290,12 +290,12 @@ export function HomeClient() {
                       <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors duration-500" />
                       
                       {/* Category Badge */}
-                      <span className="absolute top-5 left-5 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg z-10 transition-transform group-hover:scale-110">
+                      <span className="absolute top-5 left-5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg z-10 transition-transform group-hover:scale-110">
                         {project.category}
                       </span>
 
                       {project.reraApproved && (
-                        <span className="absolute top-5 right-5 bg-green-500 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg z-10 transition-transform group-hover:scale-110">
+                        <span className="absolute top-5 right-5 bg-green-500 text-slate-900 dark:text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg z-10 transition-transform group-hover:scale-110">
                           RERA VERIFIED
                         </span>
                       )}
@@ -309,15 +309,15 @@ export function HomeClient() {
                         {project.location.split(",")[0]}
                       </div>
 
-                      <h3 className="font-display text-2xl font-black uppercase tracking-tight text-white group-hover:text-[#FF7A00] transition-colors duration-300">
+                      <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-colors duration-300">
                         {project.name}
                       </h3>
 
-                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 leading-none">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 leading-none">
                         {t(project.taglineKey)}
                       </p>
 
-                      <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 opacity-80 group-hover:opacity-100 transition-opacity">
+                      <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 opacity-80 group-hover:opacity-100 transition-opacity">
                         {projectDesc}
                       </p>
                     </div>
@@ -325,7 +325,7 @@ export function HomeClient() {
 
                   {/* Actions (Visual Button) */}
                   <div className="p-8 pt-0">
-                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
                       {t('get_access')}
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </div>
@@ -337,7 +337,7 @@ export function HomeClient() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/projects" className="px-8 py-4 bg-slate-900 dark:bg-orange-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-[#FF7A00] transition-all shadow-md flex items-center gap-2">
+            <Link href="/projects" className="px-8 py-4 bg-white dark:bg-slate-900 dark:bg-orange-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-[#FF7A00] transition-all shadow-md flex items-center gap-2">
               {t('nav_projects')} <ArrowRight className="w-4 h-4" />
             </Link>
             <Link href="/tp-maps" className="px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-[#FF7A00] hover:text-[#FF7A00] transition-all shadow-sm flex items-center gap-2">
@@ -351,7 +351,7 @@ export function HomeClient() {
       {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
       <section id="site-visit" className="bg-slate-100 dark:bg-slate-950 py-32 relative overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8 relative z-10 flex justify-center">
-          <div className="bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden">
+          <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden">
             
             {/* Background Image Overlay */}
             <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
@@ -368,10 +368,10 @@ export function HomeClient() {
                 <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
                     {t('exclusive_offer')}
                 </div>
-                <h2 className="font-display text-4xl font-black text-white md:text-5xl uppercase leading-[1.1]">
+                <h2 className="font-display text-4xl font-black text-slate-900 dark:text-white md:text-5xl uppercase leading-[1.1]">
                   {t('talk_to_owner_title').split(' ').slice(0, 2).join(' ')} <br/> <span className="text-[#FF7A00] italic">{t('talk_to_owner_title').split(' ').slice(2).join(' ')}</span>
                 </h2>
-                <p className="text-sm font-medium text-slate-400 leading-relaxed tracking-wide">
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed tracking-wide">
                   {t('talk_to_owner_desc')}
                 </p>
                 <div className="space-y-4 pt-4 border-t border-slate-800">
@@ -379,24 +379,24 @@ export function HomeClient() {
                     <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
                       <MapPin className="h-5 w-5" />
                     </div>
-                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">{t('pickup_service')}</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('pickup_service')}</span>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
                       <Building className="h-5 w-5" />
                     </div>
-                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">{t('premium_stay')}</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('premium_stay')}</span>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
                       <ShieldCheck className="h-5 w-5" />
                     </div>
-                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">{t('title_review')}</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('title_review')}</span>
                   </div>
                 </div>
             </div>
 
-            <div className="bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden z-10">
+            <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden z-10">
                 {visitStatus === 'error' && (
                   <div className="mb-8 flex flex-col gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-[10px] font-bold text-red-400 uppercase tracking-widest leading-relaxed">
                     <div className="flex items-center gap-3">
@@ -415,8 +415,8 @@ export function HomeClient() {
                     <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30">
                       <CheckCircle2 className="h-10 w-10" />
                     </div>
-                    <h3 className="text-2xl font-black text-white uppercase">{t('request_received')}</h3>
-                    <p className="text-sm font-bold text-slate-400 uppercase leading-relaxed max-w-[240px] mx-auto">
+                    <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase">{t('request_received')}</h3>
+                    <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase leading-relaxed max-w-[240px] mx-auto">
                       {t('call_back_msg')}
                     </p>
                     <button 
@@ -428,7 +428,7 @@ export function HomeClient() {
                   </div>
                 ) : (
                   <>
-                    <h3 className="text-xl font-black text-white uppercase mb-6 text-center">{t('priority_conn')}</h3>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-6 text-center">{t('priority_conn')}</h3>
                     <form className="space-y-4" onSubmit={handleVisitSubmit}>
                       <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{t('full_name')}</label>
@@ -438,7 +438,7 @@ export function HomeClient() {
                           required 
                           value={visitForm.name}
                           onChange={(e) => setVisitForm({...visitForm, name: e.target.value})}
-                          className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+                          className="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -451,7 +451,7 @@ export function HomeClient() {
                           maxLength={10}
                           value={visitForm.phone}
                           onChange={handlePhoneChange}
-                          className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+                          className="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -466,7 +466,7 @@ export function HomeClient() {
                           min={today}
                           max={nextWeek}
                           onChange={(e) => setVisitForm({...visitForm, date: e.target.value})}
-                          className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+                          className="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
                       </div>
                       <button 

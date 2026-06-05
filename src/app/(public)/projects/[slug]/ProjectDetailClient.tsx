@@ -52,7 +52,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
             {/* Header copy */}
             <div className="space-y-4">
               <div className="flex flex-wrap gap-2 items-center">
-                <span className="bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest px-3.5 py-1.5 rounded-xl shadow-sm">
+                <span className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[9px] font-black uppercase tracking-widest px-3.5 py-1.5 rounded-xl shadow-sm">
                   {project.category}
                 </span>
                 
@@ -73,7 +73,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
                 {title}
               </h1>
 
-              <p className="text-xs font-black uppercase tracking-widest text-slate-400">
+              <p className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
                 {tagline}
               </p>
             </div>
@@ -103,19 +103,19 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               {/* Specs Table List */}
               <div className="pt-6 border-t border-slate-100 grid gap-6 sm:grid-cols-2">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Available Sizes</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Available Sizes</span>
                   <p className="text-sm font-black text-slate-800 uppercase">{project.plotSizes}</p>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Offering</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Offering</span>
                   <p className="text-sm font-black text-slate-800 uppercase">{project.offering}</p>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Internal Roads</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Internal Roads</span>
                   <p className="text-sm font-black text-slate-800 uppercase">{project.roadWidth}</p>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Zoning Designation</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Zoning Designation</span>
                   <p className="text-sm font-black text-slate-800 uppercase">{project.zoning}</p>
                 </div>
               </div>
@@ -135,7 +135,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
                     Geographic Alignment
                   </span>
                 </div>
-                <span className="text-[9px] font-black uppercase tracking-widest text-slate-400">
+                <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
                   TP Coordinates
                 </span>
               </div>
@@ -152,13 +152,13 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               </div>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Project Location</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Project Location</span>
                 <p className="text-sm font-black text-slate-800 uppercase leading-tight">{project.location}</p>
               </div>
             </div>
 
             {/* CTAs Card */}
-            <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white space-y-6 shadow-xl shadow-slate-950/15">
+            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 text-slate-900 dark:text-white space-y-6 shadow-xl shadow-slate-950/15">
               <div className="space-y-2">
                 <h3 className="font-display text-2xl font-black uppercase tracking-tight">
                   Advisory Desk

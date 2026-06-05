@@ -13,7 +13,7 @@ export default function PlotsForSalePage() {
     <div className="bg-slate-50 min-h-screen pb-32 w-full overflow-x-hidden">
       
       {/* Header Block */}
-      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -28,10 +28,10 @@ export default function PlotsForSalePage() {
           <div className="inline-flex items-center rounded-full bg-orange-600/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 border border-orange-500/30">
             Real Estate Inventory
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-tight">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight">
             Plotted <span className="text-orange-600 italic">Investments</span> & Land
           </h1>
-          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
             Direct access to verified residential, commercial, and industrial plots within the Dholera SIR jurisdiction. 
             Analyze zoning, DP regulations, and TP-wise land availability.
           </p>
@@ -47,7 +47,7 @@ export default function PlotsForSalePage() {
             { title: "Industrial Zones", desc: "Large land parcels for manufacturing and logistics units.", icon: MapPin },
           ].map((cat, i) => (
             <div key={i} className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all">
-              <div className="h-16 w-16 rounded-[1.5rem] bg-orange-600 flex items-center justify-center text-white mb-8">
+              <div className="h-16 w-16 rounded-[1.5rem] bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white mb-8">
                 <cat.icon className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-black text-slate-900 uppercase mb-4">{cat.title}</h3>

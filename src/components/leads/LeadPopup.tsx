@@ -114,11 +114,11 @@ export const LeadPopup = ({
           <div className="flex justify-center mb-10"><SplitLogo height={42} /></div>
           
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-black uppercase tracking-tight text-white mb-2">
+            <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">
               {step === 'language' ? 'चुनें (Select)' : 
                step === 'success' ? t('access_granted') : t('start_here')}
             </h2>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
               {step === 'language' ? 'Select your language to continue' : t('verify_desc')}
             </p>
           </div>
@@ -156,7 +156,7 @@ export const LeadPopup = ({
                   placeholder={t('full_name')} 
                   required
                   autoFocus
-                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-900 transition-all text-white placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-white dark:bg-slate-900 transition-all text-white placeholder:text-slate-400"
                   value={name} 
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -167,7 +167,7 @@ export const LeadPopup = ({
                   type="tel" 
                   placeholder={t('mobile_number')} 
                   required
-                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-900 transition-all text-white placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-white dark:bg-slate-900 transition-all text-white placeholder:text-slate-400"
                   value={phone} 
                   onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
                 />
@@ -188,7 +188,7 @@ export const LeadPopup = ({
               
               <button 
                 disabled={loading} 
-                className="mt-2 w-full rounded-2xl bg-orange-600 py-5 font-black uppercase tracking-widest text-[10px] text-white transition-all hover:bg-slate-900 dark:hover:bg-black shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3 group"
+                className="mt-2 w-full rounded-2xl bg-orange-600 py-5 font-black uppercase tracking-widest text-[10px] text-white transition-all hover:bg-white dark:bg-slate-900 dark:hover:bg-black shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3 group"
               >
                 {loading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -206,7 +206,7 @@ export const LeadPopup = ({
                <div className="h-24 w-24 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-500 border border-green-100 dark:border-green-500/30">
                  <CheckCircle2 className="h-12 w-12" />
                </div>
-               <p className="text-sm font-black uppercase tracking-[0.2em] text-white">{t('access_granted')}</p>
+               <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{t('access_granted')}</p>
             </div>
           )}
         </div>

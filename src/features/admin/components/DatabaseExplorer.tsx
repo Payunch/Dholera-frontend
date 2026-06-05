@@ -101,12 +101,12 @@ export const DatabaseExplorer = () => {
       <div className="flex-1 flex flex-col overflow-hidden bg-white">
         {!selectedTable ? (
           <div className="flex-1 flex flex-col items-center justify-center p-20 text-center space-y-4">
-             <div className="h-20 w-20 rounded-[2rem] bg-slate-50 flex items-center justify-center text-slate-200">
+             <div className="h-20 w-20 rounded-[2rem] bg-slate-50 flex items-center justify-center text-slate-700 dark:text-slate-200">
                 <Database className="h-10 w-10" />
              </div>
              <div>
                 <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Database Explorer</h3>
-                <p className="text-sm font-medium text-slate-400 mt-1">Select a table from the sidebar to browse raw records.</p>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">Select a table from the sidebar to browse raw records.</p>
              </div>
           </div>
         ) : (
@@ -119,7 +119,7 @@ export const DatabaseExplorer = () => {
                   </div>
                   <div>
                      <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight">{selectedTable}</h3>
-                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Table Preview (Last 1000 Rows)</p>
+                     <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Live Table Preview (Last 1000 Rows)</p>
                   </div>
                </div>
 
@@ -147,7 +147,7 @@ export const DatabaseExplorer = () => {
             {/* Grid */}
             <div className="flex-1 overflow-auto p-1 bg-slate-50">
                {data.length === 0 ? (
-                 <div className="flex-1 flex items-center justify-center p-20 text-slate-400 font-bold uppercase text-xs tracking-widest italic">Table is empty</div>
+                 <div className="flex-1 flex items-center justify-center p-20 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs tracking-widest italic">Table is empty</div>
                ) : (
                  <div className="inline-block min-w-full align-middle">
                     <div className="overflow-hidden border border-slate-200 sm:rounded-2xl shadow-sm bg-white">

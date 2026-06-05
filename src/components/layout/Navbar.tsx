@@ -103,7 +103,7 @@ export function Navbar() {
 
           <Link
             href="/contact"
-            className="rounded-full bg-slate-900 px-6 py-2.5 text-white transition-all hover:bg-orange-600 shadow-lg shadow-slate-950/10"
+            className="rounded-full bg-white dark:bg-slate-900 px-6 py-2.5 text-white transition-all hover:bg-orange-600 shadow-lg shadow-slate-950/10"
           >
             {t('nav_contact')}
           </Link>
@@ -137,7 +137,7 @@ export function Navbar() {
 
           <div className="pt-8 border-t border-slate-100 space-y-6">
             <div className="space-y-4">
-              <span className="text-slate-400 font-black uppercase text-[10px] tracking-[0.2em]">Select Language</span>
+              <span className="text-slate-500 dark:text-slate-400 font-black uppercase text-[10px] tracking-[0.2em]">Select Language</span>
               <div className="grid grid-cols-3 gap-2">
                 {languages.map((l) => (
                   <button
@@ -159,7 +159,7 @@ export function Navbar() {
             <Link
               href="/contact"
               onClick={() => setIsMenuOpen(false)}
-              className="block w-full rounded-lg bg-slate-900 py-4 text-center text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600"
+              className="block w-full rounded-lg bg-white dark:bg-slate-900 py-4 text-center text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600"
             >
               {t('nav_contact')}
             </Link>

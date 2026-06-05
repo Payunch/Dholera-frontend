@@ -13,7 +13,7 @@ export default function GovernmentSchemesPage() {
     <div className="bg-white min-h-screen pb-32 w-full overflow-x-hidden">
       
       {/* Header Block */}
-      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -28,10 +28,10 @@ export default function GovernmentSchemesPage() {
           <div className="inline-flex items-center rounded-full bg-orange-600/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 border border-orange-500/30">
             Policy & Incentives
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-tight">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight">
             Government <span className="text-orange-600 italic">Schemes</span>
           </h1>
-          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
             Leverage state and central government incentives designed to accelerate industrial and residential growth in the Dholera SIR.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function GovernmentSchemesPage() {
            ].map((scheme, i) => (
              <div key={i} className={`group p-10 rounded-[2.5rem] border-2 ${scheme.color} space-y-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}>
                 <div className="flex items-center gap-6">
-                   <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center text-slate-900 shadow-sm group-hover:bg-slate-900 group-hover:text-white transition-all">
+                   <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center text-slate-900 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
                       <scheme.icon className="h-7 w-7" />
                    </div>
                    <h3 className="text-2xl font-black text-slate-900 uppercase group-hover:text-orange-600 transition-colors">{scheme.title}</h3>
@@ -72,10 +72,10 @@ export default function GovernmentSchemesPage() {
            ))}
         </div>
 
-        <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
            <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 bg-orange-600/10 blur-[100px] rounded-full pointer-events-none" />
-           <h3 className="text-2xl md:text-4xl font-black text-white uppercase mb-6 relative z-10">Residential Benefits</h3>
-           <p className="text-slate-400 font-medium leading-relaxed mb-10 uppercase tracking-widest text-xs relative z-10">
+           <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white uppercase mb-6 relative z-10">Residential Benefits</h3>
+           <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-10 uppercase tracking-widest text-xs relative z-10">
               Under PMAY and Gujarat State Housing policies, eligible first-time homebuyers in Dholera can access interest 
               subsidies and infrastructure benefits for plotted developments.
            </p>

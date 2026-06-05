@@ -18,7 +18,7 @@ export default function AirportPage() {
   return (
     <div className="bg-white dark:bg-slate-950 min-h-screen w-full overflow-x-hidden transition-colors">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-slate-900 text-white">
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-white dark:bg-slate-900 text-white">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/images/airportVision.webp" 
@@ -37,7 +37,7 @@ export default function AirportPage() {
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter mb-6 leading-[0.9]">
             {t('airport_title')}
           </h1>
-          <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
             {t('airport_subtitle')}
           </p>
         </div>
@@ -48,10 +48,10 @@ export default function AirportPage() {
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
-              <h2 className="text-4xl font-black uppercase tracking-tight text-white">
+              <h2 className="text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
                 {t('strategic_importance_title')}
               </h2>
-              <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
                 {t('airport_desc')}
               </p>
               
@@ -62,7 +62,7 @@ export default function AirportPage() {
                   t('cargo_hub'),
                   t('expressway_parallel')
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 font-bold text-slate-800 dark:text-slate-200 uppercase text-xs">
+                  <div key={i} className="flex items-center gap-3 font-bold text-slate-800 dark:text-slate-700 dark:text-slate-200 uppercase text-xs">
                     <CheckCircle2 className="h-5 w-5 text-green-500" /> {item}
                   </div>
                 ))}
@@ -71,7 +71,7 @@ export default function AirportPage() {
               <div className="pt-6">
                 <Link 
                   href="/pdf" 
-                  className="inline-flex items-center gap-3 bg-slate-900 dark:bg-orange-600 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 dark:hover:bg-orange-700 transition-all shadow-xl shadow-slate-900/10"
+                  className="inline-flex items-center gap-3 bg-white dark:bg-slate-900 dark:bg-orange-600 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 dark:hover:bg-orange-700 transition-all shadow-xl shadow-slate-900/10"
                 >
                   {t('download_airport_maps')} <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -83,10 +83,10 @@ export default function AirportPage() {
                 <div key={i} className="p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-2xl transition-all">
                   <div className="flex justify-between items-start mb-4">
                     <span className="text-[10px] font-black uppercase tracking-widest text-orange-600">{m.phase}</span>
-                    <span className="bg-white dark:bg-slate-800 px-3 py-1 rounded-full text-[8px] font-black uppercase border border-slate-200 dark:border-slate-700 dark:text-slate-300">{m.status}</span>
+                    <span className="bg-white dark:bg-slate-800 px-3 py-1 rounded-full text-[8px] font-black uppercase border border-slate-200 dark:border-slate-700 dark:text-slate-600 dark:text-slate-300">{m.status}</span>
                   </div>
-                  <h4 className="text-xl font-black text-white mb-2">{m.date}</h4>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">{m.desc}</p>
+                  <h4 className="text-xl font-black text-slate-900 dark:text-white mb-2">{m.date}</h4>
+                  <p className="text-sm text-slate-500 dark:text-slate-500 dark:text-slate-400 leading-relaxed font-medium">{m.desc}</p>
                 </div>
               ))}
             </div>
@@ -95,10 +95,10 @@ export default function AirportPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-slate-900 py-24 text-white">
+      <section className="bg-white dark:bg-slate-900 py-24 text-white">
         <div className="container mx-auto px-4 text-center space-y-8">
           <h2 className="text-3xl md:text-5xl font-black uppercase">{t('interested_airport_prop')}</h2>
-          <p className="text-slate-400 max-w-xl mx-auto uppercase text-xs font-black tracking-widest leading-loose">
+          <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto uppercase text-xs font-black tracking-widest leading-loose">
             {t('direct_access_tp')}
           </p>
           <div className="flex justify-center pt-4">

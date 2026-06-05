@@ -89,7 +89,7 @@ export default function PdfPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
-      <div className="relative bg-[#0B132B] pt-32 pb-16 px-4 md:px-8 border-b border-slate-800 overflow-hidden">
+      <div className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 px-4 md:px-8 border-b border-slate-800 overflow-hidden">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -105,7 +105,7 @@ export default function PdfPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#10B981]">
                 <ShieldCheck className="h-4 w-4" /> {t('pdf_hub_title')}
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white uppercase tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">
                 DHOLERA <span className="text-[#FF7A00] italic">PDF HUB</span>
               </h1>
            </div>
@@ -117,7 +117,7 @@ export default function PdfPage() {
                 placeholder={t('search_pdf_placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-slate-900 border border-slate-700 font-bold uppercase tracking-widest text-xs text-white placeholder-slate-600 outline-none focus:border-[#FF7A00] transition-all"
+                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-700 font-bold uppercase tracking-widest text-xs text-white placeholder-slate-600 outline-none focus:border-[#FF7A00] transition-all"
               />
            </div>
         </div>
@@ -127,7 +127,7 @@ export default function PdfPage() {
         
         {/* Horizontal PDF Types Buttons */}
         <div className="space-y-6">
-            <h3 className="text-center text-xs font-black uppercase tracking-[0.3em] text-slate-400 flex items-center justify-center gap-2">
+            <h3 className="text-center text-xs font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2">
                 <Filter className="h-4 w-4" /> {t('pdf_types')}
             </h3>
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -145,7 +145,7 @@ export default function PdfPage() {
                       {filter.label}
                       <span className={cn(
                         "px-2 py-0.5 rounded-md text-[8px]",
-                        activeFilter === filter.label ? "bg-white/20 text-white" : "bg-slate-100 text-slate-400"
+                        activeFilter === filter.label ? "bg-white/20 text-slate-900 dark:text-white" : "bg-slate-100 text-slate-500 dark:text-slate-400"
                       )}>
                         {getCount(filter.key)}
                       </span>
@@ -159,12 +159,12 @@ export default function PdfPage() {
            {loading ? (
              <div className="flex flex-col items-center justify-center py-32 gap-4">
                 <div className="h-10 w-10 border-4 border-slate-200 border-t-[#FF7A00] rounded-full animate-spin" />
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 animate-pulse">Scanning Hub...</span>
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 animate-pulse">Scanning Hub...</span>
              </div>
            ) : filteredPdfs.length === 0 ? (
              <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-800 p-20 text-center flex flex-col items-center">
                 <FileText className="h-12 w-12 text-slate-300 mb-6" />
-                <h3 className="text-lg font-black text-white uppercase mb-2">{t('no_projects_found')}</h3>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase mb-2">{t('no_projects_found')}</h3>
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{t('adjust_search')}</p>
              </div>
            ) : (
@@ -178,11 +178,11 @@ export default function PdfPage() {
                     className="group bg-white rounded-3xl border border-slate-100 p-6 flex flex-col shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500"
                   >
                      <div className="flex items-center justify-between mb-6">
-                        <div className="h-12 w-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-white transition-all duration-300">
+                        <div className="h-12 w-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-slate-900 dark:text-white transition-all duration-300">
                            <FileText className="h-6 w-6" />
                         </div>
                         <div className="flex flex-col items-end">
-                           <span className="text-[8px] font-black uppercase tracking-widest text-slate-400 group-hover:text-[#FF7A00] transition-colors">
+                           <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 group-hover:text-[#FF7A00] transition-colors">
                                 {pdf.fileSize}
                            </span>
                            <div className="h-1 w-8 bg-slate-100 rounded-full mt-1 overflow-hidden">
@@ -203,11 +203,11 @@ export default function PdfPage() {
                      <div className="flex items-center justify-between gap-4 pt-4 border-t border-slate-50 group-hover:border-orange-500/10 transition-colors">
                         <div className="flex items-center gap-2">
                            <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                           <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">
+                           <span className="text-[8px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                              {formatUploadedAt(pdf)}
                            </span>
                         </div>
-                        <div className="p-2.5 rounded-xl bg-slate-900 text-white group-hover:bg-[#FF7A00] transition-all shadow-lg shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                        <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white group-hover:bg-[#FF7A00] transition-all shadow-lg shadow-slate-950/10 group-hover:shadow-orange-600/20">
                             <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
                         </div>
                      </div>

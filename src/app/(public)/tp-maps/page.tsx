@@ -55,7 +55,7 @@ export default function TpMapsPage() {
     <div className="bg-white min-h-screen font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
-      <section className="relative bg-[#0B132B] pt-32 pb-16 border-b border-slate-800 overflow-hidden">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 border-b border-slate-800 overflow-hidden">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -68,10 +68,10 @@ export default function TpMapsPage() {
 
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center">
            <div className="max-w-4xl mx-auto">
-              <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
                 {t('tp_maps_matrix_title')}
               </h1>
-              <p className="mt-6 text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
+              <p className="mt-6 text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
                 {t('tp_maps_matrix_desc')}
               </p>
            </div>
@@ -122,7 +122,7 @@ export default function TpMapsPage() {
            {loading ? (
              <div className="flex flex-col items-center justify-center py-20">
                <Loader2 className="h-12 w-12 text-orange-600 animate-spin" />
-               <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-400">Loading Intelligence Matrix...</p>
+               <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Loading Intelligence Matrix...</p>
              </div>
            ) : (
              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
@@ -140,7 +140,7 @@ export default function TpMapsPage() {
                              className={cn(
                                "backdrop-blur-md text-[8px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg border",
                                badge.type === 'compliance' 
-                                 ? "bg-[#10B981] text-white border-[#10B981]" 
+                                 ? "bg-[#10B981] text-slate-900 dark:text-white border-[#10B981]" 
                                  : "bg-[#D97706] text-white border-[#D97706]"
                              )}
                            >
@@ -151,12 +151,12 @@ export default function TpMapsPage() {
 
                      <div>
                        <div className="flex justify-between items-start mb-10 pt-4">
-                          <div className="h-16 w-16 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
+                          <div className="h-16 w-16 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all duration-300">
                             <Map className="h-8 w-8" />
                           </div>
                           <div className="group/info relative cursor-help">
                             <HelpCircle className="h-6 w-6 text-slate-300 hover:text-[#FF7A00] transition-colors" />
-                            <div className="absolute right-0 top-8 w-48 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest p-4 rounded-xl opacity-0 pointer-events-none group-hover/info:opacity-100 transition-all duration-300 z-20 shadow-2xl">
+                            <div className="absolute right-0 top-8 w-48 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[8px] font-black uppercase tracking-widest p-4 rounded-xl opacity-0 pointer-events-none group-hover/info:opacity-100 transition-all duration-300 z-20 shadow-2xl">
                                Verify exact plot boundaries, road widths, and zoning use-cases for this specific Town Planning scheme.
                             </div>
                           </div>
@@ -178,7 +178,7 @@ export default function TpMapsPage() {
                        </div>
                      </div>
 
-                     <div className="w-full h-14 rounded-2xl bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                     <div className="w-full h-14 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
                        Explore Data Matrix <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                      </div>
                   </Link>

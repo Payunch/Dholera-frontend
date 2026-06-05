@@ -79,12 +79,12 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
       <header className="bg-white border-b border-slate-200 sticky top-0 z-[100] px-8 py-6">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-white shadow-lg shadow-orange-600/20">
+            <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-orange-600/20">
               <ShieldCheck className="h-6 w-6" />
             </div>
             <div>
               <h1 className="text-xl font-black uppercase tracking-tight text-slate-900">Master <span className="text-orange-600">Control</span></h1>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Dholera Intelligence Terminal v4.0</p>
+              <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-0.5">Dholera Intelligence Terminal v4.0</p>
             </div>
           </div>
 
@@ -103,7 +103,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
                 <tab.icon className="h-4 w-4" />
                 {tab.label}
                 {tab.badge !== undefined && tab.badge > 0 && (
-                  <span className="bg-orange-600 text-white text-[8px] h-5 w-5 rounded-full flex items-center justify-center">
+                  <span className="bg-orange-600 text-slate-900 dark:text-white text-[8px] h-5 w-5 rounded-full flex items-center justify-center">
                     {tab.badge}
                   </span>
                 )}
@@ -147,7 +147,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
       </main>
 
       <footer className="py-8 px-8 border-t border-slate-200 opacity-50">
-         <div className="max-w-[1600px] mx-auto flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+         <div className="max-w-[1600px] mx-auto flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
             <div>Dholera Real Estate Intelligence System</div>
             <div>Authorized Operations Only</div>
          </div>

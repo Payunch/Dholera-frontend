@@ -100,18 +100,18 @@ export default function AboutUsPage() {
     <div className="bg-slate-50 min-h-screen pb-32 w-full overflow-x-hidden font-sans">
       
       {/* Header Section */}
-      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image src="/images/futuristic_dholera.png" alt="Dholera Vision" fill className="object-cover" />
         </div>
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
-          <div className="inline-flex items-center rounded-full bg-orange-600 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-white">
+          <div className="inline-flex items-center rounded-full bg-orange-600 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-slate-900 dark:text-white">
              {t('intelligence_network')}
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-white uppercase leading-none">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none">
             {t('nav_about').split(' ').slice(0, 1).join(' ')} <span className="text-orange-600 italic">{t('nav_about').split(' ').slice(1).join(' ')}</span>
           </h1>
-          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
             {t('about_us_subtitle')}
           </p>
         </div>
@@ -144,7 +144,7 @@ export default function AboutUsPage() {
         </div>
 
         {/* Founder Profile Section */}
-        <div className="relative bg-slate-900 rounded-[3rem] p-10 md:p-14 border border-slate-800 shadow-xl mb-32 flex flex-col lg:flex-row items-center gap-12 group hover:shadow-2xl transition-all duration-500 overflow-hidden">
+        <div className="relative bg-white dark:bg-slate-900 rounded-[3rem] p-10 md:p-14 border border-slate-800 shadow-xl mb-32 flex flex-col lg:flex-row items-center gap-12 group hover:shadow-2xl transition-all duration-500 overflow-hidden">
            
            {/* Background Image (a1.jpg) */}
            <div className="absolute inset-0 z-0 opacity-60 transition-opacity duration-700 pointer-events-none">
@@ -167,7 +167,7 @@ export default function AboutUsPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent" />
               <div className="absolute bottom-6 left-6">
-                 <h3 className="text-2xl font-black text-white uppercase tracking-tight">Naresh Gohel</h3>
+                 <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Naresh Gohel</h3>
                  <p className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00]">Founder & Director</p>
               </div>
            </div>
@@ -177,13 +177,13 @@ export default function AboutUsPage() {
               <div className="inline-flex items-center rounded-full bg-orange-600/20 border border-orange-500/30 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-orange-400">
                  {t('visionary_leadership_title')}
               </div>
-              <h2 className="font-display text-4xl md:text-5xl font-black text-white uppercase leading-[1.1] tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
+              <h2 className="font-display text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase leading-[1.1] tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
                  {t('about_title').split(' ').slice(0, 1).join(' ')} <span className="italic text-[#FF7A00]">{t('about_title').split(' ').slice(1).join(' ')}</span>
               </h2>
               <div className="relative">
                  {/* Quote Mark Decoration */}
                  <div className="absolute -top-6 -left-6 text-8xl font-serif text-slate-700 opacity-30 z-0">"</div>
-                 <p className="relative z-10 text-lg md:text-xl text-slate-300 font-medium leading-relaxed italic border-l-4 border-[#FF7A00] pl-6">
+                 <p className="relative z-10 text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed italic border-l-4 border-[#FF7A00] pl-6">
                     {t('visionary_leadership_desc')}
                  </p>
               </div>

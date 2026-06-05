@@ -13,7 +13,7 @@ export default function TravelLifestylePage() {
     <div className="bg-white min-h-screen pb-32 w-full overflow-x-hidden">
       
       {/* Header Block */}
-      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -28,10 +28,10 @@ export default function TravelLifestylePage() {
           <div className="inline-flex items-center rounded-full bg-blue-600/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 border border-blue-500/30">
              Regional Connectivity
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-white uppercase leading-none">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none">
              Travel & <span className="text-orange-600 italic">Lifestyle</span>
           </h1>
-          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
+          <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
              Navigate the corridor of growth between Ahmedabad and DSIR.
           </p>
         </div>
@@ -46,7 +46,7 @@ export default function TravelLifestylePage() {
             { title: "Local Sites", desc: "Explore the Gulf of Khambhat and Velavadar Park.", icon: MapPin },
           ].map((item, i) => (
             <div key={i} className="group p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-               <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-slate-900 group-hover:text-white transition-all">
+               <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
                   <item.icon className="h-7 w-7" />
                </div>
                <h3 className="text-xl font-black text-slate-900 uppercase mt-8 mb-4 group-hover:text-orange-600 transition-colors">{item.title}</h3>
@@ -55,14 +55,14 @@ export default function TravelLifestylePage() {
           ))}
         </div>
 
-        <section className="bg-slate-900 rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden flex flex-col md:flex-row items-center gap-16">
+        <section className="bg-white dark:bg-slate-900 rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden flex flex-col md:flex-row items-center gap-16">
            <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none">
               <Image src="/images/expressHighway.webp" alt="Background" fill className="object-cover" />
            </div>
            
            <div className="relative z-10 flex-1 space-y-8">
               <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-[0.9]">Plan Your <br/> <span className="text-orange-600 italic">Site Visit</span></h2>
-              <p className="text-slate-400 font-medium max-w-xl uppercase tracking-widest text-xs leading-loose">
+              <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl uppercase tracking-widest text-xs leading-loose">
                  We provide complimentary pick-up from Ahmedabad Airport or Railway Station, 
                  guided tours of all major TP schemes, and overnight hospitality.
               </p>

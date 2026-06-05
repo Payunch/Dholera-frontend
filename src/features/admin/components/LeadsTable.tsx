@@ -17,7 +17,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-xl">
         <div className="bg-slate-50/50 px-8 py-6 border-b border-slate-100 flex items-center justify-between">
           <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Recent Activity</h3>
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Live Database Stream</span>
+          <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Live Database Stream</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
@@ -46,7 +46,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                           </span>
                         )}
                       </div>
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{lead.phone}</span>
+                      <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{lead.phone}</span>
                     </div>
                   </td>
                   <td className="px-8 py-5">
@@ -73,7 +73,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                     <div className="flex items-center justify-center gap-2">
                       <button 
                         onClick={() => setSelectedLead(lead)}
-                        className="rounded-xl border border-slate-200 p-2 text-slate-400 transition-all hover:bg-slate-900 hover:text-white hover:border-slate-900"
+                        className="rounded-xl border border-slate-200 p-2 text-slate-400 transition-all hover:bg-white dark:bg-slate-900 hover:text-white hover:border-slate-900"
                         title="View Full DB Details"
                       >
                         <Info className="h-4 w-4" />
@@ -91,10 +91,10 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       {selectedLead && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-300">
            <div className="bg-white w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
-              <div className="bg-slate-900 p-8 text-white flex items-center justify-between">
+              <div className="bg-white dark:bg-slate-900 p-8 text-slate-900 dark:text-white flex items-center justify-between">
                  <div>
                     <h3 className="text-2xl font-black uppercase tracking-tight">{selectedLead.name}</h3>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Lead ID: {selectedLead.id} • {selectedLead.phone}</p>
+                    <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-1">Lead ID: {selectedLead.id} • {selectedLead.phone}</p>
                  </div>
                  <button onClick={() => setSelectedLead(null)} className="p-3 bg-white/5 rounded-2xl text-slate-400 hover:text-white hover:bg-white/10 transition-all">
                     <X className="h-6 w-6" />
@@ -112,7 +112,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                     ].map((item, i) => (
                       <div key={i} className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
                          <item.icon className="h-4 w-4 text-orange-600 mb-2" />
-                         <span className="block text-[8px] font-black uppercase tracking-widest text-slate-400">{item.label}</span>
+                         <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{item.label}</span>
                          <span className="block text-xs font-black text-slate-900 mt-1">{item.value}</span>
                       </div>
                     ))}
@@ -150,7 +150,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                                    </div>
                                 );
                              } catch (e) {
-                                return <p className="text-xs text-slate-400">Analysis pending...</p>;
+                                return <p className="text-xs text-slate-500 dark:text-slate-400">Analysis pending...</p>;
                              }
                           })()}
                        </div>
@@ -159,17 +159,17 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
                  {/* Technical Details */}
                  <div className="space-y-4">
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 flex items-center gap-2">
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 flex items-center gap-2">
                        <Monitor className="h-3 w-3" /> Technical Fingerprint
                     </h4>
-                    <div className="bg-slate-900 rounded-2xl p-6 text-slate-300 font-mono text-[10px] break-all leading-relaxed border border-white/5 shadow-inner">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 text-slate-600 dark:text-slate-300 font-mono text-[10px] break-all leading-relaxed border border-white/5 shadow-inner">
                        {selectedLead.browserFingerprint || "No fingerprint captured"}
                     </div>
                  </div>
 
                  {/* Journey / Pages */}
                  <div className="space-y-4">
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 flex items-center gap-2">
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 flex items-center gap-2">
                        <Calendar className="h-3 w-3" /> Activity History
                     </h4>
                     <div className="space-y-2">
@@ -181,16 +181,16 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                            </div>
                          ))
                        ) : (
-                         <p className="text-xs text-slate-400 italic">No page activity recorded</p>
+                         <p className="text-xs text-slate-500 dark:text-slate-400 italic">No page activity recorded</p>
                        )}
                     </div>
                  </div>
 
                  {/* Flags */}
                  <div className="flex flex-wrap gap-2">
-                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_registered ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-400")}>Registered</div>
-                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_trial ? "bg-purple-100 text-purple-700" : "bg-slate-100 text-slate-400")}>Trial Used</div>
-                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_pro ? "bg-orange-100 text-orange-700" : "bg-slate-100 text-slate-400")}>PRO Access</div>
+                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_registered ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-500 dark:text-slate-400")}>Registered</div>
+                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_trial ? "bg-purple-100 text-purple-700" : "bg-slate-100 text-slate-500 dark:text-slate-400")}>Trial Used</div>
+                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_pro ? "bg-orange-100 text-orange-700" : "bg-slate-100 text-slate-500 dark:text-slate-400")}>PRO Access</div>
                     <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.verified ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")}>OTP Verified</div>
                  </div>
               </div>

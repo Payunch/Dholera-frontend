@@ -150,7 +150,7 @@ export function UpdatesManagement() {
         </div>
         <button
           onClick={() => handleEdit("new")}
-          className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 shadow-lg shadow-slate-900/10"
+          className="flex items-center justify-center gap-2 rounded-2xl bg-white dark:bg-slate-900 px-6 py-3 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 shadow-lg shadow-slate-900/10"
         >
           <Plus className="h-4 w-4" />
           New Update
@@ -166,7 +166,7 @@ export function UpdatesManagement() {
           >
             <div className="flex items-start justify-between mb-4">
               <span className={cn(
-                "rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white",
+                "rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white",
                 update.published ? "bg-orange-600" : "bg-slate-400"
               )}>
                 {update.published ? "Published" : "Draft"}
@@ -193,7 +193,7 @@ export function UpdatesManagement() {
               {update.title}
             </h4>
             
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">
               {update.category} • {format(new Date(update.publishedAt || update.createdAt), "MMM d, yyyy")}
             </p>
 
@@ -365,7 +365,7 @@ export function UpdatesManagement() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 px-10 py-4 text-xs font-black uppercase tracking-widest text-white shadow-xl shadow-slate-900/10 transition-all hover:bg-orange-600 disabled:opacity-60"
+                className="flex items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 px-10 py-4 text-xs font-black uppercase tracking-widest text-white shadow-xl shadow-slate-900/10 transition-all hover:bg-orange-600 disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>

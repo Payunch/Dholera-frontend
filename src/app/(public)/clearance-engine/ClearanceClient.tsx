@@ -105,16 +105,16 @@ export function ClearanceClient() {
 
                   <button 
                     onClick={calculateFee}
-                    className="w-full h-16 rounded-2xl bg-slate-900 text-white font-black uppercase tracking-[0.2em] text-sm hover:bg-[#FF7A00] transition-all shadow-xl shadow-slate-950/20"
+                    className="w-full h-16 rounded-2xl bg-white dark:bg-slate-900 text-white font-black uppercase tracking-[0.2em] text-sm hover:bg-[#FF7A00] transition-all shadow-xl shadow-slate-950/20"
                   >
                     Generate Estimate
                   </button>
                </div>
 
                {calculatedFee !== null && (
-                 <div className="bg-[#0B132B] rounded-[2rem] p-10 text-center space-y-6 border border-slate-800 shadow-2xl animate-in zoom-in-95 duration-300">
+                 <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 text-center space-y-6 border border-slate-800 shadow-2xl animate-in zoom-in-95 duration-300">
                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">Estimated Development Charges</span>
-                    <div className="text-5xl md:text-6xl font-black text-white font-display tabular-nums">
+                    <div className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white font-display tabular-nums">
                       ₹{calculatedFee.toLocaleString()}
                     </div>
                     <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest leading-relaxed">
@@ -159,14 +159,14 @@ export function ClearanceClient() {
       </div>
 
       {/* CTA Footer */}
-      <div className="rounded-3xl bg-slate-900 p-8 text-white md:p-12 shadow-2xl overflow-hidden relative group">
+      <div className="rounded-3xl bg-white dark:bg-slate-900 p-8 text-slate-900 dark:text-white md:p-12 shadow-2xl overflow-hidden relative group">
         <div className="absolute inset-0 bg-orange-600 opacity-0 group-hover:opacity-10 transition-opacity" />
         <div className="flex flex-col items-center justify-between gap-8 text-center md:flex-row md:text-left relative z-10">
           <div className="space-y-4">
             <h2 className="font-display text-2xl font-black uppercase tracking-tight md:text-3xl">
               Ready to submit your formal application?
             </h2>
-            <p className="max-w-xl text-lg font-medium text-slate-400">
+            <p className="max-w-xl text-lg font-medium text-slate-500 dark:text-slate-400">
               Lock-in your spatial models and transition seamlessly to an authorized DSIRDA filer profile.
             </p>
           </div>

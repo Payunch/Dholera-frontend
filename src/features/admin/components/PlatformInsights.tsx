@@ -39,7 +39,7 @@ export const PlatformInsights = () => {
   }, []);
 
   if (loading) return <div className="flex justify-center p-20"><Loader2 className="h-8 w-8 animate-spin text-orange-600" /></div>;
-  if (!data) return <div className="p-20 text-center text-slate-400 font-bold uppercase tracking-widest">Failed to load insights</div>;
+  if (!data) return <div className="p-20 text-center text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">Failed to load insights</div>;
 
   return (
     <div className="space-y-12 animate-in fade-in duration-700">
@@ -56,7 +56,7 @@ export const PlatformInsights = () => {
                  <stat.icon className="h-6 w-6" />
               </div>
               <div>
-                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">{stat.label}</p>
+                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{stat.label}</p>
                  <h3 className="text-3xl font-black text-slate-900 mt-1">{stat.value}</h3>
               </div>
            </div>
@@ -70,18 +70,18 @@ export const PlatformInsights = () => {
                <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 flex items-center gap-3">
                   <Eye className="h-6 w-6 text-orange-600" /> Most Viewed
                </h3>
-               <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Top 5 Documents</span>
+               <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Top 5 Documents</span>
             </div>
             <div className="space-y-4">
                {data.topViews.map((v, i) => (
                  <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-all">
                     <div className="flex items-center gap-4">
-                       <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-400 font-black text-sm">{i+1}</div>
+                       <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 dark:text-slate-400 font-black text-sm">{i+1}</div>
                        <span className="text-sm font-bold text-slate-700 uppercase leading-tight line-clamp-1">{v.title}</span>
                     </div>
                     <div className="text-right">
                        <span className="text-lg font-black text-slate-900">{v.count}</span>
-                       <span className="block text-[8px] font-black uppercase tracking-widest text-slate-400">Views</span>
+                       <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Views</span>
                     </div>
                  </div>
                ))}
@@ -94,35 +94,35 @@ export const PlatformInsights = () => {
                <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 flex items-center gap-3">
                   <IndianRupee className="h-6 w-6 text-orange-600" /> Best Selling
                </h3>
-               <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Direct Sales</span>
+               <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Direct Sales</span>
             </div>
             <div className="space-y-4">
                {data.topPurchases.map((p, i) => (
                  <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl group hover:bg-green-50 transition-all">
                     <div className="flex items-center gap-4">
-                       <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-400 font-black text-sm">{i+1}</div>
+                       <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 dark:text-slate-400 font-black text-sm">{i+1}</div>
                        <span className="text-sm font-bold text-slate-700 uppercase leading-tight line-clamp-1">{p.title}</span>
                     </div>
                     <div className="text-right">
                        <span className="text-lg font-black text-slate-900">{p.count}</span>
-                       <span className="block text-[8px] font-black uppercase tracking-widest text-slate-400">Unlocks</span>
+                       <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Unlocks</span>
                     </div>
                  </div>
                ))}
-               {data.topPurchases.length === 0 && <p className="text-center py-20 text-slate-400 font-bold uppercase text-xs tracking-widest">No sales data recorded yet</p>}
+               {data.topPurchases.length === 0 && <p className="text-center py-20 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs tracking-widest">No sales data recorded yet</p>}
             </div>
          </div>
       </div>
       
       {/* System Health Card */}
-      <div className="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-10">
+      <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-slate-900 dark:text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-10">
          <div className="flex items-center gap-8">
             <div className="h-20 w-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center text-orange-500">
                <Activity className="h-10 w-10" />
             </div>
             <div>
                <h3 className="text-2xl font-black uppercase tracking-tight">Revenue Stream Healthy</h3>
-               <p className="text-sm font-medium text-slate-400 max-w-md leading-relaxed mt-2 uppercase tracking-widest">
+               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 max-w-md leading-relaxed mt-2 uppercase tracking-widest">
                   Revenue Safety Limit: <b>₹18,00,000</b>. <br/>
                   Current Approved Volume: <b>₹{data.totalRevenue.toLocaleString()}</b>
                </p>

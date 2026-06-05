@@ -105,13 +105,13 @@ export const SystemManagement = () => {
       )}
 
       {/* Hero Header */}
-      <div className="bg-slate-900 rounded-[3rem] p-12 text-white shadow-2xl relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-12 text-slate-900 dark:text-white shadow-2xl relative overflow-hidden">
          <div className="absolute top-0 right-0 p-12 opacity-10">
             <ShieldCheck className="h-40 w-40" />
          </div>
          <div className="relative z-10">
             <h2 className="text-4xl font-black uppercase tracking-tighter">System <span className="text-orange-500 italic">Integrity</span></h2>
-            <p className="text-slate-400 font-medium max-w-lg mt-4 uppercase tracking-[0.2em] text-[10px]">Administrative portability, local resource synchronization, and disaster recovery tools.</p>
+            <p className="text-slate-500 dark:text-slate-400 font-medium max-w-lg mt-4 uppercase tracking-[0.2em] text-[10px]">Administrative portability, local resource synchronization, and disaster recovery tools.</p>
          </div>
       </div>
 
@@ -123,7 +123,7 @@ export const SystemManagement = () => {
                   <FileJson className="h-8 w-8" />
                </div>
                <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Full System Backup</h3>
-               <p className="text-sm font-medium text-slate-400 mt-2 leading-relaxed">Download a complete JSON snapshot of all leads, purchases, updates, and system logs.</p>
+               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Download a complete JSON snapshot of all leads, purchases, updates, and system logs.</p>
             </div>
             <button 
               onClick={handleBackup}
@@ -142,7 +142,7 @@ export const SystemManagement = () => {
                   <UploadCloud className="h-8 w-8" />
                </div>
                <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Restore Platform</h3>
-               <p className="text-sm font-medium text-slate-400 mt-2 leading-relaxed">Overwrite current database with data from a previously generated JSON backup file.</p>
+               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Overwrite current database with data from a previously generated JSON backup file.</p>
             </div>
             <div className="relative mt-10">
                <input 
@@ -169,7 +169,7 @@ export const SystemManagement = () => {
                   <RefreshCcw className="h-8 w-8" />
                </div>
                <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">PDF Intelligence Sync</h3>
-               <p className="text-sm font-medium text-slate-400 mt-2 leading-relaxed">Automatically scan server 'uploads' folder and register new PDF files into the database.</p>
+               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Automatically scan server 'uploads' folder and register new PDF files into the database.</p>
             </div>
             <button 
               onClick={handleSyncPdfs}
@@ -188,7 +188,7 @@ export const SystemManagement = () => {
                   <FileSpreadsheet className="h-8 w-8" />
                </div>
                <h3 className="text-xl font-black text-slate-900 uppercase tracking-tight">Lead Export (XLSX)</h3>
-               <p className="text-sm font-medium text-slate-400 mt-2 leading-relaxed">Export all lead contact information and technical dossiers to a Microsoft Excel file.</p>
+               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Export all lead contact information and technical dossiers to a Microsoft Excel file.</p>
             </div>
             <button 
               onClick={() => window.open(`${API_BASE_URL}/analytics/export-leads`, '_blank')}

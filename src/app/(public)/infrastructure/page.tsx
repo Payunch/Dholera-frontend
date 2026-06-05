@@ -45,7 +45,7 @@ export default function InfrastructurePage() {
   return (
     <div className="bg-white min-h-screen w-full overflow-x-hidden">
       {/* Hero */}
-      <section className="relative h-[50vh] flex items-center bg-slate-900 text-white overflow-hidden">
+      <section className="relative h-[50vh] flex items-center bg-white dark:bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-60">
           <Image 
             src="/images/arialviewdholeraexpress.webp" 
@@ -63,7 +63,7 @@ export default function InfrastructurePage() {
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
               {t('smart_infra_title')}
             </h1>
-            <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
               {t('ecosystem_desc')}
             </p>
           </div>
@@ -97,7 +97,7 @@ export default function InfrastructurePage() {
       {/* Detailed Section */}
       <section className="py-24">
         <div className="container mx-auto px-4 md:px-8">
-           <div className="bg-slate-900 rounded-[3rem] p-8 md:p-20 text-white overflow-hidden relative">
+           <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-20 text-slate-900 dark:text-white overflow-hidden relative">
               <div className="absolute top-0 right-0 w-96 h-96 bg-orange-600 opacity-10 blur-[100px]" />
               
               <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
@@ -105,7 +105,7 @@ export default function InfrastructurePage() {
                     <h2 className="text-4xl md:text-5xl font-black uppercase leading-tight">
                       {t('decide_ground_reality')}
                     </h2>
-                    <p className="text-slate-400 text-lg leading-relaxed">
+                    <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
                       {t('invest_rumors')}
                     </p>
                     <div className="flex flex-wrap gap-4">
@@ -127,11 +127,11 @@ export default function InfrastructurePage() {
                  <div className="grid grid-cols-2 gap-4">
                     <div className="aspect-square rounded-[2rem] bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4">
                        <ShieldCheck className="h-10 w-10 text-orange-500" />
-                       <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Verified Plots</span>
+                       <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Verified Plots</span>
                     </div>
                     <div className="mt-8 aspect-square rounded-[2rem] bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4">
                        <Road className="h-10 w-10 text-orange-500" />
-                       <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Internal Roads</span>
+                       <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Internal Roads</span>
                     </div>
                  </div>
               </div>

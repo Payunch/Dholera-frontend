@@ -63,7 +63,7 @@ export default function BlogsAggregatorPage() {
     <div className="bg-slate-50 dark:bg-slate-950 min-h-screen font-sans w-full overflow-x-hidden transition-colors">
       
       {/* Header Section */}
-      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -79,10 +79,10 @@ export default function BlogsAggregatorPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-[#FF7A00]/30 bg-[#FF7A00]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#FF7A00]">
                 {t('exclusive_offer')}
               </div>
-              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
+              <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
                 {t('dsir_insights_title')}
               </h1>
-              <p className="text-base sm:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
+              <p className="text-base sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
                 {t('insights_desc')}
               </p>
            </div>
@@ -104,7 +104,7 @@ export default function BlogsAggregatorPage() {
                        <silo.icon className="h-8 w-8" />
                     </div>
                     <div>
-                       <h2 className="font-display text-3xl font-black text-white uppercase tracking-tight">
+                       <h2 className="font-display text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
                          [ {silo.title} ]
                        </h2>
                     </div>
@@ -144,17 +144,17 @@ export default function BlogsAggregatorPage() {
                                     <span className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00] bg-orange-50 dark:bg-orange-900/20 px-4 py-1.5 rounded-xl border border-orange-100/50 dark:border-orange-500/20">
                                       {post.category}
                                     </span>
-                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
                                       {format(new Date(post.publishedAt || post.createdAt), "MMM d, yyyy")}
                                     </span>
                                  </div>
-                                 <h3 className="font-display text-2xl font-black text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors duration-300 line-clamp-3 mb-6">
+                                 <h3 className="font-display text-2xl font-black text-slate-900 dark:text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors duration-300 line-clamp-3 mb-6">
                                    {post.title}
                                  </h3>
-                                 <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 mb-10 opacity-80 group-hover:opacity-100 transition-opacity">
+                                 <p className="text-sm font-medium text-slate-500 dark:text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 mb-10 opacity-80 group-hover:opacity-100 transition-opacity">
                                    {post.content.replace(/<[^>]*>?/gm, '').slice(0, 140)}...
                                  </p>
-                                 <div className="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800 group-hover:border-orange-500/10 text-[10px] font-black uppercase tracking-[0.2em] text-white group-hover:text-[#FF7A00] flex items-center justify-between transition-all duration-300">
+                                 <div className="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800 group-hover:border-orange-500/10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white group-hover:text-[#FF7A00] flex items-center justify-between transition-all duration-300">
                                     {t('get_access')} <ArrowRight className="h-4 w-4 transform group-hover:translate-x-2 transition-transform" />
                                  </div>
                               </div>

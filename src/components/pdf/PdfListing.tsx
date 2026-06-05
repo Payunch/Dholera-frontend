@@ -178,7 +178,7 @@ export function PdfListing() {
             <h2 className="font-display text-4xl font-black uppercase tracking-tight text-slate-900">
               Verified <span className="text-orange-600 italic">Intelligence</span>
             </h2>
-            <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-400 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-lg w-fit">
+            <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-lg w-fit">
               <ShieldCheck className="h-3 w-3 text-green-600" />
               All maps cross-verified with official DSIRDA releases
             </div>
@@ -226,7 +226,7 @@ export function PdfListing() {
         {loading ? (
           <div className="flex flex-col items-center py-20 gap-4">
             <div className="h-10 w-10 border-4 border-slate-100 border-t-orange-600 rounded-full animate-spin" />
-            <span className="font-black uppercase tracking-widest text-slate-400 animate-pulse">Scanning Archives...</span>
+            <span className="font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 animate-pulse">Scanning Archives...</span>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-20">
@@ -251,7 +251,7 @@ export function PdfListing() {
                      {isSelectionMode && !isFree && (
                        <div className={cn(
                          "absolute top-4 left-4 h-8 w-8 rounded-full border-2 flex items-center justify-center transition-all",
-                         isSelected ? "bg-orange-600 border-orange-600 text-white" : "bg-white/80 border-slate-300"
+                         isSelected ? "bg-orange-600 border-orange-600 text-slate-900 dark:text-white" : "bg-white/80 border-slate-300"
                        )}>
                          {isSelected && <ShieldCheck className="h-5 w-5" />}
                        </div>
@@ -259,7 +259,7 @@ export function PdfListing() {
 
                      {/* Hide lock if user is Pro OR if it's free OR if user purchased it */}
                      {(!verifiedLead?.is_pro && !isFree && !isSelected && !isPurchased) && (
-                       <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
+                       <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg">
                          <Lock className="h-4 w-4" />
                        </div>
                      )}
@@ -269,7 +269,7 @@ export function PdfListing() {
                       <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600">
                         {pdf.category}
                       </span>
-                      <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                         <Calendar className="h-3 w-3" />
                         {formatUploadedAt(pdf)}
                       </div>
@@ -283,7 +283,7 @@ export function PdfListing() {
                         onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
                         className={cn(
                           "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-                          isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-slate-900 text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
+                          isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-white dark:bg-slate-900 text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
                         )}
                       >
                         {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : (verifiedLead ? t('btn_view') : t('btn_unlock'))}
@@ -300,14 +300,14 @@ export function PdfListing() {
       {/* Floating Checkout Bar */}
       {isSelectionMode && (
         <div className="fixed bottom-10 inset-x-0 z-[150] px-4 animate-in slide-in-from-bottom-10">
-           <div className="max-w-4xl mx-auto bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
+           <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
               <div className="flex items-center gap-6 pl-4">
                  <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-white transition-colors">
                     <X className="h-6 w-6" />
                  </button>
                  <div className="flex flex-col">
                     <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">Selection Mode</span>
-                    <span className="text-sm font-bold text-white">{selectedPdfs.length} Documents Selected</span>
+                    <span className="text-sm font-bold text-slate-900 dark:text-white">{selectedPdfs.length} Documents Selected</span>
                  </div>
                  <button 
                   onClick={() => {
@@ -345,7 +345,7 @@ export function PdfListing() {
 
                  <div className="text-right min-w-[80px]">
                     <span className="block text-[10px] font-black uppercase tracking-widest text-slate-500">Total</span>
-                    <span className="text-xl font-black text-white">₹{selectionTotal}</span>
+                    <span className="text-xl font-black text-slate-900 dark:text-white">₹{selectionTotal}</span>
                  </div>
                  <button 
                    disabled={selectedPdfs.length === 0 || paymentLoading}

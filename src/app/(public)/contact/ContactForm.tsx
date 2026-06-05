@@ -68,12 +68,12 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="text-center py-12 space-y-6 bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl animate-in zoom-in-95 duration-300">
+      <div className="text-center py-12 space-y-6 bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl animate-in zoom-in-95 duration-300">
         <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30">
           <CheckCircle2 className="h-10 w-10" />
         </div>
-        <h3 className="text-2xl font-black text-white uppercase">{t('request_received')}</h3>
-        <p className="text-sm font-bold text-slate-400 uppercase leading-relaxed max-w-[240px] mx-auto">
+        <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase">{t('request_received')}</h3>
+        <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase leading-relaxed max-w-[240px] mx-auto">
           {t('call_back_msg')}
         </p>
         <button 
@@ -87,7 +87,7 @@ export function ContactForm() {
   }
 
   return (
-    <div className="bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden transition-colors">
+    <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden transition-colors">
         {status === 'error' && (
           <div className="mb-8 flex flex-col gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-[10px] font-bold text-red-400 uppercase tracking-widest leading-relaxed">
             <div className="flex items-center gap-3">
@@ -102,7 +102,7 @@ export function ContactForm() {
           </div>
         )}
 
-        <h3 className="text-xl font-black text-white uppercase mb-6 text-center">{t('priority_conn')}</h3>
+        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-6 text-center">{t('priority_conn')}</h3>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{t('full_name')}</label>
@@ -114,7 +114,7 @@ export function ContactForm() {
                 required 
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="w-full pl-12 pr-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+                className="w-full pl-12 pr-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
                 />
             </div>
           </div>
@@ -130,7 +130,7 @@ export function ContactForm() {
                 maxLength={10}
                 value={formData.phone}
                 onChange={handlePhoneChange}
-                className="w-full pl-12 pr-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+                className="w-full pl-12 pr-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
                 />
             </div>
           </div>
@@ -146,7 +146,7 @@ export function ContactForm() {
               min={today}
               max={nextWeek}
               onChange={(e) => setFormData({...formData, date: e.target.value})}
-              className="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+              className="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
             />
           </div>
           <button 

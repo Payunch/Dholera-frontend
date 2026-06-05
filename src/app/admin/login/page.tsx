@@ -66,19 +66,19 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-900 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-white dark:bg-slate-900 p-4">
       <div className="absolute inset-0 z-0 opacity-10">
         <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-600 blur-[120px]" />
       </div>
 
       <div className="relative z-10 w-full max-w-[440px] space-y-8 rounded-[2.5rem] border border-white/10 bg-white/5 p-10 backdrop-blur-2xl shadow-2xl">
         <div className="space-y-4 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-600 shadow-[0_0_30px_rgba(234,88,12,0.4)] text-white">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-600 shadow-[0_0_30px_rgba(234,88,12,0.4)] text-slate-900 dark:text-white">
             <ShieldAlert className="h-8 w-8" />
           </div>
           <div className="space-y-1">
-            <h1 className="text-2xl font-black uppercase tracking-tighter text-white">Admin <span className="text-orange-500">Access</span></h1>
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Master Control Terminal v4.0</p>
+            <h1 className="text-2xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Admin <span className="text-orange-500">Access</span></h1>
+            <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Master Control Terminal v4.0</p>
           </div>
         </div>
 

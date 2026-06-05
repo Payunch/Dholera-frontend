@@ -44,7 +44,7 @@ export function UpdateCard({ update }: UpdateCardProps) {
           />
         ) : (
           <div className={cn("flex h-full w-full items-center justify-center p-8 text-center", catColor)}>
-            <span className="text-2xl font-black uppercase tracking-tighter text-white/90">
+            <span className="text-2xl font-black uppercase tracking-tighter text-slate-900 dark:text-white/90">
               {update.category}
             </span>
           </div>
@@ -54,10 +54,10 @@ export function UpdateCard({ update }: UpdateCardProps) {
       {/* Content */}
       <div className="flex flex-1 flex-col p-6 space-y-4">
         <div className="flex items-center gap-3">
-          <span className={cn("rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white", catColor)}>
+          <span className={cn("rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white", catColor)}>
             {update.category}
           </span>
-          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
             <Calendar className="h-3.5 w-3.5" />
             {format(new Date(update.publishedAt || update.createdAt), "MMM d, yyyy, h:mm a")}
           </div>

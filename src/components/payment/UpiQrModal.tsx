@@ -91,7 +91,7 @@ export const UpiQrModal = ({
           {/* UPI ID Copy */}
           <div className="mb-6 flex items-center justify-between rounded-xl bg-slate-50 p-3 border border-slate-100 text-left">
             <div>
-              <span className="block text-[8px] font-black uppercase tracking-widest text-slate-400">UPI ID</span>
+              <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">UPI ID</span>
               <span className="text-xs font-bold text-slate-700">{upiId}</span>
             </div>
             <button
@@ -120,7 +120,7 @@ export const UpiQrModal = ({
 
           <div className="mb-6">
             <h3 className="text-lg font-black uppercase tracking-tight text-slate-900">Admin Approval</h3>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed mt-1">
+            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed mt-1">
               Paid already? Enter your Transaction ID / UTR No. for Admin verification.
             </p>
           </div>
@@ -143,7 +143,7 @@ export const UpiQrModal = ({
             <button 
               disabled={isVerifying || utr.length < 10}
               onClick={handleVerify}
-              className="w-full bg-slate-900 hover:bg-orange-600 disabled:bg-slate-300 text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-2"
+              className="w-full bg-white dark:bg-slate-900 hover:bg-orange-600 disabled:bg-slate-300 text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-2"
             >
               {isVerifying ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Submit for Approval <Check className="h-4 w-4" /></>}
             </button>
@@ -153,7 +153,7 @@ export const UpiQrModal = ({
             </p>
           </div>
 
-          <p className="mt-8 text-[8px] font-bold leading-relaxed text-slate-400 uppercase tracking-widest text-center">
+          <p className="mt-8 text-[8px] font-bold leading-relaxed text-slate-500 dark:text-slate-400 uppercase tracking-widest text-center">
             Once submitted, Admin will verify the payment in GPay/Bank and unlock your documents.
           </p>
         </div>

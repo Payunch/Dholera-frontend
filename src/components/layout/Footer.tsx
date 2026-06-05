@@ -102,7 +102,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-400">
+        <div className="mt-12 border-t pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
           <p className="text-[10px] sm:text-xs text-slate-500 normal-case tracking-normal max-w-4xl mx-auto font-medium leading-relaxed">
             {t('disclaimer')}
           </p>

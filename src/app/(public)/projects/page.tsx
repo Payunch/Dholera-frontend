@@ -59,7 +59,7 @@ export default function ProjectsPage() {
     <div className="bg-slate-50 min-h-screen pb-24 w-full overflow-x-hidden">
       
       {/* Header Block */}
-      <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
         {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
           <Image 
@@ -74,10 +74,10 @@ export default function ProjectsPage() {
           <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400">
             {t('official_archives')}
           </span>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tight leading-tight">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">
             {t('verified_plotted_title').split(' ').slice(0, 2).join(' ')} <span className="text-orange-600 italic">{t('verified_plotted_title').split(' ').slice(2).join(' ')}</span>
           </h1>
-          <p className="text-sm sm:text-lg font-medium text-slate-300 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
+          <p className="text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
             {t('verified_plotted_desc')}
           </p>
         </div>
@@ -95,7 +95,7 @@ export default function ProjectsPage() {
                 onClick={() => setSelectedCategory(cat.key)}
                 className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   selectedCategory === cat.key
-                    ? "bg-slate-900 text-white shadow-md shadow-slate-950/15"
+                    ? "bg-white dark:bg-slate-900 text-white shadow-md shadow-slate-950/15"
                     : "bg-slate-50 border border-slate-150 text-slate-600 hover:bg-slate-100"
                 }`}
               >
@@ -121,7 +121,7 @@ export default function ProjectsPage() {
         {loading ? (
            <div className="flex flex-col items-center justify-center py-20">
              <Loader2 className="h-12 w-12 text-orange-600 animate-spin" />
-             <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-400">Scanning Platform Archives...</p>
+             <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Scanning Platform Archives...</p>
            </div>
         ) : filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -145,12 +145,12 @@ export default function ProjectsPage() {
                       <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors duration-500" />
                       
                       {/* Category Badge */}
-                      <span className="absolute top-6 left-6 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg z-10 transition-transform group-hover:scale-110">
+                      <span className="absolute top-6 left-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg z-10 transition-transform group-hover:scale-110">
                         {project.category}
                       </span>
 
                       {project.reraApproved && (
-                        <span className="absolute top-6 right-6 bg-green-500 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg z-10 transition-transform group-hover:scale-110">
+                        <span className="absolute top-6 right-6 bg-green-500 text-slate-900 dark:text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg z-10 transition-transform group-hover:scale-110">
                           RERA VERIFIED
                         </span>
                       )}
@@ -168,7 +168,7 @@ export default function ProjectsPage() {
                         {project.name}
                       </h3>
 
-                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 leading-none">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 leading-none">
                         {t(project.taglineKey)}
                       </p>
 
@@ -180,7 +180,7 @@ export default function ProjectsPage() {
 
                   {/* Actions (Visual Button) */}
                   <div className="p-10 pt-0">
-                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
                       Analyze Project Specs
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </div>

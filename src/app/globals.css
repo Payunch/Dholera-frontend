@@ -1,6 +1,9 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "tailwindcss";
 
+/* ENABLE CLASS-BASED DARK MODE FOR TAILWIND V4 */
+@variant dark (&:where(.dark, .dark *));
+
 /* Bootstrap Overrides to maintain original aesthetics */
 a {
   text-decoration: none !important;
@@ -80,6 +83,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition requested by user */
 }
 
 .font-display {
