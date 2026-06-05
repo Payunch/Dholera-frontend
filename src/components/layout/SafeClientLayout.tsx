@@ -8,7 +8,7 @@ import React from "react";
 const ClientLayout = dynamic(() => import("./ClientLayout"), {
   ssr: false,
   // Use a minimal skeleton that matches the basic structure to keep it smooth
-  loading: () => <div className="min-h-screen bg-white" />
+  loading: () => <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors" />
 });
 
 export default function SafeClientLayout({

@@ -36,7 +36,7 @@ export function Navbar() {
   const toggleLang = () => setIsLangOpen(!isLangOpen);
 
   return (
-    <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 dark:bg-slate-950/80 dark:border-slate-800 backdrop-blur-md transition-colors">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-8">
         <Link href="/" className="flex items-center gap-3">
           <SplitLogo height={50} isFull />
@@ -62,7 +62,7 @@ export function Navbar() {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-50 text-slate-500 hover:bg-slate-100 hover:text-orange-600 transition-all group"
+            className="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-orange-600 transition-all group"
             title="Toggle Theme"
           >
             {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -81,7 +81,7 @@ export function Navbar() {
               <ChevronDown className={cn("h-3 w-3 transition-transform", isLangOpen && "rotate-180")} />
             </button>
             {isLangOpen && (
-              <div className="absolute right-0 mt-4 w-40 rounded-xl border border-slate-100 bg-white p-2 shadow-2xl animate-in fade-in zoom-in-95">
+              <div className="absolute right-0 mt-4 w-40 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-2 shadow-2xl animate-in fade-in zoom-in-95">
                 {languages.map((l) => (
                   <button
                     key={l.code}
@@ -91,7 +91,7 @@ export function Navbar() {
                     }}
                     className={cn(
                       "block w-full rounded-lg px-4 py-2 text-left text-[10px] font-black uppercase tracking-widest transition-colors",
-                      lang === l.code ? "bg-orange-600 text-white" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                      lang === l.code ? "bg-orange-600 text-white" : "text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                     )}
                   >
                     {l.label}
@@ -103,7 +103,7 @@ export function Navbar() {
 
           <Link
             href="/contact"
-            className="rounded-full bg-white dark:bg-slate-900 px-6 py-2.5 text-white transition-all hover:bg-orange-600 shadow-lg shadow-slate-950/10"
+            className="rounded-full bg-orange-600 px-6 py-2.5 text-white transition-all hover:bg-orange-500 shadow-lg shadow-slate-950/10"
           >
             {t('nav_contact')}
           </Link>
@@ -117,7 +117,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-slate-100 bg-white px-4 py-8 space-y-8 animate-in slide-in-from-top-4 duration-300 font-display">
+        <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-8 space-y-8 animate-in slide-in-from-top-4 duration-300 font-display">
           <div className="flex flex-col gap-6">
             {navItems.map((item) => (
               <Link
@@ -148,7 +148,7 @@ export function Navbar() {
                     }}
                     className={cn(
                       "rounded-lg py-3 text-[10px] font-black uppercase tracking-widest border transition-all",
-                      lang === l.code ? "bg-orange-600 border-orange-600 text-white" : "border-slate-200 text-slate-500"
+                      lang === l.code ? "bg-orange-600 border-orange-600 text-white" : "border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400"
                     )}
                   >
                     {l.code.toUpperCase()}
@@ -159,7 +159,7 @@ export function Navbar() {
             <Link
               href="/contact"
               onClick={() => setIsMenuOpen(false)}
-              className="block w-full rounded-lg bg-white dark:bg-slate-900 py-4 text-center text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600"
+              className="block w-full rounded-lg bg-orange-600 py-4 text-center text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-500"
             >
               {t('nav_contact')}
             </Link>
