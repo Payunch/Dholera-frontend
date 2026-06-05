@@ -15,6 +15,11 @@ header .btn,
   color: inherit;
 }
 
+/* Navbar active link state override */
+header nav a.text-orange-600 {
+  color: #ff7a00 !important;
+}
+
 header nav a:hover {
   color: #ff7a00 !important;
 }
@@ -22,6 +27,22 @@ header nav a:hover {
 /* Restore attractive navigation button contrast */
 header .container a.rounded-full {
   color: #ffffff !important;
+}
+
+/* STRICT THEME RULES (Pure Black & Pure White) */
+.dark body,
+.dark .dark\:bg-slate-950,
+.dark .dark\:bg-slate-900,
+.dark .bg-slate-950 {
+  background-color: #000000 !important;
+}
+
+body:not(.dark) {
+  background-color: #ffffff !important;
+}
+body:not(.dark) .bg-slate-50,
+body:not(.dark) .bg-slate-100 {
+  background-color: #ffffff !important;
 }
 
 :root {
