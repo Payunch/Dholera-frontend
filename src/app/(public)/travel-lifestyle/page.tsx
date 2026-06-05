@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function TravelLifestylePage() {
   return (
-    <div className="bg-white min-h-screen pb-32 w-full overflow-x-hidden">
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden">
       
       {/* Header Block */}
       <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24">

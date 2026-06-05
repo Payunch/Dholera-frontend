@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function ClearanceEnginePage() {
   return (
-    <div className="bg-white pt-24 pb-32 min-h-screen">
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 pt-24 pb-32 min-h-screen">
       <div className="container mx-auto px-4 md:px-8">
         <header className="mb-16 text-center space-y-6">
           <div className="inline-flex items-center rounded-full bg-orange-50 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 border border-orange-200">

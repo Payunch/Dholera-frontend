@@ -86,7 +86,7 @@ export default function PdfPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans w-full overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
       <div className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 px-4 md:px-8 border-b border-slate-800 overflow-hidden">

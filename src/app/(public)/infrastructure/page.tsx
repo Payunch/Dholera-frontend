@@ -43,7 +43,7 @@ export default function InfrastructurePage() {
   ];
 
   return (
-    <div className="bg-white min-h-screen w-full overflow-x-hidden">
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen w-full overflow-x-hidden">
       {/* Hero */}
       <section className="relative h-[50vh] flex items-center bg-white dark:bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-60">

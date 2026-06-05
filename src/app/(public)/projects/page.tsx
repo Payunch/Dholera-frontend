@@ -56,7 +56,7 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-24 w-full overflow-x-hidden">
+    <div className="bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-24 w-full overflow-x-hidden">
       
       {/* Header Block */}
       <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">

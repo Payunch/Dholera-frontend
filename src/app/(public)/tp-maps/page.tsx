@@ -52,7 +52,7 @@ export default function TpMapsPage() {
   });
 
   return (
-    <div className="bg-white min-h-screen font-sans w-full overflow-x-hidden">
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
       <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 border-b border-slate-800 overflow-hidden">

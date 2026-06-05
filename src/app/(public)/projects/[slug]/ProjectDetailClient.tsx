@@ -31,7 +31,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
   const description = t(project.descKey);
 
   return (
-    <div className="bg-slate-50 min-h-screen pt-12 pb-32">
+    <div className="bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pt-12 pb-32">
       <div className="container mx-auto px-4 md:px-8 max-w-6xl">
         
         {/* Back Link */}
