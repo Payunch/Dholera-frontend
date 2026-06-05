@@ -65,7 +65,7 @@ export function Navbar() {
             className="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-50 text-slate-500 hover:bg-slate-100 hover:text-orange-600 transition-all group"
             title="Toggle Theme"
           >
-            {theme === 'light' ? <Sun className="h-4 w-4" /> : theme === 'dark' ? <Moon className="h-4 w-4" /> : <Sparkles className="h-4 w-4 text-orange-600" />}
+            {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
           <div className="h-4 w-px bg-slate-100" />

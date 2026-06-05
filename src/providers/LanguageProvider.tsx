@@ -16,8 +16,8 @@ interface LanguageContextType {
   lang: Language;
   setLang: (lang: Language) => void;
   t: (key: string) => string;
-  theme: 'light' | 'dark' | 'auto';
-  setTheme: (theme: 'light' | 'dark' | 'auto') => void;
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
   toggleTheme: () => void;
 }
 
@@ -27,7 +27,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
   const [lang, setLangState] = useState<Language>('hi'); // Default to Hindi
   const [translations, setTranslations] = useState<Record<string, string>>({});
   const [mounted, setMounted] = useState(false);
-  const [themeMode, setThemeState] = useState<'light' | 'dark' | 'auto'>('auto');
+  const [themeMode, setThemeState] = useState<'light' | 'dark'>('light');
 
   const updateDomTheme = useCallback((isDark: boolean) => {
     if (isDark) {
@@ -37,42 +37,30 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     }
   }, []);
 
-  // Night Mode Check (6 PM to 6 AM)
   useEffect(() => {
     const checkTheme = () => {
-      const savedTheme = getCookie('user_theme') as 'light' | 'dark' | 'auto' | null;
-      if (savedTheme) setThemeState(savedTheme);
-
-      if (savedTheme === 'dark') {
-        updateDomTheme(true);
-      } else if (savedTheme === 'light') {
-        updateDomTheme(false);
+      const savedTheme = getCookie('user_theme') as 'light' | 'dark' | null;
+      if (savedTheme) {
+        setThemeState(savedTheme);
+        updateDomTheme(savedTheme === 'dark');
       } else {
-        // Auto logic
-        const hour = new Date().getHours();
-        const isNight = hour >= 18 || hour < 6;
-        updateDomTheme(isNight);
+        // Fallback to system preference if no cookie
+        const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setThemeState(isDark ? 'dark' : 'light');
+        updateDomTheme(isDark);
       }
     };
     checkTheme();
-    const interval = setInterval(checkTheme, 60000); // Check every minute
-    return () => clearInterval(interval);
   }, [updateDomTheme]);
 
-  const setTheme = (newTheme: 'light' | 'dark' | 'auto') => {
+  const setTheme = (newTheme: 'light' | 'dark') => {
     setThemeState(newTheme);
     setCookie('user_theme', newTheme);
-    
-    if (newTheme === 'dark') updateDomTheme(true);
-    else if (newTheme === 'light') updateDomTheme(false);
-    else {
-      const hour = new Date().getHours();
-      updateDomTheme(hour >= 18 || hour < 6);
-    }
+    updateDomTheme(newTheme === 'dark');
   };
 
   const toggleTheme = () => {
-    const nextTheme = themeMode === 'light' ? 'dark' : themeMode === 'dark' ? 'auto' : 'light';
+    const nextTheme = themeMode === 'light' ? 'dark' : 'light';
     setTheme(nextTheme);
   };
 
