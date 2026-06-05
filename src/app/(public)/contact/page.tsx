@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { ContactForm } from "./ContactForm";
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
+import { Translate } from "@/components/i18n/Translate";
 
 export const metadata: Metadata = {
   title: "Contact Dholera Platform | Expert Investment Consultation",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="bg-white pb-32 min-h-screen w-full overflow-x-hidden">
+    <div className="bg-white dark:bg-slate-950 pb-32 min-h-screen w-full overflow-x-hidden transition-colors">
       
       {/* Header Block */}
       <section className="relative bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
@@ -26,14 +27,13 @@ export default function ContactPage() {
 
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
           <div className="inline-flex items-center rounded-full bg-orange-600/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 border border-orange-500/30">
-            Connect with Intelligence
+            <Translate id="verified_data" />
           </div>
           <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white uppercase leading-tight">
-            Contact our <span className="text-orange-600 italic">Experts</span>
+            <Translate id="talk_to_owner_title" />
           </h1>
           <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
-            Ready to secure your stake in India&apos;s most ambitious smart city project? 
-            Our team provides verified data and on-ground support for all your DSIR queries.
+            <Translate id="talk_to_owner_desc" />
           </p>
         </div>
       </section>
@@ -43,48 +43,48 @@ export default function ContactPage() {
           {/* Left Column: Info */}
           <div className="space-y-12">
             <div className="space-y-6">
-              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 transition-all hover:bg-white hover:shadow-xl hover:shadow-slate-200/40 group">
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white shadow-md border border-slate-100 transition-all group-hover:bg-orange-600 group-hover:text-white">
+              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 transition-all group-hover:bg-orange-600 group-hover:text-white">
                   <Mail className="h-6 w-6" />
                 </div>
                 <div className="space-y-1 pt-2">
-                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Direct Intelligence</h4>
-                  <p className="font-display text-xl font-black text-slate-900 leading-none">gohelnaresh7707@gmail.com</p>
+                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Email</h4>
+                  <p className="font-display text-xl font-black text-slate-900 dark:text-white leading-none">gohelnaresh7707@gmail.com</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 transition-all hover:bg-white hover:shadow-xl hover:shadow-slate-200/40 group">
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white shadow-md border border-slate-100 transition-all group-hover:bg-orange-600 group-hover:text-white">
+              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 transition-all group-hover:bg-orange-600 group-hover:text-white">
                   <Phone className="h-6 w-6" />
                 </div>
                 <div className="space-y-1 pt-2">
-                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Consultation Hotline</h4>
-                  <p className="font-display text-xl font-black text-slate-900 leading-none">+91 7435808031</p>
+                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Hotline</h4>
+                  <p className="font-display text-xl font-black text-slate-900 dark:text-white leading-none">+91 7435808031</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 bg-slate-50/50 transition-all hover:bg-white hover:shadow-xl hover:shadow-slate-200/40 group">
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white shadow-md border border-slate-100 transition-all group-hover:bg-orange-600 group-hover:text-white">
+              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 transition-all group-hover:bg-orange-600 group-hover:text-white">
                   <MapPin className="h-6 w-6" />
                 </div>
                 <div className="space-y-1 pt-2">
-                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Regional HQ</h4>
-                  <p className="font-display text-xl font-black text-slate-900 leading-none">DSIR, Gujarat, India</p>
+                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Location</h4>
+                  <p className="font-display text-xl font-black text-slate-900 dark:text-white leading-none">DSIR, Gujarat, India</p>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-slate-200 bg-slate-900 p-8 shadow-2xl relative overflow-hidden group">
+            <div className="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-900 p-8 shadow-2xl relative overflow-hidden group">
                <div className="absolute inset-0 bg-orange-600 opacity-0 group-hover:opacity-5 transition-opacity" />
                <div className="relative z-10">
                  <div className="flex items-center gap-4 mb-4">
                     <div className="h-10 w-10 rounded-full bg-orange-600/20 flex items-center justify-center text-orange-400">
                        <Globe className="h-5 w-5" />
                     </div>
-                    <h3 className="font-display text-lg font-black uppercase tracking-tight text-white">Regional Intelligence Node</h3>
+                    <h3 className="font-display text-lg font-black uppercase tracking-tight text-white"><Translate id="priority_conn" /></h3>
                  </div>
                  <p className="text-sm font-medium text-slate-400 leading-relaxed italic">
-                    &quot;Your inquiry will be routed to the nearest regional intelligence officer specializing in your zone of interest (TP1 - TP6).&quot;
+                    <Translate id="call_back_msg" />
                  </p>
                </div>
             </div>

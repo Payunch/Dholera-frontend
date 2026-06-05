@@ -157,22 +157,21 @@ export function HomeClient() {
                 <div className="relative h-6 w-6 shrink-0">
                   <Image 
                     src="/images/hp.png" 
-                    alt="Independent Investment Intelligence" 
+                    alt={t('verified_data')} 
                     fill 
                     className="object-contain"
                   />
                 </div>
-                <span className="hidden sm:inline">Independent Investment Intelligence</span>
-                <span className="sm:hidden">DSIR Intelligence</span>
+                <span className="hidden sm:inline">{t('verified_data')}</span>
+                <span className="sm:hidden">{t('verified_data')}</span>
               </div>
 
               <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-white uppercase leading-[0.95] mb-8">
-                Decide with <span className="text-[#FF7A00] italic">Certainty</span> <br/> in Dholera SIR
+                {t('hero_title')}
               </h1>
 
               <p className="max-w-2xl text-base sm:text-lg md:text-xl font-medium text-slate-200 leading-relaxed mb-12 opacity-90">
-                The definitive platform for verified TP maps, infrastructure progress, and industrial plot analytics. 
-                Move from data to decisions with zero ambiguity.
+                {t('hero_desc')}
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-4">
@@ -180,14 +179,14 @@ export function HomeClient() {
                   href="/contact"
                   className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/20 active:scale-95"
                 >
-                  Talk To Owner
+                  {t('talk_to_owner')}
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <Link
                   href="/projects"
                   className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-md px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-white/10 sm:w-auto active:scale-95"
                 >
-                  View Verified Projects
+                  {t('view_projects')}
                 </Link>
               </div>
               
@@ -199,7 +198,7 @@ export function HomeClient() {
                     </div>
                   ))}
                 </div>
-                <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-300">Trusted by 12,000+ Global Investors</p>
+                <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-300">{t('trusted_by')}</p>
               </div>
             </div>
           </div>
@@ -366,32 +365,32 @@ export function HomeClient() {
 
             <div className="space-y-8 relative z-10">
                 <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
-                    Exclusive Offer
+                    {t('exclusive_offer')}
                 </div>
                 <h2 className="font-display text-4xl font-black text-white md:text-5xl uppercase leading-[1.1]">
-                  Talk to <br/> <span className="text-[#FF7A00] italic">Owner</span>
+                  {t('talk_to_owner_title').split(' ').slice(0, 2).join(' ')} <br/> <span className="text-[#FF7A00] italic">{t('talk_to_owner_title').split(' ').slice(2).join(' ')}</span>
                 </h2>
                 <p className="text-sm font-medium text-slate-400 leading-relaxed tracking-wide">
-                  Experience the Dholera miracle firsthand. We provide priority connection directly with the founder for verified inquiries.
+                  {t('talk_to_owner_desc')}
                 </p>
                 <div className="space-y-4 pt-4 border-t border-slate-800">
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
                       <MapPin className="h-5 w-5" />
                     </div>
-                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">Pick-up from Ahmedabad/Airport</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">{t('pickup_service')}</span>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
                       <Building className="h-5 w-5" />
                     </div>
-                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">Premium Guest House Stay</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">{t('premium_stay')}</span>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
                       <ShieldCheck className="h-5 w-5" />
                     </div>
-                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">Verified Title Reviews</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-slate-300">{t('title_review')}</span>
                   </div>
                 </div>
             </div>
@@ -401,12 +400,12 @@ export function HomeClient() {
                   <div className="mb-8 flex flex-col gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-[10px] font-bold text-red-400 uppercase tracking-widest leading-relaxed">
                     <div className="flex items-center gap-3">
                       <AlertCircle className="h-4 w-4 shrink-0" />
-                      <span>Transmission Link Failed</span>
+                      <span>{t('transmission_failed')}</span>
                     </div>
                     <p className="text-[9px] text-red-500/80 pl-8">
                       {new Date(visitForm.date) > new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) 
-                        ? "Date must be within 7 days of today." 
-                        : "Please verify your connection and try again."}
+                        ? t('date_limit_msg') 
+                        : t('err_generic')}
                     </p>
                   </div>
                 )}
@@ -415,26 +414,26 @@ export function HomeClient() {
                     <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30">
                       <CheckCircle2 className="h-10 w-10" />
                     </div>
-                    <h3 className="text-2xl font-black text-white uppercase">Request Received!</h3>
+                    <h3 className="text-2xl font-black text-white uppercase">{t('request_received')}</h3>
                     <p className="text-sm font-bold text-slate-400 uppercase leading-relaxed max-w-[240px] mx-auto">
-                      Our Dholera expert will call you within 15 minutes.
+                      {t('call_back_msg')}
                     </p>
                     <button 
                       onClick={() => setVisitFormStatus('idle')}
                       className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00] hover:text-orange-400 pt-4"
                     >
-                      Book Another Slot
+                      {t('book_another')}
                     </button>
                   </div>
                 ) : (
                   <>
-                    <h3 className="text-xl font-black text-white uppercase mb-6 text-center">Priority Connection</h3>
+                    <h3 className="text-xl font-black text-white uppercase mb-6 text-center">{t('priority_conn')}</h3>
                     <form className="space-y-4" onSubmit={handleVisitSubmit}>
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Full Identity</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{t('full_name')}</label>
                         <input 
                           type="text" 
-                          placeholder="ENTER NAME" 
+                          placeholder={t('full_name')} 
                           required 
                           value={visitForm.name}
                           onChange={(e) => setVisitForm({...visitForm, name: e.target.value})}
@@ -442,7 +441,7 @@ export function HomeClient() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">Verified Mobile</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{t('mobile_number')}</label>
                         <input 
                           type="tel" 
                           placeholder="10-DIGIT MOBILE" 
@@ -456,8 +455,8 @@ export function HomeClient() {
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1 flex justify-between">
-                          <span>Deployment Date</span>
-                          <span className="text-orange-500/50">*Must be within 7 days</span>
+                          <span>{t('deployment_date')}</span>
+                          <span className="text-orange-500/50">{t('date_limit_msg')}</span>
                         </label>
                         <input 
                           type="date" 
@@ -477,7 +476,7 @@ export function HomeClient() {
                         {visitStatus === 'loading' ? (
                           <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : (
-                          "Establish Connection"
+                          t('establish_conn')
                         )}
                       </button>
                     </form>

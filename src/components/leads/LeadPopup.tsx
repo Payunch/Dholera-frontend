@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { X, Loader2, CheckCircle2, Phone, User, ArrowRight } from 'lucide-react';
 import { useLead } from '@/providers/LeadProvider';
+import { useLanguage } from '@/providers/LanguageProvider';
 import { apiClient } from '@/lib/api';
 import { SplitLogo } from '@/components/common/DynamicImages';
 import Link from 'next/link';
@@ -27,13 +28,20 @@ export const LeadPopup = ({
   onClose
 }: LeadPopupProps) => {
   const { loginLead, verifiedLead } = useLead();
+  const { lang, setLang, t } = useLanguage();
   const [open, setOpen] = useState(true);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [step, setStep] = useState<'details' | 'success'>('details');
+  const [step, setStep] = useState<'language' | 'details' | 'success'>('language');
+
+  const languages = [
+    { code: "hi", label: "हिन्दी (Hindi)" },
+    { code: "en", label: "English" },
+    { code: "gu", label: "ગુજરાતી (Gujarati)" },
+  ] as const;
 
   // Auto-close on verifiedLead availability
   useEffect(() => {
@@ -50,9 +58,9 @@ export const LeadPopup = ({
     e.preventDefault();
     const cleanPhone = sanitizeDigits(phone, 10);
     
-    if (!validateName(name)) return setError('Please enter your full name.');
-    if (!validatePhone(cleanPhone)) return setError('Please enter a valid 10-digit mobile number.');
-    if (!agreedToTerms) return setError('Please agree to the Terms and Privacy Policy.');
+    if (!validateName(name)) return setError(t('err_name'));
+    if (!validatePhone(cleanPhone)) return setError(t('err_phone'));
+    if (!agreedToTerms) return setError(t('err_terms'));
 
     setLoading(true);
     setError('');
@@ -78,7 +86,7 @@ export const LeadPopup = ({
         if (onClose) onClose();
       }, 1500);
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Failed to save details. Please try again.');
+      setError(err.response?.data?.error || t('err_generic'));
     } finally {
       setLoading(false);
     }
@@ -88,28 +96,29 @@ export const LeadPopup = ({
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-4 animate-in fade-in duration-500">
-      <div className="relative w-full max-w-[400px] overflow-hidden rounded-[2rem] bg-white shadow-2xl border border-slate-100 animate-in zoom-in-95 duration-300">
+      <div className="relative w-full max-w-[400px] overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
         {!compulsory && (
           <button 
             onClick={() => {
               setOpen(false);
               if (onClose) onClose();
             }} 
-            className="absolute right-6 top-6 text-slate-300 hover:text-slate-900 transition-all z-20"
+            className="absolute right-6 top-6 text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all z-20"
           >
             <X className="h-5 w-5" />
           </button>
         )}
         
         <div className="p-8 md:p-10">
-          <div className="flex justify-center mb-8"><SplitLogo height={48} /></div>
+          <div className="flex justify-center mb-10"><SplitLogo height={42} /></div>
           
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-black uppercase tracking-tighter text-slate-900 mb-2">
-              {step === 'success' ? 'Access Granted' : 'Investor Access'}
+            <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">
+              {step === 'language' ? 'चुनें (Select)' : 
+               step === 'success' ? t('access_granted') : t('start_here')}
             </h2>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
-              {step === 'success' ? 'Opening Archives...' : 'Verify identity to unlock DSIRDA archives'}
+              {step === 'language' ? 'Select your language to continue' : t('verify_desc')}
             </p>
           </div>
 
@@ -119,16 +128,34 @@ export const LeadPopup = ({
             </div>
           )}
 
+          {step === 'language' && (
+            <div className="space-y-3">
+              {languages.map((l) => (
+                <button
+                  key={l.code}
+                  onClick={() => {
+                    setLang(l.code as any);
+                    setStep('details');
+                  }}
+                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 px-6 font-black uppercase tracking-widest text-xs text-slate-900 dark:text-white hover:border-orange-600 transition-all flex items-center justify-between group"
+                >
+                  {l.label}
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform text-orange-600" />
+                </button>
+              ))}
+            </div>
+          )}
+
           {step === 'details' && (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <input
                   type="text" 
-                  placeholder="Full Name" 
+                  placeholder={t('full_name')} 
                   required
                   autoFocus
-                  className="w-full rounded-xl border-2 border-slate-100 bg-slate-50 py-4 pl-12 pr-4 font-bold text-sm outline-none focus:border-orange-600 focus:bg-white transition-all text-slate-900 placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-900 transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
                   value={name} 
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -137,9 +164,9 @@ export const LeadPopup = ({
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <input
                   type="tel" 
-                  placeholder="Mobile Number" 
+                  placeholder={t('mobile_number')} 
                   required
-                  className="w-full rounded-xl border-2 border-slate-100 bg-slate-50 py-4 pl-12 pr-4 font-bold text-sm outline-none focus:border-orange-600 focus:bg-white transition-all text-slate-900 placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-900 transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
                   value={phone} 
                   onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
                 />
@@ -153,20 +180,20 @@ export const LeadPopup = ({
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
                 />
-                <label htmlFor="terms" className="text-[10px] font-medium text-slate-500 leading-relaxed cursor-pointer">
-                  I agree to the <Link href="/terms-and-conditions" className="text-orange-600 hover:underline">Terms</Link> and <Link href="/privacy-policy" className="text-orange-600 hover:underline">Privacy Policy</Link>.
+                <label htmlFor="terms" className="text-[10px] font-bold text-slate-400 leading-relaxed cursor-pointer uppercase tracking-tight">
+                  {t('terms_agree')} <Link href="/terms-and-conditions" className="text-orange-600">{t('terms')}</Link> {t('and')} <Link href="/privacy-policy" className="text-orange-600">{t('privacy')}</Link>.
                 </label>
               </div>
               
               <button 
                 disabled={loading} 
-                className="mt-2 w-full rounded-xl bg-orange-600 py-4 font-black uppercase tracking-widest text-xs text-white transition-all hover:bg-slate-900 shadow-xl shadow-orange-600/20 flex items-center justify-center gap-2 group"
+                className="mt-2 w-full rounded-2xl bg-orange-600 py-5 font-black uppercase tracking-widest text-[10px] text-white transition-all hover:bg-slate-900 dark:hover:bg-black shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3 group"
               >
                 {loading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
                   <>
-                    Begin Handshake <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    {t('get_access')} <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
               </button>
@@ -174,11 +201,11 @@ export const LeadPopup = ({
           )}
 
           {step === 'success' && (
-            <div className="flex flex-col items-center py-6 space-y-4 animate-in fade-in zoom-in-90 duration-500">
-               <div className="h-20 w-20 rounded-full bg-green-50 flex items-center justify-center text-green-500">
-                 <CheckCircle2 className="h-10 w-10" />
+            <div className="flex flex-col items-center py-6 space-y-6 animate-in fade-in zoom-in-90 duration-500">
+               <div className="h-24 w-24 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-500 border border-green-100 dark:border-green-500/30">
+                 <CheckCircle2 className="h-12 w-12" />
                </div>
-               <p className="text-sm font-black uppercase tracking-widest text-slate-900">Access Granted</p>
+               <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{t('access_granted')}</p>
             </div>
           )}
         </div>

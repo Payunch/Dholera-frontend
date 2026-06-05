@@ -3,14 +3,14 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, Languages, Home, FileText, Calculator, ShieldCheck, Map, Plane, Construction, Grid, Landmark, Users } from "lucide-react";
+import { Menu, X, ChevronDown, Languages, Home, FileText, Calculator, ShieldCheck, Map, Plane, Construction, Grid, Landmark, Users, Sun, Moon, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SplitLogo } from "@/components/common/DynamicImages";
 import { useLanguage } from "@/providers/LanguageProvider";
 
 export function Navbar() {
   const pathname = usePathname();
-  const { lang, setLang, t } = useLanguage();
+  const { lang, setLang, t, theme, toggleTheme } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isLangOpen, setIsLangOpen] = React.useState(false);
 
@@ -56,6 +56,17 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
+
+          <div className="h-4 w-px bg-slate-100" />
+
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-50 text-slate-500 hover:bg-slate-100 hover:text-orange-600 transition-all group"
+            title="Toggle Theme"
+          >
+            {theme === 'light' ? <Sun className="h-4 w-4" /> : theme === 'dark' ? <Moon className="h-4 w-4" /> : <Sparkles className="h-4 w-4 text-orange-600" />}
+          </button>
 
           <div className="h-4 w-px bg-slate-100" />
 

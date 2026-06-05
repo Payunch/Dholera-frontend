@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ClientProviders } from "@/providers/ClientProviders";
 import { VisitorTracker } from "@/components/common/VisitorTracker";
 import ConsentBanner from "@/components/consent/ConsentBanner";
+import { LanguageGate } from "@/components/i18n/LanguageGate";
 
 import { Phone, MessageCircle } from "lucide-react";
 
@@ -43,6 +44,7 @@ export default function ClientLayout({
         <VisitorTracker />
       </React.Suspense>
       <ConsentBanner />
+      <LanguageGate />
 
       {/* Global Mobile Conversion Runtime Utilities (Sticky Bottom Action Bar) */}
       <div className="fixed bottom-0 left-0 right-0 z-[180] flex h-14 w-full md:hidden bg-white border-t border-slate-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
