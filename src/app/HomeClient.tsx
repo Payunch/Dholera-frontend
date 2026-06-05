@@ -176,13 +176,13 @@ export function HomeClient() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <button
-                  onClick={() => window.dispatchEvent(new Event('openUniversalConnect'))}
+                <Link
+                  href="/contact"
                   className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/20 active:scale-95"
                 >
                   Talk To Owner
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </button>
+                </Link>
                 <Link
                   href="/projects"
                   className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-md px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-white/10 sm:w-auto active:scale-95"

@@ -164,7 +164,7 @@ export default function PortalsPage() {
               ))}
            </div>
            
-           <div className="mt-20 p-8 bg-[#0B132B] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 border border-slate-800 shadow-xl">
+           {/* <div className="mt-20 p-8 bg-[#0B132B] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 border border-slate-800 shadow-xl">
               <div className="flex items-center gap-4">
                  <div className="h-12 w-12 rounded-full bg-orange-500/20 text-[#FF7A00] flex items-center justify-center border border-orange-500/20">
                     <ShieldCheck className="h-6 w-6" />
@@ -180,7 +180,7 @@ export default function PortalsPage() {
               >
                  Request Verification Support
               </Link>
-           </div>
+           </div> */}
 
         </div>
       </section>
