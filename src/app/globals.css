@@ -29,25 +29,9 @@ header .container a.rounded-full {
   color: #ffffff !important;
 }
 
-/* STRICT THEME RULES (Pure Black & Pure White) */
-.dark body,
-.dark .dark\:bg-slate-950,
-.dark .dark\:bg-slate-900,
-.dark .bg-slate-950 {
-  background-color: #000000 !important;
-}
-
-body:not(.dark) {
-  background-color: #ffffff !important;
-}
-body:not(.dark) .bg-slate-50,
-body:not(.dark) .bg-slate-100 {
-  background-color: #ffffff !important;
-}
-
 :root {
   --background: #ffffff;
-  --foreground: #000000;
+  --foreground: #0f172a;
   --accent: #ff7a00;
   --accent-2: #10b981;
   --accent-3: #d97706;
@@ -75,19 +59,19 @@ body:not(.dark) .bg-slate-100 {
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --background: #000000;
-    --foreground: #ffffff;
-    --panel: #111111;
-    --line: #222222;
+    --background: #020617;
+    --foreground: #f8fafc;
+    --panel: #0f172a;
+    --line: #1e293b;
     --ring: #ff7a00;
   }
 }
 
 .dark {
-  --background: #000000;
-  --foreground: #ffffff;
-  --panel: #111111;
-  --line: #222222;
+  --background: #020617;
+  --foreground: #f8fafc;
+  --panel: #0f172a;
+  --line: #1e293b;
   --ring: #ff7a00;
 }
 
