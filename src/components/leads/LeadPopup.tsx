@@ -35,13 +35,7 @@ export const LeadPopup = ({
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [step, setStep] = useState<'language' | 'details' | 'success'>('language');
-
-  const languages = [
-    { code: "hi", label: "हिन्दी (Hindi)" },
-    { code: "en", label: "English" },
-    { code: "gu", label: "ગુજરાતી (Gujarati)" },
-  ] as const;
+  const [step, setStep] = useState<'details' | 'success'>('details');
 
   // Auto-close on verifiedLead availability
   useEffect(() => {
@@ -115,35 +109,16 @@ export const LeadPopup = ({
           
           <div className="text-center mb-8">
             <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">
-              {step === 'language' ? 'चुनें (Select)' : 
-               step === 'success' ? t('access_granted') : t('start_here')}
+              {step === 'success' ? t('access_granted') : t('start_here')}
             </h2>
             <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
-              {step === 'language' ? 'Select your language to continue' : t('verify_desc')}
+              {t('verify_desc')}
             </p>
           </div>
 
           {error && (
             <div className="p-3 rounded-xl bg-red-50 border border-red-100 text-red-600 mb-6 text-center animate-in slide-in-from-top-2">
                <span className="text-[10px] font-bold uppercase tracking-tight">{error}</span>
-            </div>
-          )}
-
-          {step === 'language' && (
-            <div className="space-y-3">
-              {languages.map((l) => (
-                <button
-                  key={l.code}
-                  onClick={() => {
-                    setLang(l.code as any);
-                    setStep('details');
-                  }}
-                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 px-6 font-black uppercase tracking-widest text-xs text-white hover:border-orange-600 transition-all flex items-center justify-between group"
-                >
-                  {l.label}
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform text-orange-600" />
-                </button>
-              ))}
             </div>
           )}
 
