@@ -53,13 +53,21 @@ header .container a.rounded-full {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background: #0b132b;
     --foreground: #ffffff;
     --panel: #1e293b;
     --line: #334155;
     --ring: #ff7a00;
   }
+}
+
+.dark {
+  --background: #0b132b;
+  --foreground: #ffffff;
+  --panel: #1e293b;
+  --line: #334155;
+  --ring: #ff7a00;
 }
 
 body {

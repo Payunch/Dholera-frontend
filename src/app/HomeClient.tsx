@@ -95,7 +95,7 @@ export function HomeClient() {
   };
 
   return (
-    <div className="flex flex-col bg-white overflow-x-hidden w-full">
+    <div className="flex flex-col bg-white dark:bg-slate-950 overflow-x-hidden w-full transition-colors">
       
       {/* 1.1 HERO SECTION */}
       <section className="relative w-full min-h-[95vh] bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
@@ -206,14 +206,14 @@ export function HomeClient() {
       </section>
 
       {/* 1.2 TRUST BANNER */}
-      <section className="bg-white py-16 border-b border-slate-100 overflow-hidden">
+      <section className="bg-white dark:bg-slate-950 py-16 border-b border-slate-100 dark:border-slate-800 overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8">
           <div className="mb-12 text-center space-y-3 max-w-3xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-black text-slate-900 uppercase leading-tight">
-              Institutional Anchors Driving Dholera&apos;s Growth
+            <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white uppercase leading-tight">
+              {t('institutional_anchors_title')}
             </h2>
-            <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
-              Multi-billion dollar infrastructure foundations already operational or underway.
+            <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+              {t('institutional_anchors_desc')}
             </p>
           </div>
 
@@ -254,18 +254,18 @@ export function HomeClient() {
       </section>
 
       {/* 1.25 FEATURED PROJECTS SECTION */}
-      <section className="py-24 bg-slate-50 border-b border-slate-100">
+      <section className="py-24 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">
         <div className="container mx-auto px-4 md:px-8">
           
           <div className="mb-16 text-center space-y-4 max-w-3xl mx-auto">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
-              VERIFIED PORTFOLIO
+              {t('verified_portfolio_title')}
             </span>
-            <h2 className="font-display text-4xl font-black text-slate-900 md:text-5xl uppercase leading-tight">
-              Featured <span className="text-[#FF7A00] italic">Developments</span>
+            <h2 className="font-display text-4xl font-black text-slate-900 dark:text-white md:text-5xl uppercase leading-tight">
+              {t('featured_developments').split(' ').slice(0, 1).join(' ')} <span className="text-[#FF7A00] italic">{t('featured_developments').split(' ').slice(1).join(' ')}</span>
             </h2>
-            <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest leading-relaxed">
-              Explore verified residential communities, airport logistics zones, and industrial parks in Dholera SIR.
+            <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
+              {t('explore_verified_desc')}
             </p>
           </div>
 
@@ -276,11 +276,11 @@ export function HomeClient() {
                 <Link
                   key={project.slug}
                   href={`/projects/${project.slug}`}
-                  className="group bg-white border border-slate-100 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
+                  className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
                 >
                   <div>
                     {/* Project Image */}
-                    <div className="relative h-56 w-full bg-slate-100 overflow-hidden">
+                    <div className="relative h-56 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                       <Image
                         src={project.image}
                         alt={project.name}
@@ -309,7 +309,7 @@ export function HomeClient() {
                         {project.location.split(",")[0]}
                       </div>
 
-                      <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 group-hover:text-[#FF7A00] transition-colors duration-300">
+                      <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-colors duration-300">
                         {project.name}
                       </h3>
 
@@ -317,7 +317,7 @@ export function HomeClient() {
                         {t(project.taglineKey)}
                       </p>
 
-                      <p className="text-sm font-medium text-slate-500 leading-relaxed line-clamp-3 opacity-80 group-hover:opacity-100 transition-opacity">
+                      <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 opacity-80 group-hover:opacity-100 transition-opacity">
                         {projectDesc}
                       </p>
                     </div>
@@ -326,7 +326,7 @@ export function HomeClient() {
                   {/* Actions (Visual Button) */}
                   <div className="p-8 pt-0">
                     <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
-                      Analyze Project Specs
+                      {t('get_access')}
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </div>
                   </div>
@@ -336,11 +336,11 @@ export function HomeClient() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/projects" className="px-8 py-4 bg-slate-900 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-[#FF7A00] transition-all shadow-md flex items-center gap-2">
-              Browse All Projects <ArrowRight className="w-4 h-4" />
+            <Link href="/projects" className="px-8 py-4 bg-slate-900 dark:bg-orange-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-[#FF7A00] transition-all shadow-md flex items-center gap-2">
+              {t('nav_projects')} <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="/tp-maps" className="px-8 py-4 bg-white border border-slate-200 text-slate-900 rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-[#FF7A00] hover:text-[#FF7A00] transition-all shadow-sm flex items-center gap-2">
-              TP Maps Matrix <ArrowRight className="w-4 h-4" />
+            <Link href="/tp-maps" className="px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-[#FF7A00] hover:text-[#FF7A00] transition-all shadow-sm flex items-center gap-2">
+              {t('nav_tp_maps')} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -348,7 +348,7 @@ export function HomeClient() {
       </section>
 
       {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
-      <section id="site-visit" className="bg-slate-100 py-32 relative overflow-hidden">
+      <section id="site-visit" className="bg-slate-100 dark:bg-slate-950 py-32 relative overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8 relative z-10 flex justify-center">
           <div className="bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden">
             
@@ -491,4 +491,3 @@ export function HomeClient() {
     </div>
   );
 }
-

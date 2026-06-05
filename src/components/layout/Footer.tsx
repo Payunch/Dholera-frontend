@@ -40,7 +40,7 @@ export function Footer() {
               {ownerDetails.brandName}
             </h3>
             <p className="text-sm leading-relaxed text-slate-600">
-              The independent intelligence platform for Dholera Smart City. We provide verified data, planning maps, and investment growth evidence for India&apos;s first operational smart city.
+              {t('platform_desc')}
             </p>
             <div className="flex space-x-4">
               <Link href={siteConfig.links.facebook} className="text-slate-400 hover:text-orange-600 transition-colors">
@@ -104,10 +104,10 @@ export function Footer() {
 
         <div className="mt-12 border-t pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-400">
           <p className="text-[10px] sm:text-xs text-slate-500 normal-case tracking-normal max-w-4xl mx-auto font-medium leading-relaxed">
-            Disclaimer: This platform is a private, independent real estate and planning information service. It is not affiliated with, maintained by, or officially associated with the Government of Gujarat or DSIRDA.
+            {t('disclaimer')}
           </p>
           <p>
-            &copy; 2026 {ownerDetails.brandName.toUpperCase()}. All rights reserved. Built for India&apos;s Growth.
+            {t('rights_reserved')}
           </p>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { ShieldCheck, FileText, Search, Download, Filter, CheckCircle2 } from 'l
 import { API_BASE_URL, apiClient } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { useLead } from '@/providers/LeadProvider';
+import { useLanguage } from '@/providers/LanguageProvider';
 
 interface PDF {
   id: string;
@@ -19,16 +20,19 @@ interface PDF {
 
 export default function PdfPage() {
   const { verifiedLead } = useLead();
+  const { t } = useLanguage();
   const [pdfs, setPdfs] = useState<PDF[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("All Documents");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const tAllDocs = t('all_documents') || "All Documents";
+
   const filters = [
-    { label: "All Documents", key: "All" },
-    { label: "Town Planning (TP) Maps", key: "TP" },
-    { label: "Development Plan (DP) Maps", key: "DP" },
-    { label: "Official DSIRDA Circulars", key: "Circular" }
+    { label: tAllDocs, key: "All" },
+    { label: t('tp_maps_count'), key: "TP" },
+    { label: t('dp_maps_count'), key: "DP" },
+    { label: t('circulars_count'), key: "Circular" }
   ];
 
   useEffect(() => {
@@ -99,7 +103,7 @@ export default function PdfPage() {
         <div className="max-w-7xl mx-auto text-center space-y-8 relative z-10">
            <div className="space-y-4">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#10B981]">
-                <ShieldCheck className="h-4 w-4" /> Secure Document Archive
+                <ShieldCheck className="h-4 w-4" /> {t('pdf_hub_title')}
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white uppercase tracking-tight leading-tight">
                 DHOLERA <span className="text-[#FF7A00] italic">PDF HUB</span>
@@ -110,7 +114,7 @@ export default function PdfPage() {
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500 group-focus-within:text-[#FF7A00] transition-colors" />
               <input
                 type="text"
-                placeholder="SEARCH PDF ARCHIVES..."
+                placeholder={t('search_pdf_placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-14 pr-6 py-5 rounded-2xl bg-slate-900 border border-slate-700 font-bold uppercase tracking-widest text-xs text-white placeholder-slate-600 outline-none focus:border-[#FF7A00] transition-all"
@@ -124,7 +128,7 @@ export default function PdfPage() {
         {/* Horizontal PDF Types Buttons */}
         <div className="space-y-6">
             <h3 className="text-center text-xs font-black uppercase tracking-[0.3em] text-slate-400 flex items-center justify-center gap-2">
-                <Filter className="h-4 w-4" /> PDF TYPES
+                <Filter className="h-4 w-4" /> {t('pdf_types')}
             </h3>
             <div className="flex flex-wrap items-center justify-center gap-4">
                 {filters.map(filter => (
@@ -158,10 +162,10 @@ export default function PdfPage() {
                 <span className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 animate-pulse">Scanning Hub...</span>
              </div>
            ) : filteredPdfs.length === 0 ? (
-             <div className="bg-white rounded-[2rem] border-2 border-dashed border-slate-200 p-20 text-center flex flex-col items-center">
+             <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-800 p-20 text-center flex flex-col items-center">
                 <FileText className="h-12 w-12 text-slate-300 mb-6" />
-                <h3 className="text-lg font-black text-slate-900 uppercase mb-2">No Matching PDFs</h3>
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Broaden your search or change type.</p>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase mb-2">{t('no_projects_found')}</h3>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{t('adjust_search')}</p>
              </div>
            ) : (
              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

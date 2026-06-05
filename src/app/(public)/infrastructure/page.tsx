@@ -1,45 +1,43 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
 import { Cpu, Zap, Road, CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Dholera Smart City Infrastructure - Tata Fab, Solar Park & Expressway',
-  description: 'Explore the trunk infrastructure of Dholera SIR. Real-time updates on Tata Semicon Fab, Micron plant, 4400MW Solar Park, and Ahmedabad-Dholera Expressway.',
-  keywords: 'Dholera Infrastructure, Tata Fab Dholera, Micron Dholera, Dholera Solar Park, Dholera Expressway Status'
-};
+import { useLanguage } from '@/providers/LanguageProvider';
 
 export default function InfrastructurePage() {
+  const { t } = useLanguage();
+
   const categories = [
     {
-      title: "Industrial & Semicon",
+      title: t('industrial_semicon_title'),
       icon: Cpu,
       items: [
-        "Tata Electronics Mega Fab - ₹91,000 Cr Investment",
-        "Micron ATMP Plant - World-class memory manufacturing",
-        "Over 22.5 sq km allocated for Industrial activity",
-        "Direct link to Dedicated Freight Corridor (DFC)"
+        t('tata_investment'),
+        t('micron_investment'),
+        t('sqkm_allocated'),
+        t('dfc_link')
       ]
     },
     {
-      title: "Utility Powerhouse",
+      title: t('utility_powerhouse_title'),
       icon: Zap,
       items: [
-        "4400 MW Solar Park - Largest in a single location",
-        "24x7 Uninterrupted Industrial Power Supply",
-        "SCADA-enabled Smart Water Management",
-        "Zero Liquid Discharge (ZLD) system"
+        t('solar_park'),
+        t('power_supply'),
+        t('water_mgmt'),
+        t('zld_system')
       ]
     },
     {
-      title: "Connectivity",
+      title: t('connectivity_title'),
       icon: Road,
       items: [
-        "Ahmedabad-Dholera 109km Expressway (Underway)",
-        "Massive 10-lane backbone for smooth transit",
-        "Dholera Metro Rail connectivity planned",
-        "Multi-modal Logistic Hub (Airport + Port + Rail)"
+        t('expressway_desc'),
+        t('massive_10_lane'),
+        t('metro_rail'),
+        t('logistic_hub')
       ]
     }
   ];
@@ -60,13 +58,13 @@ export default function InfrastructurePage() {
         <div className="container relative z-10 mx-auto px-4 md:px-8">
           <div className="max-w-3xl space-y-6">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 bg-orange-600/20 px-4 py-1.5 rounded-full border border-orange-500/30">
-              Future Proof City
+              {t('exclusive_offer')}
             </span>
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
-              Dholera <span className="text-orange-600 italic">Smart</span> Infrastructure
+              {t('smart_infra_title')}
             </h1>
             <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
-              India's most advanced industrial ecosystem with trunk infrastructure worth ₹3,000+ Crore already in place.
+              {t('ecosystem_desc')}
             </p>
           </div>
         </div>
@@ -105,24 +103,24 @@ export default function InfrastructurePage() {
               <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
                  <div className="space-y-8">
                     <h2 className="text-4xl md:text-5xl font-black uppercase leading-tight">
-                      Decide based on <span className="text-orange-500 italic">Ground Reality</span>
+                      {t('decide_ground_reality')}
                     </h2>
                     <p className="text-slate-400 text-lg leading-relaxed">
-                      Don't invest based on rumors. We provide official TP Maps, zoning details, and development permissions directly from the DSIRDA archive.
+                      {t('invest_rumors')}
                     </p>
                     <div className="flex flex-wrap gap-4">
                        <div className="bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
                           <p className="text-3xl font-black text-orange-500">₹3000cr+</p>
-                          <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest">Trunk Infra Spent</p>
+                          <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest">{t('trunk_infra_spent')}</p>
                        </div>
                        <div className="bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
                           <p className="text-3xl font-black text-orange-500">22.5km²</p>
-                          <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest">Activation Area</p>
+                          <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest">{t('activation_area_val')}</p>
                        </div>
                     </div>
                     <div className="pt-4">
-                       <Link href="/#documents" className="inline-flex items-center gap-3 bg-orange-600 hover:bg-orange-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-orange-600/20">
-                         Browse Planning Maps <ArrowRight className="h-4 w-4" />
+                       <Link href="/tp-maps" className="inline-flex items-center gap-3 bg-orange-600 hover:bg-orange-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-orange-600/20">
+                         {t('browse_planning_maps')} <ArrowRight className="h-4 w-4" />
                        </Link>
                     </div>
                  </div>

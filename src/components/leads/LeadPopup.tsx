@@ -71,7 +71,8 @@ export const LeadPopup = ({
         name: name.trim(),
         phone: cleanPhone,
         sessionId,
-        browserFingerprint: fingerprint
+        browserFingerprint: fingerprint,
+        preferred_language: lang
       });
 
       if (res.data.lead_token) {

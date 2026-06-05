@@ -6,6 +6,7 @@ import { Map, Layers, Search, Filter, ShieldCheck, ArrowRight, HelpCircle, Loade
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { apiClient } from '@/lib/api';
+import { useLanguage } from '@/providers/LanguageProvider';
 
 interface TpBadge {
   text: string;
@@ -21,6 +22,7 @@ interface TpMap {
 }
 
 export default function TpMapsPage() {
+  const { t } = useLanguage();
   const [tpList, setTpList] = useState<TpMap[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -67,10 +69,10 @@ export default function TpMapsPage() {
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center">
            <div className="max-w-4xl mx-auto">
               <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight text-white leading-[1.1]">
-                DHOLERA SIR <span className="text-[#FF7A00] italic">TP MAPS MATRIX</span>
+                {t('tp_maps_matrix_title')}
               </h1>
               <p className="mt-6 text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
-                Access verified Town Planning records, road widths, and zoning use-cases for the entire Dholera Special Investment Region.
+                {t('tp_maps_matrix_desc')}
               </p>
            </div>
         </div>
@@ -88,16 +90,16 @@ export default function TpMapsPage() {
                  </div>
                  <input 
                    type="text"
-                   placeholder="SEARCH ZONES, SECTORS OR TP NUMBERS..."
+                   placeholder={t('search_placeholder')}
                    value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}
-                   className="w-full pl-16 pr-6 py-6 rounded-2xl bg-white border-2 border-slate-200 text-sm font-black uppercase tracking-widest text-slate-900 placeholder-slate-400 outline-none focus:border-[#FF7A00] focus:shadow-[0_0_20px_rgba(255,122,0,0.15)] transition-all"
+                   className="w-full pl-16 pr-6 py-6 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white placeholder-slate-400 outline-none focus:border-[#FF7A00] focus:shadow-[0_0_20px_rgba(255,122,0,0.15)] transition-all"
                  />
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-3">
                  <div className="flex items-center gap-2 mr-4 text-xs font-black uppercase tracking-widest text-slate-500">
-                    <Filter className="h-4 w-4" /> Quick Filters
+                    <Filter className="h-4 w-4" /> {t('quick_filters')}
                  </div>
                  {filters.map(filter => (
                     <button
@@ -186,7 +188,7 @@ export default function TpMapsPage() {
            
            {!loading && filteredList.length === 0 && (
              <div className="text-center py-20 text-slate-500 font-bold uppercase tracking-widest text-sm">
-                No matching zones found. Try adjusting your filters.
+                {t('no_matching_zones')}
              </div>
            )}
 

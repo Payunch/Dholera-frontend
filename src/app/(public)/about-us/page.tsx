@@ -22,9 +22,11 @@ import {
 import { apiClient } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { useLead } from "@/providers/LeadProvider";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 export default function AboutUsPage() {
   const { verifiedLead } = useLead();
+  const { t } = useLanguage();
   const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   const today = new Date().toISOString().split('T')[0];
   const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -104,13 +106,13 @@ export default function AboutUsPage() {
         </div>
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
           <div className="inline-flex items-center rounded-full bg-orange-600 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-white">
-             Intelligence Network
+             {t('intelligence_network')}
           </div>
           <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-white uppercase leading-none">
-            About <span className="text-orange-600 italic">Us</span>
+            {t('nav_about').split(' ').slice(0, 1).join(' ')} <span className="text-orange-600 italic">{t('nav_about').split(' ').slice(1).join(' ')}</span>
           </h1>
           <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-300 leading-relaxed uppercase tracking-widest">
-            The definitive digital bridge to India&apos;s first platinum-rated smart city.
+            {t('about_us_subtitle')}
           </p>
         </div>
       </section>
@@ -173,18 +175,16 @@ export default function AboutUsPage() {
            {/* Content */}
            <div className="relative z-10 flex-1 space-y-8">
               <div className="inline-flex items-center rounded-full bg-orange-600/20 border border-orange-500/30 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-orange-400">
-                 Visionary Leadership
+                 {t('visionary_leadership_title')}
               </div>
               <h2 className="font-display text-4xl md:text-5xl font-black text-white uppercase leading-[1.1] tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
-                 Dholera <span className="italic text-[#FF7A00]">Platform</span>
+                 {t('about_title').split(' ').slice(0, 1).join(' ')} <span className="italic text-[#FF7A00]">{t('about_title').split(' ').slice(1).join(' ')}</span>
               </h2>
               <div className="relative">
                  {/* Quote Mark Decoration */}
                  <div className="absolute -top-6 -left-6 text-8xl font-serif text-slate-700 opacity-30 z-0">"</div>
                  <p className="relative z-10 text-lg md:text-xl text-slate-300 font-medium leading-relaxed italic border-l-4 border-[#FF7A00] pl-6">
-                    Leveraging comprehensive GIS planning data and deep structural insights into the DSIR master plan, 
-                    Naresh Gohel empowers institutional and private investors to navigate Dholera’s land market with 
-                    absolute clarity, data-backed transparency, and zero ambiguity.
+                    {t('visionary_leadership_desc')}
                  </p>
               </div>
            </div>
