@@ -79,7 +79,7 @@ export default function TpMapsPage() {
       </section>
 
       {/* Interactive Matrix Dashboard */}
-      <section className="py-16 bg-slate-50 min-h-[60vh]">
+      <section className="py-16 bg-slate-50 dark:bg-[#0B132B] min-h-[60vh]">
         <div className="container mx-auto px-4 md:px-8">
            
            {/* Search & Filter UI */}
@@ -98,7 +98,7 @@ export default function TpMapsPage() {
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-3">
-                 <div className="flex items-center gap-2 mr-4 text-xs font-black uppercase tracking-widest text-slate-500">
+                 <div className="flex items-center gap-2 mr-4 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-300">
                     <Filter className="h-4 w-4" /> {t('quick_filters')}
                  </div>
                  {filters.map(filter => (
@@ -109,7 +109,7 @@ export default function TpMapsPage() {
                         "px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
                         activeFilter === filter 
                           ? "bg-[#FF7A00] text-white border-[#FF7A00] shadow-lg shadow-orange-600/20" 
-                          : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
+                          : "bg-white dark:bg-[#111A35] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400"
                       )}
                     >
                       {filter}
@@ -130,7 +130,7 @@ export default function TpMapsPage() {
                   <Link 
                     key={tp.tp_id} 
                     href={`/pdf?search=${tp.title.split(' ')[tp.title.split(' ').length - 1]}`}
-                    className="group relative p-10 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
+                    className="group relative p-10 rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
                   >
                      {/* Psychology Badges */}
                      <div className="absolute -top-4 right-6 flex flex-col gap-2 z-10 items-end transition-transform group-hover:scale-110">
@@ -162,12 +162,12 @@ export default function TpMapsPage() {
                           </div>
                        </div>
 
-                       <h3 className="font-display text-2xl font-black text-slate-900 mb-6 uppercase tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
+                       <h3 className="font-display text-2xl font-black text-slate-900 dark:text-white mb-6 uppercase tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
                           {tp.title}
                        </h3>
                        
-                       <div className="space-y-4 mb-10 p-6 bg-slate-50 rounded-[1.5rem] group-hover:bg-slate-100/50 transition-colors border border-transparent group-hover:border-orange-500/10">
-                          <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">
+                       <div className="space-y-4 mb-10 p-6 bg-slate-50 dark:bg-[#0B132B] rounded-[1.5rem] group-hover:bg-slate-100/50 transition-colors border border-transparent group-hover:border-orange-500/10">
+                          <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 dark:text-slate-400">
                              <Layers className="h-4 w-4 text-slate-400 group-hover:text-orange-500 transition-colors" /> 
                              {tp.area}
                           </div>
@@ -187,7 +187,7 @@ export default function TpMapsPage() {
            )}
            
            {!loading && filteredList.length === 0 && (
-             <div className="text-center py-20 text-slate-500 font-bold uppercase tracking-widest text-sm">
+             <div className="text-center py-20 text-slate-500 dark:text-slate-300 font-bold uppercase tracking-widest text-sm">
                 {t('no_matching_zones')}
              </div>
            )}

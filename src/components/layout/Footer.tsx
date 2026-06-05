@@ -31,7 +31,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full border-t bg-slate-50 text-slate-900 pb-24 md:pb-0">
+    <footer className="w-full border-t bg-slate-50 dark:bg-[#0B132B] text-slate-900 dark:text-white pb-24 md:pb-0">
       <div className="container mx-auto px-4 py-12 md:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand & Mission */}
@@ -39,7 +39,7 @@ export function Footer() {
             <h3 className="font-display text-2xl font-extrabold tracking-tight text-orange-600">
               {ownerDetails.brandName}
             </h3>
-            <p className="text-sm leading-relaxed text-slate-600">
+            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
               {t('platform_desc')}
             </p>
             <div className="flex space-x-4">
@@ -60,7 +60,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">{t('platform')}</h4>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">{t('platform')}</h4>
             <ul className="space-y-4 text-sm font-semibold">
               <li><Link href="/" className="hover:text-orange-600 transition-colors">{t('nav_home')}</Link></li>
               <li><Link href="/clearance-engine" className="hover:text-orange-600 transition-colors">{t('clearance_engine')}</Link></li>
@@ -71,7 +71,7 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">{t('legal')}</h4>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">{t('legal')}</h4>
             <ul className="space-y-4 text-sm font-semibold">
               <li><Link href="/privacy-policy" className="hover:text-orange-600 transition-colors">{t('privacy_policy')}</Link></li>
               <li><Link href="/terms-and-conditions" className="hover:text-orange-600 transition-colors">{t('terms_of_service')}</Link></li>
@@ -86,16 +86,16 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500">{t('footer_owner')}</h4>
-            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">{t('footer_owner')}</h4>
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600 dark:text-slate-400">
               <User className="h-5 w-5 text-orange-600 shrink-0" />
               <span>{ownerDetails.operatorName}</span>
             </div>
-            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600 dark:text-slate-400">
               <Mail className="h-5 w-5 text-orange-600 shrink-0" />
               <span>{ownerDetails.email}</span>
             </div>
-            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600">
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600 dark:text-slate-400">
               <Phone className="h-5 w-5 text-orange-600 shrink-0" />
               <span>{ownerDetails.phoneDisplay}</span>
             </div>
@@ -103,7 +103,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-          <p className="text-[10px] sm:text-xs text-slate-500 normal-case tracking-normal max-w-4xl mx-auto font-medium leading-relaxed">
+          <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-300 normal-case tracking-normal max-w-4xl mx-auto font-medium leading-relaxed">
             {t('disclaimer')}
           </p>
           <p>

@@ -71,20 +71,20 @@ export default function InfrastructurePage() {
       </section>
 
       {/* Grid Content */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50 dark:bg-[#0B132B]">
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             {categories.map((cat, i) => (
-              <div key={i} className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/40 hover:-translate-y-2 transition-all">
+              <div key={i} className="bg-white dark:bg-[#111A35] p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/40 hover:-translate-y-2 transition-all">
                 <div className="h-16 w-16 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600 mb-8">
                   <cat.icon className="h-8 w-8" />
                 </div>
-                <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 mb-6">{cat.title}</h3>
+                <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-6">{cat.title}</h3>
                 <div className="space-y-4">
                    {cat.items.map((item, j) => (
                      <div key={j} className="flex items-start gap-3">
                        <CheckCircle2 className="h-4 w-4 text-green-500 mt-1 shrink-0" />
-                       <span className="text-sm font-bold text-slate-500 leading-snug">{item}</span>
+                       <span className="text-sm font-bold text-slate-500 dark:text-slate-300 leading-snug">{item}</span>
                      </div>
                    ))}
                 </div>
@@ -109,13 +109,13 @@ export default function InfrastructurePage() {
                       {t('invest_rumors')}
                     </p>
                     <div className="flex flex-wrap gap-4">
-                       <div className="bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
+                       <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl">
                           <p className="text-3xl font-black text-orange-500">₹3000cr+</p>
-                          <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest">{t('trunk_infra_spent')}</p>
+                          <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-300 tracking-widest">{t('trunk_infra_spent')}</p>
                        </div>
-                       <div className="bg-white/5 border border-white/10 px-6 py-4 rounded-2xl">
+                       <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl">
                           <p className="text-3xl font-black text-orange-500">22.5km²</p>
-                          <p className="text-[10px] font-black uppercase text-slate-500 tracking-widest">{t('activation_area_val')}</p>
+                          <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-300 tracking-widest">{t('activation_area_val')}</p>
                        </div>
                     </div>
                     <div className="pt-4">
@@ -125,11 +125,11 @@ export default function InfrastructurePage() {
                     </div>
                  </div>
                  <div className="grid grid-cols-2 gap-4">
-                    <div className="aspect-square rounded-[2rem] bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4">
+                    <div className="aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4">
                        <ShieldCheck className="h-10 w-10 text-orange-500" />
                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Verified Plots</span>
                     </div>
-                    <div className="mt-8 aspect-square rounded-[2rem] bg-white/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4">
+                    <div className="mt-8 aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4">
                        <Road className="h-10 w-10 text-orange-500" />
                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Internal Roads</span>
                     </div>
