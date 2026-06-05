@@ -104,7 +104,7 @@ export default function BlogsAggregatorPage() {
                        <silo.icon className="h-8 w-8" />
                     </div>
                     <div>
-                       <h2 className="font-display text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
+                       <h2 className="font-display text-3xl font-black text-white uppercase tracking-tight">
                          [ {silo.title} ]
                        </h2>
                     </div>
@@ -148,13 +148,13 @@ export default function BlogsAggregatorPage() {
                                       {format(new Date(post.publishedAt || post.createdAt), "MMM d, yyyy")}
                                     </span>
                                  </div>
-                                 <h3 className="font-display text-2xl font-black text-slate-900 dark:text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors duration-300 line-clamp-3 mb-6">
+                                 <h3 className="font-display text-2xl font-black text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors duration-300 line-clamp-3 mb-6">
                                    {post.title}
                                  </h3>
                                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 mb-10 opacity-80 group-hover:opacity-100 transition-opacity">
                                    {post.content.replace(/<[^>]*>?/gm, '').slice(0, 140)}...
                                  </p>
-                                 <div className="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800 group-hover:border-orange-500/10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white group-hover:text-[#FF7A00] flex items-center justify-between transition-all duration-300">
+                                 <div className="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800 group-hover:border-orange-500/10 text-[10px] font-black uppercase tracking-[0.2em] text-white group-hover:text-[#FF7A00] flex items-center justify-between transition-all duration-300">
                                     {t('get_access')} <ArrowRight className="h-4 w-4 transform group-hover:translate-x-2 transition-transform" />
                                  </div>
                               </div>

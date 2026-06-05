@@ -164,7 +164,7 @@ export default function PdfPage() {
            ) : filteredPdfs.length === 0 ? (
              <div className="bg-white dark:bg-slate-900 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-800 p-20 text-center flex flex-col items-center">
                 <FileText className="h-12 w-12 text-slate-300 mb-6" />
-                <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase mb-2">{t('no_projects_found')}</h3>
+                <h3 className="text-lg font-black text-white uppercase mb-2">{t('no_projects_found')}</h3>
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{t('adjust_search')}</p>
              </div>
            ) : (

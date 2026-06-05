@@ -49,7 +49,7 @@ export default function ContactPage() {
                 </div>
                 <div className="space-y-1 pt-2">
                   <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Email</h4>
-                  <p className="font-display text-xl font-black text-slate-900 dark:text-white leading-none">gohelnaresh7707@gmail.com</p>
+                  <p className="font-display text-xl font-black text-white leading-none">gohelnaresh7707@gmail.com</p>
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ export default function ContactPage() {
                 </div>
                 <div className="space-y-1 pt-2">
                   <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Hotline</h4>
-                  <p className="font-display text-xl font-black text-slate-900 dark:text-white leading-none">+91 7435808031</p>
+                  <p className="font-display text-xl font-black text-white leading-none">+91 7435808031</p>
                 </div>
               </div>
 
@@ -69,7 +69,7 @@ export default function ContactPage() {
                 </div>
                 <div className="space-y-1 pt-2">
                   <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Location</h4>
-                  <p className="font-display text-xl font-black text-slate-900 dark:text-white leading-none">DSIR, Gujarat, India</p>
+                  <p className="font-display text-xl font-black text-white leading-none">DSIR, Gujarat, India</p>
                 </div>
               </div>
             </div>

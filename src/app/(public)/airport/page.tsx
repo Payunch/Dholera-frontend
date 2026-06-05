@@ -48,7 +48,7 @@ export default function AirportPage() {
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
-              <h2 className="text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
+              <h2 className="text-4xl font-black uppercase tracking-tight text-white">
                 {t('strategic_importance_title')}
               </h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
@@ -85,7 +85,7 @@ export default function AirportPage() {
                     <span className="text-[10px] font-black uppercase tracking-widest text-orange-600">{m.phase}</span>
                     <span className="bg-white dark:bg-slate-800 px-3 py-1 rounded-full text-[8px] font-black uppercase border border-slate-200 dark:border-slate-700 dark:text-slate-300">{m.status}</span>
                   </div>
-                  <h4 className="text-xl font-black text-slate-900 dark:text-white mb-2">{m.date}</h4>
+                  <h4 className="text-xl font-black text-white mb-2">{m.date}</h4>
                   <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">{m.desc}</p>
                 </div>
               ))}

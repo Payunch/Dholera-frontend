@@ -209,7 +209,7 @@ export function HomeClient() {
       <section className="bg-white dark:bg-slate-950 py-16 border-b border-slate-100 dark:border-slate-800 overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8">
           <div className="mb-12 text-center space-y-3 max-w-3xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-black text-slate-900 dark:text-white uppercase leading-tight">
+            <h2 className="text-xl md:text-2xl font-black text-white uppercase leading-tight">
               {t('institutional_anchors_title')}
             </h2>
             <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
@@ -261,7 +261,7 @@ export function HomeClient() {
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
               {t('verified_portfolio_title')}
             </span>
-            <h2 className="font-display text-4xl font-black text-slate-900 dark:text-white md:text-5xl uppercase leading-tight">
+            <h2 className="font-display text-4xl font-black text-white md:text-5xl uppercase leading-tight">
               {t('featured_developments').split(' ').slice(0, 1).join(' ')} <span className="text-[#FF7A00] italic">{t('featured_developments').split(' ').slice(1).join(' ')}</span>
             </h2>
             <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
@@ -309,7 +309,7 @@ export function HomeClient() {
                         {project.location.split(",")[0]}
                       </div>
 
-                      <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-colors duration-300">
+                      <h3 className="font-display text-2xl font-black uppercase tracking-tight text-white group-hover:text-[#FF7A00] transition-colors duration-300">
                         {project.name}
                       </h3>
 
@@ -340,7 +340,7 @@ export function HomeClient() {
             <Link href="/projects" className="px-8 py-4 bg-slate-900 dark:bg-orange-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-[#FF7A00] transition-all shadow-md flex items-center gap-2">
               {t('nav_projects')} <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="/tp-maps" className="px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-[#FF7A00] hover:text-[#FF7A00] transition-all shadow-sm flex items-center gap-2">
+            <Link href="/tp-maps" className="px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-[#FF7A00] hover:text-[#FF7A00] transition-all shadow-sm flex items-center gap-2">
               {t('nav_tp_maps')} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

@@ -120,7 +120,7 @@ export default function PortalsPage() {
                         <cat.icon className="h-8 w-8" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                        <h2 className="text-2xl font-black uppercase tracking-tight text-white">
                           {cat.title}
                         </h2>
                         <p className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-1">
@@ -147,7 +147,7 @@ export default function PortalsPage() {
                                  </div>
                                  <ExternalLink className="h-5 w-5 text-slate-300 group-hover:text-[#FF7A00] transition-colors" />
                               </div>
-                              <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors mb-3">
+                              <h3 className="text-lg font-black text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors mb-3">
                                 {link.name}
                               </h3>
                               <p className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
