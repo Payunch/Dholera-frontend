@@ -148,7 +148,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
   const amount = selectionType === 'view' ? 5 : 10;
 
   const { token, leadPhone, isMobile } = clientData;
-  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
+  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}&type=${selectionType}`, [pdfId, token, selectionType]);
 
   if (!mounted) return null;
 
