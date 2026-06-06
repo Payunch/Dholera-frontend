@@ -131,18 +131,18 @@ export const LeadPopup = ({
                   placeholder={t('full_name')} 
                   required
                   autoFocus
-                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-white dark:bg-slate-900 transition-all text-white placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-white dark:focus:bg-slate-900 transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
                   value={name} 
                   onChange={(e) => setName(e.target.value)}
                 />
-              </div>
-              <div className="relative">
+                </div>
+                <div className="relative">
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <input
                   type="tel" 
                   placeholder={t('mobile_number')} 
                   required
-                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-white dark:bg-slate-900 transition-all text-white placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-white dark:focus:bg-slate-900 transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
                   value={phone} 
                   onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
                 />

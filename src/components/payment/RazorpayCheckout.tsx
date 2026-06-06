@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { Loader2, ShieldCheck, ArrowRight } from 'lucide-react';
-import { apiClient } from '@/lib/api';
+import React, { useState } from 'react';
+import { ShieldCheck, ArrowRight, Smartphone, MessageSquare } from 'lucide-react';
 import { getCookie } from '@/utils/cookies';
 
 interface RazorpayCheckoutProps {
@@ -12,125 +11,52 @@ interface RazorpayCheckoutProps {
   onClose: () => void;
 }
 
-declare global {
-  interface Window {
-    Razorpay: any;
-  }
-}
-
 export const RazorpayCheckout = ({ pdfIds, type, onSuccess, onClose }: RazorpayCheckoutProps) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const upiId = 'solankiparesh1183@okaxis'; // From your .env
+  const adminPhone = '917435808310';
+  const amount = type === 'download' ? pdfIds.length * 10 : pdfIds.length * 5;
+  const leadPhone = getCookie('lead_phone') || '';
 
-  useEffect(() => {
-    // 1. Load Razorpay Script
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    script.onload = () => initializeOrder();
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  const initializeOrder = async () => {
-    try {
-      // 2. Create Order on Backend
-      const res = await apiClient.post('/payment/create-order', {
-        pdfIds,
-        type
-      });
-
-      if (!res.data.success) throw new Error('Order creation failed');
-
-      const { order_id, amount, currency, key_id } = res.data;
-
-      // 3. Open Razorpay Checkout
-      const options = {
-        key: key_id,
-        amount: amount,
-        currency: currency,
-        name: "Dholera Platform",
-        description: `Unlocking ${pdfIds.length} PDF (${type})`,
-        order_id: order_id,
-        handler: async (response: any) => {
-          // 4. Verify Payment on Backend
-          try {
-            const verifyRes = await apiClient.post('/payment/verify', {
-              ...response,
-              pdfIds,
-              type
-            });
-
-            if (verifyRes.data.success) {
-              onSuccess(verifyRes.data);
-            } else {
-              setError('Payment verification failed');
-            }
-          } catch (err) {
-            setError('Verification connection error');
-          }
-        },
-        prefill: {
-          name: getCookie('lead_name') || '',
-          contact: getCookie('lead_phone') || '',
-        },
-        theme: {
-          color: "#ea580c"
-        },
-        modal: {
-          ondismiss: () => onClose()
-        }
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-      setLoading(false);
-    } catch (err: any) {
-      console.error('Razorpay Init Error:', err);
-      setError(err.response?.data?.error || 'Failed to initialize payment');
-      setLoading(false);
-    }
-  };
+  const upiUrl = `upi://pay?pa=${upiId}&pn=Dholera%20Platform&am=${amount}.00&cu=INR&tn=Bulk%20PDF%20Unlock%20${pdfIds.join(',')}_${type}`;
+  const waUrl = `https://wa.me/${adminPhone}?text=Paid%20Rs.${amount}%20for%20${type.toUpperCase()}%20access%20to%20${pdfIds.length}%20PDFs. IDs:%20${pdfIds.join(',')}.%20Please%20activate.`;
 
   return (
-    <div className="fixed inset-0 z-[400] flex items-center justify-center bg-slate-950/90 backdrop-blur-md">
-      <div className="max-w-md w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl">
-        {loading ? (
-          <div className="space-y-6">
-            <div className="flex justify-center">
-              <Loader2 className="h-12 w-12 text-orange-600 animate-spin" />
-            </div>
-            <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Initializing Secure Payment</h3>
-            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Please wait while we connect to Razorpay...</p>
+    <div className="fixed inset-0 z-[400] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6">
+      <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
+        <div className="h-20 w-20 bg-orange-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-orange-500/20">
+          <ShieldCheck className="h-10 w-10 text-orange-600" />
+        </div>
+        
+        <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">Unlock {pdfIds.length} Documents</h3>
+        <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Secure UPI Payment Required</p>
+
+        <div className="space-y-4">
+          <div className="p-6 bg-slate-50 dark:bg-slate-950 rounded-3xl border border-slate-100 dark:border-slate-800 flex justify-between items-center">
+             <div className="text-left">
+               <p className="text-[10px] font-black text-slate-400 uppercase">{type === 'view' ? 'Streaming' : 'Full Download'} Access</p>
+               <p className="text-xs font-bold text-slate-900 dark:text-white mt-1">{pdfIds.length} PREMIUM FILES</p>
+             </div>
+             <p className="text-3xl font-black italic text-orange-600">₹{amount}</p>
           </div>
-        ) : error ? (
-          <div className="space-y-6">
-            <div className="flex justify-center">
-              <div className="h-16 w-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center">
-                <ShieldCheck className="h-8 w-8" />
-              </div>
-            </div>
-            <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Payment Error</h3>
-            <p className="text-sm font-medium text-slate-500">{error}</p>
-            <button onClick={onClose} className="w-full bg-white dark:bg-slate-900 text-white py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
-              Go Back
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            <div className="flex justify-center">
-              <div className="h-16 w-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center animate-pulse">
-                <ShieldCheck className="h-8 w-8" />
-              </div>
-            </div>
-            <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Secure Checkout Active</h3>
-            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Complete the payment in the Razorpay window to unlock your PDFs instantly.</p>
-          </div>
-        )}
+
+          <a href={upiUrl} className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/20 active:scale-95">
+            <Smartphone className="h-4 w-4" />
+            Pay via UPI App
+          </a>
+
+          <a href={waUrl} className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95">
+            <MessageSquare className="h-4 w-4" />
+            Verify on WhatsApp
+          </a>
+
+          <button onClick={onClose} className="w-full py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+            Cancel
+          </button>
+        </div>
+
+        <p className="mt-8 text-[9px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Manual Activation • Secured by Dholera Growth Team</p>
       </div>
     </div>
   );
 };
+
