@@ -4,14 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { format, isValid, parseISO } from 'date-fns';
 import { useLead } from '@/providers/LeadProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
-import { API_BASE_URL, apiClient } from '@/lib/api';
+import { apiClient } from '@/lib/api';
 import { SecurePdfViewer } from '@/components/pdf/SecurePdfViewer';
 import { LeadPopup } from '@/components/leads/LeadPopup';
 import { useVisitorTracking } from '@/hooks/useVisitorTracking';
-import { Calendar, FileText, Lock, Search, ShieldCheck, X, ArrowRight } from 'lucide-react';
+import { Calendar, FileText, Lock, Search, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { RazorpayCheckout } from '@/components/payment/RazorpayCheckout';
 
 interface PDF {
   id: string;
@@ -31,9 +29,6 @@ export function PdfListing() {
   const [activeTab, setActiveTab] = useState(0);
   const [search, setSearch] = useState('');
   const [purchasedPdfIds, setPurchasedPdfIds] = useState<string[]>([]);
-  
-  // Calculate if user is Pro based on both profile and purchase history
-  const isPro = verifiedLead?.is_pro || purchasedPdfIds.includes('0');
   
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
@@ -105,33 +100,6 @@ export function PdfListing() {
     }, 400);
   };
 
-  const handleCheckout = async () => {
-    if (!verifiedLead) {
-      setPostLoginAction('checkout');
-      setShowVerifyPopup(true);
-      return;
-    }
-    setShowRazorpay(true);
-  };
-
-  const handleBuyAll = async () => {
-    if (!verifiedLead) {
-      setPostLoginAction('buy_all');
-      setShowVerifyPopup(true);
-      return;
-    }
-    const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
-    setSelectedPdfs(allIds);
-    setShowRazorpay(true);
-  };
-
-  const handlePaymentSuccess = () => {
-    setShowRazorpay(false);
-    setIsSelectionMode(false);
-    setSelectedPdfs([]);
-    fetchPurchases();
-  };
-
   const formatUploadedAt = (pdf: PDF) => {
     const value = pdf.documentDate || pdf.createdAt;
     if (!value) return 'Date unavailable';
@@ -169,8 +137,6 @@ export function PdfListing() {
               ))}
             </div>
           </div>
-
-          {/* Removed Pro Membership Card */}
           
           <div className="relative w-full md:w-96">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
@@ -192,7 +158,6 @@ export function PdfListing() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-20">
             {filtered.map(pdf => {
-              const isSelected = selectedPdfs.includes(pdf.id);
               const isFree = String(pdf.id) === '19';
               const isPurchased = purchasedPdfIds.includes(String(pdf.id));
               
@@ -202,24 +167,14 @@ export function PdfListing() {
                   onClick={() => handlePdfClick(pdf.id)}
                   className={cn(
                     "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all cursor-pointer relative",
-                    isSelected ? "border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" : "border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2",
-                    isSelectionMode && isFree && "opacity-50 cursor-not-allowed"
+                    "border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2"
                   )}
                 >
                   <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 dark:bg-slate-950 flex items-center justify-center relative overflow-hidden border border-slate-50 dark:border-slate-800">
-                    <FileText className={cn("h-16 w-16 transition-all duration-500", isSelected ? "text-orange-600 scale-110" : "text-slate-200 dark:text-slate-700 group-hover:scale-110")} />
+                    <FileText className={cn("h-16 w-16 transition-all duration-500", "text-slate-200 dark:text-slate-700 group-hover:scale-110")} />
                      
-                     {isSelectionMode && !isFree && (
-                       <div className={cn(
-                         "absolute top-4 left-4 h-8 w-8 rounded-full border-2 flex items-center justify-center transition-all",
-                         isSelected ? "bg-orange-600 border-orange-600 text-white" : "bg-white/80 dark:bg-slate-900/80 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white"
-                       )}>
-                         {isSelected && <ShieldCheck className="h-5 w-5" />}
-                       </div>
-                     )}
-
                      {/* Hide lock if user is Pro OR if it's free OR if user purchased it */}
-                     {(!verifiedLead?.is_pro && !isFree && !isSelected && !isPurchased) && (
+                     {(!verifiedLead?.is_pro && !isFree && !isPurchased) && (
                        <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
                          <Lock className="h-4 w-4" />
                        </div>
@@ -244,10 +199,10 @@ export function PdfListing() {
                         onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
                         className={cn(
                           "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-                          isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
+                          (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
                         )}
                       >
-                        {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : (verifiedLead ? t('btn_view') : t('btn_unlock'))}
+                        {verifiedLead ? t('btn_view') : t('btn_unlock')}
                       </button>
                     </div>
                   </div>
