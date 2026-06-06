@@ -8,7 +8,7 @@ import { apiClient } from '@/lib/api';
 import { SecurePdfViewer } from '@/components/pdf/SecurePdfViewer';
 import { LeadPopup } from '@/components/leads/LeadPopup';
 import { useVisitorTracking } from '@/hooks/useVisitorTracking';
-import { Calendar, FileText, Lock, Search, ShieldCheck, X } from 'lucide-react';
+import { Calendar, FileText, Lock, Search, ShieldCheck, X, Download, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PDF {
@@ -94,20 +94,20 @@ export function PdfListing() {
     const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID || '19';
     const isFree = String(pdfId) === String(freeTrialId);
 
-    // Close existing to force clean state sync
+    // Completely close viewer first to clear state
     setShowViewer(false);
     
-    setTimeout(() => {
-      setSelectedPdfId(pdfId);
-      setPreSelectedType(type);
-      
-      if (isFree || verifiedLead) {
-        setShowViewer(true);
-      } else {
-        setPostLoginAction('view');
-        setShowVerifyPopup(true);
-      }
-    }, 50);
+    // Set parameters
+    setSelectedPdfId(pdfId);
+    setPreSelectedType(type);
+
+    if (isFree || verifiedLead) {
+      // Delay opening slightly to ensure clean mount
+      setTimeout(() => setShowViewer(true), 50);
+    } else {
+      setPostLoginAction('view');
+      setShowVerifyPopup(true);
+    }
   };
 
   const toggleSelection = (pdfId: string) => {
@@ -211,13 +211,14 @@ export function PdfListing() {
               const isSelected = selectedPdfs.includes(pdf.id);
               const isFree = String(pdf.id) === '19';
               const isPurchased = purchasedPdfIds.includes(String(pdf.id));
+              const isPro = verifiedLead?.is_pro === true;
+              const hasAccess = isPro || isFree || isPurchased;
               
               return (
                 <div 
                   key={pdf.id}
-                  onClick={() => handlePdfClick(pdf.id)}
                   className={cn(
-                    "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all cursor-pointer relative",
+                    "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all relative",
                     isSelected ? "border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" : "border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2",
                     isSelectionMode && isFree && "opacity-50 cursor-not-allowed"
                   )}
@@ -234,13 +235,14 @@ export function PdfListing() {
                        </div>
                      )}
 
-                     {/* Hide lock if user is Pro OR if it's free OR if user purchased it */}
-                     {(!verifiedLead?.is_pro && !isFree && !isSelected && !isPurchased) && (
+                     {/* Lock Icon */}
+                     {!hasAccess && !isSelected && (
                        <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
                          <Lock className="h-4 w-4" />
                        </div>
                      )}
                   </div>
+
                   <div className="flex-1 flex flex-col space-y-4">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600">
@@ -256,19 +258,19 @@ export function PdfListing() {
                     </h3>
                     
                     <div className="pt-2 mt-auto">
-                      {(!verifiedLead?.is_pro && !isFree && !isPurchased && !isSelectionMode) ? (
+                      {!hasAccess && !isSelectionMode ? (
                         <div className="grid grid-cols-1 gap-2">
                           <button 
                             onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id, 'view'); }}
-                            className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] bg-orange-600 text-white hover:bg-orange-500 transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
+                            className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] bg-orange-600 text-white hover:bg-orange-500 transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"
                           >
-                            View (₹5)
+                            <Eye className="h-4 w-4" /> View (₹5)
                           </button>
                           <button 
                             onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id, 'download'); }}
-                            className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] border-2 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-orange-600 hover:text-orange-600 transition-all flex items-center justify-center gap-2 active:scale-95"
+                            className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] border-2 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-orange-600 hover:text-orange-600 transition-all flex items-center justify-center gap-3 active:scale-95"
                           >
-                            Download (₹10)
+                            <Download className="h-4 w-4" /> Download (₹10)
                           </button>
                         </div>
                       ) : (
@@ -276,10 +278,10 @@ export function PdfListing() {
                           onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
                           className={cn(
                             "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-                            isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600 shadow-sm" : "bg-orange-600 text-white hover:bg-orange-500 shadow-lg")
+                            isSelected ? "bg-orange-600 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-orange-600 hover:text-white shadow-sm"
                           )}
                         >
-                          {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : t('btn_view')}
+                          {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : 'Open Vault'}
                         </button>
                       )}
                     </div>
