@@ -8,7 +8,7 @@ import { apiClient } from '@/lib/api';
 import { SecurePdfViewer } from '@/components/pdf/SecurePdfViewer';
 import { LeadPopup } from '@/components/leads/LeadPopup';
 import { useVisitorTracking } from '@/hooks/useVisitorTracking';
-import { Calendar, FileText, Lock, Search, ShieldCheck } from 'lucide-react';
+import { Calendar, FileText, Lock, Search, ShieldCheck, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PDF {
@@ -33,7 +33,16 @@ export function PdfListing() {
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
-  const [postLoginAction, setPostLoginAction] = useState<'view' | null>(null);
+  const [postLoginAction, setPostLoginAction] = useState<'view' | 'bulk_pay' | null>(null);
+
+  // Selection Mode State
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
+  const [selectedPdfs, setSelectedPdfs] = useState<string[]>([]);
+  const [showBulkCheckout, setShowBulkCheckout] = useState(false);
+
+  const pricePerPdf = selectionType === 'download' ? 10 : 5;
+  const selectionTotal = selectedPdfs.length * pricePerPdf;
 
   const fetchPurchases = React.useCallback(() => {
     if (!verifiedLead?.token) return;
@@ -76,6 +85,11 @@ export function PdfListing() {
   });
 
   const handlePdfClick = (pdfId: string) => {
+    if (isSelectionMode) {
+      toggleSelection(pdfId);
+      return;
+    }
+
     const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID || '19';
     const isFree = String(pdfId) === String(freeTrialId);
 
@@ -89,15 +103,35 @@ export function PdfListing() {
     }
   };
 
+  const toggleSelection = (pdfId: string) => {
+    if (pdfId === '19') return; // Free PDF
+    setSelectedPdfs(prev => 
+      prev.includes(pdfId) 
+        ? prev.filter(id => id !== pdfId) 
+        : [...prev, pdfId]
+    );
+  };
+
   const handleAuthSuccess = (data?: any) => {
     setShowVerifyPopup(false);
     
     setTimeout(() => {
       if (postLoginAction === 'view') {
         setShowViewer(true);
+      } else if (postLoginAction === 'bulk_pay') {
+        setShowBulkCheckout(true);
       }
       setPostLoginAction(null);
     }, 400);
+  };
+
+  const handleBulkPay = () => {
+    if (!verifiedLead) {
+      setPostLoginAction('bulk_pay');
+      setShowVerifyPopup(true);
+      return;
+    }
+    setShowBulkCheckout(true);
   };
 
   const formatUploadedAt = (pdf: PDF) => {
@@ -135,6 +169,15 @@ export function PdfListing() {
                   {tab.label}
                 </button>
               ))}
+
+              {!isSelectionMode && (
+                <button
+                  onClick={() => setIsSelectionMode(true)}
+                  className="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2 border-dashed border-slate-200 text-slate-400 hover:border-orange-600 hover:text-orange-600 flex items-center gap-2"
+                >
+                  <ShieldCheck className="h-3 w-3" /> Select Multiple
+                </button>
+              )}
             </div>
           </div>
           

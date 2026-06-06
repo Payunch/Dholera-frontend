@@ -5,6 +5,7 @@ import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, Arr
 import { API_BASE_URL, SITE_BASE_URL, apiClient } from '@/lib/api';
 import { getCookie } from '@/utils/cookies';
 import { io, Socket } from 'socket.io-client';
+import { cn } from '@/lib/utils';
 
 interface SecurePdfViewerProps {
   pdfId: string;
