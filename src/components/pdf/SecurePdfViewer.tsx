@@ -137,12 +137,18 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
     };
   }, [blobUrl]);
 
+  const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
+  const amount = selectionType === 'view' ? 5 : 10;
+
   const { token, leadPhone, isMobile } = clientData;
   const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
 
   if (!mounted) return null;
 
   const displayError = !pdfId ? 'Invalid document ID' : error;
+
+  const upiUrl = `upi://pay?pa=${upiId}&pn=Dholera%20Platform&am=${amount}.00&cu=INR&tn=PDF%20Unlock%20${pdfId}_${selectionType}`;
+  const waUrl = `https://wa.me/${adminPhone}?text=Paid%20Rs.${amount}%20for%20${selectionType.toUpperCase()}%20access%20to%20PDF%20ID:%20${pdfId}.%20Please%20activate.`;
 
   return (
     <div className="fixed inset-0 z-[200] flex flex-col bg-slate-950/95 backdrop-blur-md">
@@ -171,38 +177,54 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
         {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
         
         {requiresPayment && (
-          <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
-            <div className="h-20 w-20 bg-orange-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-orange-500/20">
-              <Lock className="h-10 w-10 text-orange-600" />
+          <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
+            <div className="h-16 w-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-orange-500/20">
+              <Lock className="h-8 w-8 text-orange-600" />
             </div>
             
             <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">Premium Document</h3>
             <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Secure UPI Payment Required</p>
 
-            <div className="space-y-4">
-              <div className="p-6 bg-slate-50 dark:bg-slate-950 rounded-3xl border border-slate-100 dark:border-slate-800 flex justify-between items-center">
-                 <div className="text-left">
-                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Access Fee</p>
-                   <p className="text-xs font-black text-slate-900 dark:text-white mt-1 uppercase">Instant Unlock</p>
-                 </div>
-                 <p className="text-3xl font-black italic text-orange-600">₹5</p>
+            <div className="space-y-6">
+              {/* Type Selection */}
+              <div className="grid grid-cols-2 gap-3">
+                 <button 
+                   onClick={() => setSelectionType('view')}
+                   className={cn(
+                     "p-4 rounded-2xl border-2 transition-all text-left",
+                     selectionType === 'view' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/10" : "border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950"
+                   )}
+                 >
+                   <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'view' ? "text-orange-600" : "text-slate-400")}>View Online</span>
+                   <span className={cn("text-xl font-black italic", selectionType === 'view' ? "text-slate-900 dark:text-white" : "text-slate-400")}>₹5</span>
+                 </button>
+                 <button 
+                   onClick={() => setSelectionType('download')}
+                   className={cn(
+                     "p-4 rounded-2xl border-2 transition-all text-left",
+                     selectionType === 'download' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/10" : "border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950"
+                   )}
+                 >
+                   <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'download' ? "text-orange-600" : "text-slate-400")}>Download PDF</span>
+                   <span className={cn("text-xl font-black italic", selectionType === 'download' ? "text-slate-900 dark:text-white" : "text-slate-400")}>₹10</span>
+                 </button>
               </div>
 
               <a 
-                href={`upi://pay?pa=${upiId}&pn=Dholera%20Platform&am=5.00&cu=INR&tn=PDF%20Unlock%20${pdfId}`}
+                href={upiUrl}
                 className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/20 active:scale-95"
               >
-                Pay via UPI App
+                Pay ₹{amount} via UPI App
               </a>
 
               <a 
-                href={`https://wa.me/${adminPhone}?text=Hi,%20I%20have%20paid%20Rs.5%20for%20PDF%20ID:%20${pdfId}.%20Please%20activate.`}
+                href={waUrl}
                 className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
               >
                 Verify on WhatsApp
               </a>
 
-              <button onClick={onClose} className="w-full py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <button onClick={onClose} className="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
                 Maybe Later
               </button>
             </div>

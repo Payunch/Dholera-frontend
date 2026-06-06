@@ -158,6 +158,7 @@ export function PdfListing() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-20">
             {filtered.map(pdf => {
+              const isSelected = selectedPdfs.includes(pdf.id);
               const isFree = String(pdf.id) === '19';
               const isPurchased = purchasedPdfIds.includes(String(pdf.id));
               
@@ -167,14 +168,24 @@ export function PdfListing() {
                   onClick={() => handlePdfClick(pdf.id)}
                   className={cn(
                     "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all cursor-pointer relative",
-                    "border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2"
+                    isSelected ? "border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" : "border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2",
+                    isSelectionMode && isFree && "opacity-50 cursor-not-allowed"
                   )}
                 >
                   <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 dark:bg-slate-950 flex items-center justify-center relative overflow-hidden border border-slate-50 dark:border-slate-800">
-                    <FileText className={cn("h-16 w-16 transition-all duration-500", "text-slate-200 dark:text-slate-700 group-hover:scale-110")} />
+                    <FileText className={cn("h-16 w-16 transition-all duration-500", isSelected ? "text-orange-600 scale-110" : "text-slate-200 dark:text-slate-700 group-hover:scale-110")} />
                      
+                     {isSelectionMode && !isFree && (
+                       <div className={cn(
+                         "absolute top-4 left-4 h-8 w-8 rounded-full border-2 flex items-center justify-center transition-all",
+                         isSelected ? "bg-orange-600 border-orange-600 text-white" : "bg-white/80 dark:bg-slate-900/80 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white"
+                       )}>
+                         {isSelected && <ShieldCheck className="h-5 w-5" />}
+                       </div>
+                     )}
+
                      {/* Hide lock if user is Pro OR if it's free OR if user purchased it */}
-                     {(!verifiedLead?.is_pro && !isFree && !isPurchased) && (
+                     {(!verifiedLead?.is_pro && !isFree && !isSelected && !isPurchased) && (
                        <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
                          <Lock className="h-4 w-4" />
                        </div>
@@ -199,10 +210,10 @@ export function PdfListing() {
                         onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
                         className={cn(
                           "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-                          (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
+                          isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
                         )}
                       >
-                        {verifiedLead ? t('btn_view') : t('btn_unlock')}
+                        {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : (verifiedLead ? t('btn_view') : t('btn_unlock'))}
                       </button>
                     </div>
                   </div>
@@ -212,6 +223,110 @@ export function PdfListing() {
           </div>
         )}
       </div>
+
+      {/* Floating Bulk Checkout Bar */}
+      {isSelectionMode && (
+        <div className="fixed bottom-10 inset-x-0 z-[150] px-4 animate-in slide-in-from-bottom-10">
+           <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
+              <div className="flex items-center gap-6 pl-4">
+                 <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                    <X className="h-6 w-6" />
+                 </button>
+                 <div className="flex flex-col">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">Selection Mode</span>
+                    <span className="text-sm font-bold text-slate-900 dark:text-white">{selectedPdfs.length} Documents Selected</span>
+                 </div>
+                 <button 
+                  onClick={() => {
+                    const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
+                    setSelectedPdfs(allIds);
+                  }}
+                  className="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-orange-600 transition-colors border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg"
+                 >
+                   Select All in Category
+                 </button>
+              </div>
+              
+              <div className="flex items-center gap-6">
+                 {/* Type Toggle */}
+                 <div className="flex bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
+                    <button 
+                      onClick={() => setSelectionType('view')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
+                        selectionType === 'view' ? "bg-orange-600 text-white shadow-lg" : "text-slate-400 hover:text-orange-600"
+                      )}
+                    >
+                      View (₹5)
+                    </button>
+                    <button 
+                      onClick={() => setSelectionType('download')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
+                        selectionType === 'download' ? "bg-orange-600 text-white shadow-lg" : "text-slate-400 hover:text-orange-600"
+                      )}
+                    >
+                      Download (₹10)
+                    </button>
+                 </div>
+
+                 <div className="text-right min-w-[80px]">
+                    <span className="block text-[10px] font-black uppercase tracking-widest text-slate-500">Total</span>
+                    <span className="text-xl font-black text-slate-900 dark:text-white">₹{selectionTotal}</span>
+                 </div>
+                 <button 
+                   disabled={selectedPdfs.length === 0}
+                   onClick={handleBulkPay}
+                   className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-200 dark:disabled:bg-slate-800 disabled:text-slate-400 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20 active:scale-95"
+                 >
+                   Pay Now
+                 </button>
+              </div>
+           </div>
+        </div>
+      )}
+
+      {/* Bulk UPI Checkout Modal */}
+      {showBulkCheckout && (
+        <div className="fixed inset-0 z-[400] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6">
+          <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
+            <div className="h-20 w-20 bg-orange-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-orange-500/20">
+              <ShieldCheck className="h-10 w-10 text-orange-600" />
+            </div>
+            
+            <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">Unlock {selectedPdfs.length} Documents</h3>
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Secure UPI Payment Required</p>
+
+            <div className="space-y-4">
+              <div className="p-6 bg-slate-50 dark:bg-slate-950 rounded-3xl border border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                 <div className="text-left">
+                   <p className="text-[10px] font-black text-slate-400 uppercase">{selectionType === 'view' ? 'Streaming' : 'Full Download'} Access</p>
+                   <p className="text-xs font-bold text-slate-900 dark:text-white mt-1 uppercase">{selectedPdfs.length} PREMIUM FILES</p>
+                 </div>
+                 <p className="text-3xl font-black italic text-orange-600">₹{selectionTotal}</p>
+              </div>
+
+              <a 
+                href={`upi://pay?pa=solankiparesh1183@okaxis&pn=Dholera%20Platform&am=${selectionTotal}.00&cu=INR&tn=Bulk%20PDF%20Unlock%20${selectedPdfs.length}_${selectionType}`}
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/20 active:scale-95"
+              >
+                Pay ₹{selectionTotal} via UPI App
+              </a>
+
+              <a 
+                href={`https://wa.me/917435808310?text=Paid%20Rs.${selectionTotal}%20for%20${selectionType.toUpperCase()}%20access%20to%20${selectedPdfs.length}%20PDFs.%20Please%20activate.`}
+                className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
+              >
+                Verify on WhatsApp
+              </a>
+
+              <button onClick={() => setShowBulkCheckout(false)} className="w-full py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showVerifyPopup && (
         <LeadPopup
