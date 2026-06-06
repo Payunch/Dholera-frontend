@@ -140,6 +140,11 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
   }, [blobUrl]);
 
   const [selectionType, setSelectionType] = useState<'view' | 'download'>(initialType);
+  
+  useEffect(() => {
+    setSelectionType(initialType);
+  }, [initialType]);
+
   const amount = selectionType === 'view' ? 5 : 10;
 
   const { token, leadPhone, isMobile } = clientData;
