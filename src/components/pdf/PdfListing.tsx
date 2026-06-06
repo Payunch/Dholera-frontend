@@ -31,6 +31,7 @@ export function PdfListing() {
   const [purchasedPdfIds, setPurchasedPdfIds] = useState<string[]>([]);
   
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
+  const [preSelectedType, setPreSelectedType] = useState<'view' | 'download'>('view');
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
   const [postLoginAction, setPostLoginAction] = useState<'view' | 'bulk_pay' | null>(null);
@@ -83,8 +84,6 @@ export function PdfListing() {
       `${pdf.title} ${pdf.category}`.toLowerCase().includes(search.toLowerCase());
     return matchesTab && matchesSearch;
   });
-
-  const [preSelectedType, setPreSelectedType] = useState<'view' | 'download'>('view');
 
   const handlePdfClick = (pdfId: string, type: 'view' | 'download' = 'view') => {
     if (isSelectionMode) {
@@ -252,7 +251,7 @@ export function PdfListing() {
                     </h3>
                     
                     <div className="pt-2 mt-auto">
-                      {(!verifiedLead?.is_pro && !isFree && !isPurchased) ? (
+                      {(!verifiedLead?.is_pro && !isFree && !isPurchased && !isSelectionMode) ? (
                         <div className="flex flex-col gap-2">
                           <button 
                             onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id, 'view'); }}
@@ -272,7 +271,7 @@ export function PdfListing() {
                           onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
                           className={cn(
                             "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-                            "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600"
+                            isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
                           )}
                         >
                           {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : t('btn_view')}
@@ -402,6 +401,7 @@ export function PdfListing() {
       
       {showViewer && selectedPdfId && (
         <SecurePdfViewer
+          key={`${selectedPdfId}-${preSelectedType}`}
           pdfId={selectedPdfId}
           onClose={() => setShowViewer(false)}
           initialType={preSelectedType}
