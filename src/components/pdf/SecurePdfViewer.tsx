@@ -4,32 +4,30 @@ import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight } from 'lucide-react';
 import { API_BASE_URL, SITE_BASE_URL, apiClient } from '@/lib/api';
 import { getCookie } from '@/utils/cookies';
-import { RazorpayCheckout } from '@/components/payment/RazorpayCheckout';
 import { io, Socket } from 'socket.io-client';
 
 interface SecurePdfViewerProps {
   pdfId: string;
   onClose: () => void;
-  onStartSelection?: () => void;
   refreshToken?: number;
 }
 
-export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken }: SecurePdfViewerProps) => {
+export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewerProps) => {
   const [mounted, setMounted] = useState(false);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [requiresPayment, setRequiresPayment] = useState(false);
   
-  const [showRazorpay, setShowRazorpay] = useState(false);
-  const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
-
   const [clientData, setClientData] = useState({
     token: '',
     fingerprint: '',
     leadPhone: 'Guest',
     isMobile: false
   });
+
+  const upiId = 'solankiparesh1183@okaxis';
+  const adminPhone = '917435808310';
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -139,11 +137,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
     };
   }, [blobUrl]);
 
-  const handlePaymentSuccess = () => {
-    setShowRazorpay(false);
-    fetchPdf();
-  };
-
   const { token, leadPhone, isMobile } = clientData;
   const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}`, [pdfId, token]);
 
@@ -178,74 +171,42 @@ export const SecurePdfViewer = ({ pdfId, onClose, onStartSelection, refreshToken
         {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
         
         {requiresPayment && (
-          <div className="max-w-xl w-full bg-white rounded-[2.5rem] overflow-hidden shadow-2xl animate-in zoom-in-95 flex flex-col md:flex-row">
-            <div className="p-10 md:w-1/2 flex flex-col justify-center">
-              <div className="h-16 w-16 rounded-2xl bg-orange-50 flex items-center justify-center mb-6">
-                <Lock className="h-8 w-8 text-orange-600" />
-              </div>
-              <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">Premium Content</h3>
-              <p className="text-slate-500 font-medium text-sm leading-relaxed mb-6">
-                This document is part of our exclusive DSIRDA intelligence archive. Choose an option to unlock access.
-              </p>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                  <ShieldCheck className="h-4 w-4 text-green-500" /> 
-                  Instant Access
-                </div>
-                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
-                  <ShieldCheck className="h-4 w-4 text-green-500" /> 
-                  Secure Verification
-                </div>
-              </div>
+          <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
+            <div className="h-20 w-20 bg-orange-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-orange-500/20">
+              <Lock className="h-10 w-10 text-orange-600" />
             </div>
+            
+            <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">Premium Document</h3>
+            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Secure UPI Payment Required</p>
 
-            <div className="bg-slate-50 p-8 md:w-1/2 flex flex-col gap-4 border-l border-slate-100">
-              <button 
-                onClick={() => { setSelectionType('view'); setShowRazorpay(true); }}
-                className="group relative flex flex-col items-start p-6 rounded-[1.5rem] bg-white dark:bg-slate-900 text-white hover:bg-orange-600 transition-all text-left shadow-xl hover:-translate-y-1"
+            <div className="space-y-4">
+              <div className="p-6 bg-slate-50 dark:bg-slate-950 rounded-3xl border border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                 <div className="text-left">
+                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Access Fee</p>
+                   <p className="text-xs font-black text-slate-900 dark:text-white mt-1 uppercase">Instant Unlock</p>
+                 </div>
+                 <p className="text-3xl font-black italic text-orange-600">₹5</p>
+              </div>
+
+              <a 
+                href={`upi://pay?pa=${upiId}&pn=Dholera%20Platform&am=5.00&cu=INR&tn=PDF%20Unlock%20${pdfId}`}
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/20 active:scale-95"
               >
-                <span className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-1">One-Time Access</span>
-                <span className="text-lg font-black uppercase tracking-tight">View PDF</span>
-                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white/80">Instant unlock after payment.</span>
-                <div className="mt-4 flex items-center justify-between w-full">
-                   <span className="text-2xl font-black">₹5</span>
-                   <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </button>
+                Pay via UPI App
+              </a>
 
-              <button 
-                onClick={() => { setSelectionType('download'); setShowRazorpay(true); }}
-                className="group flex flex-col items-start p-6 rounded-[1.5rem] bg-white border-2 border-slate-200 hover:border-orange-600 transition-all text-left hover:-translate-y-1"
+              <a 
+                href={`https://wa.me/${adminPhone}?text=Hi,%20I%20have%20paid%20Rs.5%20for%20PDF%20ID:%20${pdfId}.%20Please%20activate.`}
+                className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
               >
-                <span className="text-lg font-black uppercase tracking-tight text-slate-900">Download PDF</span>
-                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400">Save permanently to your device</span>
-                <div className="mt-4 flex items-center justify-between w-full">
-                   <span className="text-2xl font-black text-slate-900">₹10</span>
-                   <ArrowRight className="h-5 w-5 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </button>
+                Verify on WhatsApp
+              </a>
 
-              {onStartSelection && (
-                <button 
-                  onClick={onStartSelection}
-                  className="mt-2 group flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-dashed border-slate-300 text-slate-500 hover:text-orange-600 hover:border-orange-600 transition-all"
-                >
-                  <span className="text-[10px] font-black uppercase tracking-widest text-center w-full">Select multiple from list</span>
-                </button>
-              )}
-              
-              <button onClick={onClose} className="mt-2 text-center text-xs font-bold text-slate-400 hover:text-slate-600 uppercase tracking-widest">Maybe Later</button>
+              <button onClick={onClose} className="w-full py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+                Maybe Later
+              </button>
             </div>
           </div>
-        )}
-
-        {showRazorpay && (
-          <RazorpayCheckout
-            pdfIds={[pdfId]}
-            type={selectionType}
-            onSuccess={handlePaymentSuccess}
-            onClose={() => setShowRazorpay(false)}
-          />
         )}
 
         {displayError && !requiresPayment && (
