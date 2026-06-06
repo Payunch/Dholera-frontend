@@ -1,11 +1,15 @@
 import { Update } from "@/types/update";
 import { API_BASE_URL } from "@/lib/api";
 
-export async function getUpdates(search?: string): Promise<Update[]> {
-  const query = search ? `?search=${encodeURIComponent(search)}` : "";
+export async function getUpdates(search?: string, lang?: string): Promise<Update[]> {
+  const params = new URLSearchParams();
+  if (search) params.append("search", search);
+  if (lang) params.append("lang", lang);
+  
+  const query = params.toString() ? `?${params.toString()}` : "";
   const res = await fetch(`${API_BASE_URL}/updates${query}`, {
     next: { tags: ["updates"] },
-    cache: "no-store", // For listing we might want fresh data or ISR
+    cache: "no-store",
   });
 
   if (!res.ok) {
@@ -16,9 +20,10 @@ export async function getUpdates(search?: string): Promise<Update[]> {
   return Array.isArray(data) ? data : [];
 }
 
-export async function getUpdateById(id: string): Promise<Update | null> {
-  const res = await fetch(`${API_BASE_URL}/updates/${id}`, {
-    next: { revalidate: 3600 }, // ISR: Cache for 1 hour
+export async function getUpdateById(id: string, lang?: string): Promise<Update | null> {
+  const query = lang ? `?lang=${lang}` : "";
+  const res = await fetch(`${API_BASE_URL}/updates/${id}${query}`, {
+    next: { revalidate: 3600 },
   });
 
   if (!res.ok) {

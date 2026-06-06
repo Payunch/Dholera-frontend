@@ -383,7 +383,7 @@ export function PdfListing() {
               </a>
 
               <a 
-                href={`https://wa.me/917435808310?text=Paid%20Rs.${selectionTotal}%20for%20${selectionType.toUpperCase()}%20access%20to%20${selectedPdfs.length}%20PDFs.%20Please%20activate.`}
+                href={`https://wa.me/917435808034?text=Paid%20Rs.${selectionTotal}%20for%20${selectionType.toUpperCase()}%20access%20to%20${selectedPdfs.length}%20PDFs.%20Please%20activate.`}
                 className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
               >
                 Verify on WhatsApp

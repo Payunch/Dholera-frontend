@@ -102,7 +102,7 @@ export default function AirportPage() {
             {t('direct_access_tp')}
           </p>
           <div className="flex justify-center pt-4">
-            <a href="https://wa.me/917435808031" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-green-500/20 hover:bg-[#128C7E] transition-colors">
+            <a href="https://wa.me/917435808034" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-green-500/20 hover:bg-[#128C7E] transition-colors">
               +91 74358 08031
             </a>
           </div>

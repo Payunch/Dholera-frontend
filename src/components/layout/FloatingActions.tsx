@@ -7,14 +7,14 @@ import { useLanguage } from "@/providers/LanguageProvider";
 export function FloatingActions() {
   const { t } = useLanguage();
   
-  const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(t('whatsapp_hello'))}`;
+  const whatsappUrl = `https://wa.me/917435808034?text=${encodeURIComponent("Hello, I am interested in investment opportunities in *DHOLERA SMART CITY*. Please share the latest updates and project details in residential")}`;
 
   return (
     <>
       {/* Global Mobile Conversion Runtime Utilities (Sticky Bottom Action Bar) */}
       <div className="fixed bottom-0 left-0 right-0 z-[180] flex h-14 w-full md:hidden bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
         <a
-          href="tel:+917435808031"
+          href="tel:+917435808034"
           className="flex-1 flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-900 text-white font-bold tracking-wide active:bg-slate-800"
         >
           <Phone className="h-5 w-5" />
@@ -39,7 +39,7 @@ export function FloatingActions() {
            rel="noopener noreferrer"
            className="px-6 py-4 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:bg-[#128C7E] transition-all hover:-translate-y-1 font-black tracking-widest text-sm"
          >
-           +91 74358 08031
+           +91 74358 08034
          </a>
       </div>
     </>

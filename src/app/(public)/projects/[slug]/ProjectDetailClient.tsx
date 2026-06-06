@@ -170,7 +170,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
 
               <div className="space-y-4 pt-4">
                 <a
-                  href={`https://wa.me/917435808031?text=${encodeURIComponent(project.whatsappText)}`}
+                  href={`https://wa.me/917435808034?text=${encodeURIComponent(project.whatsappText)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#25D366] text-white text-xs font-black uppercase tracking-widest hover:bg-[#128C7E] transition-all shadow-lg shadow-green-500/10"

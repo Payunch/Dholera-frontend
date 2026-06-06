@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +22,10 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { id } = await params;
-  const update = await getUpdateById(id);
+  const cookieStore = await cookies();
+  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
+  
+  const update = await getUpdateById(id, lang);
   if (!update) return {};
 
   const previousImages = (await parent).openGraph?.images || [];
@@ -59,7 +63,10 @@ const CATEGORY_COLORS = {
 
 export default async function UpdateDetailPage({ params }: Props) {
   const { id } = await params;
-  const update = await getUpdateById(id);
+  const cookieStore = await cookies();
+  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
+
+  const update = await getUpdateById(id, lang);
 
   if (!update) {
     notFound();
