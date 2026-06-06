@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { API_BASE_URL } from '@/lib/api';
 import { setCookie, getCookie, removeCookie } from '@/utils/cookies';
 
@@ -31,6 +32,8 @@ const LeadContext = createContext<LeadContextType | undefined>(undefined);
 export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
   const [verifiedLead, setVerifiedLead] = useState<Lead | null>(null);
   const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
+  const isAdminPath = pathname?.startsWith('/admin');
 
   const loginLead = useCallback((leadData: Lead) => {
     if (leadData.id) setCookie('lead_id', String(leadData.id));
@@ -51,6 +54,12 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
+    // DO NOT run lead verification on admin pages to avoid state loops
+    if (isAdminPath) {
+      setLoading(false);
+      return;
+    }
+
     let cancelled = false;
 
     const verifySession = async () => {
@@ -106,7 +115,7 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
     verifySession();
 
     return () => { cancelled = true; };
-  }, [logoutLead]);
+  }, [logoutLead, isAdminPath]);
 
   return (
     <LeadContext.Provider value={{ verifiedLead, loginLead, logoutLead, loading }}>

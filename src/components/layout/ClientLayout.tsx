@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import * as React from "react";
+import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ClientProviders } from "@/providers/ClientProviders";
@@ -15,6 +16,9 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const isAdminPath = pathname?.startsWith('/admin');
+
   useEffect(() => {
     // Import Bootstrap JS on client side
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
@@ -28,6 +32,18 @@ export default function ClientLayout({
     }
   }, []);
 
+  // Return clean layout for Admin
+  if (isAdminPath) {
+    return (
+      <ClientProviders>
+        <div className="min-h-screen bg-white dark:bg-slate-950">
+          {children}
+        </div>
+      </ClientProviders>
+    );
+  }
+
+  // Return full layout for Public
   return (
     <ClientProviders>
       <div className="flex min-h-screen flex-col">
