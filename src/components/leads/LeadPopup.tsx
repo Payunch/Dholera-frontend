@@ -28,14 +28,16 @@ export const LeadPopup = ({
   onClose
 }: LeadPopupProps) => {
   const { loginLead, verifiedLead } = useLead();
-  const { lang, setLang, t } = useLanguage();
+  const { lang, t } = useLanguage();
   const [open, setOpen] = useState(true);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [step, setStep] = useState<'details' | 'success'>('details');
+  const [step, setStep] = useState<'details' | 'otp' | 'success'>('details');
+  const [resendTimer, setResendTimer] = useState(0);
 
   // Auto-close on verifiedLead availability
   useEffect(() => {
@@ -47,6 +49,14 @@ export const LeadPopup = ({
        }, 1000);
     }
   }, [verifiedLead, step, onClose]);
+
+  // Resend timer effect
+  useEffect(() => {
+    if (resendTimer > 0) {
+      const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendTimer]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,13 +70,35 @@ export const LeadPopup = ({
     setError('');
 
     try {
-      // Use the frictionless onboard route
-      const res = await apiClient.post('/leads/onboard', {
+      // Step 1: Request OTP
+      await apiClient.post('/leads/request-otp', {
         name: name.trim(),
         phone: cleanPhone,
-        sessionId,
-        browserFingerprint: fingerprint,
         preferred_language: lang
+      });
+
+      setStep('otp');
+      setResendTimer(60);
+    } catch (err: any) {
+      setError(err.response?.data?.error || t('err_generic'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (otp.length !== 6) return setError('Please enter 6-digit OTP');
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const res = await apiClient.post('/leads/verify-otp', {
+        phone: sanitizeDigits(phone, 10),
+        otp,
+        browserFingerprint: fingerprint,
+        sessionId
       });
 
       if (res.data.lead_token) {
@@ -81,7 +113,7 @@ export const LeadPopup = ({
         if (onClose) onClose();
       }, 1500);
     } catch (err: any) {
-      setError(err.response?.data?.error || t('err_generic'));
+      setError(err.response?.data?.error || 'Invalid OTP. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -109,10 +141,10 @@ export const LeadPopup = ({
           
           <div className="text-center mb-8">
             <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">
-              {step === 'success' ? t('access_granted') : t('start_here')}
+              {step === 'success' ? t('access_granted') : step === 'otp' ? 'Verify Mobile' : t('start_here')}
             </h2>
             <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
-              {t('verify_desc')}
+              {step === 'otp' ? `OTP sent to +91 ${phone}` : t('verify_desc')}
             </p>
           </div>
 
@@ -176,6 +208,53 @@ export const LeadPopup = ({
             </form>
           )}
 
+          {step === 'otp' && (
+            <form onSubmit={handleVerifyOtp} className="space-y-6">
+              <div className="flex justify-center gap-2">
+                 <input
+                   type="tel"
+                   maxLength={6}
+                   placeholder="Enter 6-Digit OTP"
+                   required
+                   autoFocus
+                   className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-5 text-center font-black tracking-[1em] text-lg outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-900 transition-all text-slate-900 dark:text-white placeholder:text-slate-300 placeholder:tracking-normal placeholder:text-xs"
+                   value={otp}
+                   onChange={(e) => setOtp(sanitizeDigits(e.target.value, 6))}
+                 />
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <button 
+                  disabled={loading} 
+                  className="w-full rounded-2xl bg-orange-600 py-5 font-black uppercase tracking-widest text-[10px] text-white transition-all hover:bg-white dark:bg-slate-900 dark:hover:bg-black shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3 group"
+                >
+                  {loading ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <>Verify & Join Platform</>
+                  )}
+                </button>
+
+                <button 
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={loading || resendTimer > 0}
+                  className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-orange-600 transition-colors disabled:opacity-50"
+                >
+                  {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : 'Resend OTP'}
+                </button>
+                
+                <button 
+                  type="button"
+                  onClick={() => setStep('details')}
+                  className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                >
+                  Change Number
+                </button>
+              </div>
+            </form>
+          )}
+
           {step === 'success' && (
             <div className="flex flex-col items-center py-6 space-y-6 animate-in fade-in zoom-in-90 duration-500">
                <div className="h-24 w-24 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-500 border border-green-100 dark:border-green-500/30">
@@ -189,4 +268,3 @@ export const LeadPopup = ({
     </div>
   );
 };
-
