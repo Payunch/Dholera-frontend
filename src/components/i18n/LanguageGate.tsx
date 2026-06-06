@@ -50,7 +50,7 @@ export function LanguageGate() {
                 setLang(l.code);
                 setShow(false);
               }}
-              className="group rounded-3xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-6 font-black uppercase tracking-widest text-sm text-white hover:border-orange-600 hover:bg-white dark:hover:bg-white dark:bg-slate-900 transition-all flex flex-col items-center justify-center gap-4 shadow-sm hover:shadow-xl hover:-translate-y-1"
+              className="group rounded-3xl border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-6 font-black uppercase tracking-widest text-sm text-slate-900 dark:text-white hover:border-orange-600 hover:bg-white dark:hover:bg-slate-900 transition-all flex flex-col items-center justify-center gap-4 shadow-sm hover:shadow-xl hover:-translate-y-1 relative"
             >
               <div className="h-12 w-12 rounded-full bg-orange-500/10 text-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Globe className="h-6 w-6" />
