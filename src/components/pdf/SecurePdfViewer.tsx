@@ -11,9 +11,10 @@ interface SecurePdfViewerProps {
   pdfId: string;
   onClose: () => void;
   refreshToken?: number;
+  initialType?: 'view' | 'download';
 }
 
-export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewerProps) => {
+export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'view' }: SecurePdfViewerProps) => {
   const [mounted, setMounted] = useState(false);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -138,7 +139,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken }: SecurePdfViewe
     };
   }, [blobUrl]);
 
-  const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
+  const [selectionType, setSelectionType] = useState<'view' | 'download'>(initialType);
   const amount = selectionType === 'view' ? 5 : 10;
 
   const { token, leadPhone, isMobile } = clientData;

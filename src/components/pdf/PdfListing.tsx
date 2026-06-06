@@ -84,7 +84,9 @@ export function PdfListing() {
     return matchesTab && matchesSearch;
   });
 
-  const handlePdfClick = (pdfId: string) => {
+  const [preSelectedType, setPreSelectedType] = useState<'view' | 'download'>('view');
+
+  const handlePdfClick = (pdfId: string, type: 'view' | 'download' = 'view') => {
     if (isSelectionMode) {
       toggleSelection(pdfId);
       return;
@@ -94,6 +96,7 @@ export function PdfListing() {
     const isFree = String(pdfId) === String(freeTrialId);
 
     setSelectedPdfId(pdfId);
+    setPreSelectedType(type);
     
     if (isFree || verifiedLead) {
       setShowViewer(true);
@@ -249,15 +252,32 @@ export function PdfListing() {
                     </h3>
                     
                     <div className="pt-2 mt-auto">
-                      <button 
-                        onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
-                        className={cn(
-                          "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-                          isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
-                        )}
-                      >
-                        {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : (verifiedLead ? t('btn_view') : t('btn_unlock'))}
-                      </button>
+                      {(!verifiedLead?.is_pro && !isFree && !isPurchased) ? (
+                        <div className="flex flex-col gap-2">
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id, 'view'); }}
+                            className="w-full py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] bg-orange-600 text-white hover:bg-orange-500 transition-all flex items-center justify-center gap-2"
+                          >
+                            View (₹5)
+                          </button>
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id, 'download'); }}
+                            className="w-full py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] border-2 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-orange-600 hover:text-orange-600 transition-all flex items-center justify-center gap-2"
+                          >
+                            Download (₹10)
+                          </button>
+                        </div>
+                      ) : (
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
+                          className={cn(
+                            "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
+                            "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600"
+                          )}
+                        >
+                          {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : t('btn_view')}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -384,6 +404,7 @@ export function PdfListing() {
         <SecurePdfViewer
           pdfId={selectedPdfId}
           onClose={() => setShowViewer(false)}
+          initialType={preSelectedType}
         />
       )}
     </section>
