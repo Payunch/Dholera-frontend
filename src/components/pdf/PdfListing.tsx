@@ -94,15 +94,20 @@ export function PdfListing() {
     const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID || '19';
     const isFree = String(pdfId) === String(freeTrialId);
 
-    setSelectedPdfId(pdfId);
-    setPreSelectedType(type);
+    // Reset Viewer first to ensure clean remount
+    setShowViewer(false);
     
-    if (isFree || verifiedLead) {
-      setShowViewer(true);
-    } else {
-      setPostLoginAction('view');
-      setShowVerifyPopup(true);
-    }
+    setTimeout(() => {
+      setSelectedPdfId(pdfId);
+      setPreSelectedType(type);
+      
+      if (isFree || verifiedLead) {
+        setShowViewer(true);
+      } else {
+        setPostLoginAction('view');
+        setShowVerifyPopup(true);
+      }
+    }, 10);
   };
 
   const toggleSelection = (pdfId: string) => {
@@ -210,11 +215,11 @@ export function PdfListing() {
               return (
                 <div 
                   key={pdf.id}
-                  onClick={() => handlePdfClick(pdf.id)}
                   className={cn(
-                    "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all cursor-pointer relative",
+                    "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all relative",
                     isSelected ? "border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" : "border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2",
-                    isSelectionMode && isFree && "opacity-50 cursor-not-allowed"
+                    isSelectionMode && isFree && "opacity-50 cursor-not-allowed",
+                    !isSelectionMode && "cursor-default"
                   )}
                 >
                   <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 dark:bg-slate-950 flex items-center justify-center relative overflow-hidden border border-slate-50 dark:border-slate-800">
