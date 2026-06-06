@@ -167,15 +167,6 @@ export function PdfListing() {
                   {tab.label}
                 </button>
               ))}
-
-              {!isSelectionMode && (
-                <button
-                  onClick={() => setIsSelectionMode(true)}
-                  className="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2 border-dashed border-slate-200 text-slate-400 hover:border-orange-600 hover:text-orange-600 flex items-center gap-2"
-                >
-                  <ShieldCheck className="h-3 w-3" /> Select Multiple
-                </button>
-              )}
             </div>
           </div>
 
@@ -267,68 +258,6 @@ export function PdfListing() {
         )}
       </div>
 
-      {/* Floating Checkout Bar */}
-      {isSelectionMode && (
-        <div className="fixed bottom-10 inset-x-0 z-[150] px-4 animate-in slide-in-from-bottom-10">
-           <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
-              <div className="flex items-center gap-6 pl-4">
-                 <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-white transition-colors">
-                    <X className="h-6 w-6" />
-                 </button>
-                 <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">Selection Mode</span>
-                    <span className="text-sm font-bold text-slate-900 dark:text-white">{selectedPdfs.length} Documents Selected</span>
-                 </div>
-                 <button 
-                  onClick={() => {
-                    const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
-                    setSelectedPdfs(allIds);
-                  }}
-                  className="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors border border-slate-700 px-3 py-1.5 rounded-lg"
-                 >
-                   Select All in Category
-                 </button>
-              </div>
-              
-              <div className="flex items-center gap-6">
-                 {/* Type Toggle */}
-                 <div className="flex bg-slate-800 rounded-xl p-1 border border-white/5">
-                    <button 
-                      onClick={() => setSelectionType('view')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
-                        selectionType === 'view' ? "bg-orange-600 text-white shadow-lg" : "text-slate-400 hover:text-white"
-                      )}
-                    >
-                      View (₹5)
-                    </button>
-                    <button 
-                      onClick={() => setSelectionType('download')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
-                        selectionType === 'download' ? "bg-orange-600 text-white shadow-lg" : "text-slate-400 hover:text-white"
-                      )}
-                    >
-                      Download (₹10)
-                    </button>
-                 </div>
-
-                 <div className="text-right min-w-[80px]">
-                    <span className="block text-[10px] font-black uppercase tracking-widest text-slate-500">Total</span>
-                    <span className="text-xl font-black text-slate-900 dark:text-white">₹{selectionTotal}</span>
-                 </div>
-                 <button 
-                   disabled={selectedPdfs.length === 0 || paymentLoading}
-                   onClick={handleCheckout}
-                   className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-800 disabled:text-slate-500 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20"
-                 >
-                   {paymentLoading ? '...' : 'Pay Now'}
-                 </button>
-              </div>
-           </div>
-        </div>
-      )}
-
       {showVerifyPopup && (
         <LeadPopup
           sessionId={sessionId || undefined}
@@ -337,27 +266,11 @@ export function PdfListing() {
           onSuccess={handleAuthSuccess}
         />
       )}
-
-      {showRazorpay && (
-        <RazorpayCheckout
-          pdfIds={selectedPdfs}
-          type={selectionType}
-          onSuccess={handlePaymentSuccess}
-          onClose={() => setShowRazorpay(false)}
-        />
-      )}
       
       {showViewer && selectedPdfId && (
         <SecurePdfViewer
           pdfId={selectedPdfId}
           onClose={() => setShowViewer(false)}
-          onStartSelection={() => {
-            setShowViewer(false);
-            setIsSelectionMode(true);
-            if (!selectedPdfs.includes(selectedPdfId)) {
-              setSelectedPdfs(prev => [...prev, selectedPdfId]);
-            }
-          }}
         />
       )}
     </section>
