@@ -38,17 +38,7 @@ export function PdfListing() {
   const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
   const [showViewer, setShowViewer] = useState(false);
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
-  const [postLoginAction, setPostLoginAction] = useState<'view' | 'checkout' | 'buy_all' | null>(null);
-
-  // Selection Mode State
-  const [isSelectionMode, setIsSelectionMode] = useState(false);
-  const [selectionType, setSelectionType] = useState<'view' | 'download'>('view');
-  const [selectedPdfs, setSelectedPdfs] = useState<string[]>([]);
-  const [showRazorpay, setShowRazorpay] = useState(false);
-  const [paymentLoading, setPaymentLoading] = useState(false);
-
-  const pricePerPdf = selectionType === 'download' ? 10 : 5;
-  const selectionTotal = selectedPdfs.length * pricePerPdf;
+  const [postLoginAction, setPostLoginAction] = useState<'view' | null>(null);
 
   const fetchPurchases = React.useCallback(() => {
     if (!verifiedLead?.token) return;
@@ -91,11 +81,6 @@ export function PdfListing() {
   });
 
   const handlePdfClick = (pdfId: string) => {
-    if (isSelectionMode) {
-      toggleSelection(pdfId);
-      return;
-    }
-    
     const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID || '19';
     const isFree = String(pdfId) === String(freeTrialId);
 
@@ -109,27 +94,12 @@ export function PdfListing() {
     }
   };
 
-  const toggleSelection = (pdfId: string) => {
-    if (pdfId === '19') return; // Free PDF
-    setSelectedPdfs(prev => 
-      prev.includes(pdfId) 
-        ? prev.filter(id => id !== pdfId) 
-        : [...prev, pdfId]
-    );
-  };
-
   const handleAuthSuccess = (data?: any) => {
     setShowVerifyPopup(false);
     
     setTimeout(() => {
       if (postLoginAction === 'view') {
         setShowViewer(true);
-      } else if (postLoginAction === 'checkout') {
-        setShowRazorpay(true);
-      } else if (postLoginAction === 'buy_all') {
-        const allIds = filtered.filter(p => String(p.id) !== '19').map(p => p.id);
-        setSelectedPdfs(allIds);
-        setShowRazorpay(true);
       }
       setPostLoginAction(null);
     }, 400);
