@@ -94,7 +94,7 @@ export function PdfListing() {
     const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID || '19';
     const isFree = String(pdfId) === String(freeTrialId);
 
-    // Reset Viewer first to ensure clean remount
+    // Close existing to force clean state sync
     setShowViewer(false);
     
     setTimeout(() => {
@@ -107,7 +107,7 @@ export function PdfListing() {
         setPostLoginAction('view');
         setShowVerifyPopup(true);
       }
-    }, 10);
+    }, 50);
   };
 
   const toggleSelection = (pdfId: string) => {
@@ -215,11 +215,11 @@ export function PdfListing() {
               return (
                 <div 
                   key={pdf.id}
+                  onClick={() => handlePdfClick(pdf.id)}
                   className={cn(
-                    "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all relative",
+                    "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all cursor-pointer relative",
                     isSelected ? "border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" : "border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2",
-                    isSelectionMode && isFree && "opacity-50 cursor-not-allowed",
-                    !isSelectionMode && "cursor-default"
+                    isSelectionMode && isFree && "opacity-50 cursor-not-allowed"
                   )}
                 >
                   <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 dark:bg-slate-950 flex items-center justify-center relative overflow-hidden border border-slate-50 dark:border-slate-800">
@@ -257,16 +257,16 @@ export function PdfListing() {
                     
                     <div className="pt-2 mt-auto">
                       {(!verifiedLead?.is_pro && !isFree && !isPurchased && !isSelectionMode) ? (
-                        <div className="flex flex-col gap-2">
+                        <div className="grid grid-cols-1 gap-2">
                           <button 
                             onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id, 'view'); }}
-                            className="w-full py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] bg-orange-600 text-white hover:bg-orange-500 transition-all flex items-center justify-center gap-2"
+                            className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] bg-orange-600 text-white hover:bg-orange-500 transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
                           >
                             View (₹5)
                           </button>
                           <button 
                             onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id, 'download'); }}
-                            className="w-full py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] border-2 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-orange-600 hover:text-orange-600 transition-all flex items-center justify-center gap-2"
+                            className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] border-2 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-orange-600 hover:text-orange-600 transition-all flex items-center justify-center gap-2 active:scale-95"
                           >
                             Download (₹10)
                           </button>
@@ -276,7 +276,7 @@ export function PdfListing() {
                           onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
                           className={cn(
                             "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-                            isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600" : "bg-orange-600 text-white hover:bg-orange-500")
+                            isSelected ? "bg-orange-600 text-white" : (verifiedLead ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:text-white hover:bg-orange-600 shadow-sm" : "bg-orange-600 text-white hover:bg-orange-500 shadow-lg")
                           )}
                         >
                           {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : t('btn_view')}
