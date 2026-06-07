@@ -27,6 +27,32 @@ export function ArticleBody({ content }: ArticleBodyProps) {
               // Check for list items
               const isListItem = /^[•\-\*]\s/.test(trimmedLine);
 
+              // Check for images ![alt](url)
+              const isImage = /^!\[(.*?)\]\((.*?)\)$/.test(trimmedLine);
+
+              if (isImage) {
+                const match = trimmedLine.match(/^!\[(.*?)\]\((.*?)\)$/);
+                if (match) {
+                  const alt = match[1];
+                  const src = match[2];
+                  return (
+                    <div key={li} className="my-10 overflow-hidden rounded-2xl shadow-xl">
+                      <img
+                        src={src}
+                        alt={alt}
+                        className="w-full object-cover"
+                        loading="lazy"
+                      />
+                      {alt && (
+                        <p className="mt-3 text-center text-sm font-bold uppercase tracking-widest text-slate-400">
+                          {alt}
+                        </p>
+                      )}
+                    </div>
+                  );
+                }
+              }
+
               if (isHeader) {
                 // Remove leading # for markdown headers
                 const headerText = trimmedLine.replace(/^#+\s/, '');
