@@ -49,6 +49,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "dholerahub.com",
+      },
+      {
+        protocol: "https",
         hostname: "*.unsplash.com",
       },
     ],
