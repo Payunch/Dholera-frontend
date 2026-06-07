@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/professional/clearance-requests",
+        destination: "/clearance-engine",
+        permanent: true,
+      },
+      {
         source: "/my-vault",
         destination: "/pdf",
         permanent: true,
