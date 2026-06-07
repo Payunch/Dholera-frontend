@@ -39,7 +39,7 @@ export function FloatingActions() {
            rel="noopener noreferrer"
            className="px-6 py-4 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:bg-[#128C7E] transition-all hover:-translate-y-1 font-black tracking-widest text-sm"
          >
-           +91 74358 08034
+           +91 74358 08031
          </a>
       </div>
     </>

@@ -29,7 +29,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
   });
 
   const upiId = 'solankiparesh1183@okaxis';
-  const adminPhone = '917435808310';
+  const adminPhone = '917435808031';
 
   const socketRef = useRef<Socket | null>(null);
 

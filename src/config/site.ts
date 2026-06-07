@@ -11,8 +11,8 @@ export const siteConfig = {
   },
   contact: {
     email: "gohelnaresh7707@gmail.com",
-    phone: "+91-XXXXXXXXXX",
-    phoneDisplay: "+91 XXXXXXXXXX",
+    phone: "+91-7435808031",
+    phoneDisplay: "+91 7435808031",
   },
   keywords: [
     "Dholera Platform",
