@@ -9,6 +9,7 @@ import { getUpdateById } from "@/features/updates/api";
 import { ArticleBody } from "@/features/updates/components/ArticleBody";
 import { cn } from "@/lib/utils";
 import { SITE_BASE_URL } from "@/lib/api";
+import { BlogPopupTrigger } from "@/components/leads/BlogPopupTrigger";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -80,6 +81,7 @@ export default async function UpdateDetailPage({ params }: Props) {
 
   return (
     <article className="bg-white pt-24 pb-32">
+      <BlogPopupTrigger />
       <div className="container mx-auto px-4 md:px-8">
         <div className="mx-auto max-w-4xl">
           {/* Back Navigation */}

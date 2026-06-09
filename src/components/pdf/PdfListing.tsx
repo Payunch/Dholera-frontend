@@ -401,8 +401,19 @@ export function PdfListing() {
         <LeadPopup
           sessionId={sessionId || undefined}
           fingerprint={fingerprint || undefined}
-          compulsory={true}
+          compulsory={false}
           onSuccess={handleAuthSuccess}
+          onClose={() => {
+            setShowVerifyPopup(false);
+            setTimeout(() => {
+              if (postLoginAction === 'view') {
+                setShowViewer(true);
+              } else if (postLoginAction === 'bulk_pay') {
+                setShowBulkCheckout(true);
+              }
+              setPostLoginAction(null);
+            }, 400);
+          }}
         />
       )}
       
