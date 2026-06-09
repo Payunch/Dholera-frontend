@@ -11,16 +11,22 @@ import ConsentBanner from "@/components/consent/ConsentBanner";
 import { LanguageGate } from "@/components/i18n/LanguageGate";
 import { FloatingActions } from "@/components/layout/FloatingActions";
 
+import { getCookie } from "@/utils/cookies";
+
 export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+
+  // Robust admin check: Path-based + Cookie-based
   const isAdminPath = pathname?.startsWith('/admin');
+  const hasAdminCookie = typeof window !== "undefined" && (getCookie('admin_access_token') || getCookie('admin_refresh_token'));
+  const isActuallyAdmin = isAdminPath || hasAdminCookie;
 
   useEffect(() => {
-    // Import Bootstrap JS on client side
+    // ...
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
 
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
@@ -33,7 +39,7 @@ export default function ClientLayout({
   }, []);
 
   // Return clean layout for Admin
-  if (isAdminPath) {
+  if (isActuallyAdmin) {
     return (
       <ClientProviders>
         <div className="min-h-screen bg-white dark:bg-slate-950">

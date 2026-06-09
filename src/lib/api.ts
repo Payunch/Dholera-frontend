@@ -29,11 +29,19 @@ export const apiClient = axios.create({
 
 // ROADMAP PHASE 6: FIREBASE APP CHECK SHIELD
 apiClient.interceptors.request.use(async (config) => {
-  // 1. Attach Lead Token if present in browser
+  // 1. Attach Lead Token if present in browser (ONLY for non-admin requests)
   if (typeof window !== "undefined") {
-    const leadToken = getCookie('lead_token');
-    if (leadToken && !config.headers['Authorization']) {
-      config.headers['Authorization'] = leadToken.startsWith('Bearer ') ? leadToken : `Bearer ${leadToken}`;
+    const pathname = window.location.pathname;
+    const isLoginPage = pathname === "/admin/login";
+    const isAdminPath = pathname.startsWith('/admin');
+    const isAuthRequest = config.url?.includes('/auth/');
+    
+    // Do not attach lead_token if we are on an admin page or performing auth tasks
+    if (!isAdminPath && !isAuthRequest) {
+      const leadToken = getCookie('lead_token');
+      if (leadToken && !config.headers['Authorization']) {
+        config.headers['Authorization'] = leadToken.startsWith('Bearer ') ? leadToken : `Bearer ${leadToken}`;
+      }
     }
   }
 
