@@ -62,26 +62,26 @@ export function Navbar() {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-orange-600 transition-all group"
+            className="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 hover:border-orange-600 transition-all group shadow-sm"
             title="Toggle Theme"
           >
             {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
-          <div className="h-4 w-px bg-slate-100" />
+          <div className="h-4 w-px bg-slate-200" />
 
           {/* Language Switcher */}
           <div className="relative">
             <button
               onClick={toggleLang}
-              className="flex items-center gap-2 text-slate-500 hover:text-orange-600 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/50 text-orange-600 font-black transition-all hover:bg-orange-100"
             >
               <Languages className="h-4 w-4" />
-              <span className="hidden lg:inline">{languages.find(l => l.code === lang)?.label}</span>
+              <span className="text-[10px] uppercase">{lang}</span>
               <ChevronDown className={cn("h-3 w-3 transition-transform", isLangOpen && "rotate-180")} />
             </button>
             {isLangOpen && (
-              <div className="absolute right-0 mt-4 w-40 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-2 shadow-2xl animate-in fade-in zoom-in-95">
+              <div className="absolute right-0 mt-4 w-40 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-2 shadow-2xl animate-in fade-in zoom-in-95 z-[200]">
                 {languages.map((l) => (
                   <button
                     key={l.code}
@@ -91,7 +91,7 @@ export function Navbar() {
                     }}
                     className={cn(
                       "block w-full rounded-lg px-4 py-2 text-left text-[10px] font-black uppercase tracking-widest transition-colors",
-                      lang === l.code ? "bg-orange-600 text-white" : "text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
+                      lang === l.code ? "bg-orange-600 text-white" : "text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-orange-600"
                     )}
                   >
                     {l.label}
