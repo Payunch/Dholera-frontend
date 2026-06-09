@@ -10,6 +10,7 @@ import { VisitorTracker } from "@/components/common/VisitorTracker";
 import ConsentBanner from "@/components/consent/ConsentBanner";
 import { LanguageGate } from "@/components/i18n/LanguageGate";
 import { FloatingActions } from "@/components/layout/FloatingActions";
+import LeadCaptureModal from "@/components/common/LeadCaptureModal";
 
 import { getCookie } from "@/utils/cookies";
 
@@ -67,6 +68,7 @@ export default function ClientLayout({
       <ConsentBanner />
       <LanguageGate />
       <FloatingActions />
+      <LeadCaptureModal />
     </ClientProviders>
   );
 }
