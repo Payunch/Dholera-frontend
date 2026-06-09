@@ -122,11 +122,11 @@ export const useVisitorTracking = () => {
           },
           body: JSON.stringify({
             page: pathname,
-            timeSpent: 15
+            timeSpent: 60
           })
         }).catch(err => console.warn('Tracking error (returning):', err.message));
       }
-    }, 15000);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, [pathname, isAdminPath, sessionId, fingerprint]);
