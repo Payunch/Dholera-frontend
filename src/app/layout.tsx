@@ -82,7 +82,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+      </head>
+      <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`} suppressHydrationWarning>
         <OrganizationSchema />
+        <Analytics />
 
         <Script
           id="google-adsense"
@@ -92,9 +95,6 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
 
-        <Analytics />
-      </head>
-      <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`} suppressHydrationWarning>
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_CONTAINER_ID}`}
