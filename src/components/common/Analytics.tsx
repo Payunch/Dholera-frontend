@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Script from "next/script";
 import React from "react";
 
@@ -8,24 +7,6 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID || "GTM-WM9HRJVV";
 const CLARITY_ID = process.env.NEXT_PUBLIC_MS_CLARITY_ID;
 
 export default function Analytics() {
-  const pathname = usePathname();
-
-  // If the user specifically wants to EXCLUDE these pages (based on "except this listed" interpretation)
-  // we could add logic here. However, usually "Not tagged" is a report of a missing tag that SHOULD be there.
-  // To be safe, we'll ensure it's applied everywhere and check for any path-based suppression.
-  
-  const isExcluded = [
-    '/blogs/18',
-    '/blogs/6',
-    '/professional/clearance-requests',
-    '/projects/aerocity-hub',
-    '/projects/imperial-tp4b2',
-    '/updates/3',
-    '/updates/6'
-  ].includes(pathname);
-
-  if (isExcluded) return null;
-
   return (
     <>
       {/* GTM Script */}
