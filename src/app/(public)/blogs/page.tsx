@@ -49,24 +49,25 @@ export default function BlogsPage() {
   return (
     <div className="bg-white dark:bg-slate-950 min-h-screen font-sans w-full overflow-x-hidden transition-colors">
       
-      {/* Dynamic Header */}
-      <section className="relative bg-slate-900 pt-32 pb-20 overflow-hidden">
+      {/* Dynamic Header - Refactored for proper sizing */}
+      <section className="relative bg-slate-900 pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-40">
           <Image 
             src="/images/dholerasirGujrat.webp" 
             alt="Intelligence Feed" 
             fill 
             className="object-cover grayscale brightness-50"
+            sizes="100vw"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950" />
 
-        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center">
-           <div className="max-w-4xl mx-auto space-y-4">
-              <h1 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tighter text-white leading-none">
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center pt-20">
+           <div className="max-w-4xl mx-auto space-y-6">
+              <h1 className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-white leading-[0.85]">
                 Intelligence <span className="text-orange-600 italic">Feed</span>
               </h1>
-              <p className="text-sm md:text-lg text-slate-400 font-bold uppercase tracking-[0.3em]">
+              <p className="text-sm md:text-xl text-slate-400 font-bold uppercase tracking-[0.3em]">
                 Live updates from India's first smart city
               </p>
            </div>
@@ -74,8 +75,8 @@ export default function BlogsPage() {
       </section>
 
       {/* Filter & Tabs Bar */}
-      <section className="sticky top-20 z-[140] bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-900 py-6">
-         <div className="container mx-auto px-4 md:px-8 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-6">
+      <section className="sticky top-20 z-[140] bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800 py-6">
+         <div className="container mx-auto px-4 md:px-8 max-w-[1600px] flex flex-col md:flex-row items-center justify-between gap-6">
             
             {/* Category Tabs */}
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0 w-full md:w-auto">
@@ -86,7 +87,7 @@ export default function BlogsPage() {
                    className={cn(
                      "whitespace-nowrap px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2",
                      activeTab === tab.id 
-                       ? "bg-orange-600 border-orange-600 text-white shadow-xl shadow-orange-600/10" 
+                       ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10" 
                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white"
                    )}
                  >
@@ -103,16 +104,16 @@ export default function BlogsPage() {
                  placeholder={t('search_placeholder')}
                  value={search}
                  onChange={(e) => setSearch(e.target.value)}
-                 className="w-full pl-12 pr-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-xs font-bold outline-none focus:border-orange-600 transition-all text-slate-900 dark:text-white"
+                 className="w-full pl-12 pr-4 py-3 rounded-xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-xs font-black uppercase tracking-widest outline-none focus:border-[#FF7A00] transition-all text-slate-900 dark:text-white"
                />
             </div>
 
          </div>
       </section>
 
-      {/* Main Grid */}
+      {/* Main Grid - REFACTORED FOR 1/2/3/4 RESPONSIVENESS */}
       <section className="py-16">
-         <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+         <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
             
             {loading ? (
               <div className="flex flex-col items-center py-32 gap-4">
@@ -126,7 +127,7 @@ export default function BlogsPage() {
                  <button onClick={() => { setActiveTab("All"); setSearch(""); }} className="text-orange-600 text-xs font-black uppercase tracking-widest underline underline-offset-4">Reset all filters</button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
                  {filtered.map(post => {
                    const imgSrc = post.imageUrl 
                      ? (post.imageUrl.startsWith("http") ? post.imageUrl : `${SITE_BASE_URL}${post.imageUrl}`)
@@ -136,7 +137,7 @@ export default function BlogsPage() {
                      <Link 
                        key={post.id} 
                        href={`/blogs/${post.id}`}
-                       className="group flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl hover:border-orange-500/30 hover:-translate-y-2 overflow-hidden"
+                       className="group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 overflow-hidden"
                      >
                         {imgSrc && (
                           <div className="relative h-64 w-full bg-white dark:bg-slate-950 overflow-hidden">
@@ -145,14 +146,15 @@ export default function BlogsPage() {
                                alt={post.title}
                                fill
                                className="object-cover group-hover:scale-110 transition-transform duration-1000"
+                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                              />
                              <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors duration-500" />
                           </div>
                         )}
                         
-                        <div className="p-10 flex-1 flex flex-col">
+                        <div className="p-8 md:p-10 flex-1 flex flex-col">
                            <div className="flex items-center justify-between mb-8">
-                              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-orange-600 px-3 py-1 bg-orange-50 dark:bg-orange-900/10 rounded-lg border border-orange-100/50 dark:border-orange-500/20">
+                              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#FF7A00] px-3 py-1 bg-orange-50 dark:bg-orange-950/10 rounded-lg border border-orange-100/50 dark:border-orange-500/20">
                                 {post.category}
                               </span>
                               <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
@@ -161,7 +163,7 @@ export default function BlogsPage() {
                               </div>
                            </div>
 
-                           <h3 className="font-display text-2xl font-black text-slate-900 dark:text-white uppercase leading-snug group-hover:text-orange-600 transition-colors duration-300 line-clamp-3 mb-6">
+                           <h3 className="font-display text-2xl font-black text-slate-900 dark:text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors duration-300 line-clamp-3 mb-6">
                              {post.title}
                            </h3>
 
@@ -169,7 +171,7 @@ export default function BlogsPage() {
                              {post.content.replace(/<[^>]*>?/gm, '').slice(0, 150)}...
                            </p>
 
-                           <div className="mt-auto pt-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white group-hover:text-orange-600 transition-all duration-300">
+                           <div className="mt-auto pt-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-all duration-300">
                               <span>Read Analysis</span>
                               <ArrowRight className="h-4 w-4 transform group-hover:translate-x-2 transition-transform" />
                            </div>

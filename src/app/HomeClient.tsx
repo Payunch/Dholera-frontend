@@ -97,8 +97,8 @@ export function HomeClient() {
   return (
     <div className="flex flex-col bg-white dark:bg-slate-950 overflow-x-hidden w-full transition-colors">
       
-      {/* 1.1 HERO SECTION */}
-      <section className="relative w-full min-h-[95vh] bg-white dark:bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
+      {/* 1.1 HERO SECTION - REFACTORED FOR PROPER SIZING */}
+      <section className="relative w-full min-h-[70vh] md:min-h-[85vh] lg:min-h-[95vh] bg-white dark:bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
         {/* Animated Hero Carousel with HIGH-RES IMAGES */}
         <div className="absolute inset-0 z-0">
           {heroImages.map((img, idx) => (
@@ -115,17 +115,18 @@ export function HomeClient() {
                 fill
                 priority={idx === 0}
                 className="object-cover object-center transform scale-110 motion-safe:animate-[pulse_10s_infinite]"
+                sizes="100vw"
               />
             </div>
           ))}
           <div className="absolute inset-0 bg-white dark:bg-[#0B132B]/40 mix-blend-multiply" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-[#0B132B]/80 pointer-events-none" />
           
-          {/* Subtle Dholera Vector Overlay (Simulated with a tech grid) */}
-          <div className="absolute inset-0 bg-[url('/images/logo.png')] bg-no-repeat bg-center opacity-5 grayscale invert scale-[2] pointer-events-none" />
+          {/* Subtle Dholera Vector Overlay */}
+          <div className="absolute inset-0 bg-[url('/images/logo.png')] bg-no-repeat bg-center opacity-5 grayscale invert scale-[1.5] md:scale-[2] pointer-events-none" />
 
-          {/* Interactive Grid on top */}
-          <div className="absolute inset-0 grid grid-cols-8 sm:grid-cols-12 md:grid-cols-20 grid-rows-12 gap-px opacity-10">
+          {/* Interactive Grid on top - Fluid Sizing */}
+          <div className="absolute inset-0 grid grid-cols-6 sm:grid-cols-12 lg:grid-cols-20 grid-rows-12 gap-px opacity-10">
             {Array.from({ length: 240 }).map((_, i) => (
               <div 
                 key={i} 
@@ -140,15 +141,16 @@ export function HomeClient() {
           </div>
         </div>
 
-        <div className="container relative z-10 px-4 md:px-8 mx-auto py-20 flex justify-center">
-          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden">
+        <div className="container relative z-10 px-4 md:px-8 mx-auto py-12 md:py-20 flex justify-center">
+          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden">
             {/* Background Image for the Content Box */}
-            <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
+            <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
                <Image 
                  src="/images/futuristic_dholera.png" 
                  alt="Dholera Future Vision" 
                  fill 
                  className="object-cover"
+                 sizes="(max-width: 768px) 100vw, 800px"
                />
             </div>
 

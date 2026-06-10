@@ -108,6 +108,37 @@ body {
   box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
 }
 
+/* Global Responsive Grid System - 1/2/3/4 Columns */
+.auto-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .auto-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .auto-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  .auto-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Fluid Typography & Sizing */
+:root {
+  --fluid-spacing: clamp(1rem, 5vw, 4rem);
+}
+
 @keyframes floatSoft {
   0% {
     transform: translateY(0);

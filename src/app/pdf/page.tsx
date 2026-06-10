@@ -88,15 +88,16 @@ export default function PdfPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans w-full overflow-x-hidden">
       
-      {/* Header Section */}
-      <div className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 px-4 md:px-8 border-b border-slate-800 overflow-hidden">
+      {/* Header Section - Refactored for proper sizing */}
+      <div className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 px-4 md:px-8 border-b border-slate-800 overflow-hidden">
         {/* Background Image Overlay */}
-        <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <Image 
             src="/images/airportVision.webp" 
             alt="Dholera Strategic Archive" 
             fill 
             className="object-cover"
+            sizes="100vw"
           />
         </div>
 
@@ -105,7 +106,7 @@ export default function PdfPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#10B981]">
                 <ShieldCheck className="h-4 w-4" /> {t('pdf_hub_title')}
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">
                 DHOLERA <span className="text-[#FF7A00] italic">PDF HUB</span>
               </h1>
            </div>
@@ -117,13 +118,13 @@ export default function PdfPage() {
                 placeholder={t('search_pdf_placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-700 font-bold uppercase tracking-widest text-xs text-white placeholder-slate-600 outline-none focus:border-[#FF7A00] transition-all"
+                className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 font-bold uppercase tracking-widest text-xs text-slate-900 dark:text-white placeholder-slate-600 outline-none focus:border-[#FF7A00] transition-all"
               />
            </div>
         </div>
       </div>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-8 py-16 space-y-16">
+      <main className="flex-1 max-w-[1600px] mx-auto w-full px-4 md:px-8 py-16 space-y-16">
         
         {/* Horizontal PDF Types Buttons */}
         <div className="space-y-6">
@@ -139,13 +140,13 @@ export default function PdfPage() {
                         "flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2",
                         activeFilter === filter.label
                           ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10"
-                          : "bg-white border-slate-100 text-slate-400 hover:border-slate-300 hover:text-slate-600"
+                          : "bg-white dark:bg-[#111A35] border-slate-100 dark:border-slate-800 text-slate-400 hover:border-slate-300 hover:text-slate-600"
                       )}
                     >
                       {filter.label}
                       <span className={cn(
                         "px-2 py-0.5 rounded-md text-[8px]",
-                        activeFilter === filter.label ? "bg-white/20 text-slate-900 dark:text-white" : "bg-white text-slate-500 dark:text-slate-400"
+                        activeFilter === filter.label ? "bg-white/20 text-slate-900 dark:text-white" : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400"
                       )}>
                         {getCount(filter.key)}
                       </span>
@@ -154,7 +155,7 @@ export default function PdfPage() {
             </div>
         </div>
 
-        {/* Card Matrix (Smaller Cards) */}
+        {/* Card Matrix - REFACTORED FOR 1/2/3/4 RESPONSIVENESS */}
         <div className="pb-20">
            {loading ? (
              <div className="flex flex-col items-center justify-center py-32 gap-4">
@@ -168,14 +169,14 @@ export default function PdfPage() {
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{t('adjust_search')}</p>
              </div>
            ) : (
-             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
                 {filteredPdfs.map(pdf => (
                   <a 
                     key={pdf.id}
                     href={`${API_BASE_URL}/pdf/view/${pdf.id}?token=${verifiedLead?.token || 'guest'}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group bg-white rounded-3xl border border-slate-100 p-6 flex flex-col shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500"
+                    className="group bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-8 flex flex-col shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500"
                   >
                      <div className="flex items-center justify-between mb-6">
                         <div className="h-12 w-12 rounded-xl bg-white flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-slate-900 dark:text-white transition-all duration-300">

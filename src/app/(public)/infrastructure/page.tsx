@@ -44,47 +44,48 @@ export default function InfrastructurePage() {
 
   return (
     <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen w-full overflow-x-hidden">
-      {/* Hero */}
-      <section className="relative h-[50vh] flex items-center bg-white dark:bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-60">
+      {/* Hero - Refactored for proper sizing */}
+      <section className="relative min-h-[50vh] md:min-h-[65vh] flex items-center bg-white dark:bg-slate-900 text-white overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-40">
           <Image 
             src="/images/arialviewdholeraexpress.webp" 
             alt="Dholera Smart Infrastructure" 
             fill 
             className="object-cover"
+            sizes="100vw"
             priority
           />
         </div>
         <div className="container relative z-10 mx-auto px-4 md:px-8">
-          <div className="max-w-3xl space-y-6">
+          <div className="max-w-4xl space-y-6 pt-20">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 bg-orange-600/20 px-4 py-1.5 rounded-full border border-orange-500/30">
               {t('exclusive_offer')}
             </span>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.85]">
               {t('smart_infra_title')}
             </h1>
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed uppercase tracking-widest">
               {t('ecosystem_desc')}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Grid Content */}
+      {/* Grid Content - REFACTORED FOR RESPONSIVENESS */}
       <section className="py-24 bg-white dark:bg-[#0B132B]">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {categories.map((cat, i) => (
-              <div key={i} className="bg-white dark:bg-[#111A35] p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-2 transition-all">
-                <div className="h-16 w-16 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600 mb-8">
+              <div key={i} className="bg-white dark:bg-[#111A35] p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-2 transition-all group flex flex-col">
+                <div className="h-16 w-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#FF7A00] mb-8 transition-colors group-hover:bg-[#FF7A00] group-hover:text-white">
                   <cat.icon className="h-8 w-8" />
                 </div>
-                <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-6">{cat.title}</h3>
+                <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-6 group-hover:text-[#FF7A00] transition-colors">{cat.title}</h3>
                 <div className="space-y-4">
                    {cat.items.map((item, j) => (
                      <div key={j} className="flex items-start gap-3">
                        <CheckCircle2 className="h-4 w-4 text-green-500 mt-1 shrink-0" />
-                       <span className="text-sm font-bold text-slate-500 dark:text-slate-300 leading-snug">{item}</span>
+                       <span className="text-sm font-bold text-slate-500 dark:text-slate-300 leading-snug uppercase tracking-wider">{item}</span>
                      </div>
                    ))}
                 </div>

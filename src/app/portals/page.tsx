@@ -79,15 +79,16 @@ export default function PortalsPage() {
   return (
     <div className="bg-white dark:bg-slate-950 min-h-screen font-sans w-full overflow-x-hidden transition-colors">
       
-      {/* Header Section */}
-      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">
+      {/* Header Section - Refactored for proper sizing */}
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden">
         {/* Background Image Overlay */}
-        <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <Image 
             src="/images/futuristic_dholera.png" 
             alt={t('verified_portals_title')} 
             fill 
             className="object-cover"
+            sizes="100vw"
           />
         </div>
 
@@ -96,7 +97,7 @@ export default function PortalsPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#10B981]">
                 <ShieldCheck className="h-4 w-4" /> {t('third_party_verification')}
               </div>
-              <h1 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+              <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
                 {t('verified_portals_title')}
               </h1>
               <p className="text-base sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
@@ -108,29 +109,29 @@ export default function PortalsPage() {
 
       {/* Directory Grid Blocks */}
       <section className="py-20">
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+        <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
            
-           <div className="grid gap-16">
+           <div className="grid gap-16 lg:gap-24">
               {categories.map((cat, idx) => (
                 <div key={cat.id} className="scroll-mt-32">
                    
                    {/* Category Header */}
                    <div className="flex items-center gap-6 mb-10 pb-6 border-b border-slate-200 dark:border-slate-800">
-                      <div className="h-16 w-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center justify-center text-[#FF7A00] shadow-sm">
+                      <div className="h-16 w-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#FF7A00] shadow-sm">
                         <cat.icon className="h-8 w-8" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                        <h2 className="text-xl md:text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
                           {cat.title}
                         </h2>
-                        <p className="text-sm font-bold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-1">
+                        <p className="text-[10px] md:text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-1">
                           {cat.subtitle}
                         </p>
                       </div>
                    </div>
 
-                   {/* Links Grid */}
-                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                   {/* Links Grid - REFACTORED FOR 1/2/3/4 RESPONSIVENESS */}
+                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
                       {cat.links.map((link, lIdx) => (
                         <a
                           key={lIdx}

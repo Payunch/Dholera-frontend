@@ -54,24 +54,25 @@ export default function TpMapsPage() {
   return (
     <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans w-full overflow-x-hidden">
       
-      {/* Header Section */}
-      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 border-b border-slate-800 overflow-hidden">
+      {/* Header Section - Refactored for proper sizing */}
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden">
         {/* Background Image Overlay */}
-        <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <Image 
             src="/images/airportVision.webp" 
             alt="Dholera Strategic Vision" 
             fill 
             className="object-cover"
+            sizes="100vw"
           />
         </div>
 
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center">
            <div className="max-w-4xl mx-auto">
-              <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+              <h1 className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
                 {t('tp_maps_matrix_title')}
               </h1>
-              <p className="mt-6 text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
+              <p className="mt-6 text-xs sm:text-sm md:text-base font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
                 {t('tp_maps_matrix_desc')}
               </p>
            </div>
@@ -93,7 +94,7 @@ export default function TpMapsPage() {
                    placeholder={t('search_placeholder')}
                    value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}
-                   className="w-full pl-16 pr-6 py-6 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-sm font-black uppercase tracking-widest text-white placeholder-slate-400 outline-none focus:border-[#FF7A00] focus:shadow-[0_0_20px_rgba(255,122,0,0.15)] transition-all"
+                   className="w-full pl-16 pr-6 py-6 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white placeholder-slate-400 outline-none focus:border-[#FF7A00] focus:shadow-[0_0_20px_rgba(255,122,0,0.15)] transition-all"
                  />
               </div>
 
@@ -118,19 +119,19 @@ export default function TpMapsPage() {
               </div>
            </div>
 
-           {/* Interactive Zone Cards Grid */}
+           {/* Interactive Zone Cards Grid - REFACTORED FOR 1/2/3/4 RESPONSIVENESS */}
            {loading ? (
              <div className="flex flex-col items-center justify-center py-20">
                <Loader2 className="h-12 w-12 text-orange-600 animate-spin" />
                <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Loading Intelligence Matrix...</p>
              </div>
            ) : (
-             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 lg:gap-10 max-w-[1600px] mx-auto">
                 {filteredList.map((tp) => (
                   <Link 
                     key={tp.tp_id} 
                     href={`/pdf?search=${tp.title.split(' ')[tp.title.split(' ').length - 1]}`}
-                    className="group relative p-10 rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
+                    className="group relative p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
                   >
                      {/* Psychology Badges */}
                      <div className="absolute -top-4 right-6 flex flex-col gap-2 z-10 items-end transition-transform group-hover:scale-110">
