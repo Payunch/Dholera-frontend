@@ -41,7 +41,7 @@ export default function InvestmentGuidePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-32">
            <div className="lg:col-span-2 space-y-12">
               <section className="bg-white rounded-[2.5rem] p-12 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
-                 <h2 className="text-2xl font-black text-slate-900 uppercase mb-8 flex items-center gap-4">
+                 <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase mb-8 flex items-center gap-4">
                     <TrendingUp className="h-8 w-8 text-orange-600" /> Why Dholera Now?
                  </h2>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -55,7 +55,7 @@ export default function InvestmentGuidePage() {
                     ].map((item, i) => (
                       <div key={i} className="flex items-start gap-4 group">
                         <CheckCircle2 className="h-5 w-5 text-green-600 mt-1 shrink-0 group-hover:scale-125 transition-transform" />
-                        <span className="text-sm font-bold text-slate-700 uppercase tracking-tight group-hover:text-slate-900">{item}</span>
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-tight group-hover:text-slate-900 dark:text-white">{item}</span>
                       </div>
                     ))}
                  </div>
@@ -79,7 +79,7 @@ export default function InvestmentGuidePage() {
 
            <div className="space-y-8">
               <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
-                 <h3 className="text-xl font-black text-slate-900 uppercase mb-6">Risk Assessment</h3>
+                 <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-6">Risk Assessment</h3>
                  <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8 uppercase tracking-widest text-[10px]">
                     Ensure your investment is safe with our AI-powered risk scoring engine.
                  </p>

@@ -59,7 +59,7 @@ export function ArticleBody({ content }: ArticleBodyProps) {
                 return (
                   <h3
                     key={li}
-                    className="text-2xl font-black tracking-tight text-slate-900 md:text-3xl mt-6"
+                    className="text-2xl font-black tracking-tight text-slate-900 dark:text-white md:text-3xl mt-6"
                   >
                     {headerText}
                   </h3>
@@ -72,7 +72,7 @@ export function ArticleBody({ content }: ArticleBodyProps) {
                 return (
                   <div key={li} className="flex items-start gap-3 ml-4">
                     <span className="text-orange-600 mt-1.5">•</span>
-                    <p className="text-lg leading-relaxed text-slate-700 md:text-xl md:leading-loose">
+                    <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-300 md:text-xl md:leading-loose">
                       {listText}
                     </p>
                   </div>
@@ -83,7 +83,7 @@ export function ArticleBody({ content }: ArticleBodyProps) {
               return (
                 <p
                   key={li}
-                  className="text-lg leading-relaxed text-slate-700 md:text-xl md:leading-loose"
+                  className="text-lg leading-relaxed text-slate-700 dark:text-slate-300 md:text-xl md:leading-loose"
                 >
                   {trimmedLine}
                 </p>

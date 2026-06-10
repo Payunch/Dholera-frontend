@@ -158,7 +158,7 @@ export default function LeadCaptureModal() {
               <button 
                 type="submit"
                 disabled={status === 'loading' || form.phone.length !== 10 || !form.name}
-                className="w-full h-16 mt-4 rounded-2xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-800 disabled:text-slate-600 transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 active:scale-95"
+                className="w-full h-16 mt-4 rounded-2xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-800 disabled:text-slate-600 dark:text-slate-400 transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 active:scale-95"
 
               >
                 {status === 'loading' ? (

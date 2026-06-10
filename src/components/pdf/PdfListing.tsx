@@ -299,7 +299,7 @@ export function PdfListing() {
         <div className="fixed bottom-10 inset-x-0 z-[150] px-4 animate-in slide-in-from-bottom-10">
            <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
               <div className="flex items-center gap-6 pl-4">
-                 <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                 <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-colors">
                     <X className="h-6 w-6" />
                  </button>
                  <div className="flex flex-col">
@@ -390,7 +390,7 @@ export function PdfListing() {
                 Verify on WhatsApp
               </a>
 
-              <button onClick={() => setShowBulkCheckout(false)} className="w-full py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <button onClick={() => setShowBulkCheckout(false)} className="w-full py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-all">
                 Cancel
               </button>
             </div>

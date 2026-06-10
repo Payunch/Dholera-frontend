@@ -202,7 +202,7 @@ export function UpdatesManagement() {
                  href={`/blogs/${update.id}`} 
                  target="_blank" 
                  rel="noopener noreferrer"
-                 className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1"
+                 className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white flex items-center gap-1"
                >
                  View Live <ExternalLink className="h-3 w-3" />
                </a>
@@ -358,7 +358,7 @@ export function UpdatesManagement() {
               <button
                 type="button"
                 onClick={() => setEditingId(null)}
-                className="rounded-2xl px-8 py-4 text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
+                className="rounded-2xl px-8 py-4 text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 dark:text-white dark:hover:text-white transition-colors"
               >
                 Cancel
               </button>

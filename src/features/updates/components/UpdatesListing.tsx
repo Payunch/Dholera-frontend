@@ -43,7 +43,7 @@ export function UpdatesListing({ initialUpdates }: UpdatesListingProps) {
           <input
             type="text"
             placeholder="Search analysis and milestones..."
-            className="w-full rounded-2xl border-2 border-slate-100 bg-white py-4 pl-12 pr-4 font-semibold text-slate-900 outline-none transition-all focus:border-orange-600 focus:bg-white"
+            className="w-full rounded-2xl border-2 border-slate-100 bg-white py-4 pl-12 pr-4 font-semibold text-slate-900 dark:text-white outline-none transition-all focus:border-orange-600 focus:bg-white"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -79,7 +79,7 @@ export function UpdatesListing({ initialUpdates }: UpdatesListingProps) {
           <div className="h-20 w-20 rounded-full bg-white flex items-center justify-center">
             <Search className="h-10 w-10 text-slate-300" />
           </div>
-          <h3 className="text-xl font-bold text-slate-900 uppercase">No matching intel found</h3>
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white uppercase">No matching intel found</h3>
           <p className="text-slate-500 font-medium">Try adjusting your filters or search keywords.</p>
         </div>
       )}

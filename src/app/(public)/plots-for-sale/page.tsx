@@ -50,7 +50,7 @@ export default function PlotsForSalePage() {
               <div className="h-16 w-16 rounded-[1.5rem] bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white mb-8">
                 <cat.icon className="h-8 w-8" />
               </div>
-              <h3 className="text-2xl font-black text-slate-900 uppercase mb-4">{cat.title}</h3>
+              <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase mb-4">{cat.title}</h3>
               <p className="text-slate-500 font-medium leading-relaxed mb-8">{cat.desc}</p>
               <Link href="/projects" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-orange-600 hover:gap-4 transition-all">
                 Browse Inventory <ArrowRight className="h-4 w-4" />

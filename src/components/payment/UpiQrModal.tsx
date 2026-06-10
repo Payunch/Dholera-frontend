@@ -82,7 +82,7 @@ export const UpiQrModal = ({
           </div>
 
           <div className="mb-4 space-y-1">
-            <span className="block text-3xl font-black text-slate-900">₹{totalAmount.toFixed(2)}</span>
+            <span className="block text-3xl font-black text-slate-900 dark:text-white">₹{totalAmount.toFixed(2)}</span>
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-600">
               Unlocking {count} PDF{count > 1 ? 's' : ''}
             </span>
@@ -92,7 +92,7 @@ export const UpiQrModal = ({
           <div className="mb-6 flex items-center justify-between rounded-xl bg-white p-3 border border-slate-100 text-left">
             <div>
               <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">UPI ID</span>
-              <span className="text-xs font-bold text-slate-700">{upiId}</span>
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{upiId}</span>
             </div>
             <button
               onClick={handleCopy}
@@ -115,12 +115,12 @@ export const UpiQrModal = ({
 
         {/* Right Side: Verification & Unlock */}
         <div className="p-8 md:w-1/2 bg-white/50 flex flex-col justify-center relative">
-          <button onClick={onClose} className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 transition-colors">
+          <button onClick={onClose} className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
             <X className="h-5 w-5" />
           </button>
 
           <div className="mb-6">
-            <h3 className="text-lg font-black uppercase tracking-tight text-slate-900">Admin Approval</h3>
+            <h3 className="text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white">Admin Approval</h3>
             <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed mt-1">
               Paid already? Enter your Transaction ID / UTR No. for Admin verification.
             </p>
@@ -135,7 +135,7 @@ export const UpiQrModal = ({
                 maxLength={14}
                 value={utr}
                 onChange={(e) => setUtr(e.target.value.replace(/\D/g, ''))}
-                className="w-full bg-white border-2 border-slate-100 rounded-xl px-4 py-3 font-bold text-slate-900 outline-none focus:border-orange-600 transition-all"
+                className="w-full bg-white border-2 border-slate-100 rounded-xl px-4 py-3 font-bold text-slate-900 dark:text-white outline-none focus:border-orange-600 transition-all"
               />
             </div>
 

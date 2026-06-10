@@ -88,7 +88,7 @@ export default function BlogsPage() {
                      "whitespace-nowrap px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2",
                      activeTab === tab.id 
                        ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10 dark:shadow-orange-600/30" 
-                       : "bg-transparent border-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                       : "bg-transparent border-transparent text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white"
                    )}
                  >
                    {tab.label}

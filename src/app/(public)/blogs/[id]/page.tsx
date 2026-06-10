@@ -59,7 +59,7 @@ const CATEGORY_COLORS = {
   Industrial: "text-green-700 border-green-100 bg-green-50",
   Planning: "text-purple-700 border-purple-100 bg-purple-50",
   Investment: "text-orange-600 border-orange-100 bg-orange-50",
-  General: "text-slate-600 border-slate-100 bg-white",
+  General: "text-slate-600 dark:text-slate-400 border-slate-100 bg-white",
 };
 
 export default async function UpdateDetailPage({ params }: Props) {
@@ -109,7 +109,7 @@ export default async function UpdateDetailPage({ params }: Props) {
               </div>
             </div>
 
-            <h1 className="text-4xl font-black leading-[1.1] tracking-tight text-slate-900 md:text-6xl uppercase">
+            <h1 className="text-4xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white md:text-6xl uppercase">
               {update.title}
             </h1>
 
@@ -119,7 +119,7 @@ export default async function UpdateDetailPage({ params }: Props) {
                   DP
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-black uppercase tracking-tight text-slate-900">Dholera Growth Team</span>
+                  <span className="text-sm font-black uppercase tracking-tight text-slate-900 dark:text-white">Dholera Growth Team</span>
                   <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Verified Analysis</span>
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default async function UpdateDetailPage({ params }: Props) {
 
           {/* Footer Navigation */}
           <footer className="mt-20 border-t border-slate-100 pt-12 text-center">
-            <h4 className="mb-6 text-xl font-black uppercase tracking-tight text-slate-900">Ready to invest in Dholera SIR?</h4>
+            <h4 className="mb-6 text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Ready to invest in Dholera SIR?</h4>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/#site-visit"
@@ -170,7 +170,7 @@ export default async function UpdateDetailPage({ params }: Props) {
               </Link>
               <Link
                 href="/projects"
-                className="rounded-full border-2 border-slate-900 px-10 py-4 font-black uppercase tracking-widest text-slate-900 transition-all hover:bg-white dark:bg-slate-900 hover:text-white"
+                className="rounded-full border-2 border-slate-900 px-10 py-4 font-black uppercase tracking-widest text-slate-900 dark:text-white transition-all hover:bg-white dark:bg-slate-900 hover:text-white"
               >
                 View Verified Projects
               </Link>

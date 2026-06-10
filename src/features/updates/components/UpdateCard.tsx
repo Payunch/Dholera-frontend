@@ -63,7 +63,7 @@ export function UpdateCard({ update }: UpdateCardProps) {
           </div>
         </div>
 
-        <h3 className="text-xl font-black leading-tight text-slate-900 group-hover:text-orange-600 transition-colors">
+        <h3 className="text-xl font-black leading-tight text-slate-900 dark:text-white group-hover:text-orange-600 transition-colors">
           {update.title}
         </h3>
 

@@ -231,7 +231,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
                 Verify on WhatsApp
               </a>
 
-              <button onClick={onClose} className="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <button onClick={onClose} className="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-all">
                 Maybe Later
               </button>
             </div>
@@ -241,7 +241,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
         {displayError && !requiresPayment && (
           <div className="max-w-sm w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl">
             <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
-            <h3 className="text-xl font-black text-slate-900 uppercase mb-2">Access Denied</h3>
+            <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-2">Access Denied</h3>
             <p className="text-slate-500 font-medium mb-8">{displayError}</p>
             <button onClick={onClose} className="w-full rounded-2xl bg-white dark:bg-slate-900 py-4 text-white font-black uppercase tracking-widest">Close Viewer</button>
           </div>
@@ -280,7 +280,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
               <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 flex flex-col md:flex-row items-center justify-center gap-4 z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
                  <div className="flex flex-col items-center md:items-start mr-4">
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Project Owner</span>
-                    <span className="text-sm font-black text-slate-900">Naresh Gohel</span>
+                    <span className="text-sm font-black text-slate-900 dark:text-white">Naresh Gohel</span>
                  </div>
                  <div className="flex items-center gap-3 w-full md:w-auto">
                    <a 

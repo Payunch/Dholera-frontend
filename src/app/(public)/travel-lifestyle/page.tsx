@@ -49,7 +49,7 @@ export default function TravelLifestylePage() {
                <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
                   <item.icon className="h-7 w-7" />
                </div>
-               <h3 className="text-xl font-black text-slate-900 uppercase mt-8 mb-4 group-hover:text-orange-600 transition-colors">{item.title}</h3>
+               <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mt-8 mb-4 group-hover:text-orange-600 transition-colors">{item.title}</h3>
                <p className="text-sm text-slate-500 font-medium leading-relaxed">{item.desc}</p>
             </div>
           ))}

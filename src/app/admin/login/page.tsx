@@ -149,7 +149,7 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="text-center">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600 italic">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-600 dark:text-slate-400 italic">
             Authorized Personnel Only - IP Logged
           </p>
         </div>

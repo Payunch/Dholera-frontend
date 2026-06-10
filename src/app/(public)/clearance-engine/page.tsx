@@ -22,7 +22,7 @@ export default function ClearanceEnginePage() {
           <div className="inline-flex items-center rounded-full bg-orange-50 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 border border-orange-200">
             Spatial Intelligence Hub
           </div>
-          <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 md:text-7xl uppercase leading-tight">
+          <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 dark:text-white md:text-7xl uppercase leading-tight">
             Clearance <span className="text-orange-600 italic">&</span> Fee Engine
           </h1>
           <p className="mx-auto max-w-3xl text-lg font-medium text-slate-500 leading-relaxed">

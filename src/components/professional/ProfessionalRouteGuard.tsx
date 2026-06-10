@@ -33,8 +33,8 @@ export function ProfessionalRouteGuard({ children }: { children: React.ReactNode
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-red-600">
             <ShieldAlert className="h-7 w-7" />
           </div>
-          <h1 className="text-xl font-black uppercase tracking-tight text-slate-900">Professional Access Required</h1>
-          <p className="mt-3 text-sm font-medium text-slate-600">
+          <h1 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Professional Access Required</h1>
+          <p className="mt-3 text-sm font-medium text-slate-600 dark:text-slate-400">
             Redirecting to contact verification...
           </p>
         </div>

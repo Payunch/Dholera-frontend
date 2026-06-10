@@ -98,7 +98,7 @@ export const LeadPopup = ({
               setOpen(false);
               if (onClose) onClose();
             }} 
-            className="absolute right-6 top-6 text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all z-20"
+            className="absolute right-6 top-6 text-slate-300 hover:text-slate-900 dark:text-white dark:hover:text-white transition-all z-20"
           >
             <X className="h-5 w-5" />
           </button>

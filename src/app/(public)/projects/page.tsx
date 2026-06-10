@@ -97,7 +97,7 @@ export default function ProjectsPage() {
                 className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   selectedCategory === cat.key
                     ? "bg-[#FF7A00] text-white shadow-md dark:shadow-black/70 shadow-orange-600/10 dark:shadow-orange-600/30"
-                    : "bg-white dark:bg-slate-800 border border-slate-150 dark:border-slate-700 text-slate-600 hover:bg-white dark:hover:bg-slate-700"
+                    : "bg-white dark:bg-slate-800 border border-slate-150 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700"
                 }`}
               >
                 {cat.label}

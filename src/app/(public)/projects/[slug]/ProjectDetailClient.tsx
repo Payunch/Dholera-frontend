@@ -69,7 +69,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
                 )}
               </div>
 
-              <h1 className="font-display text-4xl font-black uppercase tracking-tight text-slate-900 md:text-5xl leading-tight">
+              <h1 className="font-display text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white md:text-5xl leading-tight">
                 {title}
               </h1>
 
@@ -92,7 +92,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
 
             {/* Overview / Story Card */}
             <div className="bg-white border border-slate-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm space-y-6">
-              <h2 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900">
+              <h2 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
                 Project Overview
               </h2>
               
@@ -104,19 +104,19 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               <div className="pt-6 border-t border-slate-100 grid gap-6 sm:grid-cols-2">
                 <div className="space-y-1">
                   <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Available Sizes</span>
-                  <p className="text-sm font-black text-slate-800 uppercase">{project.plotSizes}</p>
+                  <p className="text-sm font-black text-slate-800 dark:text-slate-200 uppercase">{project.plotSizes}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Offering</span>
-                  <p className="text-sm font-black text-slate-800 uppercase">{project.offering}</p>
+                  <p className="text-sm font-black text-slate-800 dark:text-slate-200 uppercase">{project.offering}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Internal Roads</span>
-                  <p className="text-sm font-black text-slate-800 uppercase">{project.roadWidth}</p>
+                  <p className="text-sm font-black text-slate-800 dark:text-slate-200 uppercase">{project.roadWidth}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Zoning Designation</span>
-                  <p className="text-sm font-black text-slate-800 uppercase">{project.zoning}</p>
+                  <p className="text-sm font-black text-slate-800 dark:text-slate-200 uppercase">{project.zoning}</p>
                 </div>
               </div>
             </div>
@@ -131,7 +131,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-orange-600" />
-                  <span className="text-xs font-black uppercase tracking-widest text-slate-900 font-display">
+                  <span className="text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white font-display">
                     Geographic Alignment
                   </span>
                 </div>
@@ -153,7 +153,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
 
               <div className="space-y-2">
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Project Location</span>
-                <p className="text-sm font-black text-slate-800 uppercase leading-tight">{project.location}</p>
+                <p className="text-sm font-black text-slate-800 dark:text-slate-200 uppercase leading-tight">{project.location}</p>
               </div>
             </div>
 

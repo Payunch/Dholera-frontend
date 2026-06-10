@@ -111,7 +111,7 @@ export function Navbar() {
         </nav>
 
         {/* Mobile Nav Toggle */}
-        <button className="md:hidden text-slate-900" onClick={toggleMenu}>
+        <button className="md:hidden text-slate-900 dark:text-white" onClick={toggleMenu}>
           {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
@@ -127,7 +127,7 @@ export function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
                 className={cn(
                   "flex items-center gap-4 text-sm font-black uppercase tracking-widest transition-colors",
-                  (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) ? "text-orange-600" : "text-slate-600"
+                  (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) ? "text-orange-600" : "text-slate-600 dark:text-slate-400"
                 )}
               >
                 <item.icon className="h-5 w-5" />

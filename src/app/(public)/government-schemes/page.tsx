@@ -58,11 +58,11 @@ export default function GovernmentSchemesPage() {
                    <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center text-slate-900 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
                       <scheme.icon className="h-7 w-7" />
                    </div>
-                   <h3 className="text-2xl font-black text-slate-900 uppercase group-hover:text-orange-600 transition-colors">{scheme.title}</h3>
+                   <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase group-hover:text-orange-600 transition-colors">{scheme.title}</h3>
                 </div>
                 <ul className="space-y-4">
                    {scheme.items.map((item, j) => (
-                     <li key={j} className="flex items-center gap-4 text-sm font-bold text-slate-700 uppercase tracking-tight group-hover:text-slate-900">
+                     <li key={j} className="flex items-center gap-4 text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-tight group-hover:text-slate-900 dark:text-white">
                         <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0 animate-pulse" />
                         {item}
                      </li>

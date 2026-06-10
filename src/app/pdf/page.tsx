@@ -140,7 +140,7 @@ export default function PdfPage() {
                         "flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2",
                         activeFilter === filter.label
                           ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10 dark:shadow-black/90 dark:shadow-orange-600/30"
-                          : "bg-white dark:bg-[#111A35] border-slate-100 dark:border-slate-800 text-slate-400 hover:border-slate-300 hover:text-slate-600"
+                          : "bg-white dark:bg-[#111A35] border-slate-100 dark:border-slate-800 text-slate-400 hover:border-slate-300 hover:text-slate-600 dark:text-slate-400"
                       )}
                     >
                       {filter.label}
@@ -196,7 +196,7 @@ export default function PdfPage() {
                         <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[#FF7A00] block mb-2 opacity-80 group-hover:opacity-100">
                           {pdf.category.split('(')[0].trim() || "Official"}
                         </span>
-                        <h4 className="font-display text-base font-black text-slate-900 uppercase leading-tight line-clamp-3 group-hover:text-[#FF7A00] transition-colors duration-300">
+                        <h4 className="font-display text-base font-black text-slate-900 dark:text-white uppercase leading-tight line-clamp-3 group-hover:text-[#FF7A00] transition-colors duration-300">
                           {pdf.title}
                         </h4>
                      </div>

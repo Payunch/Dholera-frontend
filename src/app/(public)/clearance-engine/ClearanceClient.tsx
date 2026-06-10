@@ -51,7 +51,7 @@ export function ClearanceClient() {
                 "flex flex-1 flex-col items-center justify-center gap-2 py-6 px-4 transition-all md:flex-row",
                 activeTab === tab.id
                   ? "bg-white text-orange-600 shadow-[inset_0_-4px_0_0_#FF7A00]"
-                  : "text-slate-400 hover:bg-white hover:text-slate-600"
+                  : "text-slate-400 hover:bg-white hover:text-slate-600 dark:text-slate-400"
               )}
             >
               <tab.icon className={cn("h-5 w-5", activeTab === tab.id ? "text-orange-600" : "text-slate-400")} />
@@ -65,7 +65,7 @@ export function ClearanceClient() {
           {activeTab === 0 ? (
             <div className="max-w-2xl mx-auto space-y-10 py-10">
                <div className="text-center space-y-4">
-                  <h3 className="font-display text-3xl font-black uppercase tracking-tight text-slate-900">
+                  <h3 className="font-display text-3xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
                     Development Permission <span className="text-[#FF7A00]">Fee Engine</span>
                   </h3>
                   <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
@@ -99,7 +99,7 @@ export function ClearanceClient() {
                       placeholder="ENTER AREA IN SQM..."
                       value={plotSize}
                       onChange={(e) => setPlotSize(e.target.value)}
-                      className="w-full px-8 py-5 rounded-2xl bg-white border-2 border-slate-200 outline-none focus:border-[#FF7A00] text-sm font-black tracking-widest text-slate-900 transition-all shadow-sm"
+                      className="w-full px-8 py-5 rounded-2xl bg-white border-2 border-slate-200 outline-none focus:border-[#FF7A00] text-sm font-black tracking-widest text-slate-900 dark:text-white transition-all shadow-sm"
                     />
                   </div>
 
@@ -135,7 +135,7 @@ export function ClearanceClient() {
               </div>
               
               <div className="max-w-xl space-y-4">
-                <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900">
+                <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
                   {tabs[activeTab].label} Initialization
                 </h3>
                 <p className="text-lg font-medium text-slate-500 italic leading-relaxed">
