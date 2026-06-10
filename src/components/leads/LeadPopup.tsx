@@ -158,34 +158,34 @@ export const LeadPopup = ({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-4 animate-in fade-in duration-500">
-      <div className="relative w-full max-w-[400px] overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/85 backdrop-blur-lg p-4 animate-in fade-in duration-500">
+      <div className="relative w-full max-w-[400px] overflow-hidden rounded-[2.5rem] bg-white/10 dark:bg-slate-950/20 backdrop-blur-2xl shadow-2xl border border-white/20 dark:border-slate-800/60 animate-in zoom-in-95 duration-300">
         {!compulsory && (
           <button 
             onClick={() => {
               setOpen(false);
               if (onClose) onClose();
             }} 
-            className="absolute right-6 top-6 text-slate-300 hover:text-slate-900 dark:text-white dark:hover:text-white transition-all z-20"
+            className="absolute right-6 top-6 text-white/60 hover:text-white dark:text-white/60 dark:hover:text-white transition-all z-20"
           >
             <X className="h-5 w-5" />
           </button>
         )}
         
         <div className="p-8 md:p-10">
-          <div className="flex justify-center mb-10"><SplitLogo height={42} /></div>
+          <div className="flex justify-center mb-10 brightness-0 invert"><SplitLogo height={42} /></div>
           
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">
-              {step === 'success' ? t('access_granted') : (step === 'otp' ? 'Verify Code' : (title || t('start_here')))}
+            <h2 className="text-2xl font-black uppercase tracking-tight text-white mb-2">
+              {step === 'success' ? t('access_granted') || 'Access Granted' : (step === 'otp' ? 'Verify Code' : (title || t('start_here')))}
             </h2>
-            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
+            <p className="text-[10px] font-bold text-slate-350 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
               {step === 'otp' ? 'Enter the verification code sent to your phone' : (subtitle || t('verify_desc'))}
             </p>
           </div>
 
           {error && (
-            <div className="p-3 rounded-xl bg-red-50 border border-red-100 text-red-600 mb-6 text-center animate-in slide-in-from-top-2">
+            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-200 mb-6 text-center animate-in slide-in-from-top-2">
               <span className="text-[10px] font-bold uppercase tracking-tight">{error}</span>
             </div>
           )}
@@ -199,7 +199,7 @@ export const LeadPopup = ({
                   placeholder={t('full_name') || 'Full Name'} 
                   required
                   autoFocus
-                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-900 transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
                   value={name} 
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -210,7 +210,7 @@ export const LeadPopup = ({
                   type="tel" 
                   placeholder={t('mobile_number') || 'Mobile Number'} 
                   required
-                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-900 transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
                   value={phone} 
                   onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
                 />
@@ -220,18 +220,18 @@ export const LeadPopup = ({
                 <input
                   type="checkbox"
                   id="terms"
-                  className="mt-1 h-4 w-4 rounded border-slate-300 text-orange-600 focus:ring-orange-600 cursor-pointer"
+                  className="mt-1 h-4 w-4 rounded border-white/20 bg-transparent text-[#FF7A00] focus:ring-[#FF7A00] cursor-pointer"
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
                 />
-                <label htmlFor="terms" className="text-[10px] font-bold text-slate-400 leading-relaxed cursor-pointer uppercase tracking-tight">
-                  {t('terms_agree') || 'I agree to the'} <Link href="/terms-and-conditions" className="text-orange-600">{t('terms') || 'Terms'}</Link> {t('and') || 'and'} <Link href="/privacy-policy" className="text-orange-600">{t('privacy') || 'Privacy Policy'}</Link>.
+                <label htmlFor="terms" className="text-[10px] font-bold text-slate-350 leading-relaxed cursor-pointer uppercase tracking-tight">
+                  {t('terms_agree') || 'I agree to the'} <Link href="/terms-and-conditions" className="text-[#FF7A00] font-black">{t('terms') || 'Terms'}</Link> {t('and') || 'and'} <Link href="/privacy-policy" className="text-[#FF7A00] font-black">{t('privacy') || 'Privacy Policy'}</Link>.
                 </label>
               </div>
               
               <button 
                 disabled={loading} 
-                className="mt-2 w-full rounded-2xl bg-orange-600 py-5 font-black uppercase tracking-widest text-[10px] text-white transition-all hover:bg-white dark:bg-slate-900 dark:hover:bg-black shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 group"
+                className="mt-2 w-full h-14 rounded-2xl bg-[#FF7A00] hover:bg-orange-600 disabled:bg-slate-700 text-white font-black uppercase tracking-widest text-[10px] transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 active:scale-95 group"
               >
                 {loading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -247,7 +247,7 @@ export const LeadPopup = ({
           {step === 'otp' && (
             <form onSubmit={handleVerifyOtp} className="space-y-4">
               <div className="text-center mb-4">
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
                   Sent to +91 {phone}
                 </p>
               </div>
@@ -258,7 +258,7 @@ export const LeadPopup = ({
                   required
                   maxLength={6}
                   autoFocus
-                  className="w-full rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-900 transition-all text-slate-900 dark:text-white placeholder:text-slate-400"
+                  className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
                   value={otpCode} 
                   onChange={(e) => setOtpCode(sanitizeDigits(e.target.value, 6))}
                 />
@@ -266,7 +266,7 @@ export const LeadPopup = ({
               
               <button 
                 disabled={loading} 
-                className="mt-2 w-full rounded-2xl bg-orange-600 py-5 font-black uppercase tracking-widest text-[10px] text-white transition-all hover:bg-white dark:bg-slate-900 dark:hover:bg-black shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 group"
+                className="mt-2 w-full h-14 rounded-2xl bg-[#FF7A00] hover:bg-orange-600 disabled:bg-slate-700 text-white font-black uppercase tracking-widest text-[10px] transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 active:scale-95 group"
               >
                 {loading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -284,7 +284,7 @@ export const LeadPopup = ({
                     setStep('details');
                     setError('');
                   }}
-                  className="text-[9px] font-black uppercase tracking-widest text-slate-400 hover:text-orange-600 transition-colors"
+                  className="text-[9px] font-black uppercase tracking-widest text-slate-400 hover:text-[#FF7A00] transition-colors"
                 >
                   Change Phone Number
                 </button>
@@ -294,10 +294,10 @@ export const LeadPopup = ({
 
           {step === 'success' && (
             <div className="flex flex-col items-center py-6 space-y-6 animate-in fade-in zoom-in-90 duration-500">
-              <div className="h-24 w-24 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-500 border border-green-100 dark:border-green-500/30">
+              <div className="h-24 w-24 rounded-full bg-green-500/10 dark:bg-green-950/30 flex items-center justify-center text-green-400 border border-green-500/20">
                 <CheckCircle2 className="h-12 w-12" />
               </div>
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{t('access_granted') || 'Access Granted'}</p>
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-white">{t('access_granted') || 'Access Granted'}</p>
             </div>
           )}
         </div>
