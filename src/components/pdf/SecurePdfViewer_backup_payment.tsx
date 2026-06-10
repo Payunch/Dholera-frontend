@@ -219,19 +219,19 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
 
  <a 
  href={upiUrl}
- class="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/10 active:scale-95"
+ className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/10 active:scale-95"
  >
  Pay ₹{amount} via UPI App
  </a>
 
  <a 
  href={waUrl}
- class="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
+ className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
  >
  Verify on WhatsApp
  </a>
 
- <button onClick={onClose} class="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-950 dark:text-white dark:hover:text-white transition-all">
+ <button onClick={onClose} className="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-950 dark:text-white dark:hover:text-white transition-all">
  Maybe Later
  </button>
  </div>
