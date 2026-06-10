@@ -61,23 +61,23 @@ export function Footer() {
  {/* Quick Links */}
  <div>
  <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">{t('platform')}</h4>
- <ul className="space-y-4 text-sm font-semibold">
- <li><Link href="/" className="hover:text-orange-600 transition-colors">{t('nav_home')}</Link></li>
- <li><Link href="/clearance-engine" className="hover:text-orange-600 transition-colors">{t('clearance_engine')}</Link></li>
- <li><Link href="/blogs" className="hover:text-orange-600 transition-colors">{t('growth_updates')}</Link></li>
- <li><Link href="/pdf" className="hover:text-orange-600 transition-colors">{t('nav_pdf')}</Link></li>
+ <ul className="space-y-4 text-sm font-semibold text-slate-600 dark:text-slate-300">
+ <li><Link href="/" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_home')}</Link></li>
+ <li><Link href="/clearance-engine" className="hover:text-[#FF7A00] transition-all duration-300">{t('clearance_engine')}</Link></li>
+ <li><Link href="/blogs" className="hover:text-[#FF7A00] transition-all duration-300">{t('growth_updates')}</Link></li>
+ <li><Link href="/pdf" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_pdf')}</Link></li>
  </ul>
  </div>
 
  {/* Legal */}
  <div>
  <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">{t('legal')}</h4>
- <ul className="space-y-4 text-sm font-semibold">
- <li><Link href="/privacy-policy" className="hover:text-orange-600 transition-colors">{t('privacy_policy')}</Link></li>
- <li><Link href="/terms-and-conditions" className="hover:text-orange-600 transition-colors">{t('terms_of_service')}</Link></li>
- <li><Link href="/contact" className="hover:text-orange-600 transition-colors">{t('contact')}</Link></li>
+ <ul className="space-y-4 text-sm font-semibold text-slate-600 dark:text-slate-300">
+ <li><Link href="/privacy-policy" className="hover:text-[#FF7A00] transition-all duration-300">{t('privacy_policy')}</Link></li>
+ <li><Link href="/terms-and-conditions" className="hover:text-[#FF7A00] transition-all duration-300">{t('terms_of_service')}</Link></li>
+ <li><Link href="/contact" className="hover:text-[#FF7A00] transition-all duration-300">{t('contact')}</Link></li>
  <li>
- <button type="button" onClick={handleCookieSettings} className="hover:text-orange-600 transition-colors">
+ <button type="button" onClick={handleCookieSettings} className="hover:text-[#FF7A00] transition-all duration-300">
  Cookie settings
  </button>
  </li>

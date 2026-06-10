@@ -46,24 +46,33 @@ apiClient.interceptors.request.use(async (config) => {
  }
 
   // 2. Attach App Check token in the browser environment
-  if (typeof window !=="undefined") {
-    try {
-      const { getAppCheck, getToken } = await import("firebase/app-check") as any;
-      const appCheck = getAppCheck();
-      
-      // Wrap getToken in a timeout promise to prevent hanging in headless browsers / testing
-      const tokenPromise = getToken(appCheck, false);
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error("App Check timeout")), 1500)
-      );
-      
-      const tokenResult = await Promise.race([tokenPromise, timeoutPromise]) as any;
-      if (tokenResult?.token) {
-        config.headers['X-Firebase-AppCheck'] = tokenResult.token;
+  if (typeof window !== "undefined") {
+    if ((window as any)._appCheckInitialized) {
+      try {
+        const appCheckModule = await import("firebase/app-check");
+        const getAppCheck = appCheckModule.getAppCheck || (appCheckModule as any).default?.getAppCheck;
+        const getToken = appCheckModule.getToken || (appCheckModule as any).default?.getToken;
+
+        if (typeof getAppCheck === "function" && typeof getToken === "function") {
+          const appCheck = getAppCheck();
+          
+          // Wrap getToken in a timeout promise to prevent hanging in headless browsers / testing
+          const tokenPromise = getToken(appCheck, false);
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error("App Check timeout")), 1500)
+          );
+          
+          const tokenResult = await Promise.race([tokenPromise, timeoutPromise]) as any;
+          if (tokenResult?.token) {
+            config.headers['X-Firebase-AppCheck'] = tokenResult.token;
+          }
+        } else {
+          console.warn('[App Check] getAppCheck or getToken function resolved as undefined from import.');
+        }
+      } catch (e: any) {
+        // App check might fail if blocked by ad-blocker, timed out, or during hydration
+        console.warn('[App Check] Failed to get token or timed out:', e.message);
       }
-    } catch (e: any) {
-      // App check might fail if blocked by ad-blocker, timed out, or during hydration
-      console.warn('[App Check] Failed to get token or timed out:', e.message);
     }
   }
  return config;

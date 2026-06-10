@@ -95,18 +95,15 @@ export default function RootLayout({
 `,
  }}
  />
+ <script
+ async
+ src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6979634293826789"
+ crossOrigin="anonymous"
+ />
  </head>
  <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`} suppressHydrationWarning>
  <OrganizationSchema />
  <Analytics />
-
- <Script
- id="google-adsense"
- async
- src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6979634293826789"
- crossOrigin="anonymous"
- strategy="afterInteractive"
- />
 
  <noscript>
  <iframe
