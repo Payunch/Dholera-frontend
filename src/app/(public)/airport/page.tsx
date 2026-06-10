@@ -71,7 +71,7 @@ export default function AirportPage() {
 
  <div className="pt-6">
  <Link 
- href="/pdf" 
+ href="/pdf?trigger=true" 
  className="inline-flex items-center gap-3 bg-[#FF7A00] text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl shadow-orange-600/10 dark:shadow-orange-600/50 active:scale-95"
  >
  {t('download_airport_maps')} <ArrowRight className="h-4 w-4" />

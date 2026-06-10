@@ -130,7 +130,7 @@ export default function TpMapsPage() {
  {filteredList.map((tp) => (
  <Link 
  key={tp.tp_id} 
- href={`/pdf?search=${tp.title.split('')[tp.title.split('').length - 1]}`}
+ href={`/pdf?search=${tp.title.split('')[tp.title.split('').length - 1]}&trigger=true`}
  className="group relative p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between dark:bg-slate-900"
  >
  {/* Psychology Badges */}

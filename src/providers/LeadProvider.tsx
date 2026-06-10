@@ -36,11 +36,15 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
  const isAdminPath = pathname?.startsWith('/admin');
 
  const loginLead = useCallback((leadData: Lead) => {
- if (leadData.id) setCookie('lead_id', String(leadData.id));
- if (leadData.email) setCookie('lead_email', leadData.email);
- setCookie('lead_phone', leadData.phone);
- setCookie('lead_name', leadData.name);
- setCookie('lead_token', leadData.token);
+ const domain = typeof window !== 'undefined' && window.location.hostname.includes('dholeraplatform.com') 
+   ? '.dholeraplatform.com' 
+   : undefined;
+
+ if (leadData.id) setCookie('lead_id', String(leadData.id), 7, domain);
+ if (leadData.email) setCookie('lead_email', leadData.email, 7, domain);
+ setCookie('lead_phone', leadData.phone, 7, domain);
+ setCookie('lead_name', leadData.name, 7, domain);
+ setCookie('lead_token', leadData.token, 7, domain);
  setVerifiedLead(leadData);
  }, []);
 

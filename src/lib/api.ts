@@ -31,7 +31,6 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(async (config) => {
  // 1. Attach Lead Token if present in browser (ONLY for non-admin requests)
  if (typeof window !=="undefined") {
- const pathname = window.location.pathname;
  const requestUrl = config.url || "";
  
  // Identify if the TARGET is an admin API or if we are on an AUTH request
@@ -42,8 +41,17 @@ apiClient.interceptors.request.use(async (config) => {
  // This ensures public syncs (like language preferences) work even if the user is on an admin page.
  if (!isApiAdminRequest && !isAuthRequest) {
  const leadToken = getCookie('lead_token');
- if (leadToken && !config.headers['Authorization']) {
- config.headers['Authorization'] = leadToken.startsWith('Bearer') ? leadToken :`Bearer ${leadToken}`;
+ 
+ // Use config.headers.get/set for Axios 1.x compatibility
+ const hasAuth = config.headers.get ? config.headers.get('Authorization') : config.headers['Authorization'];
+ 
+ if (leadToken && !hasAuth) {
+ const finalToken = leadToken.startsWith('Bearer') ? leadToken :`Bearer ${leadToken}`;
+ if (config.headers.set) {
+ config.headers.set('Authorization', finalToken);
+ } else {
+ config.headers['Authorization'] = finalToken;
+ }
  }
  }
  }

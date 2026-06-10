@@ -171,7 +171,7 @@ export function ClearanceClient() {
  </p>
  </div>
  <Link
- href="/pdf"
+ href="/pdf?trigger=true"
  className="group flex items-center gap-3 rounded-2xl bg-orange-600 px-8 py-5 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-500 shadow-xl shadow-orange-600/10"
  >
  Access PDF Hub

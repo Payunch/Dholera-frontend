@@ -20,29 +20,42 @@ interface PDF {
 }
 
 export default function PdfPage() {
- const { verifiedLead } = useLead();
- const { t } = useLanguage();
- const [pdfs, setPdfs] = useState<PDF[]>([]);
- const [loading, setLoading] = useState(true);
- const [activeFilter, setActiveFilter] = useState("All Documents");
- const [searchQuery, setSearchQuery] = useState("");
- const [showAuthModal, setShowAuthModal] = useState(false);
+  const { verifiedLead } = useLead();
+  const { t } = useLanguage();
+  const [pdfs, setPdfs] = useState<PDF[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState("All Documents");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [pendingPdf, setPendingPdf] = useState<PDF | null>(null);
 
- useEffect(() => {
-   if (!loading && !verifiedLead) {
-     const timer = setTimeout(() => {
-       setShowAuthModal(true);
-     }, 800);
-     return () => clearTimeout(timer);
-   }
- }, [loading, verifiedLead]);
+  // Trigger modal ONLY when coming via trigger parameter in the navigation link
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !loading && !verifiedLead) {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('trigger') === 'true') {
+        setShowAuthModal(true);
+      }
+    }
+  }, [loading, verifiedLead]);
 
- const handlePdfClick = (e: React.MouseEvent) => {
-   if (!verifiedLead) {
-     e.preventDefault();
-     setShowAuthModal(true);
-   }
- };
+  const handlePdfClick = (pdf: PDF, e: React.MouseEvent) => {
+    if (!verifiedLead) {
+      e.preventDefault();
+      setPendingPdf(pdf);
+      setShowAuthModal(true);
+    }
+  };
+
+  const handleAuthSuccess = (leadData: any) => {
+    setShowAuthModal(false);
+    if (pendingPdf) {
+      const token = leadData?.token || leadData?.lead_token;
+      const pdfUrl = `${API_BASE_URL}/pdf/view/${pendingPdf.id}?token=${token || 'guest'}`;
+      window.open(pdfUrl, '_blank');
+      setPendingPdf(null);
+    }
+  };
 
  const tAllDocs = t('all_documents') || "All Documents";
 
@@ -192,7 +205,7 @@ export default function PdfPage() {
                <a 
                  key={pdf.id}
                  href={`${API_BASE_URL}/pdf/view/${pdf.id}?token=${verifiedLead?.token || 'guest'}`}
-                 onClick={handlePdfClick}
+                 onClick={(e) => handlePdfClick(pdf, e)}
                  target="_blank"
                  rel="noopener noreferrer"
                  className={cn(
@@ -253,7 +266,7 @@ export default function PdfPage() {
        <LeadPopup 
          compulsory={false} 
          onClose={() => setShowAuthModal(false)} 
-         onSuccess={() => setShowAuthModal(false)}
+         onSuccess={handleAuthSuccess}
          title="Limited Time Offer"
          subtitle="Complete your mobile verification to unlock and view any PDF document instantly"
        />

@@ -65,7 +65,7 @@ export function Footer() {
               <li><Link href="/" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_home')}</Link></li>
               <li><Link href="/clearance-engine" className="hover:text-[#FF7A00] transition-all duration-300">{t('clearance_engine')}</Link></li>
               <li><Link href="/blogs" className="hover:text-[#FF7A00] transition-all duration-300">{t('growth_updates')}</Link></li>
-              <li><Link href="/pdf" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_pdf')}</Link></li>
+              <li><Link href="/pdf?trigger=true" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_pdf')}</Link></li>
             </ul>
           </div>
 
