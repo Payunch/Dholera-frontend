@@ -105,7 +105,8 @@ export const UpiQrModal = ({
           <div className="mt-auto">
             <a
               href={upiLink}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-600 py-3 text-[10px] font-black uppercase tracking-widest text-white shadow-lg shadow-orange-600/20 md:hidden"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange-600 py-3 text-[10px] font-black uppercase tracking-widest text-white shadow-lg shadow-orange-600/10 md:hidden"
+
             >
               Open UPI App
             </a>

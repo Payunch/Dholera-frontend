@@ -86,7 +86,7 @@ export default function BlogsPage() {
                    className={cn(
                      "whitespace-nowrap px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2",
                      activeTab === tab.id 
-                       ? "bg-orange-600 border-orange-600 text-white shadow-xl shadow-orange-600/20" 
+                       ? "bg-orange-600 border-orange-600 text-white shadow-xl shadow-orange-600/10" 
                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white"
                    )}
                  >

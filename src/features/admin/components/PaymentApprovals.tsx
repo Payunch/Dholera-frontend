@@ -149,14 +149,14 @@ export const PaymentApprovals = () => {
                   
                   <div className="flex items-center gap-2">
                      {p.status === 'completed' ? (
-                       <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-green-600 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-green-600/20">
+                       <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-green-600 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-green-600/10">
                           <Check className="h-3 w-3" /> Approved
                        </div>
                      ) : (
                        <button 
                          onClick={() => handleApprove(p.transaction_id)}
                          disabled={actionLoading === p.transaction_id}
-                         className="bg-white dark:bg-slate-900 hover:bg-orange-600 text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-slate-950/10"
+                         className="bg-white dark:bg-slate-900 hover:bg-orange-600 text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-slate-950/5"
                        >
                           {actionLoading === p.transaction_id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
                           Approve Access

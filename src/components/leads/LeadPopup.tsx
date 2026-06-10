@@ -163,7 +163,8 @@ export const LeadPopup = ({
               
               <button 
                 disabled={loading} 
-                className="mt-2 w-full rounded-2xl bg-orange-600 py-5 font-black uppercase tracking-widest text-[10px] text-white transition-all hover:bg-white dark:bg-slate-900 dark:hover:bg-black shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3 group"
+                className="mt-2 w-full rounded-2xl bg-orange-600 py-5 font-black uppercase tracking-widest text-[10px] text-white transition-all hover:bg-white dark:bg-slate-900 dark:hover:bg-black shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 group"
+
               >
                 {loading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />

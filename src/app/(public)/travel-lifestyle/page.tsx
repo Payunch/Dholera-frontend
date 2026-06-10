@@ -66,7 +66,7 @@ export default function TravelLifestylePage() {
                  We provide complimentary pick-up from Ahmedabad Airport or Railway Station, 
                  guided tours of all major TP schemes, and overnight hospitality.
               </p>
-              <Link href="/#site-visit" className="inline-flex items-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-orange-700 transition-all shadow-xl shadow-orange-600/20 active:scale-95">
+              <Link href="/#site-visit" className="inline-flex items-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-orange-700 transition-all shadow-xl shadow-orange-600/10 active:scale-95">
                  Book Complimentary Stay <ArrowRight className="h-4 w-4" />
               </Link>
            </div>

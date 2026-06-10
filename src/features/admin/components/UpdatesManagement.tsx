@@ -150,7 +150,7 @@ export function UpdatesManagement() {
         </div>
         <button
           onClick={() => handleEdit("new")}
-          className="flex items-center justify-center gap-2 rounded-2xl bg-white dark:bg-slate-900 px-6 py-3 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 shadow-lg shadow-slate-900/10"
+          className="flex items-center justify-center gap-2 rounded-2xl bg-white dark:bg-slate-900 px-6 py-3 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 shadow-lg shadow-slate-900/5"
         >
           <Plus className="h-4 w-4" />
           New Update

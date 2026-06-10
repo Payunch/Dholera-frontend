@@ -75,7 +75,7 @@ export default function InfrastructurePage() {
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             {categories.map((cat, i) => (
-              <div key={i} className="bg-white dark:bg-[#111A35] p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/40 hover:-translate-y-2 transition-all">
+              <div key={i} className="bg-white dark:bg-[#111A35] p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-2 transition-all">
                 <div className="h-16 w-16 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600 mb-8">
                   <cat.icon className="h-8 w-8" />
                 </div>
@@ -119,7 +119,7 @@ export default function InfrastructurePage() {
                        </div>
                     </div>
                     <div className="pt-4">
-                       <Link href="/tp-maps" className="inline-flex items-center gap-3 bg-orange-600 hover:bg-orange-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-orange-600/20">
+                       <Link href="/tp-maps" className="inline-flex items-center gap-3 bg-orange-600 hover:bg-orange-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-orange-600/10">
                          {t('browse_planning_maps')} <ArrowRight className="h-4 w-4" />
                        </Link>
                     </div>

@@ -164,7 +164,7 @@ export default async function UpdateDetailPage({ params }: Props) {
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/#site-visit"
-                className="rounded-full bg-[#FF7A00] px-10 py-4 font-black uppercase tracking-widest text-white transition-transform hover:scale-105 shadow-lg shadow-orange-600/20"
+                className="rounded-full bg-[#FF7A00] px-10 py-4 font-black uppercase tracking-widest text-white transition-transform hover:scale-105 shadow-lg shadow-orange-600/10"
               >
                 Book Free Site Visit
               </Link>

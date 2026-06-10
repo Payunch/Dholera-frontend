@@ -95,7 +95,7 @@ export default function ProjectsPage() {
                 onClick={() => setSelectedCategory(cat.key)}
                 className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   selectedCategory === cat.key
-                    ? "bg-white dark:bg-slate-900 text-white shadow-md shadow-slate-950/15"
+                    ? "bg-white dark:bg-slate-900 text-white shadow-md shadow-slate-950/5"
                     : "bg-white border border-slate-150 text-slate-600 hover:bg-white"
                 }`}
               >
@@ -180,7 +180,7 @@ export default function ProjectsPage() {
 
                   {/* Actions (Visual Button) */}
                   <div className="p-10 pt-0">
-                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10">
                       Analyze Project Specs
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </div>

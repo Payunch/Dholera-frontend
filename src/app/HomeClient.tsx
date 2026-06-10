@@ -177,7 +177,7 @@ export function HomeClient() {
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Link
                   href="/contact"
-                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/20 active:scale-95"
+                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/10 active:scale-95"
                 >
                   {t('talk_to_owner')}
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -325,7 +325,7 @@ export function HomeClient() {
 
                   {/* Actions (Visual Button) */}
                   <div className="p-8 pt-0">
-                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10">
                       {t('get_access')}
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </div>
@@ -472,7 +472,7 @@ export function HomeClient() {
                       <button 
                         type="submit"
                         disabled={visitStatus === 'loading' || visitForm.phone.length !== 10}
-                        className="w-full h-14 mt-4 rounded-xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-700 disabled:text-slate-400 transition-all shadow-xl shadow-orange-600/20 flex items-center justify-center active:scale-95"
+                        className="w-full h-14 mt-4 rounded-xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-700 disabled:text-slate-400 transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center active:scale-95"
                       >
                         {visitStatus === 'loading' ? (
                           <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

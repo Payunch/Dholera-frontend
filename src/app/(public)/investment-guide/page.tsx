@@ -40,7 +40,7 @@ export default function InvestmentGuidePage() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-32">
            <div className="lg:col-span-2 space-y-12">
-              <section className="bg-white rounded-[2.5rem] p-12 border border-slate-100 shadow-xl shadow-slate-200/40 hover:-translate-y-1 transition-all duration-500">
+              <section className="bg-white rounded-[2.5rem] p-12 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
                  <h2 className="text-2xl font-black text-slate-900 uppercase mb-8 flex items-center gap-4">
                     <TrendingUp className="h-8 w-8 text-orange-600" /> Why Dholera Now?
                  </h2>
@@ -78,7 +78,7 @@ export default function InvestmentGuidePage() {
            </div>
 
            <div className="space-y-8">
-              <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl shadow-slate-200/40 hover:-translate-y-1 transition-all duration-500">
+              <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
                  <h3 className="text-xl font-black text-slate-900 uppercase mb-6">Risk Assessment</h3>
                  <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8 uppercase tracking-widest text-[10px]">
                     Ensure your investment is safe with our AI-powered risk scoring engine.
@@ -88,7 +88,7 @@ export default function InvestmentGuidePage() {
                  </Link>
               </div>
 
-              <div className="bg-orange-600 rounded-[2.5rem] p-10 text-slate-900 dark:text-white shadow-xl shadow-orange-600/20 hover:-translate-y-1 transition-all duration-500">
+              <div className="bg-orange-600 rounded-[2.5rem] p-10 text-slate-900 dark:text-white shadow-xl shadow-orange-600/10 hover:-translate-y-1 transition-all duration-500">
                  <ShieldCheck className="h-12 w-12 text-white mb-6 animate-pulse" />
                  <h3 className="text-xl font-black uppercase mb-4">Legal Advisory</h3>
                  <p className="text-xs font-bold text-slate-900 dark:text-white/80 leading-relaxed mb-8 uppercase tracking-widest">

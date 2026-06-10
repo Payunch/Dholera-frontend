@@ -108,7 +108,7 @@ export default function TpMapsPage() {
                       className={cn(
                         "px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
                         activeFilter === filter 
-                          ? "bg-[#FF7A00] text-white border-[#FF7A00] shadow-lg shadow-orange-600/20" 
+                          ? "bg-[#FF7A00] text-white border-[#FF7A00] shadow-lg shadow-orange-600/10" 
                           : "bg-white dark:bg-[#111A35] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400"
                       )}
                     >
@@ -178,7 +178,7 @@ export default function TpMapsPage() {
                        </div>
                      </div>
 
-                     <div className="w-full h-14 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                     <div className="w-full h-14 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10">
                        Explore Data Matrix <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                      </div>
                   </Link>

@@ -79,7 +79,7 @@ export default function GovernmentSchemesPage() {
               Under PMAY and Gujarat State Housing policies, eligible first-time homebuyers in Dholera can access interest 
               subsidies and infrastructure benefits for plotted developments.
            </p>
-           <Link href="/contact" className="relative z-10 inline-flex items-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-orange-700 transition-all shadow-xl shadow-orange-600/20 active:scale-95">
+           <Link href="/contact" className="relative z-10 inline-flex items-center gap-3 px-10 py-5 bg-orange-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-orange-700 transition-all shadow-xl shadow-orange-600/10 active:scale-95">
               Apply for Guidance <ArrowRight className="h-4 w-4" />
            </Link>
         </div>

@@ -138,7 +138,7 @@ export default function PdfPage() {
                       className={cn(
                         "flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2",
                         activeFilter === filter.label
-                          ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/20"
+                          ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10"
                           : "bg-white border-slate-100 text-slate-400 hover:border-slate-300 hover:text-slate-600"
                       )}
                     >
@@ -207,7 +207,7 @@ export default function PdfPage() {
                              {formatUploadedAt(pdf)}
                            </span>
                         </div>
-                        <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white group-hover:bg-[#FF7A00] transition-all shadow-lg shadow-slate-950/10 group-hover:shadow-orange-600/20">
+                        <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white group-hover:bg-[#FF7A00] transition-all shadow-lg shadow-slate-950/5 group-hover:shadow-orange-600/10">
                             <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
                         </div>
                      </div>

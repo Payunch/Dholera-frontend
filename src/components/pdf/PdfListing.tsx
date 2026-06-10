@@ -169,7 +169,8 @@ export function PdfListing() {
                   className={cn(
                     "px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2",
                     activeTab === tab.id 
-                      ? "bg-orange-600 border-orange-600 text-white shadow-xl shadow-orange-600/20" 
+                      ? "bg-orange-600 border-orange-600 text-white shadow-xl shadow-orange-600/10"
+ 
                       : "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-orange-600 hover:text-orange-600"
                   )}
                 >
@@ -219,7 +220,7 @@ export function PdfListing() {
                   key={pdf.id}
                   className={cn(
                     "group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all relative",
-                    isSelected ? "border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" : "border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:-translate-y-2",
+                    isSelected ? "border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" : "border-slate-100 shadow-xl shadow-slate-200/10 hover:shadow-2xl hover:-translate-y-2",
                     isSelectionMode && isFree && "opacity-50 cursor-not-allowed"
                   )}
                 >
@@ -346,7 +347,7 @@ export function PdfListing() {
                  <button 
                    disabled={selectedPdfs.length === 0}
                    onClick={handleBulkPay}
-                   className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-200 dark:disabled:bg-slate-800 disabled:text-slate-400 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20 active:scale-95"
+                   className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-200 dark:disabled:bg-slate-800 disabled:text-slate-400 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/10 active:scale-95"
                  >
                    Pay Now
                  </button>
@@ -377,7 +378,7 @@ export function PdfListing() {
 
               <a 
                 href={`upi://pay?pa=solankiparesh1183@okaxis&pn=Dholera%20Platform&am=${selectionTotal}.00&cu=INR&tn=Bulk%20PDF%20Unlock%20${selectedPdfs.length}_${selectionType}`}
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/20 active:scale-95"
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/10 active:scale-95"
               >
                 Pay ₹{selectionTotal} via UPI App
               </a>

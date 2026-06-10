@@ -128,7 +128,7 @@ export const SystemManagement = () => {
             <button 
               onClick={handleBackup}
               disabled={loading}
-              className="mt-10 w-full py-4 rounded-2xl bg-blue-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-blue-700 shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3"
+              className="mt-10 w-full py-4 rounded-2xl bg-blue-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-blue-700 shadow-xl shadow-blue-600/10 flex items-center justify-center gap-3"
             >
                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <CloudDownload className="h-4 w-4" />}
                Generate Snapshot
@@ -154,7 +154,7 @@ export const SystemManagement = () => {
                />
                <button 
                  disabled={loading}
-                 className="w-full py-4 rounded-2xl bg-orange-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-orange-700 shadow-xl shadow-orange-600/20 flex items-center justify-center gap-3"
+                 className="w-full py-4 rounded-2xl bg-orange-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-orange-700 shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3"
                >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCcw className="h-4 w-4" />}
                   Import Snapshot
@@ -174,7 +174,7 @@ export const SystemManagement = () => {
             <button 
               onClick={handleSyncPdfs}
               disabled={loading}
-              className="mt-10 w-full py-4 rounded-2xl bg-green-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-green-700 shadow-xl shadow-green-600/20 flex items-center justify-center gap-3"
+              className="mt-10 w-full py-4 rounded-2xl bg-green-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-green-700 shadow-xl shadow-green-600/10 flex items-center justify-center gap-3"
             >
                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
                Sync Cloud Storage
@@ -192,7 +192,7 @@ export const SystemManagement = () => {
             </div>
             <button 
               onClick={() => window.open(`${API_BASE_URL}/analytics/export-leads`, '_blank')}
-              className="mt-10 w-full py-4 rounded-2xl bg-purple-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-purple-700 shadow-xl shadow-purple-600/20 flex items-center justify-center gap-3"
+              className="mt-10 w-full py-4 rounded-2xl bg-purple-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-purple-700 shadow-xl shadow-purple-600/10 flex items-center justify-center gap-3"
             >
                <CloudDownload className="h-4 w-4" />
                Export Leads to Excel

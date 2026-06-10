@@ -158,7 +158,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
             </div>
 
             {/* CTAs Card */}
-            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 text-slate-900 dark:text-white space-y-6 shadow-xl shadow-slate-950/15">
+            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 text-slate-900 dark:text-white space-y-6 shadow-xl shadow-slate-950/5">
               <div className="space-y-2">
                 <h3 className="font-display text-2xl font-black uppercase tracking-tight">
                   Advisory Desk

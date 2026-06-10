@@ -199,7 +199,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
                    onClick={() => setSelectionType('view')}
                    className={cn(
                      "p-4 rounded-2xl border-2 transition-all text-left",
-                     selectionType === 'view' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/10" : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950"
+                     selectionType === 'view' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/5" : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950"
                    )}
                  >
                    <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'view' ? "text-orange-600" : "text-slate-400")}>View Online</span>
@@ -209,7 +209,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
                    onClick={() => setSelectionType('download')}
                    className={cn(
                      "p-4 rounded-2xl border-2 transition-all text-left",
-                     selectionType === 'download' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/10" : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950"
+                     selectionType === 'download' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/5" : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950"
                    )}
                  >
                    <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'download' ? "text-orange-600" : "text-slate-400")}>Download PDF</span>
@@ -219,7 +219,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
 
               <a 
                 href={upiUrl}
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/20 active:scale-95"
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/10 active:scale-95"
               >
                 Pay ₹{amount} via UPI App
               </a>
@@ -287,7 +287,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
                      href="https://wa.me/917435808031"
                      target="_blank" 
                      rel="noopener noreferrer"
-                     className="flex-1 md:w-64 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-3.5 px-6 rounded-2xl font-black tracking-widest text-sm transition-all shadow-xl shadow-green-500/20 active:scale-95"
+                     className="flex-1 md:w-64 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-3.5 px-6 rounded-2xl font-black tracking-widest text-sm transition-all shadow-xl shadow-green-500/10 active:scale-95"
                    >
                      +91 74358 08031
                    </a>

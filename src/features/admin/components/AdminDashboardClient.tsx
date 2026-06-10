@@ -79,7 +79,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
       <header className="bg-white border-b border-slate-200 sticky top-0 z-[100] px-8 py-6">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-orange-600/20">
+            <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-orange-600/10">
               <ShieldCheck className="h-6 w-6" />
             </div>
             <div>

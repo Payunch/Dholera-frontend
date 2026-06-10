@@ -103,7 +103,8 @@ export function Navbar() {
 
           <Link
             href="/contact"
-            className="rounded-full bg-orange-600 px-6 py-2.5 text-white transition-all hover:bg-orange-500 shadow-lg shadow-slate-950/10"
+            className="rounded-full bg-orange-600 px-6 py-2.5 text-white transition-all hover:bg-orange-500 shadow-lg shadow-slate-950/5"
+
           >
             {t('nav_contact')}
           </Link>

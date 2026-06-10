@@ -41,7 +41,7 @@ export function ClearanceClient() {
   return (
     <div className="space-y-8">
       {/* Tab Navigation */}
-      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/50">
+      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/10">
         <div className="flex border-b border-slate-100 bg-white/50">
           {tabs.map((tab) => (
             <button
@@ -105,7 +105,7 @@ export function ClearanceClient() {
 
                   <button 
                     onClick={calculateFee}
-                    className="w-full h-16 rounded-2xl bg-white dark:bg-slate-900 text-white font-black uppercase tracking-[0.2em] text-sm hover:bg-[#FF7A00] transition-all shadow-xl shadow-slate-950/20"
+                    className="w-full h-16 rounded-2xl bg-white dark:bg-slate-900 text-white font-black uppercase tracking-[0.2em] text-sm hover:bg-[#FF7A00] transition-all shadow-xl shadow-slate-950/5"
                   >
                     Generate Estimate
                   </button>
@@ -172,7 +172,7 @@ export function ClearanceClient() {
           </div>
           <Link
             href="/pdf"
-            className="group flex items-center gap-3 rounded-2xl bg-orange-600 px-8 py-5 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-500 shadow-xl shadow-orange-600/20"
+            className="group flex items-center gap-3 rounded-2xl bg-orange-600 px-8 py-5 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-500 shadow-xl shadow-orange-600/10"
           >
             Access PDF Hub
             <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
