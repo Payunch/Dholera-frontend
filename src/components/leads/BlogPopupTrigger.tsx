@@ -35,7 +35,7 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }: Bl
   const handleWhatsAppClick = () => {
     setShowPopup(false);
     sessionStorage.setItem('blog_lead_popup_dismissed', 'true');
-    const text = encodeURIComponent(`Hello Naresh, I am interested in Dholera SIR investment opportunities. I was reading your article on "${blogTitle}" and would like more details.`);
+    const text = encodeURIComponent(`Hello Naresh, I am interested in <b>Dholera SIR investment opportunities.<b> I was reading your article on "${blogTitle}" and would like more details.`);
     window.open(`https://wa.me/917435808031?text=${text}`, '_blank');
   };
 
@@ -44,8 +44,8 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }: Bl
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 animate-in fade-in duration-500">
       <div className="relative w-full max-w-[400px] overflow-hidden rounded-[2rem] bg-white dark:bg-slate-900 p-8 shadow-2xl border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300">
-        <button 
-          onClick={handleClose} 
+        <button
+          onClick={handleClose}
           className="absolute right-6 top-6 text-slate-400 hover:text-slate-900 dark:text-slate-505 dark:hover:text-white transition-all z-20"
         >
           <X className="h-5 w-5" />
@@ -68,14 +68,14 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }: Bl
             </p>
           </div>
 
-          <button 
-            onClick={handleWhatsAppClick} 
+          <button
+            onClick={handleWhatsAppClick}
             className="w-full h-14 rounded-xl bg-[#25D366] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-[#128C7E] transition-all shadow-xl shadow-green-500/10 flex items-center justify-center gap-2 active:scale-95"
           >
             <MessageSquare className="h-4 w-4" />
             Chat on WhatsApp
           </button>
-          
+
           <button
             onClick={handleClose}
             className="text-[9px] font-bold uppercase tracking-widest text-slate-400 hover:text-slate-650 transition-colors pt-2"
