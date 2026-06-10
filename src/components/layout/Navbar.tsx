@@ -50,7 +50,7 @@ export function Navbar() {
               href={item.href}
               className={cn(
                 "transition-colors hover:text-orange-600",
-                (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) ? "text-orange-600" : "text-slate-500"
+                (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) ? "text-orange-600" : "text-slate-900 dark:text-white"
               )}
             >
               {item.label}
@@ -127,7 +127,7 @@ export function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
                 className={cn(
                   "flex items-center gap-4 text-sm font-black uppercase tracking-widest transition-colors",
-                  (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) ? "text-orange-600" : "text-slate-600 dark:text-slate-400"
+                  (pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))) ? "text-orange-600" : "text-slate-900 dark:text-white"
                 )}
               >
                 <item.icon className="h-5 w-5" />
