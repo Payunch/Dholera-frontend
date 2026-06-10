@@ -5,7 +5,7 @@ import { useLanguage } from '@/providers/LanguageProvider';
 export default function TermsAndConditions() {
   const { t } = useLanguage();
   return (
-    <div className="bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pt-24 pb-32 w-full overflow-x-hidden">
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pt-24 pb-32 w-full overflow-x-hidden">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         <h1 className="text-4xl font-black mb-6 uppercase tracking-tight text-slate-900 dark:text-white">{t('terms_and_conditions')}</h1>
         <p className="mb-10 text-sm font-bold tracking-widest text-slate-500 uppercase">{t('last_updated')}</p>

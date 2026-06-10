@@ -83,7 +83,7 @@ export default function LeadCaptureModal() {
         {/* Close Button */}
         <button 
           onClick={handleClose}
-          className="absolute top-6 right-6 p-2 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-400 hover:text-white transition-all z-20"
+          className="absolute top-6 right-6 p-2 rounded-xl bg-white dark:bg-slate-900 text-slate-400 hover:text-white transition-all z-20"
         >
           <X className="h-5 w-5" />
         </button>
@@ -126,7 +126,7 @@ export default function LeadCaptureModal() {
                     required
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
+                    className="w-full pl-12 pr-5 py-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
                   />
                 </div>
               </div>
@@ -143,7 +143,7 @@ export default function LeadCaptureModal() {
                     maxLength={10}
                     value={form.phone}
                     onChange={handlePhoneChange}
-                    className="w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
+                    className="w-full pl-12 pr-5 py-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
                   />
                 </div>
               </div>

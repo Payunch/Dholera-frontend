@@ -65,7 +65,7 @@ export function AdminDashboardGate() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
+      <div className="flex min-h-screen items-center justify-center bg-white px-4">
         <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold uppercase tracking-widest text-slate-500 shadow-lg">
           <Loader2 className="h-5 w-5 animate-spin text-orange-600" />
           Loading Master Control
@@ -76,7 +76,7 @@ export function AdminDashboardGate() {
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
+      <div className="flex min-h-screen items-center justify-center bg-white px-4">
         <div className="max-w-lg rounded-3xl border border-red-200 bg-white p-8 text-center shadow-xl">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-red-600">
             <ShieldAlert className="h-7 w-7" />

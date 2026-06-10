@@ -79,7 +79,7 @@ export default function TpMapsPage() {
       </section>
 
       {/* Interactive Matrix Dashboard */}
-      <section className="py-16 bg-slate-50 dark:bg-[#0B132B] min-h-[60vh]">
+      <section className="py-16 bg-white dark:bg-[#0B132B] min-h-[60vh]">
         <div className="container mx-auto px-4 md:px-8">
            
            {/* Search & Filter UI */}
@@ -151,7 +151,7 @@ export default function TpMapsPage() {
 
                      <div>
                        <div className="flex justify-between items-start mb-10 pt-4">
-                          <div className="h-16 w-16 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all duration-300">
+                          <div className="h-16 w-16 bg-white rounded-2xl flex items-center justify-center text-slate-900 group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all duration-300">
                             <Map className="h-8 w-8" />
                           </div>
                           <div className="group/info relative cursor-help">
@@ -166,7 +166,7 @@ export default function TpMapsPage() {
                           {tp.title}
                        </h3>
                        
-                       <div className="space-y-4 mb-10 p-6 bg-slate-50 dark:bg-[#0B132B] rounded-[1.5rem] group-hover:bg-slate-100/50 transition-colors border border-transparent group-hover:border-orange-500/10">
+                       <div className="space-y-4 mb-10 p-6 bg-white dark:bg-[#0B132B] rounded-[1.5rem] group-hover:bg-white/50 transition-colors border border-transparent group-hover:border-orange-500/10">
                           <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 dark:text-slate-400">
                              <Layers className="h-4 w-4 text-slate-400 group-hover:text-orange-500 transition-colors" /> 
                              {tp.area}

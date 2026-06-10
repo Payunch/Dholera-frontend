@@ -89,7 +89,7 @@ export const UpiQrModal = ({
           </div>
 
           {/* UPI ID Copy */}
-          <div className="mb-6 flex items-center justify-between rounded-xl bg-slate-50 p-3 border border-slate-100 text-left">
+          <div className="mb-6 flex items-center justify-between rounded-xl bg-white p-3 border border-slate-100 text-left">
             <div>
               <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">UPI ID</span>
               <span className="text-xs font-bold text-slate-700">{upiId}</span>
@@ -113,7 +113,7 @@ export const UpiQrModal = ({
         </div>
 
         {/* Right Side: Verification & Unlock */}
-        <div className="p-8 md:w-1/2 bg-slate-50/50 flex flex-col justify-center relative">
+        <div className="p-8 md:w-1/2 bg-white/50 flex flex-col justify-center relative">
           <button onClick={onClose} className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 transition-colors">
             <X className="h-5 w-5" />
           </button>

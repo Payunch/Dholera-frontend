@@ -98,7 +98,7 @@ export function HomeClient() {
     <div className="flex flex-col bg-white dark:bg-slate-950 overflow-x-hidden w-full transition-colors">
       
       {/* 1.1 HERO SECTION */}
-      <section className="relative w-full min-h-[95vh] bg-slate-50 dark:bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
+      <section className="relative w-full min-h-[95vh] bg-white dark:bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
         {/* Animated Hero Carousel with HIGH-RES IMAGES */}
         <div className="absolute inset-0 z-0">
           {heroImages.map((img, idx) => (
@@ -254,7 +254,7 @@ export function HomeClient() {
       </section>
 
       {/* 1.25 FEATURED PROJECTS SECTION */}
-      <section className="py-24 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">
+      <section className="py-24 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">
         <div className="container mx-auto px-4 md:px-8">
           
           <div className="mb-16 text-center space-y-4 max-w-3xl mx-auto">
@@ -280,7 +280,7 @@ export function HomeClient() {
                 >
                   <div>
                     {/* Project Image */}
-                    <div className="relative h-56 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div className="relative h-56 w-full bg-white dark:bg-slate-800 overflow-hidden">
                       <Image
                         src={project.image}
                         alt={project.name}
@@ -349,7 +349,7 @@ export function HomeClient() {
       </section>
 
       {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
-      <section id="site-visit" className="bg-slate-100 dark:bg-slate-950 py-32 relative overflow-hidden transition-colors">
+      <section id="site-visit" className="bg-white dark:bg-slate-950 py-32 relative overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8 relative z-10 flex justify-center">
           <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden">
             
@@ -438,7 +438,7 @@ export function HomeClient() {
                           required 
                           value={visitForm.name}
                           onChange={(e) => setVisitForm({...visitForm, name: e.target.value})}
-                          className="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
+                          className="w-full px-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -451,7 +451,7 @@ export function HomeClient() {
                           maxLength={10}
                           value={visitForm.phone}
                           onChange={handlePhoneChange}
-                          className="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
+                          className="w-full px-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -466,7 +466,7 @@ export function HomeClient() {
                           min={today}
                           max={nextWeek}
                           onChange={(e) => setVisitForm({...visitForm, date: e.target.value})}
-                          className="w-full px-5 py-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
+                          className="w-full px-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
                         />
                       </div>
                       <button 

@@ -157,7 +157,7 @@ export function PdfListing() {
             <h2 className="font-display text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
               Verified <span className="text-orange-600 italic">Intelligence</span>
             </h2>
-            <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-lg w-fit">
+            <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 bg-white border border-slate-100 px-3 py-1.5 rounded-lg w-fit">
               <ShieldCheck className="h-3 w-3 text-green-600" />
               All maps cross-verified with official DSIRDA releases
             </div>
@@ -193,7 +193,7 @@ export function PdfListing() {
             <input
               type="text"
               placeholder={t('search_placeholder')}
-              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 font-bold text-slate-900 dark:text-white outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-950 transition-all"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 font-bold text-slate-900 dark:text-white outline-none focus:border-orange-600 focus:bg-white dark:focus:bg-slate-950 transition-all"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -223,7 +223,7 @@ export function PdfListing() {
                     isSelectionMode && isFree && "opacity-50 cursor-not-allowed"
                   )}
                 >
-                  <div className="mb-6 aspect-[4/3] rounded-2xl bg-slate-50 dark:bg-slate-950 flex items-center justify-center relative overflow-hidden border border-slate-50 dark:border-slate-800">
+                  <div className="mb-6 aspect-[4/3] rounded-2xl bg-white dark:bg-slate-950 flex items-center justify-center relative overflow-hidden border border-slate-50 dark:border-slate-800">
                     <FileText className={cn("h-16 w-16 transition-all duration-500", isSelected ? "text-orange-600 scale-110" : "text-slate-200 dark:text-slate-700 group-hover:scale-110")} />
                      
                      {isSelectionMode && !isFree && (
@@ -278,7 +278,7 @@ export function PdfListing() {
                           onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
                           className={cn(
                             "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-                            isSelected ? "bg-orange-600 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-orange-600 hover:text-white shadow-sm"
+                            isSelected ? "bg-orange-600 text-white" : "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-orange-600 hover:text-white shadow-sm"
                           )}
                         >
                           {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : 'Open Vault'}
@@ -318,7 +318,7 @@ export function PdfListing() {
               
               <div className="flex items-center gap-6">
                  {/* Type Toggle */}
-                 <div className="flex bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
+                 <div className="flex bg-white dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
                     <button 
                       onClick={() => setSelectionType('view')}
                       className={cn(
@@ -367,7 +367,7 @@ export function PdfListing() {
             <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Secure UPI Payment Required</p>
 
             <div className="space-y-4">
-              <div className="p-6 bg-slate-50 dark:bg-slate-950 rounded-3xl border border-slate-100 dark:border-slate-800 flex justify-between items-center">
+              <div className="p-6 bg-white dark:bg-slate-950 rounded-3xl border border-slate-100 dark:border-slate-800 flex justify-between items-center">
                  <div className="text-left">
                    <p className="text-[10px] font-black text-slate-400 uppercase">{selectionType === 'view' ? 'Streaming' : 'Full Download'} Access</p>
                    <p className="text-xs font-bold text-slate-900 dark:text-white mt-1 uppercase">{selectedPdfs.length} PREMIUM FILES</p>

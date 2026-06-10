@@ -103,7 +103,7 @@ export default function BlogsPage() {
                  placeholder={t('search_placeholder')}
                  value={search}
                  onChange={(e) => setSearch(e.target.value)}
-                 className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-xs font-bold outline-none focus:border-orange-600 transition-all text-slate-900 dark:text-white"
+                 className="w-full pl-12 pr-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-xs font-bold outline-none focus:border-orange-600 transition-all text-slate-900 dark:text-white"
                />
             </div>
 
@@ -139,7 +139,7 @@ export default function BlogsPage() {
                        className="group flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl hover:border-orange-500/30 hover:-translate-y-2 overflow-hidden"
                      >
                         {imgSrc && (
-                          <div className="relative h-64 w-full bg-slate-50 dark:bg-slate-950 overflow-hidden">
+                          <div className="relative h-64 w-full bg-white dark:bg-slate-950 overflow-hidden">
                              <Image 
                                src={imgSrc}
                                alt={post.title}

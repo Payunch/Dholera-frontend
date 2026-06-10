@@ -71,7 +71,7 @@ export default function InfrastructurePage() {
       </section>
 
       {/* Grid Content */}
-      <section className="py-24 bg-slate-50 dark:bg-[#0B132B]">
+      <section className="py-24 bg-white dark:bg-[#0B132B]">
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             {categories.map((cat, i) => (

@@ -47,17 +47,17 @@ export default function SmartCityPage() {
               Greenfield Smart City.
             </p>
             <div className="grid grid-cols-2 gap-8">
-              <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
+              <div className="p-8 bg-white rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
                 <div className="text-5xl font-black text-slate-900 mb-2 group-hover:text-orange-600 transition-colors">920</div>
                 <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Sq KM Total Area</div>
               </div>
-              <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
+              <div className="p-8 bg-white rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
                 <div className="text-5xl font-black text-slate-900 mb-2 group-hover:text-orange-600 transition-colors">2M+</div>
                 <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Target Population</div>
               </div>
             </div>
           </div>
-          <div className="relative aspect-video bg-slate-50 dark:bg-slate-950 rounded-[3rem] overflow-hidden shadow-2xl group">
+          <div className="relative aspect-video bg-white dark:bg-slate-950 rounded-[3rem] overflow-hidden shadow-2xl group">
              <Image 
                src="/images/arialviewdholeraexpress.webp" 
                alt="DSIR Infrastructure" 
@@ -81,7 +81,7 @@ export default function SmartCityPage() {
             { title: "Sustainable Life", desc: "100% recycling of waste, renewable energy integration, and vast green spaces.", icon: Shield },
             { title: "Global Logistics", desc: "Proximity to the upcoming International Airport and Delhi-Mumbai Industrial Corridor.", icon: Landmark },
           ].map((feature, i) => (
-            <div key={i} className="group space-y-6 p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+            <div key={i} className="group space-y-6 p-10 rounded-[2.5rem] bg-white border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
               <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
                 <feature.icon className="h-7 w-7" />
               </div>

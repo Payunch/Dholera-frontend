@@ -74,7 +74,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Top Navigation Bar */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-[100] px-8 py-6">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between">
@@ -88,7 +88,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
             </div>
           </div>
 
-          <nav className="flex items-center gap-2 bg-slate-100 p-1.5 rounded-2xl">
+          <nav className="flex items-center gap-2 bg-white p-1.5 rounded-2xl">
             {tabs.map((tab, idx) => (
               <button
                 key={tab.label}

@@ -13,7 +13,7 @@ export function LeadsStats({ leads }: LeadsStatsProps) {
   const converted = leads.filter((l) => l.status === "Converted").length;
 
   const stats = [
-    { label: "Total Leads", value: total, icon: Users, color: "border-slate-900 text-slate-900 bg-slate-50" },
+    { label: "Total Leads", value: total, icon: Users, color: "border-slate-900 text-slate-900 bg-white" },
     { label: "New Inquiries", value: newLeads, icon: UserPlus, color: "border-orange-500 text-orange-600 bg-orange-50" },
     { label: "Converted", value: converted, icon: CheckCircle2, color: "border-green-600 text-green-700 bg-green-50" },
   ];

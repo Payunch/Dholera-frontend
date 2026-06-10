@@ -59,7 +59,7 @@ const CATEGORY_COLORS = {
   Industrial: "text-green-700 border-green-100 bg-green-50",
   Planning: "text-purple-700 border-purple-100 bg-purple-50",
   Investment: "text-orange-600 border-orange-100 bg-orange-50",
-  General: "text-slate-600 border-slate-100 bg-slate-50",
+  General: "text-slate-600 border-slate-100 bg-white",
 };
 
 export default async function UpdateDetailPage({ params }: Props) {

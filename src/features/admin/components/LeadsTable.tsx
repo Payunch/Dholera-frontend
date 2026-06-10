@@ -15,13 +15,13 @@ export function LeadsTable({ leads }: LeadsTableProps) {
   return (
     <>
       <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-xl">
-        <div className="bg-slate-50/50 px-8 py-6 border-b border-slate-100 flex items-center justify-between">
+        <div className="bg-white/50 px-8 py-6 border-b border-slate-100 flex items-center justify-between">
           <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Recent Activity</h3>
           <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Live Database Stream</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-slate-50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+            <thead className="bg-white text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
               <tr>
                 <th className="px-8 py-4">Investor Details</th>
                 <th className="px-8 py-4">Intelligence</th>
@@ -31,7 +31,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
             </thead>
             <tbody className="divide-y divide-slate-50">
               {leads.map((lead) => (
-                <tr key={lead.id} className="group transition-colors hover:bg-slate-50/50">
+                <tr key={lead.id} className="group transition-colors hover:bg-white/50">
                   <td className="px-8 py-5">
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2">
@@ -110,7 +110,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                       { icon: MapPin, label: "Last IP", value: selectedLead.sessions?.[0]?.ip || "Unknown" },
                       { icon: Globe, label: "Source", value: selectedLead.source || "Direct" },
                     ].map((item, i) => (
-                      <div key={i} className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                      <div key={i} className="bg-white rounded-2xl p-4 border border-slate-100">
                          <item.icon className="h-4 w-4 text-orange-600 mb-2" />
                          <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{item.label}</span>
                          <span className="block text-xs font-black text-slate-900 mt-1">{item.value}</span>
@@ -188,9 +188,9 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
                  {/* Flags */}
                  <div className="flex flex-wrap gap-2">
-                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_registered ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-500 dark:text-slate-400")}>Registered</div>
-                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_trial ? "bg-purple-100 text-purple-700" : "bg-slate-100 text-slate-500 dark:text-slate-400")}>Trial Used</div>
-                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_pro ? "bg-orange-100 text-orange-700" : "bg-slate-100 text-slate-500 dark:text-slate-400")}>PRO Access</div>
+                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_registered ? "bg-blue-100 text-blue-700" : "bg-white text-slate-500 dark:text-slate-400")}>Registered</div>
+                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_trial ? "bg-purple-100 text-purple-700" : "bg-white text-slate-500 dark:text-slate-400")}>Trial Used</div>
+                    <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.is_pro ? "bg-orange-100 text-orange-700" : "bg-white text-slate-500 dark:text-slate-400")}>PRO Access</div>
                     <div className={cn("px-3 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest", selectedLead.verified ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")}>OTP Verified</div>
                  </div>
               </div>

@@ -80,7 +80,7 @@ export default function AirportPage() {
 
             <div className="grid gap-6">
               {milestones.map((m, i) => (
-                <div key={i} className="p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:shadow-2xl transition-all">
+                <div key={i} className="p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-2xl transition-all">
                   <div className="flex justify-between items-start mb-4">
                     <span className="text-[10px] font-black uppercase tracking-widest text-orange-600">{m.phase}</span>
                     <span className="bg-white dark:bg-slate-800 px-3 py-1 rounded-full text-[8px] font-black uppercase border border-slate-200 dark:border-slate-700 dark:text-slate-600 dark:text-slate-300">{m.status}</span>

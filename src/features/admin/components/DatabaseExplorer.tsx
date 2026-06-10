@@ -55,7 +55,7 @@ export const DatabaseExplorer = () => {
     <div className="flex bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl overflow-hidden min-h-[70vh] max-h-[85vh]">
       
       {/* Sidebar: phpMyAdmin Style */}
-      <div className="w-72 bg-slate-50 border-r border-slate-100 flex flex-col shrink-0">
+      <div className="w-72 bg-white border-r border-slate-100 flex flex-col shrink-0">
          <div className="p-6 border-b border-slate-200 bg-white">
             <div className="flex items-center gap-3 text-slate-900">
                <Database className="h-5 w-5 text-orange-600" />
@@ -101,7 +101,7 @@ export const DatabaseExplorer = () => {
       <div className="flex-1 flex flex-col overflow-hidden bg-white">
         {!selectedTable ? (
           <div className="flex-1 flex flex-col items-center justify-center p-20 text-center space-y-4">
-             <div className="h-20 w-20 rounded-[2rem] bg-slate-50 flex items-center justify-center text-slate-700 dark:text-slate-200">
+             <div className="h-20 w-20 rounded-[2rem] bg-white flex items-center justify-center text-slate-700 dark:text-slate-200">
                 <Database className="h-10 w-10" />
              </div>
              <div>
@@ -112,7 +112,7 @@ export const DatabaseExplorer = () => {
         ) : (
           <>
             {/* Toolbar */}
-            <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6 bg-slate-50/50">
+            <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6 bg-white/50">
                <div className="flex items-center gap-4">
                   <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-orange-600">
                      <Table className="h-5 w-5" />
@@ -145,14 +145,14 @@ export const DatabaseExplorer = () => {
             </div>
 
             {/* Grid */}
-            <div className="flex-1 overflow-auto p-1 bg-slate-50">
+            <div className="flex-1 overflow-auto p-1 bg-white">
                {data.length === 0 ? (
                  <div className="flex-1 flex items-center justify-center p-20 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs tracking-widest italic">Table is empty</div>
                ) : (
                  <div className="inline-block min-w-full align-middle">
                     <div className="overflow-hidden border border-slate-200 sm:rounded-2xl shadow-sm bg-white">
                       <table className="min-w-full divide-y divide-slate-200 text-left border-collapse">
-                         <thead className="bg-slate-50">
+                         <thead className="bg-white">
                             <tr>
                                {Object.keys(data[0]).map(key => (
                                  <th key={key} className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-500 border-b border-slate-200 whitespace-nowrap">{key}</th>
@@ -161,7 +161,7 @@ export const DatabaseExplorer = () => {
                          </thead>
                          <tbody className="divide-y divide-slate-100">
                             {filteredData.map((row, i) => (
-                              <tr key={i} className="hover:bg-slate-50 transition-colors">
+                              <tr key={i} className="hover:bg-white transition-colors">
                                  {Object.values(row).map((val: any, j) => (
                                    <td key={j} className="px-4 py-3 text-[11px] font-medium text-slate-600 whitespace-nowrap max-w-xs overflow-hidden text-ellipsis border-r border-slate-50">
                                       {typeof val === 'object' ? JSON.stringify(val) : String(val)}

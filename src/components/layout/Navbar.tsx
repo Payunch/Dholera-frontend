@@ -57,12 +57,12 @@ export function Navbar() {
             </Link>
           ))}
 
-          <div className="h-4 w-px bg-slate-100" />
+          <div className="h-4 w-px bg-white" />
 
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 hover:border-orange-600 transition-all group shadow-sm"
+            className="flex items-center justify-center h-10 w-10 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 hover:border-orange-600 transition-all group shadow-sm"
             title="Toggle Theme"
           >
             {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}

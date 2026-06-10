@@ -50,7 +50,7 @@ export function LanguageGate() {
               }}
               className="group rounded-3xl border-2 border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-950/50 p-6 font-black uppercase tracking-widest text-[11px] text-slate-900 dark:text-white hover:border-orange-600 hover:bg-white dark:hover:bg-slate-900 transition-all flex flex-col items-center justify-center gap-4 shadow-sm hover:shadow-2xl hover:-translate-y-1 relative"
             >
-              <div className="h-12 w-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-orange-600 group-hover:text-white flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+              <div className="h-12 w-12 rounded-2xl bg-white dark:bg-slate-800 text-slate-400 group-hover:bg-orange-600 group-hover:text-white flex items-center justify-center group-hover:scale-110 transition-all duration-300">
                 <Globe className="h-5 w-5" />
               </div>
               <span className="text-center group-hover:text-orange-600 transition-colors">{l.label}</span>

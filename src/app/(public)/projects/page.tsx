@@ -56,7 +56,7 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-24 w-full overflow-x-hidden">
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-24 w-full overflow-x-hidden">
       
       {/* Header Block */}
       <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
@@ -96,7 +96,7 @@ export default function ProjectsPage() {
                 className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   selectedCategory === cat.key
                     ? "bg-white dark:bg-slate-900 text-white shadow-md shadow-slate-950/15"
-                    : "bg-slate-50 border border-slate-150 text-slate-600 hover:bg-slate-100"
+                    : "bg-white border border-slate-150 text-slate-600 hover:bg-white"
                 }`}
               >
                 {cat.label}
@@ -112,7 +112,7 @@ export default function ProjectsPage() {
               placeholder={t('search_by_project')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-5 py-3 rounded-xl bg-slate-50 border border-slate-150 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-800 outline-none focus:bg-white focus:border-orange-500 transition-all"
+              className="w-full pl-11 pr-5 py-3 rounded-xl bg-white border border-slate-150 text-[10px] font-black uppercase tracking-widest placeholder-slate-400 text-slate-800 outline-none focus:bg-white focus:border-orange-500 transition-all"
             />
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function ProjectsPage() {
                 >
                   <div>
                     {/* Project Image */}
-                    <div className="relative h-64 w-full bg-slate-100 overflow-hidden">
+                    <div className="relative h-64 w-full bg-white overflow-hidden">
                       <Image
                         src={project.image.startsWith('/') ? project.image : `/images/${project.image}`}
                         alt={project.name}

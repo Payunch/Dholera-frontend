@@ -86,7 +86,7 @@ export default function PdfPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans w-full overflow-x-hidden">
+    <div className="min-h-screen bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
       <div className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 px-4 md:px-8 border-b border-slate-800 overflow-hidden">
@@ -145,7 +145,7 @@ export default function PdfPage() {
                       {filter.label}
                       <span className={cn(
                         "px-2 py-0.5 rounded-md text-[8px]",
-                        activeFilter === filter.label ? "bg-white/20 text-slate-900 dark:text-white" : "bg-slate-100 text-slate-500 dark:text-slate-400"
+                        activeFilter === filter.label ? "bg-white/20 text-slate-900 dark:text-white" : "bg-white text-slate-500 dark:text-slate-400"
                       )}>
                         {getCount(filter.key)}
                       </span>
@@ -178,14 +178,14 @@ export default function PdfPage() {
                     className="group bg-white rounded-3xl border border-slate-100 p-6 flex flex-col shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500"
                   >
                      <div className="flex items-center justify-between mb-6">
-                        <div className="h-12 w-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-slate-900 dark:text-white transition-all duration-300">
+                        <div className="h-12 w-12 rounded-xl bg-white flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-slate-900 dark:text-white transition-all duration-300">
                            <FileText className="h-6 w-6" />
                         </div>
                         <div className="flex flex-col items-end">
                            <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 group-hover:text-[#FF7A00] transition-colors">
                                 {pdf.fileSize}
                            </span>
-                           <div className="h-1 w-8 bg-slate-100 rounded-full mt-1 overflow-hidden">
+                           <div className="h-1 w-8 bg-white rounded-full mt-1 overflow-hidden">
                               <div className="h-full bg-[#FF7A00] w-0 group-hover:w-full transition-all duration-700" />
                            </div>
                         </div>

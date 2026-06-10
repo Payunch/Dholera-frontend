@@ -42,7 +42,7 @@ export function ClearanceClient() {
     <div className="space-y-8">
       {/* Tab Navigation */}
       <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/50">
-        <div className="flex border-b border-slate-100 bg-slate-50/50">
+        <div className="flex border-b border-slate-100 bg-white/50">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -73,7 +73,7 @@ export function ClearanceClient() {
                   </p>
                </div>
 
-               <div className="grid gap-8 p-10 bg-slate-50 rounded-[2rem] border border-slate-100 shadow-inner">
+               <div className="grid gap-8 p-10 bg-white rounded-[2rem] border border-slate-100 shadow-inner">
                   <div className="space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Select Plot Use-Case</label>
                     <div className="grid grid-cols-3 gap-3">
@@ -145,7 +145,7 @@ export function ClearanceClient() {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-2 rounded-full bg-slate-100 overflow-hidden">
+                  <div key={i} className="h-2 rounded-full bg-white overflow-hidden">
                     <div 
                       className="h-full bg-orange-600 animate-pulse" 
                       style={{ width: `70%`, animationDelay: `${i * 200}ms` }} 

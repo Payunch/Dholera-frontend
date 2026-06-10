@@ -110,7 +110,7 @@ export default function ConsentBanner() {
               <button
                 type="button"
                 onClick={() => handleChoice("rejected")}
-                className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100"
+                className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-white"
               >
                 Reject
               </button>

@@ -199,7 +199,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
                    onClick={() => setSelectionType('view')}
                    className={cn(
                      "p-4 rounded-2xl border-2 transition-all text-left",
-                     selectionType === 'view' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/10" : "border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950"
+                     selectionType === 'view' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/10" : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950"
                    )}
                  >
                    <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'view' ? "text-orange-600" : "text-slate-400")}>View Online</span>
@@ -209,7 +209,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
                    onClick={() => setSelectionType('download')}
                    className={cn(
                      "p-4 rounded-2xl border-2 transition-all text-left",
-                     selectionType === 'download' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/10" : "border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950"
+                     selectionType === 'download' ? "border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/10" : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950"
                    )}
                  >
                    <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'download' ? "text-orange-600" : "text-slate-400")}>Download PDF</span>

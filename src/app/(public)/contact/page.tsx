@@ -43,7 +43,7 @@ export default function ContactPage() {
           {/* Left Column: Info */}
           <div className="space-y-12">
             <div className="space-y-6">
-              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-white dark:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
+              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-white dark:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
                 <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 transition-all group-hover:bg-orange-600 group-hover:text-slate-900 dark:text-white">
                   <Mail className="h-6 w-6" />
                 </div>
@@ -53,7 +53,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-white dark:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
+              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-white dark:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
                 <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 transition-all group-hover:bg-orange-600 group-hover:text-slate-900 dark:text-white">
                   <Phone className="h-6 w-6" />
                 </div>
@@ -63,7 +63,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-white dark:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
+              <div className="flex items-start gap-6 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 transition-all hover:bg-white dark:hover:bg-white dark:bg-slate-900 hover:shadow-xl hover:shadow-slate-200/40 group">
                 <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-md border border-slate-100 dark:border-slate-700 transition-all group-hover:bg-orange-600 group-hover:text-slate-900 dark:text-white">
                   <MapPin className="h-6 w-6" />
                 </div>

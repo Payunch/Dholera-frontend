@@ -91,7 +91,7 @@ export const PaymentApprovals = () => {
       </div>
 
       {records.length === 0 ? (
-        <div className="bg-slate-50 rounded-[2rem] p-12 text-center border-2 border-dashed border-slate-200">
+        <div className="bg-white rounded-[2rem] p-12 text-center border-2 border-dashed border-slate-200">
            <div className="h-16 w-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
               <Clock className="h-8 w-8 text-slate-300" />
            </div>
@@ -107,7 +107,7 @@ export const PaymentApprovals = () => {
                <div className="flex-1 flex items-start gap-4">
                   <div className={cn(
                     "h-12 w-12 rounded-xl flex items-center justify-center shrink-0 transition-all",
-                    p.status === 'completed' ? "bg-green-100 text-green-600" : "bg-slate-50 text-slate-500 dark:text-slate-400"
+                    p.status === 'completed' ? "bg-green-100 text-green-600" : "bg-white text-slate-500 dark:text-slate-400"
                   )}>
                      {p.status === 'completed' ? <CheckCircle2 className="h-6 w-6" /> : <User className="h-6 w-6" />}
                   </div>

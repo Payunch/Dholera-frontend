@@ -74,7 +74,7 @@ export const PlatformInsights = () => {
             </div>
             <div className="space-y-4">
                {data.topViews.map((v, i) => (
-                 <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl group hover:bg-orange-50 transition-all">
+                 <div key={i} className="flex items-center justify-between p-4 bg-white rounded-2xl group hover:bg-orange-50 transition-all">
                     <div className="flex items-center gap-4">
                        <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 dark:text-slate-400 font-black text-sm">{i+1}</div>
                        <span className="text-sm font-bold text-slate-700 uppercase leading-tight line-clamp-1">{v.title}</span>
@@ -98,7 +98,7 @@ export const PlatformInsights = () => {
             </div>
             <div className="space-y-4">
                {data.topPurchases.map((p, i) => (
-                 <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl group hover:bg-green-50 transition-all">
+                 <div key={i} className="flex items-center justify-between p-4 bg-white rounded-2xl group hover:bg-green-50 transition-all">
                     <div className="flex items-center gap-4">
                        <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 dark:text-slate-400 font-black text-sm">{i+1}</div>
                        <span className="text-sm font-bold text-slate-700 uppercase leading-tight line-clamp-1">{p.title}</span>

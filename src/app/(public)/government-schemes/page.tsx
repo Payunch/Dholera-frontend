@@ -44,7 +44,7 @@ export default function GovernmentSchemesPage() {
                title: "Industrial Subsidies", 
                items: ["Capital Subsidy on Fixed Assets", "Interest Subsidy for MSMEs", "Electricity Duty Exemptions", "Stamp Duty Waivers"],
                icon: Landmark,
-               color: "border-slate-100 bg-slate-50/50"
+               color: "border-slate-100 bg-white/50"
              },
              { 
                title: "Production Linked Incentives (PLI)", 

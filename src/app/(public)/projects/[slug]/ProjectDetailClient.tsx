@@ -31,7 +31,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
   const description = t(project.descKey);
 
   return (
-    <div className="bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pt-12 pb-32">
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pt-12 pb-32">
       <div className="container mx-auto px-4 md:px-8 max-w-6xl">
         
         {/* Back Link */}
@@ -79,7 +79,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
             </div>
 
             {/* Project Image */}
-            <div className="relative h-64 md:h-96 w-full bg-slate-100 border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
+            <div className="relative h-64 md:h-96 w-full bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
               <Image
                 src={project.image}
                 alt={project.name}
@@ -141,7 +141,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               </div>
 
               {/* Map Embed Frame */}
-              <div className="relative rounded-2xl overflow-hidden border border-slate-150 shadow-sm bg-slate-100 h-[300px] flex">
+              <div className="relative rounded-2xl overflow-hidden border border-slate-150 shadow-sm bg-white h-[300px] flex">
                 <iframe
                   title={`${project.name} Google Map Location`}
                   src={project.mapUrl}

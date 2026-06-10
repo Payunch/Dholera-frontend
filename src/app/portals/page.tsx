@@ -77,7 +77,7 @@ export default function PortalsPage() {
   ];
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen font-sans w-full overflow-x-hidden transition-colors">
+    <div className="bg-white dark:bg-slate-950 min-h-screen font-sans w-full overflow-x-hidden transition-colors">
       
       {/* Header Section */}
       <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden">

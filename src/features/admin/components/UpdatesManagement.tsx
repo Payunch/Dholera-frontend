@@ -174,7 +174,7 @@ export function UpdatesManagement() {
               <div className="flex gap-2">
                 <button 
                   onClick={() => handleEdit(update)}
-                  className="rounded-xl p-2 text-slate-400 hover:bg-slate-50 hover:text-orange-600 transition-colors"
+                  className="rounded-xl p-2 text-slate-400 hover:bg-white hover:text-orange-600 transition-colors"
                   title="Edit"
                 >
                   <Pencil className="h-4 w-4" />
@@ -222,7 +222,7 @@ export function UpdatesManagement() {
               </h3>
               <button 
                 onClick={() => setEditingId(null)}
-                className="rounded-2xl p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                className="rounded-2xl p-2 text-slate-400 hover:bg-white hover:text-slate-900 transition-colors"
               >
                 <X className="h-6 w-6" />
               </button>
@@ -241,7 +241,7 @@ export function UpdatesManagement() {
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Enter a compelling title..."
-                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
                     />
                   </div>
 
@@ -252,7 +252,7 @@ export function UpdatesManagement() {
                       <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value as Update["category"])}
-                        className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-bold appearance-none transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold appearance-none transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
                       >
                         <option value="Infrastructure">Infrastructure</option>
                         <option value="Industrial">Industrial</option>
@@ -270,7 +270,7 @@ export function UpdatesManagement() {
                           "flex w-full items-center justify-center gap-2 rounded-2xl border py-4 text-sm font-black uppercase tracking-widest transition-all",
                           published 
                             ? "border-orange-200 bg-orange-50 text-orange-600" 
-                            : "border-slate-200 bg-slate-50 text-slate-400"
+                            : "border-slate-200 bg-white text-slate-400"
                         )}
                       >
                         {published ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
@@ -286,7 +286,7 @@ export function UpdatesManagement() {
                       type="datetime-local"
                       value={publishedAt}
                       onChange={(e) => setPublishedAt(e.target.value)}
-                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
                     />
                   </div>
 
@@ -296,7 +296,7 @@ export function UpdatesManagement() {
                     
                     {/* Image Preview */}
                     {(imageFile || imageUrl) && (
-                      <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-100 bg-slate-50">
+                      <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-100 bg-white">
                         <Image
                           src={imageFile ? URL.createObjectURL(imageFile) : imageUrl}
                           alt="Preview"
@@ -315,7 +315,7 @@ export function UpdatesManagement() {
 
                     {!imageFile && !imageUrl && (
                       <div className="grid grid-cols-2 gap-4">
-                        <label className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 transition-all hover:border-orange-200 hover:bg-orange-50 group">
+                        <label className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-200 bg-white p-6 transition-all hover:border-orange-200 hover:bg-orange-50 group">
                           <ImageIcon className="h-6 w-6 text-slate-400 group-hover:text-orange-600" />
                           <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-orange-600">Upload Image</span>
                           <input 
@@ -331,7 +331,7 @@ export function UpdatesManagement() {
                             placeholder="Or paste Unsplash URL..."
                             value={imageUrl}
                             onChange={(e) => setImageUrl(e.target.value)}
-                            className="flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 text-xs font-bold transition-all focus:border-orange-600 focus:bg-white"
+                            className="flex-1 rounded-2xl border border-slate-200 bg-white px-5 py-3 text-xs font-bold transition-all focus:border-orange-600 focus:bg-white"
                           />
                         </div>
                       </div>
@@ -347,14 +347,14 @@ export function UpdatesManagement() {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="Write your analysis here..."
-                    className="flex-1 w-full min-h-[400px] rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4 text-sm font-medium leading-relaxed transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                    className="flex-1 w-full min-h-[400px] rounded-3xl border border-slate-200 bg-white px-5 py-4 text-sm font-medium leading-relaxed transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
                   />
                 </div>
               </div>
             </form>
 
             {/* Modal Footer */}
-            <div className="flex items-center justify-end gap-4 border-t border-slate-100 p-8 bg-slate-50/50">
+            <div className="flex items-center justify-end gap-4 border-t border-slate-100 p-8 bg-white/50">
               <button
                 type="button"
                 onClick={() => setEditingId(null)}

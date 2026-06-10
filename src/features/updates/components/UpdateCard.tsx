@@ -34,7 +34,7 @@ export function UpdateCard({ update }: UpdateCardProps) {
       className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white transition-all hover:-translate-y-2 hover:shadow-2xl hover:border-orange-200"
     >
       {/* Image or Banner */}
-      <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+      <div className="relative aspect-video w-full overflow-hidden bg-white">
         {imgSrc ? (
           <Image
             src={imgSrc}
