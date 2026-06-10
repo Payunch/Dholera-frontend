@@ -73,11 +73,11 @@ export const UpiQrModal = ({
 
  return (
  <div className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/90 p-4 backdrop-blur-sm animate-in fade-in duration-300">
- <div className="relative w-full max-w-lg overflow-hidden rounded-[2.5rem] bg-white shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col md:flex-row">
+ <div className="relative w-full max-w-lg overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col md:flex-row">
  
  {/* Left Side: QR & Payment Info */}
  <div className="p-8 text-center md:w-1/2 flex flex-col border-b md:border-b-0 md:border-r border-slate-100">
- <div className="mb-4 inline-block rounded-3xl border-8 border-slate-50 bg-white p-4 shadow-inner">
+ <div className="mb-4 inline-block rounded-3xl border-8 border-slate-50 bg-white dark:bg-slate-900 p-4 shadow-inner">
  <QRCodeSVG value={upiLink} size={160} level="H" />
  </div>
 
@@ -89,14 +89,14 @@ export const UpiQrModal = ({
  </div>
 
  {/* UPI ID Copy */}
- <div className="mb-6 flex items-center justify-between rounded-xl bg-white p-3 border border-slate-100 text-left">
+ <div className="mb-6 flex items-center justify-between rounded-xl bg-white dark:bg-slate-900 p-3 border border-slate-100 text-left">
  <div>
  <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">UPI ID</span>
  <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{upiId}</span>
  </div>
  <button
  onClick={handleCopy}
- className="flex h-8 w-8 items-center justify-center rounded-lg bg-white shadow-sm border border-slate-200 text-slate-400 hover:text-orange-600 transition-all"
+ className="flex h-8 w-8 items-center justify-center rounded-lg bg-white dark:bg-slate-900 shadow-sm border border-slate-200 text-slate-400 hover:text-orange-600 transition-all"
  >
  {copied ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
  </button>
@@ -114,7 +114,7 @@ export const UpiQrModal = ({
  </div>
 
  {/* Right Side: Verification & Unlock */}
- <div className="p-8 md:w-1/2 bg-white/50 flex flex-col justify-center relative">
+ <div className="p-8 md:w-1/2 bg-white/50 flex flex-col justify-center relative dark:bg-slate-900">
  <button onClick={onClose} className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
  <X className="h-5 w-5" />
  </button>
@@ -135,7 +135,7 @@ export const UpiQrModal = ({
  maxLength={14}
  value={utr}
  onChange={(e) => setUtr(e.target.value.replace(/\D/g,''))}
- className="w-full bg-white border-2 border-slate-100 rounded-xl px-4 py-3 font-bold text-slate-900 dark:text-white outline-none focus:border-orange-600 transition-all"
+ className="w-full bg-white dark:bg-slate-900 border-2 border-slate-100 rounded-xl px-4 py-3 font-bold text-slate-900 dark:text-white outline-none focus:border-orange-600 transition-all"
  />
  </div>
 

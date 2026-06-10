@@ -52,10 +52,10 @@ export default function TpMapsPage() {
  });
 
  return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans w-full overflow-x-hidden">
+ <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans w-full overflow-x-hidden dark:bg-slate-900">
  
  {/* Header Section - Refactored for proper sizing */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
  <Image 
@@ -80,7 +80,7 @@ export default function TpMapsPage() {
  </section>
 
  {/* Interactive Matrix Dashboard */}
- <section className="py-16 bg-white dark:bg-[#0B132B] min-h-[60vh]">
+ <section className="py-16 bg-white dark:bg-[#0B132B] min-h-[60vh] dark:bg-slate-900">
  <div className="container mx-auto px-4 md:px-8">
  
  {/* Search & Filter UI */}
@@ -110,7 +110,7 @@ export default function TpMapsPage() {
 "px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
  activeFilter === filter 
  ?"bg-[#FF7A00] text-white border-[#FF7A00] shadow-lg shadow-orange-600/10 dark:shadow-orange-600/50" 
- :"bg-white dark:bg-[#111A35] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400"
+ :"bg-white dark:bg-[#111A35] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:bg-slate-900"
  )}
  >
  {filter}
@@ -131,7 +131,7 @@ export default function TpMapsPage() {
  <Link 
  key={tp.tp_id} 
  href={`/pdf?search=${tp.title.split('')[tp.title.split('').length - 1]}`}
- className="group relative p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
+ className="group relative p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between dark:bg-slate-900"
  >
  {/* Psychology Badges */}
  <div className="absolute -top-4 right-6 flex flex-col gap-2 z-10 items-end transition-transform group-hover:scale-110">
@@ -167,7 +167,7 @@ export default function TpMapsPage() {
  {tp.title}
  </h3>
  
- <div className="space-y-4 mb-10 p-6 bg-white dark:bg-[#0B132B] rounded-[1.5rem] group-hover:bg-white/50 transition-colors border border-transparent group-hover:border-orange-500/10">
+ <div className="space-y-4 mb-10 p-6 bg-white dark:bg-[#0B132B] rounded-[1.5rem] group-hover:bg-white/50 transition-colors border border-transparent group-hover:border-orange-500/10 dark:bg-slate-900">
  <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 dark:text-slate-400">
  <Layers className="h-4 w-4 text-slate-400 group-hover:text-orange-500 transition-colors" /> 
  {tp.area}

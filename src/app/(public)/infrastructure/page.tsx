@@ -43,7 +43,7 @@ export default function InfrastructurePage() {
  ];
 
  return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen w-full overflow-x-hidden">
+ <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen w-full overflow-x-hidden dark:bg-slate-900">
  {/* Hero - Refactored for proper sizing */}
  <section className="relative min-h-[50vh] md:min-h-[65vh] flex items-center bg-white dark:bg-slate-900 text-white overflow-hidden">
  <div className="absolute inset-0 z-0 opacity-40">
@@ -72,11 +72,11 @@ export default function InfrastructurePage() {
  </section>
 
  {/* Grid Content - REFACTORED FOR RESPONSIVENESS */}
- <section className="py-24 bg-white dark:bg-[#0B132B]">
+ <section className="py-24 bg-white dark:bg-[#0B132B] dark:bg-slate-900">
  <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
  {categories.map((cat, i) => (
- <div key={i} className="bg-white dark:bg-[#111A35] p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-2 transition-all group flex flex-col">
+ <div key={i} className="bg-white dark:bg-[#111A35] p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-2 transition-all group flex flex-col dark:bg-slate-900">
  <div className="h-16 w-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#FF7A00] mb-8 transition-colors group-hover:bg-[#FF7A00] group-hover:text-white">
  <cat.icon className="h-8 w-8" />
  </div>
@@ -110,11 +110,11 @@ export default function InfrastructurePage() {
  {t('invest_rumors')}
  </p>
  <div className="flex flex-wrap gap-4">
- <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl">
+ <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl dark:bg-slate-900">
  <p className="text-3xl font-black text-orange-500">₹3000cr+</p>
  <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-300 tracking-widest">{t('trunk_infra_spent')}</p>
  </div>
- <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl">
+ <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl dark:bg-slate-900">
  <p className="text-3xl font-black text-orange-500">22.5km²</p>
  <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-300 tracking-widest">{t('activation_area_val')}</p>
  </div>
@@ -126,11 +126,11 @@ export default function InfrastructurePage() {
  </div>
  </div>
  <div className="grid grid-cols-2 gap-4">
- <div className="aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4">
+ <div className="aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4 dark:bg-slate-900">
  <ShieldCheck className="h-10 w-10 text-orange-500" />
  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Verified Plots</span>
  </div>
- <div className="mt-8 aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4">
+ <div className="mt-8 aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4 dark:bg-slate-900">
  <Road className="h-10 w-10 text-orange-500" />
  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Internal Roads</span>
  </div>

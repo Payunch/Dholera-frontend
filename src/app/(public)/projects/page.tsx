@@ -56,10 +56,10 @@ export default function ProjectsPage() {
  });
 
  return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-24 w-full overflow-x-hidden">
+ <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-24 w-full overflow-x-hidden dark:bg-slate-900">
  
  {/* Header Block - Refactored for proper sizing */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden mb-16">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden mb-16 dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
  <Image 

@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function InvestmentGuidePage() {
  return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden">
+ <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden dark:bg-slate-900">
  
  {/* Header Block */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16 dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
  <Image 
@@ -40,7 +40,7 @@ export default function InvestmentGuidePage() {
  <div className="container mx-auto px-4 md:px-8">
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-32">
  <div className="lg:col-span-2 space-y-12">
- <section className="bg-white rounded-[2.5rem] p-12 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
+ <section className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
  <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase mb-8 flex items-center gap-4">
  <TrendingUp className="h-8 w-8 text-orange-600" /> Why Dholera Now?
  </h2>
@@ -65,11 +65,11 @@ export default function InvestmentGuidePage() {
  <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 bg-orange-600/10 blur-[100px] rounded-full pointer-events-none" />
  <h2 className="text-2xl font-black uppercase mb-8 relative z-10">Investment Zones</h2>
  <div className="space-y-6 relative z-10">
- <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300">
+ <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300 dark:bg-slate-900">
  <h3 className="text-orange-500 font-black uppercase text-sm mb-3">Activation Area (22.5 sq km)</h3>
  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">The core priority zone for immediate development and industrial operations. Direct connectivity to the 4500MW Solar Park.</p>
  </div>
- <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300">
+ <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300 dark:bg-slate-900">
  <h3 className="text-orange-500 font-black uppercase text-sm mb-3">TP1 & TP2 (Residential Hubs)</h3>
  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Focus for residential communities, housing societies, and social infrastructure. Most vibrant zone for individual investors.</p>
  </div>
@@ -78,7 +78,7 @@ export default function InvestmentGuidePage() {
  </div>
 
  <div className="space-y-8">
- <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
+ <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-6">Risk Assessment</h3>
  <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8 uppercase tracking-widest text-[10px]">
  Ensure your investment is safe with our AI-powered risk scoring engine.

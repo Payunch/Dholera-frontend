@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function SmartCityPage() {
  return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden">
+ <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden dark:bg-slate-900">
  
  {/* Header Block */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24 dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
  <Image 
@@ -47,11 +47,11 @@ export default function SmartCityPage() {
  Greenfield Smart City.
  </p>
  <div className="grid grid-cols-2 gap-8">
- <div className="p-8 bg-white rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
+ <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
  <div className="text-5xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-orange-600 transition-colors">920</div>
  <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Sq KM Total Area</div>
  </div>
- <div className="p-8 bg-white rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
+ <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
  <div className="text-5xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-orange-600 transition-colors">2M+</div>
  <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Target Population</div>
  </div>
@@ -65,7 +65,7 @@ export default function SmartCityPage() {
  className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-700"
  />
  <div className="absolute inset-0 flex items-center justify-center">
- <div className="h-20 w-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-slate-900 dark:text-white">
+ <div className="h-20 w-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-slate-900 dark:text-white dark:bg-slate-900">
  <Construction className="h-8 w-8 animate-pulse" />
  </div>
  </div>
@@ -81,7 +81,7 @@ export default function SmartCityPage() {
  { title:"Sustainable Life", desc:"100% recycling of waste, renewable energy integration, and vast green spaces.", icon: Shield },
  { title:"Global Logistics", desc:"Proximity to the upcoming International Airport and Delhi-Mumbai Industrial Corridor.", icon: Landmark },
  ].map((feature, i) => (
- <div key={i} className="group space-y-6 p-10 rounded-[2.5rem] bg-white border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+ <div key={i} className="group space-y-6 p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
  <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
  <feature.icon className="h-7 w-7" />
  </div>
@@ -99,7 +99,7 @@ export default function SmartCityPage() {
  <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto uppercase tracking-widest text-xs leading-loose mb-12 relative z-10">
  A global manufacturing and trading hub that provides a high-quality lifestyle with smart infrastructure and a world-class environment.
  </p>
- <Link href="/contact" className="relative z-10 inline-flex items-center gap-3 px-12 py-5 bg-white text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 hover:text-white transition-all shadow-xl active:scale-95">
+ <Link href="/contact" className="relative z-10 inline-flex items-center gap-3 px-12 py-5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 hover:text-white transition-all shadow-xl active:scale-95">
  Secure Your Stake <ArrowRight className="h-4 w-4" />
  </Link>
  </div>

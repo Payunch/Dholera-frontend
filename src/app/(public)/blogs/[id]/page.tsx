@@ -59,7 +59,7 @@ const CATEGORY_COLORS = {
  Industrial:"text-green-700 border-green-100 bg-green-50",
  Planning:"text-purple-700 border-purple-100 bg-purple-50",
  Investment:"text-orange-600 border-orange-100 bg-orange-50",
- General:"text-slate-600 dark:text-slate-400 border-slate-100 bg-white",
+ General:"text-slate-600 dark:text-slate-400 border-slate-100 bg-white dark:bg-slate-900",
 };
 
 export default async function UpdateDetailPage({ params }: Props) {
@@ -80,7 +80,7 @@ export default async function UpdateDetailPage({ params }: Props) {
  const catColor = CATEGORY_COLORS[update.category] || CATEGORY_COLORS.General;
 
  return (
- <article className="bg-white pt-24 pb-32">
+ <article className="bg-white dark:bg-slate-900 pt-24 pb-32">
  <BlogPopupTrigger />
  <div className="container mx-auto px-4 md:px-8">
  <div className="mx-auto max-w-4xl">
@@ -170,7 +170,7 @@ export default async function UpdateDetailPage({ params }: Props) {
  </Link>
  <Link
  href="/projects"
- className="rounded-full border-2 border-slate-900 px-10 py-4 font-black uppercase tracking-widest text-slate-900 dark:text-white transition-all hover:bg-white dark:bg-slate-900 hover:text-white"
+ className="rounded-full border-2 border-slate-900 px-10 py-4 font-black uppercase tracking-widest text-slate-900 dark:text-white transition-all hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:text-white"
  >
  View Verified Projects
  </Link>

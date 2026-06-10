@@ -31,7 +31,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
  const description = t(project.descKey);
 
  return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pt-12 pb-32">
+ <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pt-12 pb-32 dark:bg-slate-900">
  <div className="container mx-auto px-4 md:px-8 max-w-6xl">
  
  {/* Back Link */}
@@ -79,7 +79,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
  </div>
 
  {/* Project Image */}
- <div className="relative h-64 md:h-96 w-full bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
+ <div className="relative h-64 md:h-96 w-full bg-white dark:bg-slate-900 border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
  <Image
  src={project.image}
  alt={project.name}
@@ -91,7 +91,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
  </div>
 
  {/* Overview / Story Card */}
- <div className="bg-white border border-slate-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm space-y-6">
+ <div className="bg-white dark:bg-slate-900 border border-slate-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm space-y-6">
  <h2 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
  Project Overview
  </h2>
@@ -127,7 +127,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
  <div className="lg:col-span-5 space-y-8 sticky top-28">
  
  {/* Map Frame Card */}
- <div className="bg-white border border-slate-100 rounded-[2.5rem] p-6 shadow-sm space-y-6">
+ <div className="bg-white dark:bg-slate-900 border border-slate-100 rounded-[2.5rem] p-6 shadow-sm space-y-6">
  <div className="flex items-center justify-between border-b border-slate-100 pb-4">
  <div className="flex items-center gap-2">
  <MapPin className="h-5 w-5 text-orange-600" />
@@ -141,7 +141,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
  </div>
 
  {/* Map Embed Frame */}
- <div className="relative rounded-2xl overflow-hidden border border-slate-150 shadow-sm bg-white h-[300px] flex">
+ <div className="relative rounded-2xl overflow-hidden border border-slate-150 shadow-sm bg-white dark:bg-slate-900 h-[300px] flex">
  <iframe
  title={`${project.name} Google Map Location`}
  src={project.mapUrl}
@@ -181,7 +181,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
 
  <Link
  href="/clearance-engine"
- className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 text-white text-xs font-black uppercase tracking-widest hover:bg-white/10 transition-all"
+ className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 text-white text-xs font-black uppercase tracking-widest hover:bg-white/10 transition-all dark:bg-slate-900"
  >
  Verify via Clearance Engine
  </Link>

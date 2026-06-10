@@ -119,7 +119,7 @@ export function HomeClient() {
  />
  </div>
  ))}
- <div className="absolute inset-0 bg-white dark:bg-[#0B132B]/40 mix-blend-multiply" />
+ <div className="absolute inset-0 bg-white dark:bg-[#0B132B]/40 mix-blend-multiply dark:bg-slate-900" />
  <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-[#0B132B]/80 pointer-events-none" />
  
  {/* Subtle Dholera Vector Overlay */}
@@ -186,7 +186,7 @@ export function HomeClient() {
  </Link>
  <Link
  href="/projects"
- className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-md px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-white/10 sm:w-auto active:scale-95"
+ className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-md px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-white/10 sm:w-auto active:scale-95 dark:bg-slate-900"
  >
  {t('view_projects')}
  </Link>
@@ -353,7 +353,7 @@ export function HomeClient() {
  {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
  <section id="site-visit" className="bg-white dark:bg-slate-950 py-32 relative overflow-hidden transition-colors">
  <div className="container mx-auto px-4 md:px-8 relative z-10 flex justify-center">
- <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden">
+ <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden dark:bg-slate-900">
  
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
@@ -378,19 +378,19 @@ export function HomeClient() {
  </p>
  <div className="space-y-4 pt-4 border-t border-slate-800">
  <div className="flex items-center gap-4">
- <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
+ <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00] dark:bg-slate-900">
  <MapPin className="h-5 w-5" />
  </div>
  <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('pickup_service')}</span>
  </div>
  <div className="flex items-center gap-4">
- <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
+ <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00] dark:bg-slate-900">
  <Building className="h-5 w-5" />
  </div>
  <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('premium_stay')}</span>
  </div>
  <div className="flex items-center gap-4">
- <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00]">
+ <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00] dark:bg-slate-900">
  <ShieldCheck className="h-5 w-5" />
  </div>
  <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('title_review')}</span>

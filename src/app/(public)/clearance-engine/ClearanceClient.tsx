@@ -41,8 +41,8 @@ export function ClearanceClient() {
  return (
  <div className="space-y-8">
  {/* Tab Navigation */}
- <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/10">
- <div className="flex border-b border-slate-100 bg-white/50">
+ <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white dark:bg-slate-900 shadow-xl shadow-slate-200/10">
+ <div className="flex border-b border-slate-100 bg-white/50 dark:bg-slate-900">
  {tabs.map((tab) => (
  <button
  key={tab.id}
@@ -50,8 +50,8 @@ export function ClearanceClient() {
  className={cn(
 "flex flex-1 flex-col items-center justify-center gap-2 py-6 px-4 transition-all md:flex-row",
  activeTab === tab.id
- ?"bg-white text-orange-600 shadow-[inset_0_-4px_0_0_#FF7A00]"
- :"text-slate-400 hover:bg-white hover:text-slate-600 dark:text-slate-400"
+ ?"bg-white dark:bg-slate-900 text-orange-600 shadow-[inset_0_-4px_0_0_#FF7A00]"
+ :"text-slate-400 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:text-slate-600 dark:text-slate-400"
  )}
  >
  <tab.icon className={cn("h-5 w-5", activeTab === tab.id ?"text-orange-600" :"text-slate-400")} />
@@ -73,7 +73,7 @@ export function ClearanceClient() {
  </p>
  </div>
 
- <div className="grid gap-8 p-10 bg-white rounded-[2rem] border border-slate-100 shadow-inner">
+ <div className="grid gap-8 p-10 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 shadow-inner">
  <div className="space-y-4">
  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Select Plot Use-Case</label>
  <div className="grid grid-cols-3 gap-3">
@@ -83,7 +83,7 @@ export function ClearanceClient() {
  onClick={() => setUseType(type)}
  className={cn(
 "py-4 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition-all",
- useType === type ?"bg-[#FF7A00] border-[#FF7A00] text-white" :"bg-white border-slate-200 text-slate-500 hover:border-slate-300"
+ useType === type ?"bg-[#FF7A00] border-[#FF7A00] text-white" :"bg-white dark:bg-slate-900 border-slate-200 text-slate-500 hover:border-slate-300"
  )}
  >
  {type}
@@ -99,7 +99,7 @@ export function ClearanceClient() {
  placeholder="ENTER AREA IN SQM..."
  value={plotSize}
  onChange={(e) => setPlotSize(e.target.value)}
- className="w-full px-8 py-5 rounded-2xl bg-white border-2 border-slate-200 outline-none focus:border-[#FF7A00] text-sm font-black tracking-widest text-slate-900 dark:text-white transition-all shadow-sm"
+ className="w-full px-8 py-5 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 outline-none focus:border-[#FF7A00] text-sm font-black tracking-widest text-slate-900 dark:text-white transition-all shadow-sm"
  />
  </div>
 
@@ -112,7 +112,7 @@ export function ClearanceClient() {
  </div>
 
  {calculatedFee !== null && (
- <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 text-center space-y-6 border border-slate-800 shadow-2xl animate-in zoom-in-95 duration-300">
+ <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 text-center space-y-6 border border-slate-800 shadow-2xl animate-in zoom-in-95 duration-300 dark:bg-slate-900">
  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">Estimated Development Charges</span>
  <div className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white font-display tabular-nums">
  ₹{calculatedFee.toLocaleString()}
@@ -145,7 +145,7 @@ export function ClearanceClient() {
 
  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl">
  {[1, 2, 3, 4].map((i) => (
- <div key={i} className="h-2 rounded-full bg-white overflow-hidden">
+ <div key={i} className="h-2 rounded-full bg-white dark:bg-slate-900 overflow-hidden">
  <div 
  className="h-full bg-orange-600 animate-pulse" 
  style={{ width:`70%`, animationDelay:`${i * 200}ms` }} 

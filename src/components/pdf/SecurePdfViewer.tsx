@@ -173,7 +173,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  Full Screen
  </button>
  )}
- <button onClick={onClose} className="rounded-full p-2 bg-white/5 text-slate-400 hover:text-white hover:bg-red-500/20 transition-all">
+ <button onClick={onClose} className="rounded-full p-2 bg-white/5 text-slate-400 hover:text-white hover:bg-red-500/20 transition-all dark:bg-slate-900">
  <X className="h-5 w-5" />
  </button>
  </div>
@@ -239,7 +239,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  )}
 
  {displayError && !requiresPayment && (
- <div className="max-w-sm w-full bg-white rounded-[2.5rem] p-10 text-center shadow-2xl">
+ <div className="max-w-sm w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-center shadow-2xl">
  <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-2">Access Denied</h3>
  <p className="text-slate-500 font-medium mb-8">{displayError}</p>
@@ -248,7 +248,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  )}
 
  {!loading && !displayError && blobUrl && (
- <div className="relative w-full h-full max-w-6xl bg-white shadow-2xl overflow-hidden rounded-xl flex flex-col">
+ <div className="relative w-full h-full max-w-6xl bg-white dark:bg-slate-900 shadow-2xl overflow-hidden rounded-xl flex flex-col">
  <div className="absolute inset-0 pointer-events-none z-10 opacity-[0.03] grid grid-cols-2 md:grid-cols-3 grid-rows-4 overflow-hidden">
  {[...Array(12)].map((_, i) => (
  <div key={i} className="flex items-center justify-center -rotate-45 text-[10px] md:text-sm font-black text-slate-950 uppercase text-center">
@@ -277,7 +277,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  className="flex-1 w-full border-none h-full pb-16"
  />
  
- <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 flex flex-col md:flex-row items-center justify-center gap-4 z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+ <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 flex flex-col md:flex-row items-center justify-center gap-4 z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] dark:bg-slate-900">
  <div className="flex flex-col items-center md:items-start mr-4">
  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Project Owner</span>
  <span className="text-sm font-black text-slate-900 dark:text-white">Naresh Gohel</span>

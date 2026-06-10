@@ -117,7 +117,7 @@ export const PlatformInsights = () => {
  {/* System Health Card */}
  <div className="bg-slate-900 dark:bg-slate-950 rounded-[2.5rem] p-10 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-10">
  <div className="flex items-center gap-8">
- <div className="h-20 w-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center text-orange-500">
+ <div className="h-20 w-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center text-orange-500 dark:bg-slate-900">
  <Activity className="h-10 w-10" />
  </div>
  <div>
@@ -129,7 +129,7 @@ export const PlatformInsights = () => {
  </div>
  </div>
  <div className="text-right">
- <div className="h-2 w-64 bg-white/5 rounded-full overflow-hidden border border-white/5">
+ <div className="h-2 w-64 bg-white/5 rounded-full overflow-hidden border border-white/5 dark:bg-slate-900">
  <div className="h-full bg-orange-600" style={{ width:`${Math.min(100, (data.totalRevenue / 1800000) * 100)}%` }} />
  </div>
  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mt-4">Threshold Utilization</p>

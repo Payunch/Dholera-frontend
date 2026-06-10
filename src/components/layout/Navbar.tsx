@@ -57,7 +57,7 @@ export function Navbar() {
  </Link>
  ))}
 
- <div className="h-4 w-px bg-white" />
+ <div className="h-4 w-px bg-white dark:bg-slate-900" />
 
  {/* Theme Toggle */}
  <button

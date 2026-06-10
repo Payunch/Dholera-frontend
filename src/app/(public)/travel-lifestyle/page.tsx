@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function TravelLifestylePage() {
  return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden">
+ <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden dark:bg-slate-900">
  
  {/* Header Block */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24 dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
  <Image 
@@ -45,7 +45,7 @@ export default function TravelLifestylePage() {
  { title:"Premium Stay", desc:"Verified guest houses and hotels for site visitors.", icon: Coffee },
  { title:"Local Sites", desc:"Explore the Gulf of Khambhat and Velavadar Park.", icon: MapPin },
  ].map((item, i) => (
- <div key={i} className="group p-10 rounded-[2.5rem] bg-white border border-slate-100 hover:bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+ <div key={i} className="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
  <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
  <item.icon className="h-7 w-7" />
  </div>

@@ -150,14 +150,14 @@ export function PdfListing() {
  };
 
  return (
- <section className="py-24 bg-white dark:bg-[#0B132B] transition-colors" id="documents">
+ <section className="py-24 bg-white dark:bg-[#0B132B] transition-colors dark:bg-slate-900" id="documents">
  <div className="container mx-auto px-4 md:px-8">
  <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
  <div className="space-y-4">
  <h2 className="font-display text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
  Verified <span className="text-orange-600 italic">Intelligence</span>
  </h2>
- <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 bg-white border border-slate-100 px-3 py-1.5 rounded-lg w-fit">
+ <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 border border-slate-100 px-3 py-1.5 rounded-lg w-fit">
  <ShieldCheck className="h-3 w-3 text-green-600" />
  All maps cross-verified with official DSIRDA releases
  </div>

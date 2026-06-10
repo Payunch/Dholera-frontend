@@ -86,10 +86,10 @@ export default function PdfPage() {
  };
 
  return (
- <div className="min-h-screen bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans w-full overflow-x-hidden">
+ <div className="min-h-screen bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans w-full overflow-x-hidden dark:bg-slate-900">
  
  {/* Header Section - Refactored for proper sizing */}
- <div className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 px-4 md:px-8 border-b border-slate-800 overflow-hidden">
+ <div className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 px-4 md:px-8 border-b border-slate-800 overflow-hidden dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
  <Image 
@@ -140,13 +140,13 @@ export default function PdfPage() {
 "flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2",
  activeFilter === filter.label
  ?"bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10 dark:shadow-orange-600/50"
- :"bg-white dark:bg-[#111A35] border-slate-100 dark:border-slate-800 text-slate-400 hover:border-slate-300 hover:text-slate-600 dark:text-slate-400"
+ :"bg-white dark:bg-[#111A35] border-slate-100 dark:border-slate-800 text-slate-400 hover:border-slate-300 hover:text-slate-600 dark:text-slate-400 dark:bg-slate-900"
  )}
  >
  {filter.label}
  <span className={cn(
 "px-2 py-0.5 rounded-md text-[8px]",
- activeFilter === filter.label ?"bg-white/20 text-slate-900 dark:text-white" :"bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400"
+ activeFilter === filter.label ?"bg-white/20 text-slate-900 dark:text-white dark:bg-slate-900" :"bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400"
  )}>
  {getCount(filter.key)}
  </span>
@@ -179,14 +179,14 @@ export default function PdfPage() {
  className="group bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-8 flex flex-col shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500"
  >
  <div className="flex items-center justify-between mb-6">
- <div className="h-12 w-12 rounded-xl bg-white flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-slate-900 dark:text-white transition-all duration-300">
+ <div className="h-12 w-12 rounded-xl bg-white dark:bg-slate-900 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-slate-900 dark:text-white transition-all duration-300">
  <FileText className="h-6 w-6" />
  </div>
  <div className="flex flex-col items-end">
  <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 group-hover:text-[#FF7A00] transition-colors">
  {pdf.fileSize}
  </span>
- <div className="h-1 w-8 bg-white rounded-full mt-1 overflow-hidden">
+ <div className="h-1 w-8 bg-white dark:bg-slate-900 rounded-full mt-1 overflow-hidden">
  <div className="h-full bg-[#FF7A00] w-0 group-hover:w-full transition-all duration-700" />
  </div>
  </div>
