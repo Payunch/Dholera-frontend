@@ -142,7 +142,7 @@ export function HomeClient() {
         </div>
 
         <div className="container relative z-10 px-4 md:px-8 mx-auto py-12 md:py-20 flex justify-center">
-          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden">
+          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 shadow-2xl dark:shadow-black/90 relative overflow-hidden">
             {/* Background Image for the Content Box */}
             <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
                <Image 

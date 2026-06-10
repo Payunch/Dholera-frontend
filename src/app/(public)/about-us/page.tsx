@@ -133,7 +133,7 @@ export default function AboutUsPage() {
             { title: "Strategic ROI", desc: "Data-driven insights to maximize your land appreciation.", icon: Target, img: "/images/expressHighway.webp" },
             { title: "Trust Record", desc: "Over 5 years of tracking Dholera's infrastructure milestones.", icon: History, img: "/images/dholerasirGujrat.webp" },
           ].map((item, i) => (
-            <div key={i} className="group bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col">
+            <div key={i} className="group bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-black/60 hover:shadow-2xl dark:hover:shadow-black/100 hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col">
                <div className="relative h-56 w-full">
                   <Image 
                     src={item.img} 
@@ -143,7 +143,7 @@ export default function AboutUsPage() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                   />
                   <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors" />
-                  <div className="absolute bottom-6 left-6 h-12 w-12 rounded-xl bg-white dark:bg-slate-900 flex items-center justify-center text-orange-600 shadow-lg border border-slate-100 dark:border-slate-800">
+                  <div className="absolute bottom-6 left-6 h-12 w-12 rounded-xl bg-white dark:bg-slate-900 flex items-center justify-center text-orange-600 shadow-lg dark:shadow-black/80 border border-slate-100 dark:border-slate-800">
                      <item.icon className="h-6 w-6" />
                   </div>
                </div>
@@ -156,7 +156,7 @@ export default function AboutUsPage() {
         </div>
 
         {/* Founder Profile Section - Refactored for better spacing/grid */}
-        <div className="relative bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-14 lg:p-20 border border-slate-200 dark:border-slate-800 shadow-xl mb-32 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 group hover:shadow-2xl transition-all duration-500 overflow-hidden">
+        <div className="relative bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-14 lg:p-20 border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-black/90 mb-32 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 group hover:shadow-2xl dark:hover:shadow-black/100 transition-all duration-500 overflow-hidden">
            
            {/* Background Image */}
            <div className="absolute inset-0 z-0 opacity-40 transition-opacity duration-700 pointer-events-none">
@@ -171,7 +171,7 @@ export default function AboutUsPage() {
            </div>
 
            {/* Founder Image */}
-           <div className="relative z-10 w-full lg:w-[400px] shrink-0 aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl group-hover:-translate-y-2 transition-transform duration-500 border border-white/10">
+           <div className="relative z-10 w-full lg:w-[400px] shrink-0 aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl dark:shadow-black/100 group-hover:-translate-y-2 transition-transform duration-500 border border-white/10">
               <Image 
                 src="/images/ng.png" 
                 alt="Naresh Gohel - Founder" 

@@ -46,18 +46,18 @@ export const PlatformInsights = () => {
       {/* Top Level KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
          {[
-           { label: "Total Revenue", value: `₹${data.totalRevenue.toLocaleString()}`, icon: IndianRupee, color: "text-green-600", bg: "bg-green-50" },
-           { label: "Conversion Rate", value: `${data.conversionRate}%`, icon: TrendingUp, color: "text-blue-600", bg: "bg-blue-50" },
-           { label: "Pro Members", value: data.proCount, icon: Trophy, color: "text-orange-600", bg: "bg-orange-50" },
-           { label: "Unique Buyers", value: data.uniqueBuyers, icon: Users, color: "text-purple-600", bg: "bg-purple-50" },
+           { label: "Total Revenue", value: `₹${data.totalRevenue.toLocaleString()}`, icon: IndianRupee, color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-600/10" },
+           { label: "Conversion Rate", value: `${data.conversionRate}%`, icon: TrendingUp, color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-600/10" },
+           { label: "Pro Members", value: data.proCount, icon: Trophy, color: "text-orange-600 dark:text-orange-400", bg: "bg-orange-50 dark:bg-orange-600/10" },
+           { label: "Unique Buyers", value: data.uniqueBuyers, icon: Users, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-600/10" },
          ].map((stat, i) => (
-           <div key={i} className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm flex flex-col gap-4">
+           <div key={i} className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-black/100 flex flex-col gap-4">
               <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center", stat.bg, stat.color)}>
                  <stat.icon className="h-6 w-6" />
               </div>
               <div>
                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{stat.label}</p>
-                 <h3 className="text-3xl font-black text-slate-900 mt-1">{stat.value}</h3>
+                 <h3 className="text-3xl font-black text-slate-900 dark:text-white mt-1">{stat.value}</h3>
               </div>
            </div>
          ))}
@@ -65,22 +65,22 @@ export const PlatformInsights = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
          {/* Most Viewed Content */}
-         <div className="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-xl">
+         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-black/100">
             <div className="flex items-center justify-between mb-8">
-               <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 flex items-center gap-3">
+               <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                   <Eye className="h-6 w-6 text-orange-600" /> Most Viewed
                </h3>
                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Top 5 Documents</span>
             </div>
             <div className="space-y-4">
                {data.topViews.map((v, i) => (
-                 <div key={i} className="flex items-center justify-between p-4 bg-white rounded-2xl group hover:bg-orange-50 transition-all">
+                 <div key={i} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl group hover:bg-orange-50 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-orange-100 dark:hover:border-slate-700">
                     <div className="flex items-center gap-4">
-                       <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 dark:text-slate-400 font-black text-sm">{i+1}</div>
-                       <span className="text-sm font-bold text-slate-700 uppercase leading-tight line-clamp-1">{v.title}</span>
+                       <div className="h-10 w-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 font-black text-sm">{i+1}</div>
+                       <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase leading-tight line-clamp-1">{v.title}</span>
                     </div>
                     <div className="text-right">
-                       <span className="text-lg font-black text-slate-900">{v.count}</span>
+                       <span className="text-lg font-black text-slate-900 dark:text-white">{v.count}</span>
                        <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Views</span>
                     </div>
                  </div>
@@ -89,22 +89,22 @@ export const PlatformInsights = () => {
          </div>
 
          {/* Best Selling Content */}
-         <div className="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-xl">
+         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-black/100">
             <div className="flex items-center justify-between mb-8">
-               <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 flex items-center gap-3">
+               <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                   <IndianRupee className="h-6 w-6 text-orange-600" /> Best Selling
                </h3>
                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Direct Sales</span>
             </div>
             <div className="space-y-4">
                {data.topPurchases.map((p, i) => (
-                 <div key={i} className="flex items-center justify-between p-4 bg-white rounded-2xl group hover:bg-green-50 transition-all">
+                 <div key={i} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl group hover:bg-green-50 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-green-100 dark:hover:border-slate-700">
                     <div className="flex items-center gap-4">
-                       <div className="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 dark:text-slate-400 font-black text-sm">{i+1}</div>
-                       <span className="text-sm font-bold text-slate-700 uppercase leading-tight line-clamp-1">{p.title}</span>
+                       <div className="h-10 w-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 font-black text-sm">{i+1}</div>
+                       <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase leading-tight line-clamp-1">{p.title}</span>
                     </div>
                     <div className="text-right">
-                       <span className="text-lg font-black text-slate-900">{p.count}</span>
+                       <span className="text-lg font-black text-slate-900 dark:text-white">{p.count}</span>
                        <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Unlocks</span>
                     </div>
                  </div>
@@ -115,14 +115,14 @@ export const PlatformInsights = () => {
       </div>
       
       {/* System Health Card */}
-      <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-slate-900 dark:text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-10">
+      <div className="bg-slate-900 dark:bg-slate-950 rounded-[2.5rem] p-10 text-white shadow-2xl dark:shadow-black/100 flex flex-col md:flex-row items-center justify-between gap-10">
          <div className="flex items-center gap-8">
             <div className="h-20 w-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center text-orange-500">
                <Activity className="h-10 w-10" />
             </div>
             <div>
                <h3 className="text-2xl font-black uppercase tracking-tight">Revenue Stream Healthy</h3>
-               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 max-w-md leading-relaxed mt-2 uppercase tracking-widest">
+               <p className="text-sm font-medium text-slate-400 max-w-md leading-relaxed mt-2 uppercase tracking-widest">
                   Revenue Safety Limit: <b>₹18,00,000</b>. <br/>
                   Current Approved Volume: <b>₹{data.totalRevenue.toLocaleString()}</b>
                </p>

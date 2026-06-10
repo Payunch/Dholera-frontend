@@ -109,7 +109,7 @@ export default function TpMapsPage() {
                       className={cn(
                         "px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
                         activeFilter === filter 
-                          ? "bg-[#FF7A00] text-white border-[#FF7A00] shadow-lg shadow-orange-600/10" 
+                          ? "bg-[#FF7A00] text-white border-[#FF7A00] shadow-lg shadow-orange-600/10 dark:shadow-black/80 dark:shadow-orange-600/30" 
                           : "bg-white dark:bg-[#111A35] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400"
                       )}
                     >
@@ -131,7 +131,7 @@ export default function TpMapsPage() {
                   <Link 
                     key={tp.tp_id} 
                     href={`/pdf?search=${tp.title.split(' ')[tp.title.split(' ').length - 1]}`}
-                    className="group relative p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
+                    className="group relative p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-black/60 hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
                   >
                      {/* Psychology Badges */}
                      <div className="absolute -top-4 right-6 flex flex-col gap-2 z-10 items-end transition-transform group-hover:scale-110">

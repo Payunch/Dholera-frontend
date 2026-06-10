@@ -63,7 +63,7 @@ export default function AirportPage() {
                   t('cargo_hub'),
                   t('expressway_parallel')
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 font-black text-slate-800 dark:text-slate-200 uppercase text-[10px] tracking-widest bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                  <div key={i} className="flex items-center gap-3 font-black text-slate-800 dark:text-slate-200 uppercase text-[10px] tracking-widest bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-black/60">
                     <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" /> {item}
                   </div>
                 ))}
@@ -72,7 +72,7 @@ export default function AirportPage() {
               <div className="pt-6">
                 <Link 
                   href="/pdf" 
-                  className="inline-flex items-center gap-3 bg-[#FF7A00] text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl shadow-orange-600/10 active:scale-95"
+                  className="inline-flex items-center gap-3 bg-[#FF7A00] text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl dark:shadow-black/90 shadow-orange-600/10 dark:shadow-orange-600/30 active:scale-95"
                 >
                   {t('download_airport_maps')} <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -81,7 +81,7 @@ export default function AirportPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
               {milestones.map((m, i) => (
-                <div key={i} className="p-8 md:p-10 rounded-[2rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-2xl transition-all group flex flex-col justify-between">
+                <div key={i} className="p-8 md:p-10 rounded-[2rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-2xl dark:hover:shadow-black/100 transition-all group flex flex-col justify-between">
                   <div className="space-y-4">
                     <div className="flex justify-between items-start">
                       <span className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00]">{m.phase}</span>
@@ -105,7 +105,7 @@ export default function AirportPage() {
             {t('direct_access_tp')}
           </p>
           <div className="flex justify-center pt-4">
-            <a href="https://wa.me/917435808031" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-green-500/10 hover:bg-[#128C7E] transition-colors">
+            <a href="https://wa.me/917435808031" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl dark:shadow-black/90 shadow-green-500/10 dark:shadow-black/90 hover:bg-[#128C7E] transition-colors">
               +91 74358 08031
             </a>
           </div>

@@ -74,21 +74,21 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col transition-colors duration-300">
       {/* Top Navigation Bar */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-[100] px-8 py-6">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-[100] px-8 py-6">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-orange-600/10">
+            <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-orange-600/10 dark:shadow-orange-600/40">
               <ShieldCheck className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="text-xl font-black uppercase tracking-tight text-slate-900">Master <span className="text-orange-600">Control</span></h1>
+              <h1 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Master <span className="text-orange-600">Control</span></h1>
               <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-0.5">Dholera Intelligence Terminal v4.0</p>
             </div>
           </div>
 
-          <nav className="flex items-center gap-2 bg-white p-1.5 rounded-2xl">
+          <nav className="flex items-center gap-2 bg-slate-50 dark:bg-slate-950 p-1.5 rounded-2xl border border-slate-100 dark:border-slate-800">
             {tabs.map((tab, idx) => (
               <button
                 key={tab.label}
@@ -96,8 +96,8 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
                 className={cn(
                   "px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2.5",
                   activeTab === idx 
-                    ? "bg-white text-orange-600 shadow-sm" 
-                    : "text-slate-400 hover:text-slate-600"
+                    ? "bg-white dark:bg-slate-900 text-orange-600 shadow-sm dark:shadow-black/100" 
+                    : "text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                 )}
               >
                 <tab.icon className="h-4 w-4" />
@@ -114,7 +114,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
           <button 
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="flex items-center gap-2.5 px-6 py-3 rounded-xl border-2 border-slate-100 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-red-500 hover:border-red-50 transition-all"
+            className="flex items-center gap-2.5 px-6 py-3 rounded-xl border-2 border-slate-100 dark:border-slate-800 text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:border-red-50 dark:hover:border-red-900/30 transition-all"
           >
             {isLoggingOut ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogOut className="h-4 w-4" />}
             Secure Exit
@@ -128,7 +128,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
            {activeTab === 0 && (
              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <LeadsStats leads={initialLeads} />
-                <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl dark:shadow-black/100 overflow-hidden">
                    <LeadsTable leads={initialLeads} />
                 </div>
              </div>
@@ -146,7 +146,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
         </div>
       </main>
 
-      <footer className="py-8 px-8 border-t border-slate-200 opacity-50">
+      <footer className="py-8 px-8 border-t border-slate-200 dark:border-slate-800 opacity-50">
          <div className="max-w-[1600px] mx-auto flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
             <div>Dholera Real Estate Intelligence System</div>
             <div>Authorized Operations Only</div>

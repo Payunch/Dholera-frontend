@@ -135,7 +135,7 @@ export function UpdatesManagement() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 transition-colors duration-300">
       {/* Header & Search */}
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div className="relative flex-1 max-w-md">
@@ -145,12 +145,12 @@ export function UpdatesManagement() {
             placeholder="Search updates..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm font-medium transition-all focus:border-orange-600 focus:ring-1 focus:ring-orange-600"
+            className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-3 pl-11 pr-4 text-sm font-medium transition-all focus:border-orange-600 focus:ring-1 focus:ring-orange-600 text-slate-900 dark:text-white"
           />
         </div>
         <button
           onClick={() => handleEdit("new")}
-          className="flex items-center justify-center gap-2 rounded-2xl bg-white dark:bg-slate-900 px-6 py-3 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 shadow-lg shadow-slate-900/5"
+          className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white shadow-lg dark:shadow-black/100"
         >
           <Plus className="h-4 w-4" />
           New Update
@@ -162,26 +162,26 @@ export function UpdatesManagement() {
         {filteredUpdates.map((update) => (
           <div 
             key={update.id}
-            className="group relative flex flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:shadow-xl hover:border-orange-200"
+            className="group relative flex flex-col rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm dark:shadow-black/100 transition-all hover:shadow-xl dark:hover:shadow-black/100 hover:border-orange-200 dark:hover:border-orange-900/30"
           >
             <div className="flex items-start justify-between mb-4">
               <span className={cn(
-                "rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white",
-                update.published ? "bg-orange-600" : "bg-slate-400"
+                "rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white",
+                update.published ? "bg-orange-600 shadow-md shadow-orange-600/20 dark:shadow-orange-600/40" : "bg-slate-400"
               )}>
                 {update.published ? "Published" : "Draft"}
               </span>
               <div className="flex gap-2">
                 <button 
                   onClick={() => handleEdit(update)}
-                  className="rounded-xl p-2 text-slate-400 hover:bg-white hover:text-orange-600 transition-colors"
+                  className="rounded-xl p-2 text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-orange-600 transition-colors"
                   title="Edit"
                 >
                   <Pencil className="h-4 w-4" />
                 </button>
                 <button 
                   onClick={() => handleDelete(update.id)}
-                  className="rounded-xl p-2 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors"
+                  className="rounded-xl p-2 text-slate-400 dark:text-slate-500 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 transition-colors"
                   title="Delete"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -189,7 +189,7 @@ export function UpdatesManagement() {
               </div>
             </div>
 
-            <h4 className="text-lg font-black leading-tight text-slate-900 mb-2 line-clamp-2">
+            <h4 className="text-lg font-black leading-tight text-slate-900 dark:text-white mb-2 line-clamp-2">
               {update.title}
             </h4>
             
@@ -197,12 +197,12 @@ export function UpdatesManagement() {
               {update.category} • {format(new Date(update.publishedAt || update.createdAt), "MMM d, yyyy")}
             </p>
 
-            <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100">
+            <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
                <a 
                  href={`/blogs/${update.id}`} 
                  target="_blank" 
                  rel="noopener noreferrer"
-                 className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 flex items-center gap-1"
+                 className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1"
                >
                  View Live <ExternalLink className="h-3 w-3" />
                </a>
@@ -213,16 +213,16 @@ export function UpdatesManagement() {
 
       {/* Edit/New Modal Overlay */}
       {editingId !== null && (
-        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] bg-white shadow-2xl animate-in zoom-in-95 duration-200 flex flex-col">
+        <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl dark:shadow-black/100 border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-200 flex flex-col">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-slate-100 p-8">
-              <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 p-8">
+              <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
                 {editingId === "new" ? "Create New Update" : "Edit Update"}
               </h3>
               <button 
                 onClick={() => setEditingId(null)}
-                className="rounded-2xl p-2 text-slate-400 hover:bg-white hover:text-slate-900 transition-colors"
+                className="rounded-2xl p-2 text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-red-500 transition-colors"
               >
                 <X className="h-6 w-6" />
               </button>
@@ -234,25 +234,25 @@ export function UpdatesManagement() {
                 <div className="space-y-6">
                   {/* Title */}
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-slate-500">Article Title</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Article Title</label>
                     <input
                       required
                       type="text"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Enter a compelling title..."
-                      className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                      className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 focus:ring-0 text-slate-900 dark:text-white"
                     />
                   </div>
 
                   {/* Category & Status */}
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-black uppercase tracking-widest text-slate-500">Category</label>
+                      <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Category</label>
                       <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value as Update["category"])}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold appearance-none transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                        className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold appearance-none transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 focus:ring-0 text-slate-900 dark:text-white"
                       >
                         <option value="Infrastructure">Infrastructure</option>
                         <option value="Industrial">Industrial</option>
@@ -262,15 +262,15 @@ export function UpdatesManagement() {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-black uppercase tracking-widest text-slate-500">Status</label>
+                      <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Status</label>
                       <button
                         type="button"
                         onClick={() => setPublished(!published)}
                         className={cn(
                           "flex w-full items-center justify-center gap-2 rounded-2xl border py-4 text-sm font-black uppercase tracking-widest transition-all",
                           published 
-                            ? "border-orange-200 bg-orange-50 text-orange-600" 
-                            : "border-slate-200 bg-white text-slate-400"
+                            ? "border-orange-200 dark:border-orange-900/30 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400" 
+                            : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400"
                         )}
                       >
                         {published ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
@@ -281,22 +281,22 @@ export function UpdatesManagement() {
 
                   {/* Published Date */}
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-slate-500">Publication Date & Time</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Publication Date & Time</label>
                     <input
                       type="datetime-local"
                       value={publishedAt}
                       onChange={(e) => setPublishedAt(e.target.value)}
-                      className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                      className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 focus:ring-0 text-slate-900 dark:text-white"
                     />
                   </div>
 
                   {/* Image Source */}
                   <div className="space-y-4">
-                    <label className="text-xs font-black uppercase tracking-widest text-slate-500">Cover Image</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Cover Image</label>
                     
                     {/* Image Preview */}
                     {(imageFile || imageUrl) && (
-                      <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-100 bg-white">
+                      <div className="relative aspect-video w-full overflow-hidden rounded-3xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
                         <Image
                           src={imageFile ? URL.createObjectURL(imageFile) : imageUrl}
                           alt="Preview"
@@ -306,7 +306,7 @@ export function UpdatesManagement() {
                         <button
                           type="button"
                           onClick={() => { setImageFile(null); setImageUrl(""); }}
-                          className="absolute right-4 top-4 rounded-xl bg-white/90 p-2 text-red-600 shadow-lg backdrop-blur hover:bg-white transition-colors"
+                          className="absolute right-4 top-4 rounded-xl bg-white/90 dark:bg-slate-900/90 p-2 text-red-600 shadow-lg dark:shadow-black/100 backdrop-blur hover:bg-white dark:hover:bg-slate-800 transition-colors"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -315,7 +315,7 @@ export function UpdatesManagement() {
 
                     {!imageFile && !imageUrl && (
                       <div className="grid grid-cols-2 gap-4">
-                        <label className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-200 bg-white p-6 transition-all hover:border-orange-200 hover:bg-orange-50 group">
+                        <label className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-6 transition-all hover:border-orange-200 dark:hover:border-orange-900/30 hover:bg-orange-50 dark:hover:bg-orange-900/10 group">
                           <ImageIcon className="h-6 w-6 text-slate-400 group-hover:text-orange-600" />
                           <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-orange-600">Upload Image</span>
                           <input 
@@ -331,7 +331,7 @@ export function UpdatesManagement() {
                             placeholder="Or paste Unsplash URL..."
                             value={imageUrl}
                             onChange={(e) => setImageUrl(e.target.value)}
-                            className="flex-1 rounded-2xl border border-slate-200 bg-white px-5 py-3 text-xs font-bold transition-all focus:border-orange-600 focus:bg-white"
+                            className="flex-1 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-xs font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 text-slate-900 dark:text-white"
                           />
                         </div>
                       </div>
@@ -341,31 +341,31 @@ export function UpdatesManagement() {
 
                 {/* Content Editor */}
                 <div className="space-y-2 flex flex-col">
-                  <label className="text-xs font-black uppercase tracking-widest text-slate-500">Article Content (Markdown supported)</label>
+                  <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Article Content (Markdown supported)</label>
                   <textarea
                     required
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="Write your analysis here..."
-                    className="flex-1 w-full min-h-[400px] rounded-3xl border border-slate-200 bg-white px-5 py-4 text-sm font-medium leading-relaxed transition-all focus:border-orange-600 focus:bg-white focus:ring-0"
+                    className="flex-1 w-full min-h-[400px] rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-medium leading-relaxed transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 focus:ring-0 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
             </form>
 
             {/* Modal Footer */}
-            <div className="flex items-center justify-end gap-4 border-t border-slate-100 p-8 bg-white/50">
+            <div className="flex items-center justify-end gap-4 border-t border-slate-100 dark:border-slate-800 p-8 bg-slate-50/50 dark:bg-slate-900/50">
               <button
                 type="button"
                 onClick={() => setEditingId(null)}
-                className="rounded-2xl px-8 py-4 text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors"
+                className="rounded-2xl px-8 py-4 text-xs font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="flex items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 px-10 py-4 text-xs font-black uppercase tracking-widest text-white shadow-xl shadow-slate-900/10 transition-all hover:bg-orange-600 disabled:opacity-60"
+                className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl dark:shadow-black/100 transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>

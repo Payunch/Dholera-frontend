@@ -87,7 +87,7 @@ export default function BlogsPage() {
                    className={cn(
                      "whitespace-nowrap px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2",
                      activeTab === tab.id 
-                       ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10" 
+                       ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10 dark:shadow-orange-600/30" 
                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white"
                    )}
                  >
@@ -137,7 +137,7 @@ export default function BlogsPage() {
                      <Link 
                        key={post.id} 
                        href={`/blogs/${post.id}`}
-                       className="group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 overflow-hidden"
+                       className="group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl dark:hover:shadow-black/100 hover:border-[#FF7A00] hover:-translate-y-2 overflow-hidden"
                      >
                         {imgSrc && (
                           <div className="relative h-64 w-full bg-white dark:bg-slate-950 overflow-hidden">

@@ -76,7 +76,7 @@ export default function InfrastructurePage() {
         <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {categories.map((cat, i) => (
-              <div key={i} className="bg-white dark:bg-[#111A35] p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-2 transition-all group flex flex-col">
+              <div key={i} className="bg-white dark:bg-[#111A35] p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl dark:shadow-black/90 shadow-slate-200/10 dark:shadow-black/95 hover:-translate-y-2 transition-all group flex flex-col">
                 <div className="h-16 w-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#FF7A00] mb-8 transition-colors group-hover:bg-[#FF7A00] group-hover:text-white">
                   <cat.icon className="h-8 w-8" />
                 </div>
@@ -120,7 +120,7 @@ export default function InfrastructurePage() {
                        </div>
                     </div>
                     <div className="pt-4">
-                       <Link href="/tp-maps" className="inline-flex items-center gap-3 bg-orange-600 hover:bg-orange-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-orange-600/10">
+                       <Link href="/tp-maps" className="inline-flex items-center gap-3 bg-orange-600 hover:bg-orange-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl dark:shadow-black/90 shadow-orange-600/10 dark:shadow-orange-600/30">
                          {t('browse_planning_maps')} <ArrowRight className="h-4 w-4" />
                        </Link>
                     </div>
