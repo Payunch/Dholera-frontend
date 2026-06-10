@@ -45,19 +45,27 @@ apiClient.interceptors.request.use(async (config) => {
  }
  }
 
- // 2. Attach App Check token in the browser environment
- if (typeof window !=="undefined") {
- try {
- const { getAppCheck, getToken } = await import("firebase/app-check") as any;
- const appCheck = getAppCheck();
- const tokenResult = await getToken(appCheck, false);
- if (tokenResult?.token) {
- config.headers['X-Firebase-AppCheck'] = tokenResult.token;
- }
- } catch (e) {
- // App check might fail if blocked by ad-blocker or during hydration
- }
- }
+  // 2. Attach App Check token in the browser environment
+  if (typeof window !=="undefined") {
+    try {
+      const { getAppCheck, getToken } = await import("firebase/app-check") as any;
+      const appCheck = getAppCheck();
+      
+      // Wrap getToken in a timeout promise to prevent hanging in headless browsers / testing
+      const tokenPromise = getToken(appCheck, false);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("App Check timeout")), 1500)
+      );
+      
+      const tokenResult = await Promise.race([tokenPromise, timeoutPromise]) as any;
+      if (tokenResult?.token) {
+        config.headers['X-Firebase-AppCheck'] = tokenResult.token;
+      }
+    } catch (e: any) {
+      // App check might fail if blocked by ad-blocker, timed out, or during hydration
+      console.warn('[App Check] Failed to get token or timed out:', e.message);
+    }
+  }
  return config;
 });
 

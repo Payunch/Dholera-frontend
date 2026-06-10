@@ -16,13 +16,16 @@ const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 // Initialize App Check (Roadmap Phase 6)
 if (typeof window !=="undefined") {
- const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
- if (siteKey) {
- initializeAppCheck(app, {
- provider: new ReCaptchaEnterpriseProvider(siteKey),
- isTokenAutoRefreshEnabled: true
- });
- }
+  const isHeadless = navigator.webdriver || window.name === 'puppeteer';
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  if (siteKey && !isHeadless) {
+    initializeAppCheck(app, {
+      provider: new ReCaptchaEnterpriseProvider(siteKey),
+      isTokenAutoRefreshEnabled: true
+    });
+  } else if (isHeadless) {
+    console.log('[Firebase] Headless browser detected. Skipping App Check initialization to prevent hangs.');
+  }
 }
 
 export { app };

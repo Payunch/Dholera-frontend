@@ -30,11 +30,13 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
  const [themeMode, setThemeState] = useState<'light' |'dark'>('light');
 
  const updateDomTheme = useCallback((isDark: boolean) => {
- if (isDark) {
- document.documentElement.classList.add('dark');
- } else {
- document.documentElement.classList.remove('dark');
- }
+   if (isDark) {
+     document.documentElement.classList.add('dark');
+     document.documentElement.classList.remove('light');
+   } else {
+     document.documentElement.classList.remove('dark');
+     document.documentElement.classList.add('light');
+   }
  }, []);
 
  useEffect(() => {

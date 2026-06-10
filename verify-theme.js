@@ -4,8 +4,41 @@ const puppeteer = require('puppeteer');
   console.log('\n🚀 Launching Automated Verification Agent...');
   
   try {
-    const browser = await puppeteer.launch({ headless: "new" });
+    const browser = await puppeteer.launch({ 
+      headless: "new",
+      args: ['--no-sandbox', '--disable-setuid-sandbox'] 
+    });
     const page = await browser.newPage();
+
+    // Pre-seed language cookie to bypass the Language Gate modal
+    await page.setCookie({
+      name: 'preferred_lang',
+      value: 'en',
+      url: 'http://localhost:3000'
+    });
+
+    // Pre-seed theme cookie to start the test in Light Mode
+    await page.setCookie({
+      name: 'user_theme',
+      value: 'light',
+      url: 'http://localhost:3000'
+    });
+
+    // Block third-party tracking scripts to avoid load delays
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+      const url = request.url();
+      if (
+        url.includes('googletagmanager.com') ||
+        url.includes('googlesyndication.com') ||
+        url.includes('google-analytics.com') ||
+        url.includes('doubleclick.net')
+      ) {
+        request.abort();
+      } else {
+        request.continue();
+      }
+    });
     
     console.log('🌐 Navigating to http://localhost:3000...');
     
@@ -29,15 +62,20 @@ const puppeteer = require('puppeteer');
         
         // Find the marquee wrapper specifically
         let marqueeBg = 'Not Found';
+        let marqueeClasses = 'Not Found';
         const marquee = document.querySelector('.animate-marquee');
         if (marquee && marquee.parentElement) {
            marqueeBg = window.getComputedStyle(marquee.parentElement).backgroundColor;
+           marqueeClasses = marquee.parentElement.className;
         }
 
         return {
+          cookies: document.cookie,
+          htmlClass: document.documentElement.className,
           bodyBg: getBg('body'),
           bodyText: getText('body'),
-          marqueeWrapperBg: marqueeBg
+          marqueeWrapperBg: marqueeBg,
+          marqueeWrapperClasses: marqueeClasses
         };
       });
     };
@@ -46,6 +84,8 @@ const puppeteer = require('puppeteer');
     console.log('       ☀️ LIGHT MODE VERIFICATION       ');
     console.log('=========================================');
     let lightColors = await getThemeColors();
+    console.log('Cookies:            ', lightColors.cookies);
+    console.log('HTML ClassName:     ', lightColors.htmlClass);
     console.log('Body Background:    ', lightColors.bodyBg, '(Should be rgb(255, 255, 255) / pure white)');
     console.log('Body Text Color:    ', lightColors.bodyText, '(Should be dark slate)');
     console.log('Logo Marquee BG:    ', lightColors.marqueeWrapperBg, '(Should be pure white)');
@@ -60,6 +100,8 @@ const puppeteer = require('puppeteer');
     console.log('       🌙 DARK MODE VERIFICATION        ');
     console.log('=========================================');
     let darkColors = await getThemeColors();
+    console.log('Cookies:            ', darkColors.cookies);
+    console.log('HTML ClassName:     ', darkColors.htmlClass);
     console.log('Body Background:    ', darkColors.bodyBg, '(Should be rgb(2, 6, 23) / deep slate)');
     console.log('Body Text Color:    ', darkColors.bodyText, '(Should be near white)');
     console.log('Logo Marquee BG:    ', darkColors.marqueeWrapperBg, '(Should be dark slate)');

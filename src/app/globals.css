@@ -66,6 +66,17 @@ header .container a.rounded-full {
   --shadow-color: transparent;
 }
 
+/* Force dark mode background variables to override Bootstrap's bg-white !important */
+.dark .bg-white {
+  background-color: var(--background) !important;
+}
+.dark .bg-white.dark\:bg-slate-900 {
+  background-color: var(--panel) !important;
+}
+.dark .bg-white.dark\:bg-slate-800 {
+  background-color: var(--line) !important;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
