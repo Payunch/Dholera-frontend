@@ -32,12 +32,15 @@ apiClient.interceptors.request.use(async (config) => {
  // 1. Attach Lead Token if present in browser (ONLY for non-admin requests)
  if (typeof window !=="undefined") {
  const pathname = window.location.pathname;
- const isLoginPage = pathname ==="/admin/login";
- const isAdminPath = pathname.startsWith('/admin');
- const isAuthRequest = config.url?.includes('/auth/');
+ const requestUrl = config.url || "";
  
- // Do not attach lead_token if we are on an admin page or performing auth tasks
- if (!isAdminPath && !isAuthRequest) {
+ // Identify if the TARGET is an admin API or if we are on an AUTH request
+ const isApiAdminRequest = requestUrl.includes('/admin/');
+ const isAuthRequest = requestUrl.includes('/auth/');
+ 
+ // We attach lead_token to any request that is NOT an admin task and NOT an auth task.
+ // This ensures public syncs (like language preferences) work even if the user is on an admin page.
+ if (!isApiAdminRequest && !isAuthRequest) {
  const leadToken = getCookie('lead_token');
  if (leadToken && !config.headers['Authorization']) {
  config.headers['Authorization'] = leadToken.startsWith('Bearer') ? leadToken :`Bearer ${leadToken}`;

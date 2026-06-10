@@ -135,17 +135,22 @@ export default function LeadCaptureModal() {
  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">WhatsApp Number</label>
  <div className="relative">
  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
- <input 
- type="tel" 
+ <input
+ type="tel"
  placeholder="10-DIGIT MOBILE"
  required
  pattern="[0-9]{10}"
  maxLength={10}
  value={form.phone}
  onChange={handlePhoneChange}
- className="w-full pl-12 pr-5 py-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
+ className={`w-full pl-12 pr-5 py-4 rounded-2xl bg-white dark:bg-slate-950 border ${form.phone.length > 0 && form.phone.length < 10 ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all`}
  />
  </div>
+ {form.phone.length > 0 && form.phone.length < 10 && (
+   <p className="text-[9px] font-bold text-red-500 uppercase tracking-widest ml-1 animate-pulse">
+     {t('phone_too_short') || "MUST BE 10 DIGITS"}
+   </p>
+ )}
  </div>
 
  {status ==='error' && (

@@ -130,9 +130,14 @@ export function ContactForm() {
  maxLength={10}
  value={formData.phone}
  onChange={handlePhoneChange}
- className="w-full pl-12 pr-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
+ className={`w-full pl-12 pr-5 py-4 rounded-xl bg-white dark:bg-slate-950 border ${formData.phone.length > 0 && formData.phone.length < 10 ? 'border-red-500' : 'border-slate-200 dark:border-slate-700'} text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all`}
  />
  </div>
+ {formData.phone.length > 0 && formData.phone.length < 10 && (
+ <p className="text-[9px] font-bold text-red-500 uppercase tracking-widest ml-1 animate-pulse">
+ {t('phone_too_short') || "MUST BE 10 DIGITS"}
+ </p>
+ )}
  </div>
  <div className="space-y-2">
  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-300 ml-1 flex justify-between">
