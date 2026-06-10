@@ -114,7 +114,7 @@ export function ContactForm() {
  required 
  value={formData.name}
  onChange={(e) => setFormData({...formData, name: e.target.value})}
- className="w-full pl-12 pr-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+ className="w-full pl-12 pr-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
  />
  </div>
  </div>
@@ -130,7 +130,7 @@ export function ContactForm() {
  maxLength={10}
  value={formData.phone}
  onChange={handlePhoneChange}
- className="w-full pl-12 pr-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+ className="w-full pl-12 pr-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
  />
  </div>
  </div>
@@ -146,7 +146,7 @@ export function ContactForm() {
  min={today}
  max={nextWeek}
  onChange={(e) => setFormData({...formData, date: e.target.value})}
- className="w-full px-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-500 text-white outline-none focus:border-[#FF7A00] transition-all"
+ className="w-full px-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
  />
  </div>
  <button 
