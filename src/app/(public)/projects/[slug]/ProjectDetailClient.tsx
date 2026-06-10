@@ -181,7 +181,7 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
 
  <Link
  href="/clearance-engine"
- className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 text-white text-xs font-black uppercase tracking-widest hover:bg-white/10 transition-all dark:bg-slate-900"
+ className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 text-white text-xs font-black uppercase tracking-widest hover:bg-white dark:hover:bg-slate-800/10 transition-all dark:bg-slate-900"
  >
  Verify via Clearance Engine
  </Link>

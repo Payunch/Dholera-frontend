@@ -46,7 +46,7 @@ export default function TravelLifestylePage() {
  { title:"Local Sites", desc:"Explore the Gulf of Khambhat and Velavadar Park.", icon: MapPin },
  ].map((item, i) => (
  <div key={i} className="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
- <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
+ <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
  <item.icon className="h-7 w-7" />
  </div>
  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mt-8 mb-4 group-hover:text-orange-600 transition-colors">{item.title}</h3>

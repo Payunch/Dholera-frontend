@@ -186,7 +186,7 @@ export function HomeClient() {
  </Link>
  <Link
  href="/projects"
- className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-md px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-white/10 sm:w-auto active:scale-95 dark:bg-slate-900"
+ className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-md px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-white dark:hover:bg-slate-800/10 sm:w-auto active:scale-95 dark:bg-slate-900"
  >
  {t('view_projects')}
  </Link>
@@ -219,38 +219,38 @@ export function HomeClient() {
  </p>
  </div>
 
- <div className="relative flex overflow-hidden group">
- <div className="flex animate-marquee whitespace-nowrap gap-16 md:gap-32 items-center py-4">
- {[...Array(2)].map((_, i) => (
- <React.Fragment key={i}>
- {[
- { logo:"/images/tata.png", name:"Tata Electronics" },
- { logo:"/images/larsen-toubro.png", name:"L&T Infrastructure" },
- { logo:"/images/torrent.png", name:"Torrent Power" },
- { logo:"/images/renew.png", name:"ReNew Power" }
- ].map((giant, idx) => (
- <div key={`${i}-${idx}`} className="relative h-12 w-40 flex-shrink-0 opacity-100 transition-all duration-500 hover:scale-110">
- <Image
- src={giant.logo}
- alt={`${giant.name} logo`}
- fill
- className="object-contain"
- onError={(e: any) => {
- e.target.style.display ='none';
- }}
- />
- <div className="absolute -bottom-8 inset-x-0 text-center text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
- {giant.name}
- </div>
- </div>
- ))}
- </React.Fragment>
- ))}
- </div>
- 
- {/* Gradient Overlays for smooth edges */}
- <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-slate-950 to-transparent z-10" />
- <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-slate-950 to-transparent z-10" />
+ <div className="relative flex overflow-hidden group bg-white dark:bg-slate-950">
+   <div className="flex animate-marquee whitespace-nowrap gap-16 md:gap-32 items-center py-4">
+     {[...Array(2)].map((_, i) => (
+       <React.Fragment key={i}>
+         {[
+           { logo: "/images/tata.png", name: "Tata Electronics" },
+           { logo: "/images/larsen-toubro.png", name: "L&T Infrastructure" },
+           { logo: "/images/torrent.png", name: "Torrent Power" },
+           { logo: "/images/renew.png", name: "ReNew Power" }
+         ].map((giant, idx) => (
+           <div key={`${i}-${idx}`} className="relative h-12 w-40 flex-shrink-0 opacity-100 transition-all duration-500 hover:scale-110">
+             <Image
+               src={giant.logo}
+               alt={`${giant.name} logo`}
+               fill
+               className="object-contain dark:brightness-200"
+               onError={(e: any) => {
+                 e.target.style.display = 'none';
+               }}
+             />
+             <div className="absolute -bottom-8 inset-x-0 text-center text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+               {giant.name}
+             </div>
+           </div>
+         ))}
+       </React.Fragment>
+     ))}
+   </div>
+
+   {/* Gradient Overlays for smooth edges */}
+   <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-slate-950 to-transparent z-10 pointer-events-none" />
+   <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-slate-950 to-transparent z-10 pointer-events-none" />
  </div>
  </div>
  </section>

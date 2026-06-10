@@ -55,7 +55,7 @@ export default function GovernmentSchemesPage() {
  ].map((scheme, i) => (
  <div key={i} className={`group p-10 rounded-[2.5rem] border-2 ${scheme.color} space-y-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}>
  <div className="flex items-center gap-6">
- <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center text-slate-900 shadow-sm group-hover:bg-white dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
+ <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center text-slate-900 shadow-sm group-hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
  <scheme.icon className="h-7 w-7" />
  </div>
  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase group-hover:text-orange-600 transition-colors">{scheme.title}</h3>

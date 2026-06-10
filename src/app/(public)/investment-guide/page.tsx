@@ -65,11 +65,11 @@ export default function InvestmentGuidePage() {
  <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 bg-orange-600/10 blur-[100px] rounded-full pointer-events-none" />
  <h2 className="text-2xl font-black uppercase mb-8 relative z-10">Investment Zones</h2>
  <div className="space-y-6 relative z-10">
- <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300 dark:bg-slate-900">
+ <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white dark:hover:bg-slate-800/10 hover:border-orange-500/30 transition-all duration-300 dark:bg-slate-900">
  <h3 className="text-orange-500 font-black uppercase text-sm mb-3">Activation Area (22.5 sq km)</h3>
  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">The core priority zone for immediate development and industrial operations. Direct connectivity to the 4500MW Solar Park.</p>
  </div>
- <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300 dark:bg-slate-900">
+ <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white dark:hover:bg-slate-800/10 hover:border-orange-500/30 transition-all duration-300 dark:bg-slate-900">
  <h3 className="text-orange-500 font-black uppercase text-sm mb-3">TP1 & TP2 (Residential Hubs)</h3>
  <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">Focus for residential communities, housing societies, and social infrastructure. Most vibrant zone for individual investors.</p>
  </div>
