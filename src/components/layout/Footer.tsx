@@ -31,87 +31,86 @@ export function Footer() {
  };
 
  return (
- <footer className="w-full border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-900 dark:text-white pb-24 md:pb-0 transition-colors">
- <div className="container mx-auto px-4 py-12 md:px-8">
- <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
- {/* Brand & Mission */}
- <div className="space-y-4">
- <h3 className="font-display text-2xl font-extrabold tracking-tight text-orange-600">
- {ownerDetails.brandName}
- </h3>
- <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
- {t('platform_desc')}
- </p>
- <div className="flex space-x-4">
- <Link href={siteConfig.links.facebook} className="text-slate-400 hover:text-orange-600 transition-colors">
- <Globe className="h-5 w-5" />
- </Link>
- <Link href={siteConfig.links.twitter} className="text-slate-400 hover:text-orange-600 transition-colors">
- <Radio className="h-5 w-5" />
- </Link>
- <Link href={siteConfig.links.instagram} className="text-slate-400 hover:text-orange-600 transition-colors">
- <Camera className="h-5 w-5" />
- </Link>
- <Link href={siteConfig.links.youtube} className="text-slate-400 hover:text-orange-600 transition-colors">
- <PlayCircle className="h-5 w-5" />
- </Link>
- </div>
- </div>
+    <footer className="w-full border-t border-slate-800 dark:border-slate-200 bg-slate-950 dark:bg-white text-slate-100 dark:text-slate-900 pb-24 md:pb-0 transition-colors">
+      <div className="container mx-auto px-4 py-12 md:px-8">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
+          {/* Brand & Mission */}
+          <div className="space-y-4">
+            <h3 className="font-display text-2xl font-extrabold tracking-tight text-orange-600">
+              {ownerDetails.brandName}
+            </h3>
+            <p className="text-sm leading-relaxed text-slate-400 dark:text-slate-600">
+              {t('platform_desc')}
+            </p>
+            <div className="flex space-x-4">
+              <Link href={siteConfig.links.facebook} className="text-slate-400 hover:text-[#FF7A00] transition-colors">
+                <Globe className="h-5 w-5" />
+              </Link>
+              <Link href={siteConfig.links.twitter} className="text-slate-400 hover:text-[#FF7A00] transition-colors">
+                <Radio className="h-5 w-5" />
+              </Link>
+              <Link href={siteConfig.links.instagram} className="text-slate-400 hover:text-[#FF7A00] transition-colors">
+                <Camera className="h-5 w-5" />
+              </Link>
+              <Link href={siteConfig.links.youtube} className="text-slate-400 hover:text-[#FF7A00] transition-colors">
+                <PlayCircle className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
 
- {/* Quick Links */}
- <div>
- <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">{t('platform')}</h4>
- <ul className="space-y-4 text-sm font-semibold text-slate-600 dark:text-slate-300">
- <li><Link href="/" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_home')}</Link></li>
- <li><Link href="/clearance-engine" className="hover:text-[#FF7A00] transition-all duration-300">{t('clearance_engine')}</Link></li>
- <li><Link href="/blogs" className="hover:text-[#FF7A00] transition-all duration-300">{t('growth_updates')}</Link></li>
- <li><Link href="/pdf" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_pdf')}</Link></li>
- </ul>
- </div>
+          {/* Quick Links */}
+          <div>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t('platform')}</h4>
+            <ul className="space-y-4 text-sm font-semibold text-slate-300 dark:text-slate-600">
+              <li><Link href="/" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_home')}</Link></li>
+              <li><Link href="/clearance-engine" className="hover:text-[#FF7A00] transition-all duration-300">{t('clearance_engine')}</Link></li>
+              <li><Link href="/blogs" className="hover:text-[#FF7A00] transition-all duration-300">{t('growth_updates')}</Link></li>
+              <li><Link href="/pdf" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_pdf')}</Link></li>
+            </ul>
+          </div>
 
- {/* Legal */}
- <div>
- <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">{t('legal')}</h4>
- <ul className="space-y-4 text-sm font-semibold text-slate-600 dark:text-slate-300">
- <li><Link href="/privacy-policy" className="hover:text-[#FF7A00] transition-all duration-300">{t('privacy_policy')}</Link></li>
- <li><Link href="/terms-and-conditions" className="hover:text-[#FF7A00] transition-all duration-300">{t('terms_of_service')}</Link></li>
- <li><Link href="/contact" className="hover:text-[#FF7A00] transition-all duration-300">{t('contact')}</Link></li>
- <li>
- <button type="button" onClick={handleCookieSettings} className="hover:text-[#FF7A00] transition-all duration-300">
- Cookie settings
- </button>
- </li>
- </ul>
- </div>
+          {/* Legal */}
+          <div>
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t('legal')}</h4>
+            <ul className="space-y-4 text-sm font-semibold text-slate-300 dark:text-slate-600">
+              <li><Link href="/privacy-policy" className="hover:text-[#FF7A00] transition-all duration-300">{t('privacy_policy')}</Link></li>
+              <li><Link href="/terms-and-conditions" className="hover:text-[#FF7A00] transition-all duration-300">{t('terms_of_service')}</Link></li>
+              <li><Link href="/contact" className="hover:text-[#FF7A00] transition-all duration-300">{t('contact')}</Link></li>
+              <li>
+                <button type="button" onClick={handleCookieSettings} className="hover:text-[#FF7A00] transition-all duration-300">
+                  Cookie settings
+                </button>
+              </li>
+            </ul>
+          </div>
 
- {/* Contact Info */}
- <div className="space-y-4">
- <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-300">{t('footer_owner')}</h4>
- <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600 dark:text-slate-400">
- <User className="h-5 w-5 text-orange-600 shrink-0" />
- <span>{ownerDetails.operatorName}</span>
- </div>
- <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600 dark:text-slate-400">
- <Mail className="h-5 w-5 text-orange-600 shrink-0" />
- <span>{ownerDetails.email}</span>
- </div>
- <div className="flex items-start space-x-3 text-sm font-semibold text-slate-600 dark:text-slate-400">
- <Phone className="h-5 w-5 text-orange-600 shrink-0" />
- <span>{ownerDetails.phoneDisplay}</span>
- </div>
- </div>
- </div>
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t('footer_owner')}</h4>
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300 dark:text-slate-600">
+              <User className="h-5 w-5 text-orange-600 shrink-0" />
+              <span>{ownerDetails.operatorName}</span>
+            </div>
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300 dark:text-slate-600">
+              <Mail className="h-5 w-5 text-orange-600 shrink-0" />
+              <span>{ownerDetails.email}</span>
+            </div>
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300 dark:text-slate-600">
+              <Phone className="h-5 w-5 text-orange-600 shrink-0" />
+              <span>{ownerDetails.phoneDisplay}</span>
+            </div>
+          </div>
+        </div>
 
- <div className="mt-12 border-t pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
- <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-300 normal-case tracking-normal max-w-4xl mx-auto font-medium leading-relaxed">
- {t('disclaimer')}
- </p>
- <p>
- {t('rights_reserved')}
- </p>
- </div>
- </div>
- </footer>
+        <div className="mt-12 border-t border-slate-800 dark:border-slate-200 pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+          <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 normal-case tracking-normal max-w-4xl mx-auto font-medium leading-relaxed">
+            {t('disclaimer')}
+          </p>
+          <p>
+            {t('rights_reserved')}
+          </p>
+        </div>
+      </div>
+    </footer>
  );
 }
-
