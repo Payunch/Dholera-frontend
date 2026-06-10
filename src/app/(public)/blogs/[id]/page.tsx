@@ -81,7 +81,7 @@ export default async function UpdateDetailPage({ params }: Props) {
 
  return (
  <article className="bg-white dark:bg-slate-900 pt-24 pb-32">
- <BlogPopupTrigger />
+ <BlogPopupTrigger blogTitle={update.title} />
  <div className="container mx-auto px-4 md:px-8">
  <div className="mx-auto max-w-4xl">
  {/* Back Navigation */}

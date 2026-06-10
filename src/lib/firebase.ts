@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,6 +14,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+const auth = typeof window !== "undefined" ? getAuth(app) : null;
 
 // Initialize App Check (Roadmap Phase 6)
 if (typeof window !== "undefined") {
@@ -29,4 +31,4 @@ if (typeof window !== "undefined") {
   }
 }
 
-export { app };
+export { app, auth };
