@@ -71,6 +71,15 @@ export function PdfListing() {
  return () => clearInterval(interval);
  }, [fetchPurchases]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !loading && !verifiedLead) {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('trigger') === 'true') {
+        setShowVerifyPopup(true);
+      }
+    }
+  }, [loading, verifiedLead]);
+
  const tabs = [
  { id: 0, label: t('pdf_cat_official'), keywords: ['pdf','brochure','legal','general'] },
  { id: 1, label: t('pdf_cat_naksha'), keywords: ['naksha','tp'] },
@@ -415,6 +424,8 @@ export function PdfListing() {
  setPostLoginAction(null);
  }, 400);
  }}
+ title="Limited Time Offer"
+ subtitle="Complete your mobile verification to unlock and view any PDF document instantly"
  />
  )}
  
