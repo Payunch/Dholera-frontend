@@ -53,7 +53,7 @@ header .container a.rounded-full {
     --panel: #0f172a;
     --line: #1e293b;
     --ring: #ff7a00;
-    --shadow-color: rgb(0 0 0 / 0.6);
+    --shadow-color: transparent;
   }
 }
 
@@ -63,7 +63,7 @@ header .container a.rounded-full {
   --panel: #0f172a;
   --line: #1e293b;
   --ring: #ff7a00;
-  --shadow-color: rgb(0 0 0 / 0.6);
+  --shadow-color: transparent;
 }
 
 body {

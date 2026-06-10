@@ -1,15 +1,15 @@
 "use client";
 
-import { openConsentBanner } from "@/components/consent/ConsentBanner";
+import { openConsentBanner } from"@/components/consent/ConsentBanner";
 
 export function CookiePreferencesLink() {
-  return (
-    <button
-      type="button"
-      onClick={openConsentBanner}
-      className="hover:text-orange-600 transition-colors"
-    >
-      Cookie settings
-    </button>
-  );
+ return (
+ <button
+ type="button"
+ onClick={openConsentBanner}
+ className="hover:text-orange-600 transition-colors"
+ >
+ Cookie settings
+ </button>
+ );
 }

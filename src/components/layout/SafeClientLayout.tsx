@@ -1,20 +1,20 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import React from "react";
+import dynamic from"next/dynamic";
+import React from"react";
 
-// This wrapper handles the 'ssr: false' logic in a Client Component,
+// This wrapper handles the'ssr: false' logic in a Client Component,
 // which is required by Next.js App Router for dynamic imports with no SSR.
 const ClientLayout = dynamic(() => import("./ClientLayout"), {
-  ssr: false,
-  // Use a minimal skeleton that matches the basic structure to keep it smooth
-  loading: () => <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors" />
+ ssr: false,
+ // Use a minimal skeleton that matches the basic structure to keep it smooth
+ loading: () => <div className="min-h-screen bg-white dark:bg-slate-950 transition-colors" />
 });
 
 export default function SafeClientLayout({
-  children,
+ children,
 }: {
-  children: React.ReactNode;
+ children: React.ReactNode;
 }) {
-  return <ClientLayout>{children}</ClientLayout>;
+ return <ClientLayout>{children}</ClientLayout>;
 }
