@@ -187,14 +187,14 @@ export function PdfListing() {
  </button>
  ))}
 
- {!isSelectionMode && (
- <button
- onClick={() => setIsSelectionMode(true)}
- className="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2 border-dashed border-slate-200 text-slate-400 hover:border-orange-600 hover:text-orange-600 flex items-center gap-2"
- >
- <ShieldCheck className="h-3 w-3" /> Select Multiple
- </button>
- )}
+ {!isSelectionMode && !verifiedLead && (
+  <button
+  onClick={() => setIsSelectionMode(true)}
+  className="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2 border-dashed border-slate-200 text-slate-400 hover:border-orange-600 hover:text-orange-600 flex items-center gap-2"
+  >
+  <ShieldCheck className="h-3 w-3" /> Select Multiple
+  </button>
+  )}
  </div>
  </div>
  
@@ -220,15 +220,20 @@ export function PdfListing() {
  {filtered.map(pdf => {
  const isSelected = selectedPdfs.includes(pdf.id);
  const isFree = String(pdf.id) ==='19';
- const isPurchased = purchasedPdfIds.includes(String(pdf.id));
- const isPro = verifiedLead?.is_pro === true;
- const hasAccess = isPro || isFree || isPurchased;
+ const hasAccess = !!verifiedLead || isFree;
  
  return (
  <div 
  key={pdf.id}
+ onClick={() => {
+    if (!isSelectionMode) {
+      handlePdfClick(pdf.id, 'view');
+    } else {
+      toggleSelection(pdf.id);
+    }
+  }}
  className={cn(
-"group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] p-6 border dark:border-slate-800 transition-all relative",
+"group flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] p-6 border dark:border-slate-800 transition-all relative cursor-pointer select-none",
  isSelected ?"border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" :"border-slate-100 shadow-xl shadow-slate-200/10 hover:shadow-2xl hover:-translate-y-2",
  isSelectionMode && isFree &&"opacity-50 cursor-not-allowed"
  )}
@@ -242,13 +247,6 @@ export function PdfListing() {
  isSelected ?"bg-orange-600 border-orange-600 text-white" :"bg-white/80 dark:bg-slate-900/80 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white"
  )}>
  {isSelected && <ShieldCheck className="h-5 w-5" />}
- </div>
- )}
-
- {/* Lock Icon */}
- {!hasAccess && !isSelected && (
- <div className="absolute top-4 right-4 h-10 w-10 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
- <Lock className="h-4 w-4" />
  </div>
  )}
  </div>
@@ -268,32 +266,24 @@ export function PdfListing() {
  </h3>
  
  <div className="pt-2 mt-auto">
- {!hasAccess && !isSelectionMode ? (
- <div className="grid grid-cols-1 gap-2">
- <button 
- onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id,'view'); }}
- className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] bg-orange-600 text-white hover:bg-orange-500 transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"
- >
- <Eye className="h-4 w-4" /> View (₹5)
- </button>
- <button 
- onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id,'download'); }}
- className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] border-2 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-orange-600 hover:text-orange-600 transition-all flex items-center justify-center gap-3 active:scale-95"
- >
- <Download className="h-4 w-4" /> Download (₹10)
- </button>
- </div>
- ) : (
- <button 
- onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
- className={cn(
-"w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
- isSelected ?"bg-orange-600 text-white" :"bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-orange-600 hover:text-white shadow-sm"
- )}
- >
- {isSelectionMode ? (isSelected ?'Selected' :'Select PDF') :'Open Vault'}
- </button>
- )}
+  {!hasAccess && !isSelectionMode ? (
+  <button 
+  onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id,'view'); }}
+  className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] bg-orange-600 text-white hover:bg-orange-500 transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"
+  >
+  <Lock className="h-4 w-4" /> Verify Mobile to View
+  </button>
+  ) : (
+  <button 
+  onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
+  className={cn(
+ "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
+  isSelected ?"bg-orange-600 text-white" :"bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-orange-600 hover:text-white shadow-sm"
+  )}
+  >
+  {isSelectionMode ? (isSelected ?'Selected' :'Select PDF') :'Open Vault'}
+  </button>
+  )}
  </div>
  </div>
  </div>
@@ -305,65 +295,41 @@ export function PdfListing() {
 
  {/* Floating Bulk Checkout Bar */}
  {isSelectionMode && (
- <div className="fixed bottom-10 inset-x-0 z-[150] px-4 animate-in slide-in-from-bottom-10">
- <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
- <div className="flex items-center gap-6 pl-4">
- <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-colors">
- <X className="h-6 w-6" />
- </button>
- <div className="flex flex-col">
- <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">Selection Mode</span>
- <span className="text-sm font-bold text-slate-900 dark:text-white">{selectedPdfs.length} Documents Selected</span>
- </div>
- <button 
- onClick={() => {
- const allIds = filtered.filter(p => String(p.id) !=='19').map(p => p.id);
- setSelectedPdfs(allIds);
- }}
- className="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-orange-600 transition-colors border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg"
- >
- Select All in Category
- </button>
- </div>
- 
- <div className="flex items-center gap-6">
- {/* Type Toggle */}
- <div className="flex bg-white dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
- <button 
- onClick={() => setSelectionType('view')}
- className={cn(
-"px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
- selectionType ==='view' ?"bg-orange-600 text-white shadow-lg" :"text-slate-400 hover:text-orange-600"
- )}
- >
- View (₹5)
- </button>
- <button 
- onClick={() => setSelectionType('download')}
- className={cn(
-"px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
- selectionType ==='download' ?"bg-orange-600 text-white shadow-lg" :"text-slate-400 hover:text-orange-600"
- )}
- >
- Download (₹10)
- </button>
- </div>
-
- <div className="text-right min-w-[80px]">
- <span className="block text-[10px] font-black uppercase tracking-widest text-slate-500">Total</span>
- <span className="text-xl font-black text-slate-900 dark:text-white">₹{selectionTotal}</span>
- </div>
- <button 
- disabled={selectedPdfs.length === 0}
- onClick={handleBulkPay}
- className="bg-orange-600 hover:bg-orange-500 disabled:bg-slate-200 dark:disabled:bg-slate-800 disabled:text-slate-400 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/10 active:scale-95"
- >
- Pay Now
- </button>
- </div>
- </div>
- </div>
- )}
+  <div className="fixed bottom-10 inset-x-0 z-[150] px-4 animate-in slide-in-from-bottom-10">
+  <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
+  <div className="flex items-center gap-6 pl-4">
+  <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-colors">
+  <X className="h-6 w-6" />
+  </button>
+  <div className="flex flex-col">
+  <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">Selection Mode</span>
+  <span className="text-sm font-bold text-slate-900 dark:text-white">{selectedPdfs.length} Documents Selected</span>
+  </div>
+  <button 
+  onClick={() => {
+  const allIds = filtered.filter(p => String(p.id) !=='19').map(p => p.id);
+  setSelectedPdfs(allIds);
+  }}
+  className="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-orange-600 transition-colors border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg"
+  >
+  Select All in Category
+  </button>
+  </div>
+  
+  <div className="flex items-center gap-6">
+  <button 
+  onClick={() => {
+  setPostLoginAction('view');
+  setShowVerifyPopup(true);
+  }}
+  className="bg-orange-600 hover:bg-orange-500 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/10 active:scale-95"
+  >
+  Unlock Selection via Verification
+  </button>
+  </div>
+  </div>
+  </div>
+  )}
 
  {/* Bulk UPI Checkout Modal */}
  {showBulkCheckout && (

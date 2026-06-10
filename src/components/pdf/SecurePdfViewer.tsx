@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState, useRef } from'react';
-import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight } from'lucide-react';
+import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, ArrowRight, Download } from'lucide-react';
 import { API_BASE_URL, SITE_BASE_URL, apiClient } from'@/lib/api';
 import { getCookie } from'@/utils/cookies';
 import { io, Socket } from'socket.io-client';
@@ -167,76 +167,54 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  Secure Intelligence Hub
  </span>
  </div>
- <div className="flex items-center gap-4">
- {!loading && !error && isMobile && (
- <button onClick={() => window.open(directUrl,'_blank')} className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-black uppercase text-white hover:bg-orange-500 transition-colors">
- Full Screen
- </button>
- )}
- <button onClick={onClose} className="rounded-full p-2 bg-white/5 text-slate-400 hover:text-white hover:bg-red-500/20 transition-all dark:bg-slate-900">
- <X className="h-5 w-5" />
- </button>
- </div>
+  <div className="flex items-center gap-4">
+  {!loading && !error && (
+  <a 
+  href={directUrl} 
+  target="_blank" 
+  rel="noopener noreferrer" 
+  className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-black uppercase text-white hover:bg-orange-500 transition-colors flex items-center gap-1.5"
+  >
+  <Download className="h-3 w-3" /> Save / Print
+  </a>
+  )}
+  <button onClick={onClose} className="rounded-full p-2 bg-white/5 text-slate-400 hover:text-white hover:bg-red-500/20 transition-all dark:bg-slate-900">
+  <X className="h-5 w-5" />
+  </button>
+  </div>
  </div>
 
  {/* Main Content */}
  <div className="flex-1 flex items-center justify-center p-4">
  {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
  
- {requiresPayment && (
- <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
- <div className="h-16 w-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-orange-500/20">
- <Lock className="h-8 w-8 text-orange-600" />
- </div>
- 
- <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">Premium Document</h3>
- <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Secure UPI Payment Required</p>
+  {requiresPayment && (
+  <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
+  <div className="h-16 w-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-orange-500/20">
+  <Lock className="h-8 w-8 text-orange-600" />
+  </div>
+  
+  <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">Verification Required</h3>
+  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Please complete mobile OTP verification to view</p>
 
- <div className="space-y-6">
- {/* Type Selection */}
- <div className="grid grid-cols-2 gap-3">
- <button 
- onClick={() => setSelectionType('view')}
- className={cn(
-"p-4 rounded-2xl border-2 transition-all text-left",
- selectionType ==='view' ?"border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/5" :"border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950"
- )}
- >
- <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType ==='view' ?"text-orange-600" :"text-slate-400")}>View Online</span>
- <span className={cn("text-xl font-black italic", selectionType ==='view' ?"text-slate-900 dark:text-white" :"text-slate-400")}>₹5</span>
- </button>
- <button 
- onClick={() => setSelectionType('download')}
- className={cn(
-"p-4 rounded-2xl border-2 transition-all text-left",
- selectionType ==='download' ?"border-orange-600 bg-orange-500/5 shadow-lg shadow-orange-500/5" :"border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950"
- )}
- >
- <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType ==='download' ?"text-orange-600" :"text-slate-400")}>Download PDF</span>
- <span className={cn("text-xl font-black italic", selectionType ==='download' ?"text-slate-900 dark:text-white" :"text-slate-400")}>₹10</span>
- </button>
- </div>
-
- <a 
- href={upiUrl}
- className="w-full bg-orange-600 hover:bg-orange-700 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all shadow-xl shadow-orange-600/10 active:scale-95"
- >
- Pay ₹{amount} via UPI App
- </a>
-
- <a 
- href={waUrl}
- className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
- >
- Verify on WhatsApp
- </a>
-
- <button onClick={onClose} className="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-all">
- Maybe Later
- </button>
- </div>
- </div>
- )}
+  <div className="space-y-4">
+  <button 
+  onClick={() => {
+    onClose();
+    if (typeof window !== 'undefined') {
+      window.location.search = '?trigger=true';
+    }
+  }}
+  className="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 transition-all active:scale-95"
+  >
+  Go to Verification
+  </button>
+  <button onClick={onClose} className="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-all">
+  Close
+  </button>
+  </div>
+  </div>
+  )}
 
  {displayError && !requiresPayment && (
  <div className="max-w-sm w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-center shadow-2xl">
