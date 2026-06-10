@@ -49,9 +49,9 @@ apiClient.interceptors.request.use(async (config) => {
   if (typeof window !== "undefined") {
     if ((window as any)._appCheckInitialized) {
       try {
-        const appCheckModule = await import("firebase/app-check");
-        const getAppCheck = appCheckModule.getAppCheck || (appCheckModule as any).default?.getAppCheck;
-        const getToken = appCheckModule.getToken || (appCheckModule as any).default?.getToken;
+        const appCheckModule = await import("firebase/app-check") as any;
+        const getAppCheck = appCheckModule.getAppCheck || appCheckModule.default?.getAppCheck;
+        const getToken = appCheckModule.getToken || appCheckModule.default?.getToken;
 
         if (typeof getAppCheck === "function" && typeof getToken === "function") {
           const appCheck = getAppCheck();
