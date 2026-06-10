@@ -184,7 +184,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType = 'v
         {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
         
         {requiresPayment && (
-          <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl dark:shadow-black/90 border border-slate-100 dark:border-slate-800">
+          <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl dark:shadow-white/5 border border-slate-100 dark:border-slate-800">
             <div className="h-16 w-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-orange-500/20">
               <Lock className="h-8 w-8 text-orange-600" />
             </div>

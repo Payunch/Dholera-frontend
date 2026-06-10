@@ -14,7 +14,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
   return (
     <>
-      <div className="overflow-hidden rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl dark:shadow-black/100 transition-colors duration-300">
+      <div className="overflow-hidden rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl dark:shadow-white/10 transition-colors duration-300">
         <div className="bg-white/50 dark:bg-slate-900/50 px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Recent Activity</h3>
           <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Live Database Stream</span>
@@ -90,7 +90,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       {/* Deep Detail Modal */}
       {selectedLead && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-300">
-           <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl dark:shadow-black/100 border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+           <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[2.5rem] overflow-hidden shadow-2xl dark:shadow-white/10 border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
               <div className="p-8 text-slate-900 dark:text-white flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
                  <div>
                     <h3 className="text-2xl font-black uppercase tracking-tight">{selectedLead.name}</h3>
@@ -110,7 +110,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                       { icon: MapPin, label: "Last IP", value: selectedLead.sessions?.[0]?.ip || "Unknown" },
                       { icon: Globe, label: "Source", value: selectedLead.source || "Direct" },
                     ].map((item, i) => (
-                      <div key={i} className="bg-slate-50 dark:bg-slate-950 rounded-2xl p-4 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-black/100">
+                      <div key={i} className="bg-slate-50 dark:bg-slate-950 rounded-2xl p-4 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-white/10">
                          <item.icon className="h-4 w-4 text-orange-600 mb-2" />
                          <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{item.label}</span>
                          <span className="block text-xs font-black text-slate-900 dark:text-white mt-1">{item.value}</span>

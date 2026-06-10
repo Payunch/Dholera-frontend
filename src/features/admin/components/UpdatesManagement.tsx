@@ -150,7 +150,7 @@ export function UpdatesManagement() {
         </div>
         <button
           onClick={() => handleEdit("new")}
-          className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white shadow-lg dark:shadow-black/100"
+          className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 dark:bg-white px-6 py-3 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white shadow-lg dark:shadow-white/10"
         >
           <Plus className="h-4 w-4" />
           New Update
@@ -162,12 +162,12 @@ export function UpdatesManagement() {
         {filteredUpdates.map((update) => (
           <div 
             key={update.id}
-            className="group relative flex flex-col rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm dark:shadow-black/100 transition-all hover:shadow-xl dark:hover:shadow-black/100 hover:border-orange-200 dark:hover:border-orange-900/30"
+            className="group relative flex flex-col rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm dark:shadow-white/10 transition-all hover:shadow-xl dark:hover:shadow-black/100 hover:border-orange-200 dark:hover:border-orange-900/30"
           >
             <div className="flex items-start justify-between mb-4">
               <span className={cn(
                 "rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white",
-                update.published ? "bg-orange-600 shadow-md shadow-orange-600/20 dark:shadow-orange-600/40" : "bg-slate-400"
+                update.published ? "bg-orange-600 shadow-md shadow-orange-600/20 dark:shadow-orange-600/60" : "bg-slate-400"
               )}>
                 {update.published ? "Published" : "Draft"}
               </span>
@@ -214,7 +214,7 @@ export function UpdatesManagement() {
       {/* Edit/New Modal Overlay */}
       {editingId !== null && (
         <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl dark:shadow-black/100 border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-200 flex flex-col">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl dark:shadow-white/10 border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-200 flex flex-col">
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 p-8">
               <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
@@ -306,7 +306,7 @@ export function UpdatesManagement() {
                         <button
                           type="button"
                           onClick={() => { setImageFile(null); setImageUrl(""); }}
-                          className="absolute right-4 top-4 rounded-xl bg-white/90 dark:bg-slate-900/90 p-2 text-red-600 shadow-lg dark:shadow-black/100 backdrop-blur hover:bg-white dark:hover:bg-slate-800 transition-colors"
+                          className="absolute right-4 top-4 rounded-xl bg-white/90 dark:bg-slate-900/90 p-2 text-red-600 shadow-lg dark:shadow-white/10 backdrop-blur hover:bg-white dark:hover:bg-slate-800 transition-colors"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -365,7 +365,7 @@ export function UpdatesManagement() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl dark:shadow-black/100 transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:opacity-60"
+                className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl dark:shadow-white/10 transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>

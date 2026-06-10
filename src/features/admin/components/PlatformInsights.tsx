@@ -51,7 +51,7 @@ export const PlatformInsights = () => {
            { label: "Pro Members", value: data.proCount, icon: Trophy, color: "text-orange-600 dark:text-orange-400", bg: "bg-orange-50 dark:bg-orange-600/10" },
            { label: "Unique Buyers", value: data.uniqueBuyers, icon: Users, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-600/10" },
          ].map((stat, i) => (
-           <div key={i} className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-black/100 flex flex-col gap-4">
+           <div key={i} className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-white/10 flex flex-col gap-4">
               <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center", stat.bg, stat.color)}>
                  <stat.icon className="h-6 w-6" />
               </div>
@@ -65,7 +65,7 @@ export const PlatformInsights = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
          {/* Most Viewed Content */}
-         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-black/100">
+         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-white/10">
             <div className="flex items-center justify-between mb-8">
                <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                   <Eye className="h-6 w-6 text-orange-600" /> Most Viewed
@@ -89,7 +89,7 @@ export const PlatformInsights = () => {
          </div>
 
          {/* Best Selling Content */}
-         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-black/100">
+         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-white/10">
             <div className="flex items-center justify-between mb-8">
                <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
                   <IndianRupee className="h-6 w-6 text-orange-600" /> Best Selling
@@ -115,7 +115,7 @@ export const PlatformInsights = () => {
       </div>
       
       {/* System Health Card */}
-      <div className="bg-slate-900 dark:bg-slate-950 rounded-[2.5rem] p-10 text-white shadow-2xl dark:shadow-black/100 flex flex-col md:flex-row items-center justify-between gap-10">
+      <div className="bg-slate-900 dark:bg-slate-950 rounded-[2.5rem] p-10 text-white shadow-2xl dark:shadow-white/10 flex flex-col md:flex-row items-center justify-between gap-10">
          <div className="flex items-center gap-8">
             <div className="h-20 w-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center text-orange-500">
                <Activity className="h-10 w-10" />

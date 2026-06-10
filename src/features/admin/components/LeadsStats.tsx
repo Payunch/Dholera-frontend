@@ -23,7 +23,7 @@ export function LeadsStats({ leads }: LeadsStatsProps) {
       {stats.map((stat) => (
         <div 
           key={stat.label} 
-          className={`flex items-center justify-between rounded-3xl border-2 p-8 shadow-sm dark:shadow-black/100 transition-all hover:shadow-md dark:hover:shadow-black/100 ${stat.color}`}
+          className={`flex items-center justify-between rounded-3xl border-2 p-8 shadow-sm dark:shadow-white/10 transition-all hover:shadow-md dark:hover:shadow-black/100 ${stat.color}`}
         >
           <div className="space-y-1">
             <p className="text-sm font-black uppercase tracking-widest opacity-70">{stat.label}</p>

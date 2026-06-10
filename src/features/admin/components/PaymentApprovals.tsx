@@ -92,7 +92,7 @@ export const PaymentApprovals = () => {
 
       {records.length === 0 ? (
         <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-12 text-center border-2 border-dashed border-slate-200 dark:border-slate-800">
-           <div className="h-16 w-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm dark:shadow-black/100">
+           <div className="h-16 w-16 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm dark:shadow-white/10">
               <Clock className="h-8 w-8 text-slate-300 dark:text-slate-600" />
            </div>
            <p className="text-slate-500 dark:text-slate-400 font-bold uppercase text-xs tracking-widest">No access requests found in database</p>
@@ -101,7 +101,7 @@ export const PaymentApprovals = () => {
         <div className="grid grid-cols-1 gap-4 pb-20">
           {records.map((p) => (
             <div key={p.transaction_id} className={cn(
-              "bg-white dark:bg-slate-900 rounded-[1.5rem] p-6 border transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm dark:shadow-black/100",
+              "bg-white dark:bg-slate-900 rounded-[1.5rem] p-6 border transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm dark:shadow-white/10",
               p.status === 'completed' ? "border-green-100 dark:border-green-900/30 bg-green-50/10 dark:bg-green-900/5" : "border-slate-100 dark:border-slate-800"
             )}>
                <div className="flex-1 flex items-start gap-4">
@@ -151,14 +151,14 @@ export const PaymentApprovals = () => {
                   
                   <div className="flex items-center gap-2">
                      {p.status === 'completed' ? (
-                       <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-green-600 text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-green-600/10 dark:shadow-green-600/40">
+                       <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-green-600 text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-green-600/10 dark:shadow-green-600/60">
                           <Check className="h-3 w-3" /> Approved
                        </div>
                      ) : (
                        <button 
                          onClick={() => handleApprove(p.transaction_id)}
                          disabled={actionLoading === p.transaction_id}
-                         className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-orange-600 dark:hover:bg-orange-600 hover:text-white text-slate-900 dark:text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-slate-950/5 dark:shadow-black/100"
+                         className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-orange-600 dark:hover:bg-orange-600 hover:text-white text-slate-900 dark:text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-xl shadow-slate-950/5 dark:shadow-white/10"
                        >
                           {actionLoading === p.transaction_id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
                           Approve Access

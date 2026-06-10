@@ -139,7 +139,7 @@ export default function PdfPage() {
                       className={cn(
                         "flex items-center gap-3 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2",
                         activeFilter === filter.label
-                          ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10 dark:shadow-black/90 dark:shadow-orange-600/30"
+                          ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10 dark:shadow-white/5 dark:shadow-orange-600/50"
                           : "bg-white dark:bg-[#111A35] border-slate-100 dark:border-slate-800 text-slate-400 hover:border-slate-300 hover:text-slate-600 dark:text-slate-400"
                       )}
                     >
@@ -176,7 +176,7 @@ export default function PdfPage() {
                     href={`${API_BASE_URL}/pdf/view/${pdf.id}?token=${verifiedLead?.token || 'guest'}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-8 flex flex-col shadow-sm dark:shadow-black/60 hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500"
+                    className="group bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-8 flex flex-col shadow-sm dark:shadow-white/5 hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500"
                   >
                      <div className="flex items-center justify-between mb-6">
                         <div className="h-12 w-12 rounded-xl bg-white flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-[#FF7A00] group-hover:text-slate-900 dark:text-white transition-all duration-300">
@@ -208,7 +208,7 @@ export default function PdfPage() {
                              {formatUploadedAt(pdf)}
                            </span>
                         </div>
-                        <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white group-hover:bg-[#FF7A00] transition-all shadow-lg shadow-slate-950/5 dark:shadow-black/80 group-hover:shadow-orange-600/10 dark:group-hover:shadow-orange-600/30">
+                        <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white group-hover:bg-[#FF7A00] transition-all shadow-lg shadow-slate-950/5 dark:shadow-white/5 group-hover:shadow-orange-600/10 dark:group-hover:shadow-orange-600/30">
                             <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
                         </div>
                      </div>

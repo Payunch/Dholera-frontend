@@ -63,7 +63,7 @@ export default function AirportPage() {
                   t('cargo_hub'),
                   t('expressway_parallel')
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 font-black text-slate-800 dark:text-slate-200 uppercase text-[10px] tracking-widest bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-black/60">
+                  <div key={i} className="flex items-center gap-3 font-black text-slate-800 dark:text-slate-200 uppercase text-[10px] tracking-widest bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-white/5">
                     <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" /> {item}
                   </div>
                 ))}
@@ -72,7 +72,7 @@ export default function AirportPage() {
               <div className="pt-6">
                 <Link 
                   href="/pdf" 
-                  className="inline-flex items-center gap-3 bg-[#FF7A00] text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl dark:shadow-black/90 shadow-orange-600/10 dark:shadow-orange-600/30 active:scale-95"
+                  className="inline-flex items-center gap-3 bg-[#FF7A00] text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl dark:shadow-white/5 shadow-orange-600/10 dark:shadow-orange-600/50 active:scale-95"
                 >
                   {t('download_airport_maps')} <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -105,7 +105,7 @@ export default function AirportPage() {
             {t('direct_access_tp')}
           </p>
           <div className="flex justify-center pt-4">
-            <a href="https://wa.me/917435808031" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl dark:shadow-black/90 shadow-green-500/10 dark:shadow-black/90 hover:bg-[#128C7E] transition-colors">
+            <a href="https://wa.me/917435808031" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl dark:shadow-white/5 shadow-green-500/10 dark:shadow-white/5 hover:bg-[#128C7E] transition-colors">
               +91 74358 08031
             </a>
           </div>

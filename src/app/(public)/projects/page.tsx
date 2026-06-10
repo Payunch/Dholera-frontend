@@ -87,7 +87,7 @@ export default function ProjectsPage() {
       <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
         
         {/* Filter Controls */}
-        <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-black/60 mb-12 flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-white/5 mb-12 flex flex-col md:flex-row gap-4 items-center justify-between">
           {/* Categories */}
           <div className="flex flex-wrap gap-2 justify-center">
             {categories.map((cat) => (
@@ -96,7 +96,7 @@ export default function ProjectsPage() {
                 onClick={() => setSelectedCategory(cat.key)}
                 className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                   selectedCategory === cat.key
-                    ? "bg-[#FF7A00] text-white shadow-md dark:shadow-black/70 shadow-orange-600/10 dark:shadow-orange-600/30"
+                    ? "bg-[#FF7A00] text-white shadow-md dark:shadow-white/5 shadow-orange-600/10 dark:shadow-orange-600/50"
                     : "bg-white dark:bg-slate-800 border border-slate-150 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700"
                 }`}
               >
@@ -132,7 +132,7 @@ export default function ProjectsPage() {
                 <Link
                   key={project.slug}
                   href={`/projects/${project.slug}`}
-                  className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-sm dark:shadow-black/60 hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
+                  className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-sm dark:shadow-white/5 hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
                 >
                   <div>
                     {/* Project Image */}
@@ -147,12 +147,12 @@ export default function ProjectsPage() {
                       <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors duration-500" />
                       
                       {/* Category Badge */}
-                      <span className="absolute top-6 left-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg dark:shadow-black/80 z-10 transition-transform group-hover:scale-110">
+                      <span className="absolute top-6 left-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg dark:shadow-white/5 z-10 transition-transform group-hover:scale-110">
                         {project.category}
                       </span>
 
                       {project.reraApproved && (
-                        <span className="absolute top-6 right-6 bg-green-500 text-slate-900 dark:text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg dark:shadow-black/80 z-10 transition-transform group-hover:scale-110">
+                        <span className="absolute top-6 right-6 bg-green-500 text-slate-900 dark:text-white text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-lg dark:shadow-white/5 z-10 transition-transform group-hover:scale-110">
                           RERA VERIFIED
                         </span>
                       )}
@@ -182,7 +182,7 @@ export default function ProjectsPage() {
 
                   {/* Actions (Visual Button) */}
                   <div className="p-8 md:p-10 pt-0">
-                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl dark:shadow-black/90 shadow-slate-950/5 dark:shadow-black/95 group-hover:shadow-orange-600/10 dark:group-hover:shadow-orange-600/30">
+                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl dark:shadow-white/5 shadow-slate-950/5 dark:shadow-white/10 group-hover:shadow-orange-600/10 dark:group-hover:shadow-orange-600/30">
                       Analyze Project Specs
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </div>
@@ -192,7 +192,7 @@ export default function ProjectsPage() {
             })}
           </div>
         ) : (
-          <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl max-w-xl mx-auto space-y-4 shadow-sm dark:shadow-black/60">
+          <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl max-w-xl mx-auto space-y-4 shadow-sm dark:shadow-white/5">
             <Grid className="h-10 w-10 text-slate-300 mx-auto" />
             <h3 className="font-display text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
               {t('no_projects_found')}

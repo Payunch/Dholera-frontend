@@ -107,7 +107,7 @@ export const SystemManagement = () => {
       )}
 
       {/* Hero Header */}
-      <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-12 text-slate-900 dark:text-white shadow-2xl dark:shadow-black/100 border border-slate-100 dark:border-slate-800 relative overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-12 text-slate-900 dark:text-white shadow-2xl dark:shadow-white/10 border border-slate-100 dark:border-slate-800 relative overflow-hidden">
          <div className="absolute top-0 right-0 p-12 opacity-10 dark:opacity-20 transition-opacity">
             <ShieldCheck className="h-40 w-40" />
          </div>
@@ -119,7 +119,7 @@ export const SystemManagement = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
          {/* Backup Card */}
-         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-black/100 flex flex-col justify-between group hover:border-blue-200 dark:hover:border-blue-900/30 transition-all">
+         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-white/10 flex flex-col justify-between group hover:border-blue-200 dark:hover:border-blue-900/30 transition-all">
             <div>
                <div className="h-16 w-16 rounded-3xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-8 group-hover:scale-110 transition-transform">
                   <FileJson className="h-8 w-8" />
@@ -130,7 +130,7 @@ export const SystemManagement = () => {
             <button 
               onClick={handleBackup}
               disabled={loading}
-              className="mt-10 w-full py-4 rounded-2xl bg-blue-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-blue-700 shadow-xl shadow-blue-600/10 dark:shadow-blue-600/40 flex items-center justify-center gap-3"
+              className="mt-10 w-full py-4 rounded-2xl bg-blue-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-blue-700 shadow-xl shadow-blue-600/10 dark:shadow-blue-600/60 flex items-center justify-center gap-3"
             >
                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <CloudDownload className="h-4 w-4" />}
                Generate Snapshot
@@ -138,7 +138,7 @@ export const SystemManagement = () => {
          </div>
 
          {/* Restore Card */}
-         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-black/100 flex flex-col justify-between group hover:border-orange-200 dark:hover:border-orange-900/30 transition-all">
+         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-white/10 flex flex-col justify-between group hover:border-orange-200 dark:hover:border-orange-900/30 transition-all">
             <div>
                <div className="h-16 w-16 rounded-3xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 mb-8 group-hover:scale-110 transition-transform">
                   <UploadCloud className="h-8 w-8" />
@@ -156,7 +156,7 @@ export const SystemManagement = () => {
                />
                <button 
                  disabled={loading}
-                 className="w-full py-4 rounded-2xl bg-orange-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-orange-700 shadow-xl shadow-orange-600/10 dark:shadow-orange-600/40 flex items-center justify-center gap-3"
+                 className="w-full py-4 rounded-2xl bg-orange-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-orange-700 shadow-xl shadow-orange-600/10 dark:shadow-orange-600/60 flex items-center justify-center gap-3"
                >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCcw className="h-4 w-4" />}
                   Import Snapshot
@@ -165,7 +165,7 @@ export const SystemManagement = () => {
          </div>
 
          {/* Sync Card */}
-         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-black/100 flex flex-col justify-between group hover:border-green-200 dark:hover:border-green-900/30 transition-all">
+         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-white/10 flex flex-col justify-between group hover:border-green-200 dark:hover:border-green-900/30 transition-all">
             <div>
                <div className="h-16 w-16 rounded-3xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400 mb-8 group-hover:scale-110 transition-transform">
                   <RefreshCcw className="h-8 w-8" />
@@ -176,7 +176,7 @@ export const SystemManagement = () => {
             <button 
               onClick={handleSyncPdfs}
               disabled={loading}
-              className="mt-10 w-full py-4 rounded-2xl bg-green-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-green-700 shadow-xl shadow-green-600/10 dark:shadow-green-600/40 flex items-center justify-center gap-3"
+              className="mt-10 w-full py-4 rounded-2xl bg-green-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-green-700 shadow-xl shadow-green-600/10 dark:shadow-green-600/60 flex items-center justify-center gap-3"
             >
                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
                Sync Cloud Storage
@@ -184,7 +184,7 @@ export const SystemManagement = () => {
          </div>
 
          {/* Analytics Export */}
-         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-black/100 flex flex-col justify-between group hover:border-purple-200 dark:hover:border-purple-900/30 transition-all">
+         <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl dark:shadow-white/10 flex flex-col justify-between group hover:border-purple-200 dark:hover:border-purple-900/30 transition-all">
             <div>
                <div className="h-16 w-16 rounded-3xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-8 group-hover:scale-110 transition-transform">
                   <FileSpreadsheet className="h-8 w-8" />
@@ -194,7 +194,7 @@ export const SystemManagement = () => {
             </div>
             <button 
               onClick={() => window.open(`${API_BASE_URL}/analytics/export-leads`, '_blank')}
-              className="mt-10 w-full py-4 rounded-2xl bg-purple-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-purple-700 shadow-xl shadow-purple-600/10 dark:shadow-purple-600/40 flex items-center justify-center gap-3"
+              className="mt-10 w-full py-4 rounded-2xl bg-purple-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-purple-700 shadow-xl shadow-purple-600/10 dark:shadow-purple-600/60 flex items-center justify-center gap-3"
             >
                <CloudDownload className="h-4 w-4" />
                Export Leads to Excel

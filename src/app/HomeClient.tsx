@@ -142,7 +142,7 @@ export function HomeClient() {
         </div>
 
         <div className="container relative z-10 px-4 md:px-8 mx-auto py-12 md:py-20 flex justify-center">
-          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 shadow-2xl dark:shadow-black/90 relative overflow-hidden">
+          <div className="max-w-4xl w-full backdrop-blur-xl bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 shadow-2xl dark:shadow-white/5 relative overflow-hidden">
             {/* Background Image for the Content Box */}
             <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
                <Image 
@@ -339,10 +339,10 @@ export function HomeClient() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/projects" className="px-8 py-4 bg-white dark:bg-slate-900 dark:bg-orange-600 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-[#FF7A00] transition-all shadow-md flex items-center gap-2">
+            <Link href="/projects" className="px-8 py-4 bg-[#FF7A00] text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-orange-600 transition-all shadow-md dark:shadow-white/5 flex items-center gap-2">
               {t('nav_projects')} <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="/tp-maps" className="px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-[#FF7A00] hover:text-[#FF7A00] transition-all shadow-sm flex items-center gap-2">
+            <Link href="/tp-maps" className="px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:border-[#FF7A00] hover:text-[#FF7A00] transition-all shadow-sm dark:shadow-white/5 flex items-center gap-2">
               {t('nav_tp_maps')} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

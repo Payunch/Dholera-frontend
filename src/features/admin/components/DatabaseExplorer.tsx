@@ -52,7 +52,7 @@ export const DatabaseExplorer = () => {
   if (loading) return <div className="flex justify-center p-20"><Loader2 className="h-8 w-8 animate-spin text-orange-600" /></div>;
 
   return (
-    <div className="flex bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl dark:shadow-black/100 overflow-hidden min-h-[70vh] max-h-[85vh] transition-colors duration-300">
+    <div className="flex bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-2xl dark:shadow-white/10 overflow-hidden min-h-[70vh] max-h-[85vh] transition-colors duration-300">
       
       {/* Sidebar: phpMyAdmin Style */}
       <div className="w-72 bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 flex flex-col shrink-0">
@@ -116,7 +116,7 @@ export const DatabaseExplorer = () => {
             {/* Toolbar */}
             <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 bg-white/50 dark:bg-slate-900/50">
                <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-black/100 flex items-center justify-center text-orange-600">
+                  <div className="h-10 w-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-white/10 flex items-center justify-center text-orange-600">
                      <Table className="h-5 w-5" />
                   </div>
                   <div>
@@ -138,7 +138,7 @@ export const DatabaseExplorer = () => {
                   </div>
                   <button 
                     onClick={() => fetchTableData(selectedTable)}
-                    className="p-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-400 dark:text-slate-500 hover:text-orange-600 dark:hover:text-orange-400 hover:border-orange-100 dark:hover:border-orange-900/30 transition-all shadow-sm dark:shadow-black/100"
+                    className="p-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-400 dark:text-slate-500 hover:text-orange-600 dark:hover:text-orange-400 hover:border-orange-100 dark:hover:border-orange-900/30 transition-all shadow-sm dark:shadow-white/10"
                     title="Refresh Data"
                   >
                      <RefreshCcw className={cn("h-4 w-4", dataLoading && "animate-spin")} />
@@ -152,7 +152,7 @@ export const DatabaseExplorer = () => {
                  <div className="flex-1 flex items-center justify-center p-20 text-slate-500 dark:text-slate-400 font-bold uppercase text-xs tracking-widest italic">Table is empty</div>
                ) : (
                  <div className="inline-block min-w-full align-middle">
-                    <div className="overflow-hidden border border-slate-200 dark:border-slate-800 sm:rounded-2xl shadow-sm dark:shadow-black/100 bg-white dark:bg-slate-900">
+                    <div className="overflow-hidden border border-slate-200 dark:border-slate-800 sm:rounded-2xl shadow-sm dark:shadow-white/10 bg-white dark:bg-slate-900">
                       <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800 text-left border-collapse">
                          <thead className="bg-white dark:bg-slate-900">
                             <tr>

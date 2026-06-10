@@ -79,7 +79,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
       <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-[100] px-8 py-6">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-orange-600/10 dark:shadow-orange-600/40">
+            <div className="h-12 w-12 rounded-2xl bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-orange-600/10 dark:shadow-orange-600/60">
               <ShieldCheck className="h-6 w-6" />
             </div>
             <div>
@@ -96,7 +96,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
                 className={cn(
                   "px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2.5",
                   activeTab === idx 
-                    ? "bg-white dark:bg-slate-900 text-orange-600 shadow-sm dark:shadow-black/100" 
+                    ? "bg-white dark:bg-slate-900 text-orange-600 shadow-sm dark:shadow-white/10" 
                     : "text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                 )}
               >
@@ -128,7 +128,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
            {activeTab === 0 && (
              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <LeadsStats leads={initialLeads} />
-                <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl dark:shadow-black/100 overflow-hidden">
+                <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl dark:shadow-white/10 overflow-hidden">
                    <LeadsTable leads={initialLeads} />
                 </div>
              </div>

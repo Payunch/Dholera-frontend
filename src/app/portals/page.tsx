@@ -117,7 +117,7 @@ export default function PortalsPage() {
                    
                    {/* Category Header */}
                    <div className="flex items-center gap-6 mb-10 pb-6 border-b border-slate-200 dark:border-slate-800">
-                      <div className="h-16 w-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#FF7A00] shadow-sm dark:shadow-black/60">
+                      <div className="h-16 w-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#FF7A00] shadow-sm dark:shadow-white/5">
                         <cat.icon className="h-8 w-8" />
                       </div>
                       <div>
@@ -138,7 +138,7 @@ export default function PortalsPage() {
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-black/60 hover:shadow-2xl hover:border-[#FF7A00] transition-all hover:-translate-y-1 flex flex-col justify-between"
+                          className="group bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-white/5 hover:shadow-2xl hover:border-[#FF7A00] transition-all hover:-translate-y-1 flex flex-col justify-between"
                         >
                            <div>
                               <div className="flex justify-between items-start mb-6">
