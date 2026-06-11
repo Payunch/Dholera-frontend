@@ -40,11 +40,11 @@ export const LeadProvider = ({ children }: { children: React.ReactNode }) => {
    ? '.dholeraplatform.com' 
    : undefined;
 
- if (leadData.id) setCookie('lead_id', String(leadData.id), 7, domain);
- if (leadData.email) setCookie('lead_email', leadData.email, 7, domain);
- setCookie('lead_phone', leadData.phone, 7, domain);
- setCookie('lead_name', leadData.name, 7, domain);
- setCookie('lead_token', leadData.token, 7, domain);
+ if (leadData.id) setCookie('lead_id', String(leadData.id), null, domain);
+ if (leadData.email) setCookie('lead_email', leadData.email, null, domain);
+ setCookie('lead_phone', leadData.phone, null, domain);
+ setCookie('lead_name', leadData.name, null, domain);
+ setCookie('lead_token', leadData.token, null, domain);
  setVerifiedLead(leadData);
  }, []);
 

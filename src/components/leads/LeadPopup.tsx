@@ -126,11 +126,14 @@ export const LeadPopup = ({
 
       await confirmationResult.confirm(code);
       
-      // Verification successful! Now onboard the user in our backend database
+      // Get Firebase ID Token to securely verify in our backend database
+      const idToken = await auth?.currentUser?.getIdToken();
+      
       const cleanPhone = sanitizeDigits(phone, 10);
-      const res = await apiClient.post('/leads/onboard', {
+      const res = await apiClient.post('/leads/verify-otp', {
         name: name.trim(),
         phone: cleanPhone,
+        firebaseToken: idToken,
         sessionId,
         browserFingerprint: fingerprint,
         preferred_language: lang

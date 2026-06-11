@@ -6,6 +6,7 @@ import { API_BASE_URL, SITE_BASE_URL, apiClient } from'@/lib/api';
 import { getCookie } from'@/utils/cookies';
 import { io, Socket } from'socket.io-client';
 import { cn } from'@/lib/utils';
+import { LeadPopup } from '@/components/leads/LeadPopup';
 
 interface SecurePdfViewerProps {
  pdfId: string;
@@ -20,6 +21,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  const [loading, setLoading] = useState(true);
  const [error, setError] = useState<string | null>(null);
  const [requiresPayment, setRequiresPayment] = useState(false);
+ const [showVerifyPopup, setShowVerifyPopup] = useState(false);
  
  const [clientData, setClientData] = useState({
  token:'',
@@ -38,13 +40,16 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  setLoading(true);
  setError(null);
  setRequiresPayment(false);
+ setShowVerifyPopup(false);
  
  try {
  const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID ||'19';
  const isTrial = String(pdfId) === String(freeTrialId);
 
  if (!token && !isTrial) {
- throw new Error('Verification required to access this document.');
+ setShowVerifyPopup(true);
+ setLoading(false);
+ return;
  }
 
  const res = await apiClient.get(`/pdf/view/${pdfId}`, {
@@ -65,7 +70,9 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  }
  }
 
- if (err.response?.status === 402) {
+ if (err.response?.status === 403 || err.response?.status === 401) {
+ setShowVerifyPopup(true);
+ } else if (err.response?.status === 402) {
  setRequiresPayment(true);
  } else {
  console.error('SecurePdfViewer Fetch Error:', err);
@@ -216,14 +223,32 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
   </div>
   )}
 
- {displayError && !requiresPayment && (
- <div className="max-w-sm w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-center shadow-2xl">
- <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
- <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-2">Access Denied</h3>
- <p className="text-slate-500 font-medium mb-8">{displayError}</p>
- <button onClick={onClose} className="w-full rounded-2xl bg-white dark:bg-slate-900 py-4 text-white font-black uppercase tracking-widest">Close Viewer</button>
- </div>
- )}
+  {displayError && !requiresPayment && !showVerifyPopup && (
+  <div className="max-w-sm w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-center shadow-2xl">
+  <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
+  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-2">Access Denied</h3>
+  <p className="text-slate-500 font-medium mb-8">{displayError}</p>
+  <button onClick={onClose} className="w-full rounded-2xl bg-white dark:bg-slate-900 py-4 text-white font-black uppercase tracking-widest">Close Viewer</button>
+  </div>
+  )}
+
+  {showVerifyPopup && (
+    <LeadPopup
+      sessionId={clientData.fingerprint || undefined}
+      fingerprint={clientData.fingerprint || undefined}
+      compulsory={true}
+      onSuccess={() => {
+        setShowVerifyPopup(false);
+        fetchPdf();
+      }}
+      onClose={() => {
+        setShowVerifyPopup(false);
+        onClose();
+      }}
+      title="Verification Required"
+      subtitle="Complete your mobile verification to view this document"
+    />
+  )}
 
  {!loading && !displayError && blobUrl && (
  <div className="relative w-full h-full max-w-6xl bg-white dark:bg-slate-900 shadow-2xl overflow-hidden rounded-xl flex flex-col">
