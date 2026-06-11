@@ -9,8 +9,8 @@ const firebaseConfig = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "user-management-admin-1128f",
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "user-management-admin-1128f.firebasestorage.app",
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "536387058166",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:536387058166:web:221d86e1db8169096d2fd7",
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-N7HCNRG5J1"
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:536387058166:web:0fad3e8ce885fde06d2fd7",
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-FKFH082E9K"
 };
 
 // Initialize Firebase
