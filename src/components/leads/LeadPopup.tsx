@@ -36,7 +36,7 @@ export const LeadPopup = ({
   const { loginLead, verifiedLead } = useLead();
   const { lang, setLang, t } = useLanguage();
   const [open, setOpen] = useState(true);
-  const [name, setName] = useState('');
+  const [name, setName] = useState('Verified Visitor');
   const [phone, setPhone] = useState('');
   const [otpCode, setOtpCode] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -73,7 +73,6 @@ export const LeadPopup = ({
     e.preventDefault();
     const cleanPhone = sanitizeDigits(phone, 10);
     
-    if (!validateName(name)) return setError(t('err_name') || 'Please enter a valid name.');
     if (!validatePhone(cleanPhone)) return setError(t('err_phone') || 'Please enter a valid 10-digit mobile number.');
     if (!agreedToTerms) return setError(t('err_terms') || 'You must agree to the terms and privacy policy.');
 
@@ -196,23 +195,12 @@ export const LeadPopup = ({
           {step === 'details' && (
             <form onSubmit={handleSendOtp} className="space-y-4">
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-                <input
-                  type="text" 
-                  placeholder={t('full_name') || 'Full Name'} 
-                  required
-                  autoFocus
-                  className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
-                  value={name} 
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="relative">
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <input
                   type="tel" 
                   placeholder={t('mobile_number') || 'Mobile Number'} 
                   required
+                  autoFocus
                   className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
                   value={phone} 
                   onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
