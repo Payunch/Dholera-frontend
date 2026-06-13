@@ -132,7 +132,7 @@ export function Navbar() {
  {/* Mobile Menu */}
  {isMenuOpen && (
  <div className="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-8 space-y-8 animate-in slide-in-from-top-4 duration-300 font-display">
- <div className="flex flex-col gap-6">
+ <nav className="flex flex-col gap-6">
  {navItems.map((item) => (
  <Link
  key={item.href}
@@ -147,7 +147,7 @@ export function Navbar() {
  {item.label}
  </Link>
  ))}
- </div>
+ </nav>
 
  <div className="pt-8 border-t border-slate-100 space-y-6">
  <div className="space-y-4">
