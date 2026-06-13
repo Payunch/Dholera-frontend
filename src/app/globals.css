@@ -193,8 +193,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-float-soft,
   .animate-fade-up,
-  .animate-fade-up-slow,
-  .animate-marquee {
+  .animate-fade-up-slow {
     animation: none !important;
   }
 }
