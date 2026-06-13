@@ -52,21 +52,6 @@ export function PdfListing() {
  const pricePerPdf = selectionType ==='download' ? 300 : 150;
  const selectionTotal = Math.min(selectedPdfs.length * pricePerPdf, 499);
 
- const fetchPurchases = React.useCallback(() => {
- if (!verifiedLead?.token) return;
- apiClient.get('/payment/my-purchases')
- .then(res => {
- const data = res.data;
- if (data.success && data.purchases) {
- const completed = data.purchases
- .filter((p: any) => p.status ==='completed')
- .map((p: any) => String(p.pdfId));
- setPurchasedPdfIds(completed);
- }
- })
- .catch(e => console.error('Purchases fetch error:', e));
- }, [verifiedLead?.token]);
-
  useEffect(() => {
  apiClient.get('/pdf/list')
  .then(res => setPdfs(Array.isArray(res.data) ? res.data : []))
