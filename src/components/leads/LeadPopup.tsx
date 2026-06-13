@@ -160,8 +160,8 @@ export const LeadPopup = ({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/85 backdrop-blur-lg p-4 animate-in fade-in duration-500">
-      <div className="relative w-full max-w-[400px] overflow-hidden rounded-[2.5rem] bg-white/10 dark:bg-slate-950/20 backdrop-blur-2xl shadow-2xl border border-white/20 dark:border-slate-800/60 animate-in zoom-in-95 duration-300">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/80 backdrop-blur-lg p-4 animate-in fade-in duration-500">
+      <div className="relative w-full max-w-3xl overflow-hidden rounded-[2.5rem] bg-white/10 dark:bg-slate-950/20 backdrop-blur-2xl shadow-2xl border border-white/20 dark:border-slate-800/60 animate-in zoom-in-95 duration-300">
         {!compulsory && (
           <button 
             onClick={() => {
@@ -174,23 +174,31 @@ export const LeadPopup = ({
           </button>
         )}
         
-        <div className="p-8 md:p-10">
-          <div className="flex justify-center mb-10 brightness-0 invert"><SplitLogo height={42} /></div>
+        <div className="p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
           
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-black uppercase tracking-tight text-white mb-2">
-              {step === 'success' ? t('access_granted') || 'Access Granted' : (step === 'otp' ? 'Verify Code' : (title || t('start_here')))}
-            </h2>
-            <p className="text-[10px] font-bold text-slate-350 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
-              {step === 'otp' ? 'Enter the verification code sent to your phone' : (subtitle || t('verify_desc'))}
-            </p>
+          {/* Left Column */}
+          <div className="flex-1 w-full text-center md:text-left flex flex-col justify-center">
+            <div className="flex justify-center md:justify-start mb-6 md:mb-10 brightness-0 invert">
+              <SplitLogo height={42} />
+            </div>
+            
+            <div>
+              <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-3">
+                {step === 'success' ? t('access_granted') || 'Access Granted' : (step === 'otp' ? 'Verify Code' : (title || t('start_here')))}
+              </h2>
+              <p className="text-[10px] md:text-xs font-bold text-slate-350 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
+                {step === 'otp' ? 'Enter the verification code sent to your phone' : (subtitle || t('verify_desc'))}
+              </p>
+            </div>
           </div>
 
-          {error && (
-            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-200 mb-6 text-center animate-in slide-in-from-top-2">
-              <span className="text-[10px] font-bold uppercase tracking-tight">{error}</span>
-            </div>
-          )}
+          {/* Right Column */}
+          <div className="flex-1 w-full bg-white/5 dark:bg-slate-950/40 p-6 md:p-8 rounded-[2rem] border border-white/10 dark:border-slate-800/60 relative">
+            {error && (
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-200 mb-6 text-center animate-in slide-in-from-top-2">
+                <span className="text-[10px] font-bold uppercase tracking-tight">{error}</span>
+              </div>
+            )}
 
           {step === 'details' && (
             <form onSubmit={handleSendOtp} className="space-y-4">
@@ -291,6 +299,7 @@ export const LeadPopup = ({
               <p className="text-sm font-black uppercase tracking-[0.2em] text-white">{t('access_granted') || 'Access Granted'}</p>
             </div>
           )}
+          </div>
         </div>
       </div>
       <div id="recaptcha-container" className="hidden"></div>

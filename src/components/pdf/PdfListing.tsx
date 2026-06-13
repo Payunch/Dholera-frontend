@@ -326,15 +326,8 @@ export function PdfListing() {
  compulsory={false}
  onSuccess={handleAuthSuccess}
  onClose={() => {
- setShowVerifyPopup(false);
- setTimeout(() => {
- if (postLoginAction ==='view') {
- setShowViewer(true);
- } else if (postLoginAction ==='bulk_pay') {
- setShowBulkCheckout(true);
- }
- setPostLoginAction(null);
- }, 400);
+   setShowVerifyPopup(false);
+   setPostLoginAction(null);
  }}
  title="Limited Time Offer"
  subtitle="Complete your mobile verification to unlock and view any PDF document instantly"
