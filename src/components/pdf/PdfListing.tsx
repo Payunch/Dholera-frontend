@@ -52,16 +52,12 @@ export function PdfListing() {
  const pricePerPdf = selectionType ==='download' ? 300 : 150;
  const selectionTotal = Math.min(selectedPdfs.length * pricePerPdf, 499);
 
- useEffect(() => {
- apiClient.get('/pdf/list')
- .then(res => setPdfs(Array.isArray(res.data) ? res.data : []))
- .catch(err => console.error('PDF Listing Error:', err))
- .finally(() => setLoading(false));
-
- fetchPurchases();
- const interval = setInterval(fetchPurchases, 30000);
- return () => clearInterval(interval);
- }, [fetchPurchases]);
+  useEffect(() => {
+  apiClient.get('/pdf/list')
+  .then(res => setPdfs(Array.isArray(res.data) ? res.data : []))
+  .catch(err => console.error('PDF Listing Error:', err))
+  .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && !loading && !verifiedLead) {
