@@ -119,7 +119,7 @@ export function HomeClient() {
               />
             </div>
           ))}
-          <div className="absolute inset-0 bg-white dark:bg-[#0B132B]/40 mix-blend-multiply dark:bg-slate-900" />
+          <div className="absolute inset-0 bg-white/10 dark:bg-slate-950/40 mix-blend-multiply" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-transparent to-[#0B132B]/80 pointer-events-none" />
 
           {/* Subtle Dholera Vector Overlay */}
@@ -222,7 +222,7 @@ export function HomeClient() {
           </div>
 
           <div className="relative flex overflow-hidden group bg-white dark:bg-slate-950">
-            <div className="flex animate-marquee whitespace-nowrap gap-16 md:gap-32 items-center py-4">
+            <div className="flex w-max animate-marquee whitespace-nowrap gap-16 md:gap-32 items-center py-4">
               {[...Array(2)].map((_, i) => (
                 <React.Fragment key={i}>
                   {[

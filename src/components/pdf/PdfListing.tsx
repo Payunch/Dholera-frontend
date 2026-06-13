@@ -59,14 +59,7 @@ export function PdfListing() {
   .finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !loading && !verifiedLead) {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('trigger') === 'true') {
-        setShowVerifyPopup(true);
-      }
-    }
-  }, [loading, verifiedLead]);
+  // Auto popup trigger on load has been removed as per user request
 
  const tabs = [
  { id: 0, label: t('pdf_cat_official'), keywords: ['pdf','brochure','legal','general'] },
