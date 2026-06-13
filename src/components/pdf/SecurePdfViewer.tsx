@@ -5,8 +5,16 @@ import { X, FileText, Loader2, Lock, ShieldCheck, ExternalLink, AlertCircle, Arr
 import { API_BASE_URL, SITE_BASE_URL, apiClient } from'@/lib/api';
 import { getCookie } from'@/utils/cookies';
 import { io, Socket } from'socket.io-client';
-import { cn } from'@/lib/utils';
+import { cn } from '@/lib/utils';
 import { LeadPopup } from '@/components/leads/LeadPopup';
+
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { ZoomIn, ZoomOut, Maximize } from 'lucide-react';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 interface SecurePdfViewerProps {
  pdfId: string;
@@ -23,12 +31,14 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  const [requiresPayment, setRequiresPayment] = useState(false);
  const [showVerifyPopup, setShowVerifyPopup] = useState(false);
  
- const [clientData, setClientData] = useState({
- token:'',
- fingerprint:'',
- leadPhone:'Guest',
- isMobile: false
- });
+  const [clientData, setClientData] = useState({
+  token: '',
+  fingerprint: '',
+  leadPhone: 'Guest',
+  isMobile: false
+  });
+
+  const [numPages, setNumPages] = useState<number>(1);
 
  const upiId ='solankiparesh1183@okaxis';
  const adminPhone ='917435808031';
@@ -211,14 +221,49 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  ))}
  </div>
 
- <div className="flex-1 flex flex-col relative">
-  {/* Full Screen link removed to prevent downloads */}
- 
- <div className="absolute top-0 inset-x-0 h-14 z-20 cursor-not-allowed" title="Toolbar restricted" />
- <iframe 
- src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=0`}
- className="flex-1 w-full border-none h-full pb-16"
- />
+ <div className="flex-1 flex flex-col relative overflow-hidden bg-slate-100 dark:bg-slate-950">
+ <TransformWrapper
+   initialScale={1}
+   minScale={0.5}
+   maxScale={8}
+   centerOnInit={true}
+ >
+   {({ zoomIn, zoomOut, resetTransform }) => (
+     <>
+       <div className="absolute top-4 right-4 z-40 flex flex-col gap-2">
+         <button onClick={() => zoomIn()} className="p-3 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-white rounded-xl shadow-lg backdrop-blur hover:bg-white active:scale-95 transition-all border border-slate-200 dark:border-slate-700">
+           <ZoomIn className="w-5 h-5" />
+         </button>
+         <button onClick={() => zoomOut()} className="p-3 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-white rounded-xl shadow-lg backdrop-blur hover:bg-white active:scale-95 transition-all border border-slate-200 dark:border-slate-700">
+           <ZoomOut className="w-5 h-5" />
+         </button>
+         <button onClick={() => resetTransform()} className="p-3 bg-white/90 dark:bg-slate-800/90 text-slate-900 dark:text-white rounded-xl shadow-lg backdrop-blur hover:bg-white active:scale-95 transition-all border border-slate-200 dark:border-slate-700">
+           <Maximize className="w-5 h-5" />
+         </button>
+       </div>
+       <TransformComponent wrapperClass="!w-full !h-full" contentClass="!w-full !h-full flex items-center justify-center min-h-full pb-16">
+         <Document
+           file={blobUrl}
+           onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+           loading={<Loader2 className="h-10 w-10 text-orange-500 animate-spin" />}
+           error={<div className="text-red-500 text-sm font-bold uppercase p-4">Failed to render PDF</div>}
+           className="flex flex-col items-center max-w-full"
+         >
+           {Array.from(new Array(numPages), (el, index) => (
+             <Page
+               key={`page_${index + 1}`}
+               pageNumber={index + 1}
+               className="mb-4 shadow-xl border border-slate-200 dark:border-slate-800 bg-white"
+               renderTextLayer={false}
+               renderAnnotationLayer={false}
+               width={typeof window !== 'undefined' ? Math.min(window.innerWidth - 32, 1200) : 800}
+             />
+           ))}
+         </Document>
+       </TransformComponent>
+     </>
+   )}
+ </TransformWrapper>
  
  <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 flex flex-col md:flex-row items-center justify-center gap-4 z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] dark:bg-slate-900">
  <div className="flex flex-col items-center md:items-start mr-4">
