@@ -224,10 +224,10 @@ export function HomeClient() {
             </p>
           </div>
 
-          <div className="relative flex overflow-hidden group bg-white dark:bg-slate-950">
-            <div className="flex w-max animate-marquee whitespace-nowrap items-center py-4">
+          <div className="relative overflow-hidden group bg-white dark:bg-slate-950 w-full">
+            <div className="flex w-max animate-marquee items-center py-4">
               {[...Array(2)].map((_, i) => (
-                <div key={i} className="flex gap-16 md:gap-32 pr-16 md:pr-32 items-center">
+                <div key={i} className="flex gap-16 md:gap-32 pr-16 md:pr-32 items-center shrink-0">
                   {[
                     { logo: "/images/tata.png", name: "Tata Electronics" },
                     { logo: "/images/larsen-toubro.png", name: "L&T Infrastructure" },
