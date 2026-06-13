@@ -183,6 +183,11 @@ export const LeadPopup = ({
             </div>
             
             <div>
+              {step === 'details' && title?.includes('Limited Time') && (
+                <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/50 bg-orange-500/20 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-6 animate-pulse shadow-[0_0_15px_rgba(255,122,0,0.3)]">
+                  ⚡ EXCLUSIVE 10-DAY OFFER
+                </div>
+              )}
               <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-3">
                 {step === 'success' ? t('access_granted') || 'Access Granted' : (step === 'otp' ? 'Verify Code' : (title || t('start_here')))}
               </h2>

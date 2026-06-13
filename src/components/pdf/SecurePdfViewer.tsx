@@ -206,8 +206,8 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
         setShowVerifyPopup(false);
         onClose();
       }}
-      title="Verification Required"
-      subtitle="Complete your mobile verification to view this document"
+      title="Limited Time Free Access"
+      subtitle="Verify your mobile number to view premium DP Maps and Nakshas for free. (Offer ends in 10 days, after which viewing will require a paid subscription)"
     />
   )}
 
