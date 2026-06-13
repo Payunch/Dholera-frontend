@@ -88,8 +88,8 @@ export function PdfListing() {
  return;
  }
 
- const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID ||'19';
- const isFree = String(pdfId) === String(freeTrialId);
+  const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID ||'19';
+  const isFree = false; // All PDFs now require verification
 
  // Completely close viewer first to clear state
  setShowViewer(false);
@@ -250,8 +250,8 @@ export function PdfListing() {
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-20">
  {filtered.map(pdf => {
  const isSelected = selectedPdfs.includes(pdf.id);
- const isFree = String(pdf.id) ==='19';
- const hasAccess = !!verifiedLead || isFree;
+ const isFree = false;
+ const hasAccess = !!verifiedLead;
  
  return (
  <div 
