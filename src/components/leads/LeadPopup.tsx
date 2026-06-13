@@ -179,7 +179,7 @@ export const LeadPopup = ({
           {/* Left Column */}
           <div className="flex-1 w-full text-center md:text-left flex flex-col justify-center">
             <div className="flex justify-center md:justify-start mb-6 md:mb-10 brightness-0 invert">
-              <SplitLogo height={42} />
+              <SplitLogo height={42} isFull={true} />
             </div>
             
             <div>
