@@ -72,8 +72,6 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
 
  if (err.response?.status === 403 || err.response?.status === 401) {
  setShowVerifyPopup(true);
- } else if (err.response?.status === 402) {
- setRequiresPayment(true);
  } else {
  console.error('SecurePdfViewer Fetch Error:', err);
  setError(errorData?.error ||'Failed to load document.');
@@ -146,79 +144,12 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  };
  }, [blobUrl]);
 
-  const [selectionType, setSelectionType] = useState<'view' | 'download' | 'pro'>(initialType);
-  
-  useEffect(() => {
-    setSelectionType(initialType);
-  }, [initialType]);
-
-  const [tempTxnId, setTempTxnId] = useState<string | null>(null);
-  const [calculatedTotal, setCalculatedTotal] = useState(0);
-  const [utr, setUtr] = useState('');
-  const [isVerifyingUtr, setIsVerifyingUtr] = useState(false);
-  const [utrSubmitted, setUtrSubmitted] = useState(false);
-  const [utrError, setUtrError] = useState<string | null>(null);
-
-  const requestPayment = useCallback(() => {
-    if (!requiresPayment) return;
-    const isProUnlock = selectionType === 'pro';
-    const pdfIds = isProUnlock ? [0] : [pdfId];
-    const finalType = isProUnlock ? 'view' : selectionType;
-
-    apiClient.post('/payment/request-manual', {
-      pdfIds,
-      type: finalType
-    }).then(res => {
-      if (res.data.success) {
-        setTempTxnId(res.data.transaction_id);
-        setCalculatedTotal(res.data.amount);
-      }
-    }).catch(e => {
-      console.error('Failed to request manual payment:', e);
-    });
-  }, [requiresPayment, pdfId, selectionType]);
-
-  useEffect(() => {
-    requestPayment();
-  }, [requiresPayment, selectionType, requestPayment]);
-
-  const handleVerifyUtr = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!/^\d{10,14}$/.test(utr)) {
-      setUtrError('Please enter a valid 10-14 digit UTR / Transaction ID.');
-      return;
-    }
-    setUtrError(null);
-    setIsVerifyingUtr(true);
-    try {
-      const res = await apiClient.post('/payment/verify-utr', {
-        transaction_id: tempTxnId,
-        utr
-      });
-      if (res.data.success) {
-        setUtrSubmitted(true);
-      } else {
-        setUtrError(res.data.error || 'Failed to submit UTR.');
-      }
-    } catch (err: any) {
-      setUtrError(err.response?.data?.error || 'Connection failed.');
-    } finally {
-      setIsVerifyingUtr(false);
-    }
-  };
-
-  const amount = selectionType === 'pro' ? 499 : (selectionType === 'download' ? 300 : 150);
-
   const { token, leadPhone, isMobile } = clientData;
-  const apiSelectionType = selectionType === 'pro' ? 'view' : selectionType;
-  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}&type=${apiSelectionType}`, [pdfId, token, apiSelectionType]);
+  const directUrl = useMemo(() => `${API_BASE_URL}/pdf/view/${pdfId}?token=${token}&type=view`, [pdfId, token]);
 
   if (!mounted) return null;
 
   const displayError = !pdfId ? 'Invalid document ID' : error;
-
-  const upiUrl = `upi://pay?pa=${upiId}&pn=Dholera%20Platform&am=${amount}.00&cu=INR&tn=Unlock_${tempTxnId || pdfId}`;
-  const waUrl = `https://wa.me/${adminPhone}?text=Paid%20Rs.${amount}%20for%20${selectionType.toUpperCase()}%20access.%20Transaction%20ID:%20${tempTxnId || 'None'}.%20UTR:%20${utr}`;
 
  return (
  <div className="fixed inset-0 z-[200] flex flex-col bg-slate-950/95 backdrop-blur-md">
@@ -251,105 +182,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  <div className="flex-1 flex items-center justify-center p-4">
  {loading && <Loader2 className="h-12 w-12 text-orange-500 animate-spin" />}
  
-  {requiresPayment && (
-   <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
-   <div className="h-16 w-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-orange-500/20">
-   <Lock className="h-8 w-8 text-orange-600" />
-   </div>
-   
-   <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">Premium Document</h3>
-   <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6">Secure UPI Payment Required</p>
 
-   <div className="space-y-6">
-     {/* Type Selection */}
-     <div className="grid grid-cols-3 gap-2">
-       <button 
-         onClick={() => { setSelectionType('view'); setUtrSubmitted(false); setUtr(''); }}
-         className={cn(
-           "p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-center",
-           selectionType === 'view' ? "border-orange-600 bg-orange-500/5 shadow-lg" : "border-slate-150 dark:border-slate-800 bg-white dark:bg-slate-950"
-         )}
-       >
-         <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'view' ? "text-orange-600" : "text-slate-400")}>View</span>
-         <span className={cn("text-sm font-black italic", selectionType === 'view' ? "text-slate-900 dark:text-white" : "text-slate-400")}>₹150</span>
-       </button>
-       <button 
-         onClick={() => { setSelectionType('download'); setUtrSubmitted(false); setUtr(''); }}
-         className={cn(
-           "p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-center",
-           selectionType === 'download' ? "border-orange-600 bg-orange-500/5 shadow-lg" : "border-slate-150 dark:border-slate-800 bg-white dark:bg-slate-950"
-         )}
-       >
-         <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'download' ? "text-orange-600" : "text-slate-400")}>Download</span>
-         <span className={cn("text-sm font-black italic", selectionType === 'download' ? "text-slate-900 dark:text-white" : "text-slate-400")}>₹300</span>
-       </button>
-       <button 
-         onClick={() => { setSelectionType('pro'); setUtrSubmitted(false); setUtr(''); }}
-         className={cn(
-           "p-3 rounded-2xl border-2 transition-all text-center flex flex-col items-center justify-center",
-           selectionType === 'pro' ? "border-orange-600 bg-orange-500/5 shadow-lg" : "border-slate-150 dark:border-slate-800 bg-white dark:bg-slate-950"
-         )}
-       >
-         <span className={cn("block text-[8px] font-black uppercase mb-1", selectionType === 'pro' ? "text-orange-600" : "text-slate-400")}>Unlock All</span>
-         <span className={cn("text-sm font-black italic", selectionType === 'pro' ? "text-slate-900 dark:text-white" : "text-slate-400")}>₹499</span>
-       </button>
-     </div>
-
-     <div className="p-4 bg-orange-500/5 rounded-2xl border border-orange-500/10 text-center">
-       <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 mb-1">UPI ID</span>
-       <a href={upiUrl} className="text-xs font-black text-[#FF7A00] hover:underline block">{upiId}</a>
-     </div>
-
-     {!utrSubmitted ? (
-       <form onSubmit={handleVerifyUtr} className="space-y-4 text-left">
-         <div className="space-y-2">
-           <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-1">Enter 12-Digit Ref/UTR No.</label>
-           <input 
-             type="text"
-             placeholder="12-DIGIT TRANSACTION UTR"
-             required
-             maxLength={14}
-             className="w-full bg-slate-50 dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-bold text-slate-900 dark:text-white outline-none focus:border-orange-600 transition-all text-center uppercase tracking-widest"
-             value={utr}
-             onChange={(e) => setUtr(e.target.value.replace(/\D/g,''))}
-           />
-         </div>
-
-         {utrError && <p className="text-[9px] font-bold text-red-500 uppercase px-1 text-center">{utrError}</p>}
-
-         <button 
-           type="submit"
-           disabled={isVerifyingUtr || utr.length < 10}
-           className="w-full bg-[#FF7A00] hover:bg-orange-600 disabled:bg-slate-700 text-white py-4 rounded-xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
-         >
-           {isVerifyingUtr ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Submit for Approval'}
-         </button>
-
-         <a 
-           href={waUrl}
-           target="_blank"
-           rel="noopener noreferrer"
-           className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all text-center active:scale-95"
-         >
-           Verify on WhatsApp
-         </a>
-       </form>
-     ) : (
-       <div className="py-6 space-y-4">
-         <div className="h-14 w-14 rounded-full bg-green-500/10 flex items-center justify-center mx-auto text-green-500">
-           <ShieldCheck className="h-8 w-8" />
-         </div>
-         <p className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">UTR Submitted!</p>
-         <p className="text-[10px] font-bold text-slate-500 uppercase leading-relaxed tracking-wide">Admin will verify the payment and grant access within 5-10 minutes.</p>
-       </div>
-     )}
-
-     <button onClick={onClose} className="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-955 dark:text-white dark:hover:text-white transition-all">
-       Cancel
-     </button>
-   </div>
-   </div>
-   )}
 
   {displayError && !requiresPayment && !showVerifyPopup && (
   <div className="max-w-sm w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-center shadow-2xl">

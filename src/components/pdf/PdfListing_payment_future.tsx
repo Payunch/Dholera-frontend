@@ -244,7 +244,14 @@ export function PdfListing() {
  </button>
  ))}
 
-
+ {!isSelectionMode && !verifiedLead && (
+  <button
+  onClick={() => setIsSelectionMode(true)}
+  className="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2 border-dashed border-slate-200 text-slate-400 hover:border-orange-600 hover:text-orange-600 flex items-center gap-2"
+  >
+  <ShieldCheck className="h-3 w-3" /> Select Multiple
+  </button>
+  )}
  </div>
  </div>
  
@@ -343,7 +350,139 @@ export function PdfListing() {
  )}
  </div>
 
+  {/* Floating Bulk Checkout Bar */}
+  {isSelectionMode && (
+   <div className="fixed bottom-10 inset-x-0 z-[150] px-4 animate-in slide-in-from-bottom-10">
+   <div className="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-[2.5rem] p-4 pr-6 flex flex-col md:flex-row items-center justify-between shadow-2xl border border-white/10 backdrop-blur-xl gap-4">
+   <div className="flex items-center gap-6 pl-4">
+   <button onClick={() => { setIsSelectionMode(false); setSelectedPdfs([]); }} className="text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-colors">
+   <X className="h-6 w-6" />
+   </button>
+   <div className="flex flex-col">
+   <span className="text-[10px] font-black uppercase tracking-widest text-orange-500">Selection Mode</span>
+   <span className="text-sm font-bold text-slate-900 dark:text-white">{selectedPdfs.length} Documents Selected</span>
+   </div>
+   <button 
+   onClick={() => {
+   const allIds = filtered.filter(p => String(p.id) !=='19').map(p => p.id);
+   setSelectedPdfs(allIds);
+   }}
+   className="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-orange-600 transition-colors border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-lg"
+   >
+   Select All in Category
+   </button>
+   </div>
+   
+   <div className="flex flex-wrap items-center gap-3">
+   <button 
+   onClick={() => {
+     setSelectedPdfs(['0']);
+     setTimeout(() => handleBulkPay(), 50);
+   }}
+   className="border-2 border-orange-600 hover:bg-orange-600 hover:text-white text-orange-600 px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all active:scale-95"
+   >
+     Unlock All Maps (₹499)
+   </button>
+   <button 
+   onClick={handleBulkPay}
+   className="bg-orange-600 hover:bg-orange-500 text-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/10 active:scale-95"
+   >
+   {verifiedLead ? `Unlock Selection (₹${selectionTotal})` : 'Verify Mobile to Unlock'}
+   </button>
+   </div>
+   </div>
+   </div>
+   )}
 
+  {/* Bulk UPI Checkout Modal */}
+  {showBulkCheckout && (
+  <div className="fixed inset-0 z-[400] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl p-6">
+  <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 text-center shadow-2xl border border-slate-100 dark:border-slate-800">
+  <div className="h-20 w-20 bg-orange-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-orange-500/20">
+  <ShieldCheck className="h-10 w-10 text-orange-600" />
+  </div>
+  
+  <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-2">
+    {selectedPdfs.includes('0') ? 'Unlock All Documents' : `Unlock ${selectedPdfs.length} Documents`}
+  </h3>
+  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Secure UPI Payment Required</p>
+
+  <div className="space-y-4">
+  <div className="p-6 bg-white dark:bg-slate-950 rounded-3xl border border-slate-100 dark:border-slate-800 flex justify-between items-center">
+  <div className="text-left">
+  <p className="text-[10px] font-black text-slate-400 uppercase">{selectionType ==='view' ?'Streaming' :'Full Download'} Access</p>
+  <p className="text-xs font-bold text-slate-900 dark:text-white mt-1 uppercase">
+    {selectedPdfs.includes('0') ? 'LIFETIME PRO ACCESS' : `${selectedPdfs.length} PREMIUM FILES`}
+  </p>
+  </div>
+  <p className="text-3xl font-black italic text-orange-600">₹{calculatedTotal || selectionTotal}</p>
+  </div>
+
+  {!utrSubmitted ? (
+    <form onSubmit={handleVerifyUtr} className="space-y-4 text-left">
+      <div className="p-4 bg-orange-500/5 rounded-2xl border border-orange-500/10 text-center">
+        <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500">Scan QR or Click to Pay</span>
+        <a 
+        href={`upi://pay?pa=solankiparesh1183@okaxis&pn=Dholera%20Platform&am=${calculatedTotal || selectionTotal}.00&cu=INR&tn=Bulk_Unlock_${tempTxnId}`}
+        className="text-xs font-black text-[#FF7A00] hover:underline block mt-1 text-center"
+        >
+          UPI ID: solankiparesh1183@okaxis
+        </a>
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-1">Enter UPI Ref No. / UTR No.</label>
+        <input 
+          type="text"
+          placeholder="12-DIGIT TRANSACTION UTR"
+          required
+          maxLength={14}
+          className="w-full bg-slate-50 dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3 text-xs font-bold text-slate-900 dark:text-white outline-none focus:border-orange-600 transition-all text-center uppercase tracking-widest"
+          value={utr}
+          onChange={(e) => setUtr(e.target.value.replace(/\D/g,''))}
+        />
+      </div>
+
+      {utrError && <p className="text-[9px] font-bold text-red-500 uppercase px-1 text-center">{utrError}</p>}
+
+      <button 
+        type="submit"
+        disabled={isVerifyingUtr || utr.length < 10}
+        className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-slate-700 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all active:scale-95"
+      >
+        {isVerifyingUtr ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Submit UTR for Approval'}
+      </button>
+
+      <a 
+      href={`https://wa.me/917435808031?text=Paid%20Rs.${calculatedTotal || selectionTotal}%20for%20access.%20Transaction%20ID:%20${tempTxnId}.%20UTR:%20${utr}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-full border-2 border-green-500/20 hover:bg-green-500/5 text-green-500 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 transition-all text-center active:scale-95"
+      >
+        Submit via WhatsApp
+      </a>
+    </form>
+  ) : (
+    <div className="py-6 space-y-4">
+      <div className="h-14 w-14 rounded-full bg-green-500/10 flex items-center justify-center mx-auto text-green-500">
+        <CheckCircle2 className="h-8 w-8" />
+      </div>
+      <p className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">UTR Submitted!</p>
+      <p className="text-[10px] font-bold text-slate-500 uppercase leading-relaxed tracking-wide">Admin will verify the payment and grant access within 5-10 minutes.</p>
+    </div>
+  )}
+
+  <button 
+  type="button"
+  onClick={() => setShowBulkCheckout(false)} 
+  className="w-full py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white transition-all"
+  >
+    Close
+  </button>
+  </div>
+  </div>
+  </div>
+  )}
 
  {showVerifyPopup && (
  <LeadPopup
