@@ -18,11 +18,11 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }: Bl
     const dismissed = sessionStorage.getItem('blog_lead_popup_dismissed');
     if (dismissed === 'true') return;
 
-    // Show popup after 12 seconds of reading
+    // Show popup after 45 seconds of reading
     const timer = setTimeout(() => {
       setShowPopup(true);
       setHasTriggered(true);
-    }, 12000);
+    }, 45000);
 
     return () => clearTimeout(timer);
   }, [hasTriggered]);
@@ -59,13 +59,13 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }: Bl
 
           <div className="space-y-2">
             <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#FF7A00]">
-              Exclusive Investment Access
+              Direct Help from the Founder
             </span>
             <h3 className="text-2xl font-black uppercase tracking-tight text-white leading-tight">
-              Connect With The Founder
+              Talk to Naresh Gohel
             </h3>
             <p className="text-xs font-semibold text-slate-300 dark:text-slate-400 leading-relaxed max-w-[280px] mx-auto uppercase tracking-wide">
-              Chat directly with Naresh Gohel on WhatsApp for expert land guidance, TP maps, and payment plans.
+              Message Naresh directly on WhatsApp for simple advice about land, maps, and easy ways to pay.
             </p>
           </div>
 

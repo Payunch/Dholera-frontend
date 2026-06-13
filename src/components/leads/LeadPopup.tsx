@@ -186,7 +186,7 @@ export const LeadPopup = ({
               <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-3">
                 {step === 'success' ? t('access_granted') || 'Access Granted' : (step === 'otp' ? 'Verify Code' : (title || t('start_here')))}
               </h2>
-              <p className="text-[10px] md:text-xs font-bold text-slate-350 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
+              <p className="text-[10px] md:text-xs font-bold text-slate-300 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
                 {step === 'otp' ? 'Enter the verification code sent to your phone' : (subtitle || t('verify_desc'))}
               </p>
             </div>
@@ -223,7 +223,7 @@ export const LeadPopup = ({
                   checked={agreedToTerms}
                   onChange={(e) => setAgreedToTerms(e.target.checked)}
                 />
-                <label htmlFor="terms" className="text-[10px] font-bold text-slate-350 leading-relaxed cursor-pointer uppercase tracking-tight">
+                <label htmlFor="terms" className="text-[10px] font-bold text-slate-300 leading-relaxed cursor-pointer uppercase tracking-tight">
                   {t('terms_agree') || 'I agree to the'} <Link href="/terms-and-conditions" className="text-[#FF7A00] font-black">{t('terms') || 'Terms'}</Link> {t('and') || 'and'} <Link href="/privacy-policy" className="text-[#FF7A00] font-black">{t('privacy') || 'Privacy Policy'}</Link>.
                 </label>
               </div>
