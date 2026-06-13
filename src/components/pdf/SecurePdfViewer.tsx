@@ -212,18 +212,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  </div>
 
  <div className="flex-1 flex flex-col relative">
- {isMobile && (
- <div className="absolute top-4 right-4 z-30">
- <a 
- href={directUrl} 
- target="_blank" 
- rel="noopener noreferrer"
- className="flex items-center gap-2 rounded-xl bg-slate-900/80 backdrop-blur-sm px-4 py-2 text-[10px] font-black uppercase text-white hover:bg-orange-600 transition-all"
- >
- Full Screen <ExternalLink className="h-3 w-3" />
- </a>
- </div>
- )}
+  {/* Full Screen link removed to prevent downloads */}
  
  <div className="absolute top-0 inset-x-0 h-14 z-20 cursor-not-allowed" title="Toolbar restricted" />
  <iframe 

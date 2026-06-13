@@ -302,7 +302,7 @@ export const LeadPopup = ({
           </div>
         </div>
       </div>
-      <div id="recaptcha-container" className="hidden"></div>
+      <div id="recaptcha-container"></div>
     </div>
   );
 };

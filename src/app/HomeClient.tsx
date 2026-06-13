@@ -87,6 +87,9 @@ export function HomeClient() {
         notes: `Requested site visit for: ${visitForm.date}`
       });
       setVisitFormStatus("success");
+      const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
+      const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappUrl, '_blank');
       setVisitForm({ name: "", phone: "", date: tomorrow });
     } catch (err) {
       console.error("Site visit submission error:", err);
@@ -226,6 +229,14 @@ export function HomeClient() {
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex gap-16 md:gap-32 pr-16 md:pr-32 items-center">
                   {[
+                    { logo: "/images/tata.png", name: "Tata Electronics" },
+                    { logo: "/images/larsen-toubro.png", name: "L&T Infrastructure" },
+                    { logo: "/images/torrent.png", name: "Torrent Power" },
+                    { logo: "/images/renew.png", name: "ReNew Power" },
+                    { logo: "/images/tata.png", name: "Tata Electronics" },
+                    { logo: "/images/larsen-toubro.png", name: "L&T Infrastructure" },
+                    { logo: "/images/torrent.png", name: "Torrent Power" },
+                    { logo: "/images/renew.png", name: "ReNew Power" },
                     { logo: "/images/tata.png", name: "Tata Electronics" },
                     { logo: "/images/larsen-toubro.png", name: "L&T Infrastructure" },
                     { logo: "/images/torrent.png", name: "Torrent Power" },

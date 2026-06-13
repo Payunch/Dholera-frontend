@@ -42,8 +42,8 @@ export function Navbar() {
     <div className="hidden md:block">
       <SplitLogo height={50} isFull />
     </div>
-    <div className="block md:hidden">
-      <SplitLogo height={36} isFull />
+    <div className="block md:hidden -ml-2">
+      <SplitLogo height={42} isFull />
     </div>
   </Link>
 
