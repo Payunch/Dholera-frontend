@@ -225,7 +225,7 @@ export function HomeClient() {
           </div>
 
           <div className="relative flex overflow-hidden group bg-white dark:bg-slate-950">
-            <div className="flex animate-marquee whitespace-nowrap items-center py-4">
+            <div className="flex w-max animate-marquee whitespace-nowrap items-center py-4">
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex gap-16 md:gap-32 pr-16 md:pr-32 items-center">
                   {[
