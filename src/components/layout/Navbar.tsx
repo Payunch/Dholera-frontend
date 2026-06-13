@@ -38,9 +38,14 @@ export function Navbar() {
  return (
  <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 dark:bg-slate-950/80 dark:border-slate-800 backdrop-blur-md transition-colors">
  <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-8">
- <Link href="/" className="flex items-center gap-3">
- <SplitLogo height={50} isFull />
- </Link>
+  <Link href="/" className="flex items-center gap-3">
+    <div className="hidden md:block">
+      <SplitLogo height={50} isFull />
+    </div>
+    <div className="block md:hidden">
+      <SplitLogo height={36} isFull />
+    </div>
+  </Link>
 
  {/* Desktop Nav */}
  <nav className="hidden md:flex items-center space-x-8 text-[10px] font-black uppercase tracking-wider font-display">
@@ -49,8 +54,8 @@ export function Navbar() {
  key={item.href}
  href={item.href}
  className={cn(
-"transition-colors hover:text-orange-600",
- (pathname === item.href || (item.href !=="/" && pathname.startsWith(item.href))) ?"text-orange-600" :"text-slate-900 dark:text-white"
+ "transition-colors hover:text-orange-600",
+ (item.href === "/" ? pathname === "/" : pathname.startsWith(item.href.split('?')[0])) ?"text-orange-600" :"text-slate-900 dark:text-white"
  )}
  >
  {item.label}
@@ -110,10 +115,18 @@ export function Navbar() {
  </Link>
  </nav>
 
- {/* Mobile Nav Toggle */}
- <button className="md:hidden text-slate-900 dark:text-white" onClick={toggleMenu}>
- {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
- </button>
+ {/* Mobile Nav Toggle & Theme */}
+ <div className="md:hidden flex items-center gap-4">
+   <button
+     onClick={toggleTheme}
+     className="flex items-center justify-center h-8 w-8 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 transition-all"
+   >
+     {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+   </button>
+   <button className="text-slate-900 dark:text-white" onClick={toggleMenu}>
+     {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+   </button>
+ </div>
  </div>
 
  {/* Mobile Menu */}
@@ -126,8 +139,8 @@ export function Navbar() {
  href={item.href}
  onClick={() => setIsMenuOpen(false)}
  className={cn(
-"flex items-center gap-4 text-sm font-black uppercase tracking-widest transition-colors",
- (pathname === item.href || (item.href !=="/" && pathname.startsWith(item.href))) ?"text-orange-600" :"text-slate-900 dark:text-white"
+ "flex items-center gap-4 text-sm font-black uppercase tracking-widest transition-colors",
+ (item.href === "/" ? pathname === "/" : pathname.startsWith(item.href.split('?')[0])) ?"text-orange-600" :"text-slate-900 dark:text-white"
  )}
  >
  <item.icon className="h-5 w-5" />

@@ -162,19 +162,9 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  </span>
  </div>
   <div className="flex items-center gap-4">
-  {!loading && !error && (
-  <a 
-  href={directUrl} 
-  target="_blank" 
-  rel="noopener noreferrer" 
-  className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-black uppercase text-white hover:bg-orange-500 transition-colors flex items-center gap-1.5"
-  >
-  <Download className="h-3 w-3" /> Save / Print
-  </a>
-  )}
-  <button onClick={onClose} className="rounded-full p-2 bg-white/5 text-slate-400 hover:text-white hover:bg-red-500/20 transition-all dark:bg-slate-900">
-  <X className="h-5 w-5" />
-  </button>
+    <button onClick={onClose} className="rounded-full p-2 bg-white/5 text-slate-400 hover:text-white hover:bg-red-500/20 transition-all dark:bg-slate-900">
+      <X className="h-5 w-5" />
+    </button>
   </div>
  </div>
 
