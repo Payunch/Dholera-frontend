@@ -16,16 +16,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${project.name} | Dholera Investment Project`,
-    description: project.description.slice(0, 160).replace(/\n/g, " "),
+    description: `${project.name} offers ${project.offering} in the ${project.category} zone. Plot sizes: ${project.plotSizes}. Zoning: ${project.zoning}.`,
     openGraph: {
       title: `${project.name} | Dholera Projects`,
-      description: project.description.slice(0, 160).replace(/\n/g, " "),
+      description: `${project.name} offers ${project.offering} in the ${project.category} zone. Plot sizes: ${project.plotSizes}. Zoning: ${project.zoning}.`,
       images: [{ url: project.image }],
     },
     twitter: {
       card: "summary_large_image",
       title: project.name,
-      description: project.description.slice(0, 160).replace(/\n/g, " "),
+      description: `${project.name} offers ${project.offering} in the ${project.category} zone. Plot sizes: ${project.plotSizes}. Zoning: ${project.zoning}.`,
       images: [project.image],
     }
   };
