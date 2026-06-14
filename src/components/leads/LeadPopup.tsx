@@ -22,6 +22,7 @@ interface LeadPopupProps {
   onClose?: () => void;
   title?: string;
   subtitle?: string;
+  showCountdown?: boolean;
 }
 
 export const LeadPopup = ({ 
@@ -31,7 +32,8 @@ export const LeadPopup = ({
   onSuccess,
   onClose,
   title,
-  subtitle
+  subtitle,
+  showCountdown = false
 }: LeadPopupProps) => {
   const { loginLead, verifiedLead } = useLead();
   const { lang, setLang, t } = useLanguage();
@@ -216,7 +218,7 @@ export const LeadPopup = ({
             </div>
             
             <div>
-              {step === 'details' && compulsory && (
+              {step === 'details' && (compulsory || showCountdown) && (
                 <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/50 bg-orange-500/20 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-6 animate-pulse shadow-[0_0_15px_rgba(255,122,0,0.3)]">
                   {t('exclusive_10_day_offer')}
                 </div>
@@ -228,7 +230,7 @@ export const LeadPopup = ({
                 {step === 'otp' ? t('enter_verification_code') : (subtitle || t('verify_desc'))}
               </p>
               
-              {step === 'details' && compulsory && timeLeft && (
+              {step === 'details' && (compulsory || showCountdown) && timeLeft && (
                 <div className="mt-8 flex justify-center md:justify-start gap-3">
                   {[
                     { label: 'Days', value: timeLeft.d },
