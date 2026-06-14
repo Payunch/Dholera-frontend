@@ -42,7 +42,7 @@ export default function ClientLayout({
  if (isActuallyAdmin) {
  return (
  <ClientProviders>
- <div className="min-h-screen bg-white dark:bg-slate-950">
+ <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
  {children}
  </div>
  </ClientProviders>
