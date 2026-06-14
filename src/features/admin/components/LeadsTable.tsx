@@ -40,27 +40,31 @@ export function LeadsTable({ leads: initialLeads }: LeadsTableProps) {
    return () => clearTimeout(timeoutId);
  }, [page, search]);
 
- const handleStatusChange = async (leadId: number, newStatus: string) => {
-   try {
-     await apiClient.put(`/leads/${leadId}/status`, { status: newStatus });
-     setLeads(leads.map(l => l.id === leadId ? { ...l, status: newStatus } : l));
-   } catch (err) {
-     console.error('Failed to update status', err);
-     alert('Failed to update status.');
-   }
- };
+  const handleStatusChange = async (leadId: number, newStatus: string) => {
+    try {
+      const { fetchCsrfToken } = await import("@/utils/csrf");
+      const csrf = await fetchCsrfToken();
+      await apiClient.put(`/leads/${leadId}/status`, { status: newStatus }, { headers: { 'X-CSRF-Token': csrf || '' } });
+      setLeads(leads.map(l => l.id === leadId ? { ...l, status: newStatus } : l));
+    } catch (err) {
+      console.error('Failed to update status', err);
+      alert('Failed to update status.');
+    }
+  };
 
- const handleDeleteLead = async (leadId: number) => {
-   if (!confirm("Are you sure you want to permanently delete this lead?")) return;
-   try {
-     await apiClient.delete(`/leads/${leadId}`);
-     setLeads(leads.filter(l => l.id !== leadId));
-     if (selectedLead?.id === leadId) setSelectedLead(null);
-   } catch (err) {
-     console.error('Failed to delete lead', err);
-     alert('Failed to delete lead.');
-   }
- };
+  const handleDeleteLead = async (leadId: number) => {
+    if (!confirm("Are you sure you want to permanently delete this lead?")) return;
+    try {
+      const { fetchCsrfToken } = await import("@/utils/csrf");
+      const csrf = await fetchCsrfToken();
+      await apiClient.delete(`/leads/${leadId}`, { headers: { 'X-CSRF-Token': csrf || '' } });
+      setLeads(leads.filter(l => l.id !== leadId));
+      if (selectedLead?.id === leadId) setSelectedLead(null);
+    } catch (err) {
+      console.error('Failed to delete lead', err);
+      alert('Failed to delete lead.');
+    }
+  };
 
  return (
  <>
