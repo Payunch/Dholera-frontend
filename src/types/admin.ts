@@ -4,7 +4,8 @@ export interface Lead {
  email: string;
  phone: string;
  source: string;
- status:"New" |"Contacted" |"Converted" |"Qualified";
+ utm_source?: string;
+ status: "New" | "Contacted" | "Site Visit" | "Converted" | "Qualified" | "Follow-up" | "Not Interested" | "Lost" | string;
  createdAt: string;
  is_pro?: boolean;
  is_registered?: boolean;

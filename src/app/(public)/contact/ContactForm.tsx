@@ -53,14 +53,21 @@ export function ContactForm() {
 
  setStatus("loading");
  try {
+ const utmSource = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('utm_source') || 'organic' : 'organic';
  await apiClient.post("/leads", { 
  ...formData, 
  source:"Contact Page - Standardized Form",
+ utm_source: utmSource,
  notes:`Requested meeting for: ${formData.date}`,
  preferred_language: window.localStorage.getItem('preferred_lang') ||'en'
  });
  setStatus("success");
  setFormData({ name:"", phone:"", date: tomorrow });
+ 
+ // Fire Meta Pixel Event
+ if (typeof window !== "undefined" && (window as any).fbq) {
+   (window as any).fbq('track', 'Lead');
+ }
  } catch (err) {
  console.error("Submission error:", err);
  setStatus("error");

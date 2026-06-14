@@ -23,7 +23,9 @@ import { PlatformInsights } from"./PlatformInsights";
 import { SystemManagement } from"./SystemManagement";
 import { cn } from"@/lib/utils";
 import { apiClient, API_BASE_URL } from"@/lib/api";
-import { fetchCsrfToken } from"@/utils/csrf";
+import { fetchCsrfToken } from "@/utils/csrf";
+import { useLanguage } from "@/providers/LanguageProvider";
+import { Sun, Moon } from "lucide-react";
 
 interface AdminDashboardClientProps {
  initialLeads: Lead[];
@@ -32,9 +34,10 @@ interface AdminDashboardClientProps {
 
 export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDashboardClientProps) {
  const router = useRouter();
- const [activeTab, setActiveTab] = React.useState(0);
- const [isLoggingOut, setIsLoggingOut] = React.useState(false);
- const [pendingCount, setPendingCount] = React.useState(0);
+  const [activeTab, setActiveTab] = React.useState(0);
+  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
+  const [pendingCount, setPendingCount] = React.useState(0);
+  const { theme, toggleTheme } = useLanguage();
 
  const fetchPendingCount = React.useCallback(async () => {
  try {
@@ -111,16 +114,26 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
  ))}
  </nav>
 
- <button 
- onClick={handleLogout}
+  <div className="flex items-center gap-4">
+    <button
+      onClick={toggleTheme}
+      className="flex items-center justify-center h-10 w-10 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 hover:border-orange-600 transition-all shadow-sm"
+      title="Toggle Theme"
+    >
+      {theme === 'light' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+    </button>
+
+    <button 
+    onClick={handleLogout}
  disabled={isLoggingOut}
  className="flex items-center gap-2.5 px-6 py-3 rounded-xl border-2 border-slate-100 dark:border-slate-800 text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:border-red-50 dark:hover:border-red-900/30 transition-all"
  >
  {isLoggingOut ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogOut className="h-4 w-4" />}
- Secure Exit
- </button>
- </div>
- </header>
+    Secure Exit
+    </button>
+  </div>
+  </div>
+  </header>
 
  {/* Main Dashboard Content */}
  <main className="flex-1 p-8">

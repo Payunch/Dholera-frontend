@@ -35,6 +35,12 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }: Bl
   const handleWhatsAppClick = () => {
     setShowPopup(false);
     sessionStorage.setItem('blog_lead_popup_dismissed', 'true');
+    
+    // Fire Meta Pixel Event
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq('track', 'Contact');
+    }
+
     // WhatsApp native bold formatting uses asterisks * instead of <b> tags
     const text = encodeURIComponent(`HELLO NARESH, I AM INTERESTED IN INVESTMENT OPPORTUNITIES IN *DHOLERA SMART CITY*. PLEASE SHARE THE LATEST UPDATES AND PROJECT DETAILS`);
     window.open(`https://wa.me/917435808031?text=${text}`, '_blank');

@@ -40,6 +40,16 @@ export function LeadsTable({ leads: initialLeads }: LeadsTableProps) {
    return () => clearTimeout(timeoutId);
  }, [page, search]);
 
+ const handleStatusChange = async (leadId: number, newStatus: string) => {
+   try {
+     await apiClient.put(`/leads/${leadId}/status`, { status: newStatus });
+     setLeads(leads.map(l => l.id === leadId ? { ...l, status: newStatus } : l));
+   } catch (err) {
+     console.error('Failed to update status', err);
+     alert('Failed to update status.');
+   }
+ };
+
  return (
  <>
  <div className="overflow-hidden rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl transition-colors duration-300">
@@ -99,14 +109,30 @@ export function LeadsTable({ leads: initialLeads }: LeadsTableProps) {
  </div>
  </td>
  <td className="px-8 py-5">
- <span className={cn(
-"rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest",
- lead.status ==="New" ?"bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400" :
- lead.status ==="Converted" ?"bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400" :
-"bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
- )}>
- {lead.status}
- </span>
+  <select
+    value={lead.status}
+    onChange={(e) => handleStatusChange(lead.id, e.target.value)}
+    className={cn(
+      "rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest border border-slate-200 dark:border-slate-700 outline-none cursor-pointer appearance-none",
+      lead.status === "New" ? "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400" :
+      lead.status === "Converted" ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400" :
+      lead.status === "Site Visit" ? "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400" :
+      "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+    )}
+  >
+    <option value="New">New</option>
+    <option value="Contacted">Contacted</option>
+    <option value="Site Visit">Site Visit</option>
+    <option value="Converted">Converted</option>
+    <option value="Follow-up">Follow-up</option>
+    <option value="Not Interested">Not Interested</option>
+    <option value="Lost">Lost</option>
+  </select>
+  {lead.utm_source && lead.utm_source !== 'organic' && (
+    <div className="mt-2 text-[8px] font-bold text-slate-400 uppercase tracking-widest">
+      {lead.utm_source}
+    </div>
+  )}
  </td>
  <td className="px-8 py-5">
  <div className="flex items-center justify-center gap-2">

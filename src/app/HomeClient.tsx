@@ -85,12 +85,20 @@ export function HomeClient() {
     setVisitFormStatus("loading");
 
     try {
+      const utmSource = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('utm_source') || 'organic' : 'organic';
       await apiClient.post("/leads", {
         ...visitForm,
         source: "Website Site Visit Request",
+        utm_source: utmSource,
         notes: `Requested site visit for: ${visitForm.date}`
       });
       setVisitFormStatus("success");
+      
+      // Fire Meta Pixel Event
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq('track', 'Lead');
+      }
+
       const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
       const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, '_blank');
