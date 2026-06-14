@@ -67,18 +67,21 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
  };
 
  const fetchTranslations = useCallback(async (l: Language) => {
- // Start with local translations
- const localDict = LOCAL_TRANSLATIONS[l] || {};
- setTranslations(localDict);
+    // Start with local translations
+    const localDict = LOCAL_TRANSLATIONS[l] || {};
+    setTranslations(localDict);
 
- try {
- // Sync with backend for dynamic content or updates
- const response = await apiClient.get(`/preferences/translations/${l}`);
- setTranslations(prev => ({ ...prev, ...response.data }));
- } catch (err) {
- // Fallback is already set to localDict
- }
- }, []);
+    try {
+      // Sync with backend for dynamic content or updates
+      const response = await apiClient.get(`/preferences/translations/${l}`);
+      // ONLY merge if response.data is a valid object (not a string/HTML)
+      if (response.data && typeof response.data === 'object' && !Array.isArray(response.data)) {
+        setTranslations(prev => ({ ...prev, ...response.data }));
+      }
+    } catch (err) {
+      // Fallback is already set to localDict
+    }
+  }, []);
 
  const setLang = useCallback(async (newLang: Language) => {
  setLangState(newLang);
