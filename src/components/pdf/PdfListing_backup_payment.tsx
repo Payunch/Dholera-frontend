@@ -426,6 +426,7 @@ export function PdfListing() {
   }}
   title="Limited Time Offer"
   subtitle="Complete your mobile verification to unlock and view any PDF document instantly"
+  showCountdown={true}
   />
   )}
   
