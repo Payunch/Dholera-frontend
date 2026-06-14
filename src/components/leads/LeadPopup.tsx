@@ -56,13 +56,12 @@ export const LeadPopup = ({
       localStorage.setItem('dholera_offer_end', endTime);
     }
 
-    const timer = setInterval(() => {
+    const updateTimer = () => {
       const now = new Date().getTime();
       const distance = parseInt(endTime!) - now;
       
       if (distance < 0) {
         setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
-        clearInterval(timer);
         return;
       }
 
@@ -72,7 +71,10 @@ export const LeadPopup = ({
         m: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
         s: Math.floor((distance % (1000 * 60)) / 1000)
       });
-    }, 1000);
+    };
+
+    updateTimer(); // Initialize immediately so no 1-second delay
+    const timer = setInterval(updateTimer, 1000);
 
     return () => clearInterval(timer);
   }, []);
@@ -214,7 +216,7 @@ export const LeadPopup = ({
             </div>
             
             <div>
-              {step === 'details' && title?.includes(t('limited_time_free_access')) && (
+              {step === 'details' && compulsory && (
                 <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/50 bg-orange-500/20 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-6 animate-pulse shadow-[0_0_15px_rgba(255,122,0,0.3)]">
                   {t('exclusive_10_day_offer')}
                 </div>
@@ -226,7 +228,7 @@ export const LeadPopup = ({
                 {step === 'otp' ? t('enter_verification_code') : (subtitle || t('verify_desc'))}
               </p>
               
-              {step === 'details' && title?.includes(t('limited_time_free_access')) && timeLeft && (
+              {step === 'details' && compulsory && timeLeft && (
                 <div className="mt-8 flex justify-center md:justify-start gap-3">
                   {[
                     { label: 'Days', value: timeLeft.d },
