@@ -92,19 +92,14 @@ export const SystemManagement = () => {
     try {
       setLoading(true);
       const csrf = await fetchCsrfToken();
-      const res = await fetch(`${API_BASE_URL}/admin/leads/purge`, {
-        method: 'DELETE',
-        headers: { 'X-CSRF-Token': csrf || '' },
-        credentials: 'include'
+      const res = await apiClient.delete('/admin/leads/purge', {
+        headers: { 'X-CSRF-Token': csrf || '' }
       });
-      const data = await res.json();
-      if (res.ok) {
-        setStatus({ type: 'success', message: data.message || 'All lead data purged successfully.' });
-      } else {
-        throw new Error(data.error || 'Purge failed');
-      }
-    } catch (err) {
-      setStatus({ type: 'error', message: err instanceof Error ? err.message : 'Purge failed' });
+      
+      setStatus({ type: 'success', message: res.data?.message || 'All lead data purged successfully.' });
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.error || err.message || 'Purge failed';
+      setStatus({ type: 'error', message: errorMessage });
     } finally {
       setLoading(false);
     }
