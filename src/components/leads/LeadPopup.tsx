@@ -45,6 +45,37 @@ export const LeadPopup = ({
   const [step, setStep] = useState<'details' | 'otp' | 'success'>('details');
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const recaptchaVerifierRef = useRef<any>(null);
+  const [timeLeft, setTimeLeft] = useState<{d: number, h: number, m: number, s: number} | null>(null);
+
+  useEffect(() => {
+    let endTime = localStorage.getItem('dholera_offer_end');
+    if (!endTime) {
+      const target = new Date();
+      target.setDate(target.getDate() + 10);
+      endTime = target.getTime().toString();
+      localStorage.setItem('dholera_offer_end', endTime);
+    }
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = parseInt(endTime!) - now;
+      
+      if (distance < 0) {
+        setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
+        clearInterval(timer);
+        return;
+      }
+
+      setTimeLeft({
+        d: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        h: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        m: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        s: Math.floor((distance % (1000 * 60)) / 1000)
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   // Auto-close on verifiedLead availability
   useEffect(() => {
@@ -194,6 +225,22 @@ export const LeadPopup = ({
               <p className="text-[10px] md:text-xs font-bold text-slate-300 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
                 {step === 'otp' ? t('enter_verification_code') : (subtitle || t('verify_desc'))}
               </p>
+              
+              {step === 'details' && title?.includes(t('limited_time_free_access')) && timeLeft && (
+                <div className="mt-8 flex justify-center md:justify-start gap-3">
+                  {[
+                    { label: 'Days', value: timeLeft.d },
+                    { label: 'Hours', value: timeLeft.h },
+                    { label: 'Mins', value: timeLeft.m },
+                    { label: 'Secs', value: timeLeft.s }
+                  ].map((unit, i) => (
+                    <div key={i} className="flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl w-14 h-14 md:w-16 md:h-16 backdrop-blur-md shadow-lg">
+                      <span className="text-lg md:text-xl font-black text-white">{String(unit.value).padStart(2, '0')}</span>
+                      <span className="text-[8px] md:text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-1">{unit.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
