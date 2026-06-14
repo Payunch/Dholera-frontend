@@ -67,7 +67,11 @@ export function HomeClient() {
 
   const handleVisitSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!visitForm.name || visitForm.phone.length !== 10) return;
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!visitForm.name || !phoneRegex.test(visitForm.phone)) {
+      setVisitFormStatus("error");
+      return;
+    }
 
     // Date validation: must be within a week
     const selectedDate = new Date(visitForm.date);
@@ -108,7 +112,7 @@ export function HomeClient() {
             <div
               key={idx}
               className={cn(
-                "absolute inset-0 transition-opacity duration-[2000ms] ease-in-out",
+                "absolute inset-0 transition-opacity duration-[2000ms] ease-in-out will-change-opacity",
                 currentImageIndex === idx ? "opacity-50" : "opacity-0"
               )}
             >
@@ -117,7 +121,7 @@ export function HomeClient() {
                 alt={`Dholera SIR Infrastructure ${idx + 1}`}
                 fill
                 priority={idx === 0}
-                className="object-cover object-center transform scale-110 motion-safe:animate-[pulse_10s_infinite]"
+                className="object-cover object-center transform scale-110 motion-safe:animate-[pulse_10s_infinite] will-change-transform"
                 sizes="100vw"
               />
             </div>

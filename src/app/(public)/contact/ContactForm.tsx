@@ -41,7 +41,8 @@ export function ContactForm() {
 
  const handleSubmit = async (e: React.FormEvent) => {
  e.preventDefault();
- if (!formData.name || formData.phone.length !== 10) return;
+ const phoneRegex = /^[6-9]\d{9}$/;
+ if (!formData.name || !phoneRegex.test(formData.phone)) return;
  
  // Date validation
  const selectedDate = new Date(formData.date);
@@ -156,7 +157,7 @@ export function ContactForm() {
  </div>
  <button 
  type="submit"
- disabled={status ==='loading' || formData.phone.length !== 10}
+ disabled={status ==='loading' || !(/^[6-9]\d{9}$/.test(formData.phone))}
  className="w-full h-14 mt-4 rounded-xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-700 disabled:text-slate-400 transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center active:scale-95 group"
  >
  {status ==='loading' ? (

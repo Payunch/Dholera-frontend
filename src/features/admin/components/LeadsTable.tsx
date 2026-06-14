@@ -3,21 +3,60 @@
 import { Lead } from"@/types/admin";
 import { MessageSquare, Phone, Info, Eye, Clock, ShieldCheck, MapPin, Monitor, X, Globe, Calendar } from"lucide-react";
 import { cn } from"@/lib/utils";
-import React, { useState } from"react";
+import React, { useState, useEffect } from "react";
+import { apiClient } from "@/lib/api";
 
 interface LeadsTableProps {
  leads: Lead[];
 }
 
-export function LeadsTable({ leads }: LeadsTableProps) {
+export function LeadsTable({ leads: initialLeads }: LeadsTableProps) {
+ const [leads, setLeads] = useState<Lead[]>(initialLeads);
  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+ const [search, setSearch] = useState("");
+ const [page, setPage] = useState(1);
+ const [loading, setLoading] = useState(false);
+ const limit = 50;
+
+ useEffect(() => {
+   // Skip initial fetch since we have initialLeads
+   if (page === 1 && !search && leads === initialLeads) return;
+   
+   const fetchLeads = async () => {
+     setLoading(true);
+     try {
+       const res = await apiClient.get('/leads', {
+         params: { page, limit, search: search.trim() || undefined }
+       });
+       setLeads(Array.isArray(res.data) ? res.data : []);
+     } catch (err) {
+       console.error('Failed to fetch leads', err);
+     } finally {
+       setLoading(false);
+     }
+   };
+   
+   const timeoutId = setTimeout(fetchLeads, 500); // Debounce search
+   return () => clearTimeout(timeoutId);
+ }, [page, search]);
 
  return (
  <>
  <div className="overflow-hidden rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl transition-colors duration-300">
- <div className="bg-white/50 dark:bg-slate-900/50 px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+ <div className="bg-white/50 dark:bg-slate-900/50 px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+ <div>
  <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Recent Activity</h3>
  <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Live Database Stream</span>
+ </div>
+ <div className="flex items-center gap-4">
+ <input 
+ type="text" 
+ placeholder="Search by name or phone..." 
+ value={search}
+ onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+ className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+ />
+ </div>
  </div>
  <div className="overflow-x-auto">
  <table className="w-full text-left">
@@ -85,6 +124,28 @@ export function LeadsTable({ leads }: LeadsTableProps) {
  </tbody>
  </table>
  </div>
+
+ <div className="px-8 py-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+      {loading ? 'Loading...' : `Showing page ${page}`}
+    </span>
+    <div className="flex gap-2">
+      <button 
+        onClick={() => setPage(p => Math.max(1, p - 1))}
+        disabled={page === 1}
+        className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-black uppercase tracking-widest disabled:opacity-50 hover:bg-slate-100 dark:hover:bg-slate-800"
+      >
+        Previous
+      </button>
+      <button 
+        onClick={() => setPage(p => p + 1)}
+        disabled={leads.length < limit}
+        className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-black uppercase tracking-widest disabled:opacity-50 hover:bg-slate-100 dark:hover:bg-slate-800"
+      >
+        Next
+      </button>
+    </div>
+  </div>
  </div>
 
  {/* Deep Detail Modal */}
