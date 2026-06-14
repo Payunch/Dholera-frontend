@@ -71,7 +71,7 @@ export default function AdminLoginPage() {
  <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-600 blur-[120px]" />
  </div>
 
- <div className="relative z-10 w-full max-w-[440px] space-y-8 rounded-[2.5rem] border border-white/10 bg-white/5 p-10 backdrop-blur-2xl shadow-2xl dark:bg-slate-900">
+ <div className="relative z-10 w-full max-w-[440px] space-y-8 rounded-[2.5rem] border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-slate-900/90 p-10 backdrop-blur-2xl shadow-2xl">
  <div className="space-y-4 text-center">
  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-600 shadow-[0_0_30px_rgba(234,88,12,0.4)] text-slate-900 dark:text-white">
  <ShieldAlert className="h-8 w-8" />
@@ -96,7 +96,7 @@ export default function AdminLoginPage() {
  <input
  type="text"
  placeholder="USERNAME"
- className="w-full rounded-2xl border-2 border-white/5 bg-white/5 py-4 pl-12 pr-4 text-sm font-black tracking-widest text-white outline-none transition-all focus:border-orange-600 focus:bg-white/10 dark:bg-slate-900"
+ className="w-full rounded-2xl border-2 border-slate-200 dark:border-white/5 bg-white dark:bg-white/5 py-4 pl-12 pr-4 text-sm font-black tracking-widest text-slate-900 dark:text-white outline-none transition-all focus:border-orange-600 focus:bg-slate-50 dark:focus:bg-white/10"
  value={username}
  onChange={(e) => setUsername(e.target.value)}
  required
@@ -108,7 +108,7 @@ export default function AdminLoginPage() {
  <input
  type="password"
  placeholder="PASSWORD"
- className="w-full rounded-2xl border-2 border-white/5 bg-white/5 py-4 pl-12 pr-4 text-sm font-black tracking-widest text-white outline-none transition-all focus:border-orange-600 focus:bg-white/10 dark:bg-slate-900"
+ className="w-full rounded-2xl border-2 border-slate-200 dark:border-white/5 bg-white dark:bg-white/5 py-4 pl-12 pr-4 text-sm font-black tracking-widest text-slate-900 dark:text-white outline-none transition-all focus:border-orange-600 focus:bg-slate-50 dark:focus:bg-white/10"
  value={password}
  onChange={(e) => setPassword(e.target.value)}
  required
