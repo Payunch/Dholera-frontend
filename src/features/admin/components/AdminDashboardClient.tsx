@@ -19,8 +19,9 @@ import { LeadsTable } from"./LeadsTable";
 import { UpdatesManagement } from"./UpdatesManagement";
 import { PaymentApprovals } from"./PaymentApprovals";
 import { DatabaseExplorer } from"./DatabaseExplorer";
-import { PlatformInsights } from"./PlatformInsights";
-import { SystemManagement } from"./SystemManagement";
+import { PlatformInsights } from "./PlatformInsights";
+import { CampaignAnalytics } from "./CampaignAnalytics";
+import { SystemManagement } from "./SystemManagement";
 import { cn } from"@/lib/utils";
 import { apiClient, API_BASE_URL } from"@/lib/api";
 import { fetchCsrfToken } from "@/utils/csrf";
@@ -151,7 +152,12 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
  
  {activeTab === 2 && <UpdatesManagement />}
 
- {activeTab === 3 && <PlatformInsights />}
+  {activeTab === 3 && (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <PlatformInsights />
+      <CampaignAnalytics />
+    </div>
+  )}
 
  {activeTab === 4 && <DatabaseExplorer />}
 
