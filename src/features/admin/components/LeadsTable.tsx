@@ -1,7 +1,7 @@
 "use client";
 
 import { Lead } from"@/types/admin";
-import { MessageSquare, Phone, Info, Eye, Clock, ShieldCheck, MapPin, Monitor, X, Globe, Calendar } from"lucide-react";
+import { MessageSquare, Phone, Info, Eye, Clock, ShieldCheck, MapPin, Monitor, X, Globe, Calendar, Trash2 } from"lucide-react";
 import { cn } from"@/lib/utils";
 import React, { useState, useEffect } from "react";
 import { apiClient } from "@/lib/api";
@@ -47,6 +47,18 @@ export function LeadsTable({ leads: initialLeads }: LeadsTableProps) {
    } catch (err) {
      console.error('Failed to update status', err);
      alert('Failed to update status.');
+   }
+ };
+
+ const handleDeleteLead = async (leadId: number) => {
+   if (!confirm("Are you sure you want to permanently delete this lead?")) return;
+   try {
+     await apiClient.delete(`/leads/${leadId}`);
+     setLeads(leads.filter(l => l.id !== leadId));
+     if (selectedLead?.id === leadId) setSelectedLead(null);
+   } catch (err) {
+     console.error('Failed to delete lead', err);
+     alert('Failed to delete lead.');
    }
  };
 
@@ -142,6 +154,13 @@ export function LeadsTable({ leads: initialLeads }: LeadsTableProps) {
  title="View Full DB Details"
  >
  <Info className="h-4 w-4" />
+ </button>
+ <button 
+ onClick={() => handleDeleteLead(lead.id)}
+ className="rounded-xl border border-slate-200 dark:border-slate-700 p-2 text-slate-400 dark:text-slate-500 transition-all hover:bg-red-500 hover:text-white hover:border-red-500"
+ title="Delete Lead"
+ >
+ <Trash2 className="h-4 w-4" />
  </button>
  </div>
  </td>
