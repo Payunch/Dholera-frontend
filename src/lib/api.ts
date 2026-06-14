@@ -34,7 +34,7 @@ apiClient.interceptors.request.use(async (config) => {
  const requestUrl = config.url || "";
  
  // Identify if the TARGET is an admin API or if we are on an AUTH request
- const isApiAdminRequest = requestUrl.includes('/admin/');
+ const isApiAdminRequest = requestUrl.includes('/admin/') || (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin'));
  const isAuthRequest = requestUrl.includes('/auth/');
  
  // We attach lead_token to any request that is NOT an admin task and NOT an auth task.
