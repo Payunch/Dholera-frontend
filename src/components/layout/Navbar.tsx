@@ -37,19 +37,19 @@ export function Navbar() {
 
  return (
  <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 dark:bg-slate-950/80 dark:border-slate-800 backdrop-blur-md transition-colors">
- <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-8">
-  <div className="flex items-center gap-3 md:gap-0">
-    <Link href="/" className="flex items-center">
+ <div className="container mx-auto flex h-20 w-full items-center justify-between px-2 sm:px-4 md:px-8 overflow-hidden">
+  <div className="flex items-center gap-2 md:gap-0 flex-shrink-0">
+    <Link href="/" className="flex items-center flex-shrink-0">
       <div className="hidden md:block">
         <SplitLogo height={50} isFull />
       </div>
-      <div className="block md:hidden">
-        <SplitLogo height={46} isFull />
+      <div className="block md:hidden -ml-2">
+        <SplitLogo height={42} isFull />
       </div>
     </Link>
     
-    <div className="md:hidden flex items-center border-l-2 border-slate-200 dark:border-slate-800 pl-3 ml-1 h-6">
-      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] line-clamp-1 max-w-[120px]">
+    <div className="md:hidden flex items-center border-l-2 border-slate-200 dark:border-slate-800 pl-2 ml-1 h-5 overflow-hidden">
+      <span className="text-[9px] font-black uppercase tracking-[0.1em] text-[#FF7A00] truncate max-w-[90px] xs:max-w-[120px]">
         {navItems.find(item => item.href === "/" ? pathname === "/" : pathname.startsWith(item.href.split('?')[0]))?.label || "DHOLERA"}
       </span>
     </div>
@@ -124,7 +124,7 @@ export function Navbar() {
  </nav>
 
  {/* Mobile Nav Toggle & Theme */}
- <div className="md:hidden flex items-center gap-4">
+ <div className="md:hidden flex items-center gap-4 flex-shrink-0">
    <button
      onClick={toggleTheme}
      className="flex items-center justify-center h-8 w-8 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 transition-all"
