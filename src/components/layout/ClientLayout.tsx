@@ -2,7 +2,7 @@
 
 import { useEffect } from"react";
 import * as React from"react";
-import { usePathname } from"next/navigation";
+import { usePathname, useSearchParams } from"next/navigation";
 import { Navbar } from"@/components/layout/Navbar";
 import { Footer } from"@/components/layout/Footer";
 import { ClientProviders } from"@/providers/ClientProviders";
@@ -19,6 +19,7 @@ export default function ClientLayout({
  children: React.ReactNode;
 }) {
  const pathname = usePathname();
+ const searchParams = useSearchParams();
 
  // Robust admin check: Path-based + Cookie-based
  const isAdminPath = pathname?.startsWith('/admin');
@@ -27,8 +28,7 @@ export default function ClientLayout({
 
  useEffect(() => {
  if (typeof window !== "undefined") {
-   const params = new URLSearchParams(window.location.search);
-   const utm = params.get("utm_source");
+   const utm = searchParams?.get("utm_source");
    if (utm) {
      sessionStorage.setItem("dholera_utm_source", utm);
    }
@@ -43,7 +43,7 @@ export default function ClientLayout({
  }
  });
  }
- }, []);
+ }, [searchParams]);
 
  // Return clean layout for Admin
  if (isActuallyAdmin) {
