@@ -7,6 +7,7 @@ import { getCookie } from'@/utils/cookies';
 import { io, Socket } from'socket.io-client';
 import { cn } from '@/lib/utils';
 import { LeadPopup } from '@/components/leads/LeadPopup';
+import { useLanguage } from '@/providers/LanguageProvider';
 
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -24,6 +25,7 @@ interface SecurePdfViewerProps {
 }
 
 export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='view' }: SecurePdfViewerProps) => {
+ const { t } = useLanguage();
  const [mounted, setMounted] = useState(false);
  const [blobUrl, setBlobUrl] = useState<string | null>(null);
  const [loading, setLoading] = useState(true);
@@ -168,7 +170,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  <div className="flex items-center gap-3">
  <FileText className="h-5 w-5 text-orange-500" />
  <span className="text-xs font-black uppercase tracking-widest text-slate-900 dark:text-white hidden sm:inline">
- Secure Intelligence Hub
+ {t('secure_intelligence_hub')}
  </span>
  </div>
   <div className="flex items-center gap-4">
@@ -187,9 +189,9 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
   {displayError && !requiresPayment && !showVerifyPopup && (
   <div className="max-w-sm w-full bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 text-center shadow-2xl">
   <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
-  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-2">Access Denied</h3>
+  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-2">{t('access_denied')}</h3>
   <p className="text-slate-500 font-medium mb-8">{displayError}</p>
-  <button onClick={onClose} className="w-full rounded-2xl bg-white dark:bg-slate-900 py-4 text-white font-black uppercase tracking-widest">Close Viewer</button>
+  <button onClick={onClose} className="w-full rounded-2xl bg-white dark:bg-slate-900 py-4 text-white font-black uppercase tracking-widest">{t('close_viewer')}</button>
   </div>
   )}
 
@@ -206,8 +208,8 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
         setShowVerifyPopup(false);
         onClose();
       }}
-      title="Limited Time Free Access"
-      subtitle="Verify your mobile number to view premium DP Maps and Nakshas for free. (Offer ends in 10 days, after which viewing will require a paid subscription)"
+      title={t('limited_time_free_access')}
+      subtitle={t('offer_ends_in_10_days')}
     />
   )}
 
@@ -246,7 +248,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
            file={blobUrl}
            onLoadSuccess={({ numPages }) => setNumPages(numPages)}
            loading={<Loader2 className="h-10 w-10 text-orange-500 animate-spin" />}
-           error={<div className="text-red-500 text-sm font-bold uppercase p-4">Failed to render PDF</div>}
+           error={<div className="text-red-500 text-sm font-bold uppercase p-4">{t('failed_to_render_pdf')}</div>}
            className="flex flex-col items-center max-w-full"
          >
            {Array.from(new Array(numPages), (el, index) => (
@@ -267,7 +269,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  
  <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-4 flex flex-col md:flex-row items-center justify-center gap-4 z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] dark:bg-slate-900">
  <div className="flex flex-col items-center md:items-start mr-4">
- <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Project Owner</span>
+ <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('project_owner')}</span>
  <span className="text-sm font-black text-slate-900 dark:text-white">Naresh Gohel</span>
  </div>
  <div className="flex items-center gap-3 w-full md:w-auto">

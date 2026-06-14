@@ -164,5 +164,15 @@
   "whatsapp_hello": "Hi, I am interested in investing in Dholera SIR. I saw your platform. Please guide me.",
   "pdf_cat_official": "Official Documents",
   "pdf_cat_naksha": "Town Planning (Naksha)",
-  "pdf_cat_dp": "Development Plan (DP)"
+  "pdf_cat_dp": "Development Plan (DP)",
+  "secure_intelligence_hub": "Secure Intelligence Hub",
+  "access_denied": "Access Denied",
+  "close_viewer": "Close Viewer",
+  "limited_time_free_access": "Limited Time Free Access",
+  "offer_ends_in_10_days": "Verify your mobile number to view premium DP Maps and Nakshas for free. (Offer ends in 10 days, after which viewing will require a paid subscription)",
+  "failed_to_render_pdf": "Failed to render PDF",
+  "project_owner": "Project Owner",
+  "exclusive_10_day_offer": "⚡ EXCLUSIVE 10-DAY OFFER",
+  "verify_code": "Verify Code",
+  "enter_verification_code": "Enter the verification code sent to your phone"
 }

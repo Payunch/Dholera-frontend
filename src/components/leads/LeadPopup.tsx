@@ -183,16 +183,16 @@ export const LeadPopup = ({
             </div>
             
             <div>
-              {step === 'details' && title?.includes('Limited Time') && (
+              {step === 'details' && title?.includes(t('limited_time_free_access')) && (
                 <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/50 bg-orange-500/20 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-6 animate-pulse shadow-[0_0_15px_rgba(255,122,0,0.3)]">
-                  ⚡ EXCLUSIVE 10-DAY OFFER
+                  {t('exclusive_10_day_offer')}
                 </div>
               )}
               <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-3">
-                {step === 'success' ? t('access_granted') || 'Access Granted' : (step === 'otp' ? 'Verify Code' : (title || t('start_here')))}
+                {step === 'success' ? t('access_granted') || 'Access Granted' : (step === 'otp' ? t('verify_code') : (title || t('start_here')))}
               </h2>
               <p className="text-[10px] md:text-xs font-bold text-slate-300 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
-                {step === 'otp' ? 'Enter the verification code sent to your phone' : (subtitle || t('verify_desc'))}
+                {step === 'otp' ? t('enter_verification_code') : (subtitle || t('verify_desc'))}
               </p>
             </div>
           </div>
