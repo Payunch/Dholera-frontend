@@ -231,19 +231,26 @@ export const LeadPopup = ({
               </p>
               
               {step === 'details' && (compulsory || showCountdown) && timeLeft && (
-                <div className="mt-8 flex justify-center md:justify-start gap-3">
-                  {[
-                    { label: 'Days', value: timeLeft.d },
-                    { label: 'Hours', value: timeLeft.h },
-                    { label: 'Mins', value: timeLeft.m },
-                    { label: 'Secs', value: timeLeft.s }
-                  ].map((unit, i) => (
-                    <div key={i} className="flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl w-14 h-14 md:w-16 md:h-16 backdrop-blur-md shadow-lg">
-                      <span className="text-lg md:text-xl font-black text-white">{String(unit.value).padStart(2, '0')}</span>
-                      <span className="text-[8px] md:text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-1">{unit.label}</span>
+                <>
+                  <div className="mt-8 flex justify-center md:justify-start gap-3">
+                    {[
+                      { label: 'Days', value: timeLeft.d },
+                      { label: 'Hours', value: timeLeft.h },
+                      { label: 'Mins', value: timeLeft.m },
+                      { label: 'Secs', value: timeLeft.s }
+                    ].map((unit, i) => (
+                      <div key={i} className="flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl w-14 h-14 md:w-16 md:h-16 backdrop-blur-md shadow-lg">
+                        <span className="text-lg md:text-xl font-black text-white">{String(unit.value).padStart(2, '0')}</span>
+                        <span className="text-[8px] md:text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-1">{unit.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 inline-flex justify-center md:justify-start">
+                    <div className="bg-red-500/10 border border-red-500/20 text-red-400 font-bold text-[10px] md:text-xs px-3 py-2 rounded-lg tracking-wide text-center md:text-left">
+                      {(t('paid_warning') || 'After {days} days, viewing will require a paid subscription.').replace('{days}', timeLeft.d.toString())}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                </>
               )}
             </div>
           </div>

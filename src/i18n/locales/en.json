@@ -174,5 +174,6 @@
   "project_owner": "Project Owner",
   "exclusive_10_day_offer": "⚡ EXCLUSIVE 10-DAY OFFER",
   "verify_code": "Verify Code",
-  "enter_verification_code": "Enter the verification code sent to your phone"
+  "enter_verification_code": "Enter the verification code sent to your phone",
+  "paid_warning": "After {days} days, viewing will require a paid subscription."
 }
