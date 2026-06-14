@@ -147,7 +147,7 @@ export const LeadPopup = ({
       
       setTimeout(() => {
         setOpen(false);
-        if (onClose) onClose();
+        // Do not call onClose() here. Success means we completed the flow, not canceled it.
       }, 1500);
     } catch (err: any) {
       console.error('Failed to verify OTP:', err);
