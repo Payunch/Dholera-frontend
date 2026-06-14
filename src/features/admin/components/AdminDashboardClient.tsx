@@ -16,9 +16,8 @@ import {
 import { Lead, WhatsAppStats } from"@/types/admin";
 import { LeadsStats } from"./LeadsStats";
 import { LeadsTable } from"./LeadsTable";
-import { UpdatesManagement } from"./UpdatesManagement";
-import { PaymentApprovals } from"./PaymentApprovals";
-import { DatabaseExplorer } from"./DatabaseExplorer";
+import { UpdatesManagement } from "./UpdatesManagement";
+import { DatabaseExplorer } from "./DatabaseExplorer";
 import { PlatformInsights } from "./PlatformInsights";
 import { CampaignAnalytics } from "./CampaignAnalytics";
 import { SystemManagement } from "./SystemManagement";
@@ -37,28 +36,10 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
  const router = useRouter();
   const [activeTab, setActiveTab] = React.useState(0);
   const [isLoggingOut, setIsLoggingOut] = React.useState(false);
-  const [pendingCount, setPendingCount] = React.useState(0);
   const { theme, toggleTheme } = useLanguage();
-
- const fetchPendingCount = React.useCallback(async () => {
- try {
- const resp = await fetch(`${API_BASE_URL}/payment/admin/count-pending`, { credentials:'include' });
- if (resp.ok) {
- const data = await resp.json();
- setPendingCount(data.count || 0);
- }
- } catch (e) {}
- }, []);
-
- React.useEffect(() => {
- fetchPendingCount();
- const interval = setInterval(fetchPendingCount, 30000);
- return () => clearInterval(interval);
- }, [fetchPendingCount]);
 
  const tabs = [
  { label:"Leads", icon: Users },
- { label:"Approvals", icon: CheckSquare, badge: pendingCount },
  { label:"Updates", icon: Globe },
  { label:"Insights", icon: Activity },
  { label:"Database", icon: Database },
@@ -106,11 +87,6 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
  >
  <tab.icon className="h-4 w-4" />
  {tab.label}
- {tab.badge !== undefined && tab.badge > 0 && (
- <span className="bg-orange-600 text-slate-900 dark:text-white text-[8px] h-5 w-5 rounded-full flex items-center justify-center">
- {tab.badge}
- </span>
- )}
  </button>
  ))}
  </nav>
@@ -148,20 +124,18 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }: AdminDash
  </div>
  )}
 
- {activeTab === 1 && <PaymentApprovals />}
- 
- {activeTab === 2 && <UpdatesManagement />}
+ {activeTab === 1 && <UpdatesManagement />}
 
-  {activeTab === 3 && (
+  {activeTab === 2 && (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <PlatformInsights />
       <CampaignAnalytics />
     </div>
   )}
 
- {activeTab === 4 && <DatabaseExplorer />}
+ {activeTab === 3 && <DatabaseExplorer />}
 
- {activeTab === 5 && <SystemManagement />}
+ {activeTab === 4 && <SystemManagement />}
  </div>
  </main>
 
