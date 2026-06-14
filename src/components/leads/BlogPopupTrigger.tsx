@@ -36,7 +36,7 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }: Bl
     setShowPopup(false);
     sessionStorage.setItem('blog_lead_popup_dismissed', 'true');
     // WhatsApp native bold formatting uses asterisks * instead of <b> tags
-    const text = encodeURIComponent(`Hello Naresh, I am interested in *Dholera SIR investment opportunities.* I was reading your article on "${blogTitle}" and would like more details.`);
+    const text = encodeURIComponent(`HELLO NARESH, I AM INTERESTED IN INVESTMENT OPPORTUNITIES IN *DHOLERA SMART CITY*. PLEASE SHARE THE LATEST UPDATES AND PROJECT DETAILS`);
     window.open(`https://wa.me/917435808031?text=${text}`, '_blank');
   };
 
