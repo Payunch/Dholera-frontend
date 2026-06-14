@@ -164,7 +164,9 @@ export const LeadPopup = ({
       const idToken = await auth?.currentUser?.getIdToken();
       
       const cleanPhone = sanitizeDigits(phone, 10);
-      const utmSource = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('utm_source') || 'organic' : 'organic';
+      const utmSource = typeof window !== 'undefined' 
+        ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
+        : 'organic';
       
       const res = await apiClient.post('/leads/verify-otp', {
         name: name.trim(),

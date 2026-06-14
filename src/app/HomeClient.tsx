@@ -85,7 +85,9 @@ export function HomeClient() {
     setVisitFormStatus("loading");
 
     try {
-      const utmSource = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('utm_source') || 'organic' : 'organic';
+      const utmSource = typeof window !== 'undefined' 
+        ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
+        : 'organic';
       await apiClient.post("/leads", {
         ...visitForm,
         source: "Website Site Visit Request",

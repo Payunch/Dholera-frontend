@@ -26,7 +26,14 @@ export default function ClientLayout({
  const isActuallyAdmin = isAdminPath || hasAdminCookie;
 
  useEffect(() => {
- // ...
+ if (typeof window !== "undefined") {
+   const params = new URLSearchParams(window.location.search);
+   const utm = params.get("utm_source");
+   if (utm) {
+     sessionStorage.setItem("dholera_utm_source", utm);
+   }
+ }
+
  import("bootstrap/dist/js/bootstrap.bundle.min.js");
 
  if (typeof window !=="undefined" &&"serviceWorker" in navigator) {

@@ -53,7 +53,9 @@ export function ContactForm() {
 
  setStatus("loading");
  try {
- const utmSource = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('utm_source') || 'organic' : 'organic';
+ const utmSource = typeof window !== 'undefined' 
+   ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
+   : 'organic';
  await apiClient.post("/leads", { 
  ...formData, 
  source:"Contact Page - Standardized Form",
