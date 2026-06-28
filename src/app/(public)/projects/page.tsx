@@ -7,6 +7,7 @@ import { apiClient } from"@/lib/api";
 import { projects as staticProjects } from"@/data/projects";
 import { useLanguage } from"@/providers/LanguageProvider";
 import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight, Loader2, X } from"lucide-react";
+import { StaticPdfViewer } from"@/components/pdf/StaticPdfViewer";
 
 interface Project {
  slug: string;
@@ -233,12 +234,8 @@ export default function ProjectsPage() {
  <X className="h-5 w-5" />
  </button>
  </div>
- <div className="flex-1 w-full bg-slate-100 dark:bg-slate-950">
- <iframe 
- src={`${previewPdf}#toolbar=0&navpanes=0`} 
- className="w-full h-full border-0"
- title="PDF Preview"
- />
+ <div className="flex-1 w-full bg-slate-100 dark:bg-slate-950 overflow-hidden">
+ <StaticPdfViewer url={previewPdf} />
  </div>
  </div>
  </div>
