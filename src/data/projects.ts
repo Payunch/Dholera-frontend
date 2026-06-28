@@ -10,18 +10,6 @@ export interface Project {
  zoning: string;
  status: string;
  reraApproved: boolean;
-export interface Project {
- slug: string;
- name: string;
- category:"Residential" |"Commercial" |"Industrial";
- taglineKey: string;
- descKey: string;
- plotSizes: string;
- offering: string;
- roadWidth: string;
- zoning: string;
- status: string;
- reraApproved: boolean;
  mapUrl: string;
  whatsappText: string;
  location: string;
