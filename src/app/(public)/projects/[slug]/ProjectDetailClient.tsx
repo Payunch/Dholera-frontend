@@ -169,6 +169,17 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
  </div>
 
  <div className="space-y-4 pt-4">
+ {project.slug ==="final-dholera-report" && (
+ <a
+ href="/Final_Dholera_Report.pdf"
+ target="_blank"
+ rel="noopener noreferrer"
+ className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-orange-600 text-white text-xs font-black uppercase tracking-widest hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/10"
+ >
+ <ExternalLink className="h-5 w-5" />
+ View PDF Report
+ </a>
+ )}
  <a
  href={`https://wa.me/917435808031?text=${encodeURIComponent(project.whatsappText)}`}
  target="_blank"
