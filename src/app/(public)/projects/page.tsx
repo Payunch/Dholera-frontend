@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from"react";
 import Link from"next/link";
 import Image from"next/image";
 import { apiClient } from"@/lib/api";
+import { projects as staticProjects } from"@/data/projects";
 import { useLanguage } from"@/providers/LanguageProvider";
 import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight, Loader2 } from"lucide-react";
 
@@ -33,14 +34,22 @@ export default function ProjectsPage() {
  ];
 
  const fetchProjects = useCallback(async () => {
- try {
- const response = await apiClient.get("/content/projects");
- setProjects(response.data);
- } catch (err) {
- console.error("Failed to fetch projects:", err);
- } finally {
- setLoading(false);
- }
+  try {
+  const response = await apiClient.get("/content/projects");
+  const backendProjects = response.data || [];
+  const merged = [...backendProjects];
+  staticProjects.forEach(sp => {
+    if (!merged.find(bp => bp.slug === sp.slug)) {
+      merged.push(sp);
+    }
+  });
+  setProjects(merged);
+  } catch (err) {
+  console.error("Failed to fetch projects:", err);
+  setProjects(staticProjects);
+  } finally {
+  setLoading(false);
+  }
  }, []);
 
  useEffect(() => {
