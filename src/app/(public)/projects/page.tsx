@@ -140,7 +140,8 @@ export default function ProjectsPage() {
  return (
  <Link
  key={project.slug}
- href={`/projects/${project.slug}`}
+ href={project.slug ==="final-dholera-report" ?"/Final_Dholera_Report.pdf" : `/projects/${project.slug}`}
+ target={project.slug ==="final-dholera-report" ?"_blank" : undefined}
  className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
  >
  <div>
@@ -192,7 +193,7 @@ export default function ProjectsPage() {
  {/* Actions (Visual Button) */}
  <div className="p-8 md:p-10 pt-0">
  <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10 dark:group-hover:shadow-orange-600/30">
- Analyze Project Specs
+ {project.slug ==="final-dholera-report" ?"Read Full Report" :"Analyze Project Specs"}
  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
  </div>
  </div>
