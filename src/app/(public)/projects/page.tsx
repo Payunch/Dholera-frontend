@@ -6,7 +6,7 @@ import Image from"next/image";
 import { apiClient } from"@/lib/api";
 import { projects as staticProjects } from"@/data/projects";
 import { useLanguage } from"@/providers/LanguageProvider";
-import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight, Loader2 } from"lucide-react";
+import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight, Loader2, X } from"lucide-react";
 
 interface Project {
  slug: string;
@@ -25,6 +25,7 @@ export default function ProjectsPage() {
  const [loading, setLoading] = useState(true);
  const [searchQuery, setSearchQuery] = useState("");
  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+ const [previewPdf, setPreviewPdf] = useState<string | null>(null);
 
  const categories = [
  { label: t('all'), key:"All" },
@@ -140,8 +141,13 @@ export default function ProjectsPage() {
  return (
  <Link
  key={project.slug}
- href={project.slug ==="final-dholera-report" ?"/Final_Dholera_Report.pdf" : `/projects/${project.slug}`}
- target={project.slug ==="final-dholera-report" ?"_blank" : undefined}
+ href={project.slug ==="final-dholera-report" ?"#" : `/projects/${project.slug}`}
+ onClick={(e) => {
+   if (project.slug ==="final-dholera-report") {
+     e.preventDefault();
+     setPreviewPdf("/Final_Dholera_Report.pdf");
+   }
+ }}
  className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
  >
  <div>
@@ -214,7 +220,30 @@ export default function ProjectsPage() {
  )}
 
  </div>
+ 
+ {previewPdf && (
+ <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 md:p-8 animate-in fade-in duration-300">
+ <div className="relative w-full max-w-6xl h-[85vh] bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden shadow-2xl flex flex-col border border-slate-200 dark:border-slate-800">
+ <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+ <h3 className="font-display font-black uppercase tracking-widest text-slate-900 dark:text-white text-sm">Report Preview</h3>
+ <button 
+ onClick={() => setPreviewPdf(null)} 
+ className="p-2 text-slate-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl transition-colors"
+ >
+ <X className="h-5 w-5" />
+ </button>
+ </div>
+ <div className="flex-1 w-full bg-slate-100 dark:bg-slate-950">
+ <iframe 
+ src={`${previewPdf}#toolbar=0&navpanes=0`} 
+ className="w-full h-full border-0"
+ title="PDF Preview"
+ />
+ </div>
+ </div>
+ </div>
+ )}
+ 
  </div>
  );
 }
-
