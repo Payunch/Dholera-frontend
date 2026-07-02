@@ -24,7 +24,6 @@ export function Navbar() {
  { label: t('nav_infrastructure'), href:"/infrastructure", icon: Construction },
  { label: t('nav_updates'), href:"/blogs", icon: FileText },
  { label: t('nav_about'), href:"/about-us", icon: Users },
- { label: 'Contact', href:"/contact", icon: Users },
  ];
 
  const languages = [

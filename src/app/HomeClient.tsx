@@ -101,6 +101,9 @@ export function HomeClient() {
         (window as any).fbq('track', 'Lead');
       }
 
+      const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
+      const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappUrl, '_blank');
       setVisitForm({ name: "", phone: "", date: tomorrow });
     } catch (err) {
       console.error("Site visit submission error:", err);
