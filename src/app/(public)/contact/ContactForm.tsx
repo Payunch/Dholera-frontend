@@ -10,14 +10,12 @@ import { useLanguage } from"@/providers/LanguageProvider";
 export function ContactForm() {
  const { verifiedLead } = useLead();
  const { t } = useLanguage();
- const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
- const today = new Date().toISOString().split('T')[0];
- const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
  const [formData, setFormData] = React.useState({ 
- name:"", 
- phone:"", 
- date: tomorrow 
+ name: "", 
+ phone: "", 
+ email: "",
+ notes: "" 
  });
 
  // Pre-fill form if lead is already verified
@@ -43,13 +41,6 @@ export function ContactForm() {
  e.preventDefault();
  const phoneRegex = /^[6-9]\d{9}$/;
  if (!formData.name || !phoneRegex.test(formData.phone)) return;
- 
- // Date validation
- const selectedDate = new Date(formData.date);
- if (selectedDate > new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)) {
- setStatus("error");
- return;
- }
 
  setStatus("loading");
  try {
@@ -58,13 +49,12 @@ export function ContactForm() {
    : 'organic';
  await apiClient.post("/leads", { 
  ...formData, 
- source:"Contact Page - Standardized Form",
+ source:"Contact Page",
  utm_source: utmSource,
- notes:`Requested meeting for: ${formData.date}`,
  preferred_language: window.localStorage.getItem('preferred_lang') ||'en'
  });
  setStatus("success");
- setFormData({ name:"", phone:"", date: tomorrow });
+ setFormData({ name:"", phone:"", email: "", notes: "" });
  
  // Fire Meta Pixel Event
  if (typeof window !== "undefined" && (window as any).fbq) {
@@ -105,9 +95,7 @@ export function ContactForm() {
  <span>{t('transmission_failed')}</span>
  </div>
  <p className="text-[9px] text-red-500/80 pl-8">
- {new Date(formData.date) > new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) 
- ? t('date_limit_msg') 
- : t('err_generic')}
+ {t('err_generic')}
  </p>
  </div>
  )}
@@ -150,19 +138,30 @@ export function ContactForm() {
  )}
  </div>
  <div className="space-y-2">
- <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-300 ml-1 flex justify-between">
- <span>{t('deployment_date')}</span>
- <span className="text-orange-500/50">{t('date_limit_msg')}</span>
- </label>
+ <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-300 ml-1">Email (Optional)</label>
+ <div className="relative">
+ <svg className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 dark:text-slate-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
  <input 
- type="date" 
- required 
- value={formData.date}
- min={today}
- max={nextWeek}
- onChange={(e) => setFormData({...formData, date: e.target.value})}
- className="w-full px-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
+ type="email" 
+ placeholder="YOUR EMAIL" 
+ value={formData.email}
+ onChange={(e) => setFormData({...formData, email: e.target.value})}
+ className="w-full pl-12 pr-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all"
  />
+ </div>
+ </div>
+ <div className="space-y-2">
+ <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-300 ml-1">Message (Optional)</label>
+ <div className="relative">
+ <svg className="absolute left-4 top-5 -translate-y-1/2 h-4 w-4 text-slate-500 dark:text-slate-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+ <textarea 
+ placeholder="YOUR MESSAGE" 
+ rows={4}
+ value={formData.notes}
+ onChange={(e) => setFormData({...formData, notes: e.target.value})}
+ className="w-full pl-12 pr-5 py-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-widest placeholder-slate-400 dark:placeholder-slate-500 text-slate-900 dark:text-white outline-none focus:border-[#FF7A00] transition-all resize-none"
+ />
+ </div>
  </div>
  <button 
  type="submit"
