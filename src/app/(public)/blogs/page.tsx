@@ -153,15 +153,22 @@ export default function BlogsPage() {
  )}
  
  <div className="p-8 md:p-10 flex-1 flex flex-col">
- <div className="flex items-center justify-between mb-8">
- <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#FF7A00] px-3 py-1 bg-orange-50 dark:bg-orange-950/10 rounded-lg border border-orange-100/50 dark:border-orange-500/20">
- {post.category}
- </span>
- <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
- <TrendingUp className="h-3 w-3" />
- {format(new Date(post.publishedAt || post.createdAt),"MMM d, yyyy")}
- </div>
- </div>
+  <div className="flex items-center justify-between mb-8">
+    <div className="flex flex-col gap-2">
+      <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#FF7A00] px-3 py-1 bg-orange-50 dark:bg-orange-950/10 rounded-lg border border-orange-100/50 dark:border-orange-500/20 self-start">
+        {post.category}
+      </span>
+      {post.author && (
+        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 capitalize">
+          By {post.author}
+        </span>
+      )}
+    </div>
+    <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+      <TrendingUp className="h-3 w-3" />
+      {format(new Date(post.publishedAt || post.createdAt),"MMM d, yyyy")}
+    </div>
+  </div>
 
  <h3 className="font-display text-2xl font-black text-slate-900 dark:text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors duration-300 line-clamp-3 mb-6">
  {post.title}

@@ -35,20 +35,21 @@ export async function generateMetadata(
  : null;
 
  return {
- title: update.title,
- description: update.content.slice(0, 160).replace(/\n/g,""),
+ title: update.seoTitle || update.title,
+ description: update.seoDescription || update.content.slice(0, 160).replace(/\n/g,""),
+ keywords: update.seoKeywords || "Dholera, Real Estate, Investment",
  openGraph: {
- title: update.title,
- description: update.content.slice(0, 160).replace(/\n/g,""),
+ title: update.seoTitle || update.title,
+ description: update.seoDescription || update.content.slice(0, 160).replace(/\n/g,""),
  images: imgSrc ? [imgSrc, ...previousImages] : previousImages,
  type:"article",
  publishedTime: update.publishedAt || update.createdAt,
- authors: ["Dholera Growth Team"],
+ authors: [update.author || "Dholera Growth Team"],
  },
  twitter: {
  card:"summary_large_image",
- title: update.title,
- description: update.content.slice(0, 160).replace(/\n/g,""),
+ title: update.seoTitle || update.title,
+ description: update.seoDescription || update.content.slice(0, 160).replace(/\n/g,""),
  images: imgSrc ? [imgSrc] : [],
  }
  };
@@ -113,14 +114,24 @@ export default async function UpdateDetailPage({ params }: Props) {
  {update.title}
  </h1>
 
+ {update.tags && (
+    <div className="flex flex-wrap gap-2 pt-4">
+      {update.tags.split(',').slice(0, 5).map((tag: string, i: number) => (
+        <span key={i} className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-wider rounded-full">
+          {tag.trim()}
+        </span>
+      ))}
+    </div>
+  )}
+
  <div className="flex items-center justify-between border-y border-slate-100 py-6">
  <div className="flex items-center gap-3">
  <div className="h-10 w-10 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-slate-900 dark:text-white font-black text-xs">
  DP
  </div>
  <div className="flex flex-col">
- <span className="text-sm font-black uppercase tracking-tight text-slate-900 dark:text-white">Dholera Growth Team</span>
- <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Verified Analysis</span>
+ <span className="text-sm font-black uppercase tracking-tight text-slate-900 dark:text-white">{update.author || "Dholera Growth Team"}</span>
+ <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{update.author ? "Author" : "Verified Analysis"}</span>
  </div>
  </div>
 
