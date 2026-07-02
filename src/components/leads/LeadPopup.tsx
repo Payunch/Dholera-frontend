@@ -118,36 +118,19 @@ export const LeadPopup = ({
 
     try {
       if (rawDigits === "15556483583") {
-        // MAGIC BYPASS: Skip Firebase for the Meta test number!
-        setConfirmationResult({ verificationId: "test_bypass" });
         setStep('otp');
         setLoading(false);
         return;
       }
 
-      if (!auth) {
-        throw new Error("Firebase Auth is not initialized.");
-      }
-      
-      initRecaptcha();
-      const verifier = recaptchaVerifierRef.current;
-      if (!verifier) {
-        throw new Error("Recaptcha verifier initialization failed.");
-      }
+      await apiClient.post('/leads/send-otp', {
+        phone: cleanPhone
+      });
 
-      const phoneNumber = `+91${cleanPhone}`;
-      const confirmation = await signInWithPhoneNumber(auth, phoneNumber, verifier);
-      setConfirmationResult(confirmation);
       setStep('otp');
     } catch (err: any) {
       console.error('Failed to send OTP:', err);
-      setError(err.message || 'Failed to send verification code. Please check your phone number.');
-      if (recaptchaVerifierRef.current) {
-        try {
-          recaptchaVerifierRef.current.clear();
-        } catch (e) {}
-        recaptchaVerifierRef.current = null;
-      }
+      setError(err.response?.data?.error || err.message || 'Failed to send verification code.');
     } finally {
       setLoading(false);
     }
@@ -164,17 +147,6 @@ export const LeadPopup = ({
     setError('');
 
     try {
-      if (!confirmationResult) {
-        throw new Error("No pending verification request found.");
-      }
-
-      let idToken = "";
-      if (confirmationResult.verificationId !== "test_bypass") {
-        await confirmationResult.confirm(code);
-        // Get Firebase ID Token to securely verify in our backend database
-        idToken = await auth?.currentUser?.getIdToken() || "";
-      }
-      
       const cleanPhone = sanitizeDigits(phone, 10);
       const utmSource = typeof window !== 'undefined' 
         ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
@@ -183,7 +155,7 @@ export const LeadPopup = ({
       const res = await apiClient.post('/leads/verify-otp', {
         name: name.trim(),
         phone: cleanPhone,
-        firebaseToken: idToken,
+        otpCode: code, // Replaced firebaseToken with standard backend otpCode validation
         sessionId,
         browserFingerprint: fingerprint,
         preferred_language: lang,
