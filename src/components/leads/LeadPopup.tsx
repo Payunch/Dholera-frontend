@@ -12,7 +12,8 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 const sanitizeDigits = (value: string, maxLength: number) => value.replace(/\D/g, '').slice(0, maxLength);
 const validateName = (name: string) => name.trim().length >= 2;
-const validatePhone = (phone: string) => /^[6-9]\d{9}$/.test(phone);
+// Relaxed regex to allow US Meta test numbers (10 to 15 digits)
+const validatePhone = (phone: string) => /^\d{10,15}$/.test(phone);
 
 interface LeadPopupProps {
   sessionId?: string;
