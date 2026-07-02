@@ -129,9 +129,13 @@ export default function BlogsPage() {
  ) : (
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
  {filtered.map(post => {
- const imgSrc = post.imageUrl 
- ? (post.imageUrl.startsWith("http") ? post.imageUrl :`${SITE_BASE_URL}${post.imageUrl}`)
- : null;
+  const imgSrc = post.imageUrl 
+  ? (
+      post.imageUrl.startsWith("http") ? post.imageUrl : 
+      post.imageUrl.startsWith("/uploads/") ? `${SITE_BASE_URL}${post.imageUrl}` :
+      post.imageUrl
+    )
+  : null;
 
  return (
  <Link 

@@ -30,9 +30,13 @@ export async function generateMetadata(
  if (!update) return {};
 
  const previousImages = (await parent).openGraph?.images || [];
- const imgSrc = update.imageUrl 
- ? (update.imageUrl.startsWith("http") ? update.imageUrl :`${SITE_BASE_URL}${update.imageUrl}`)
- : null;
+  const imgSrc = update.imageUrl 
+  ? (
+      update.imageUrl.startsWith("http") ? update.imageUrl : 
+      update.imageUrl.startsWith("/uploads/") ? `${SITE_BASE_URL}${update.imageUrl}` :
+      update.imageUrl
+    )
+  : null;
 
  return {
  title: update.seoTitle || update.title,
@@ -74,9 +78,13 @@ export default async function UpdateDetailPage({ params }: Props) {
  notFound();
  }
 
- const imgSrc = update.imageUrl 
- ? (update.imageUrl.startsWith("http") ? update.imageUrl :`${SITE_BASE_URL}${update.imageUrl}`)
- : null;
+  const imgSrc = update.imageUrl 
+  ? (
+      update.imageUrl.startsWith("http") ? update.imageUrl : 
+      update.imageUrl.startsWith("/uploads/") ? `${SITE_BASE_URL}${update.imageUrl}` :
+      update.imageUrl
+    )
+  : null;
  const imgPos = update.imagePosition ||"top";
  const catColor = CATEGORY_COLORS[update.category] || CATEGORY_COLORS.General;
 
