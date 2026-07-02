@@ -116,6 +116,14 @@ export const LeadPopup = ({
     setError('');
 
     try {
+      if (cleanPhone === "15556483583") {
+        // MAGIC BYPASS: Skip Firebase for the Meta test number!
+        setConfirmationResult({ verificationId: "test_bypass" });
+        setStep('otp');
+        setLoading(false);
+        return;
+      }
+
       if (!auth) {
         throw new Error("Firebase Auth is not initialized.");
       }
@@ -159,10 +167,12 @@ export const LeadPopup = ({
         throw new Error("No pending verification request found.");
       }
 
-      await confirmationResult.confirm(code);
-      
-      // Get Firebase ID Token to securely verify in our backend database
-      const idToken = await auth?.currentUser?.getIdToken();
+      let idToken = "";
+      if (confirmationResult.verificationId !== "test_bypass") {
+        await confirmationResult.confirm(code);
+        // Get Firebase ID Token to securely verify in our backend database
+        idToken = await auth?.currentUser?.getIdToken() || "";
+      }
       
       const cleanPhone = sanitizeDigits(phone, 10);
       const utmSource = typeof window !== 'undefined' 
