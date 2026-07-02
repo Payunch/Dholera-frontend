@@ -22,9 +22,9 @@ export async function getUpdates(search?: string, lang?: string): Promise<Update
 
 export async function getUpdateById(id: string, lang?: string): Promise<Update | null> {
  const query = lang ?`?lang=${lang}` :"";
- const res = await fetch(`${API_BASE_URL}/updates/${id}${query}`, {
- next: { revalidate: 3600 },
- });
+  const res = await fetch(`${API_BASE_URL}/updates/${id}${query}`, {
+    cache: "no-store",
+  });
 
  if (!res.ok) {
  if (res.status === 404) return null;
