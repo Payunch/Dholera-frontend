@@ -107,7 +107,8 @@ export const LeadPopup = ({
 
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanPhone = sanitizeDigits(phone, 10);
+    const rawDigits = phone.replace(/\D/g, '');
+    const cleanPhone = rawDigits.length > 10 ? rawDigits : sanitizeDigits(phone, 10);
     
     if (!validatePhone(cleanPhone)) return setError(t('err_phone') || 'Please enter a valid 10-digit mobile number.');
     if (!agreedToTerms) return setError(t('err_terms') || 'You must agree to the terms and privacy policy.');
@@ -116,7 +117,7 @@ export const LeadPopup = ({
     setError('');
 
     try {
-      if (cleanPhone === "15556483583") {
+      if (rawDigits === "15556483583") {
         // MAGIC BYPASS: Skip Firebase for the Meta test number!
         setConfirmationResult({ verificationId: "test_bypass" });
         setStep('otp');
