@@ -9,6 +9,11 @@ export interface Update {
  publishedAt: string;
  createdAt: string;
  updatedAt: string;
+ author?: string;
+ tags?: string;
+ seoTitle?: string;
+ seoDescription?: string;
+ seoKeywords?: string;
 }
 
 export type UpdateCategory = Update["category"] |"All";
