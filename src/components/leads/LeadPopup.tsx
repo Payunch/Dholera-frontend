@@ -124,29 +124,29 @@ export const LeadPopup = ({
       setLoading(false);
       return;
 
-      if (!auth) {
-        throw new Error("Firebase Auth is not initialized.");
-      }
-      
-      initRecaptcha();
-      const verifier = recaptchaVerifierRef.current;
-      if (!verifier) {
-        throw new Error("Recaptcha verifier initialization failed.");
-      }
-
-      const phoneNumber = `+91${cleanPhone}`;
-      const confirmation = await signInWithPhoneNumber(auth, phoneNumber, verifier);
-      setConfirmationResult(confirmation);
-      setStep('otp');
+      // if (!auth) {
+      //   throw new Error("Firebase Auth is not initialized.");
+      // }
+      // 
+      // initRecaptcha();
+      // const verifier = recaptchaVerifierRef.current;
+      // if (!verifier) {
+      //   throw new Error("Recaptcha verifier initialization failed.");
+      // }
+      // 
+      // const phoneNumber = `+91${cleanPhone}`;
+      // const confirmation = await signInWithPhoneNumber(auth as any, phoneNumber, verifier);
+      // setConfirmationResult(confirmation);
+      // setStep('otp');
     } catch (err: any) {
       console.error('Failed to send OTP:', err);
       setError(err.message || 'Failed to send verification code. Please check your phone number.');
-      if (recaptchaVerifierRef.current) {
-        try {
-          recaptchaVerifierRef.current.clear();
-        } catch (e) {}
-        recaptchaVerifierRef.current = null;
-      }
+      // if (recaptchaVerifierRef.current) {
+      //   try {
+      //     recaptchaVerifierRef.current.clear();
+      //   } catch (e) {}
+      //   recaptchaVerifierRef.current = null;
+      // }
     } finally {
       setLoading(false);
     }
