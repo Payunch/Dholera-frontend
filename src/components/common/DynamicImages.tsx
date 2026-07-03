@@ -21,6 +21,7 @@ export const SplitLogo = ({ isFull, height = 32 }: { isFull?: boolean; height?: 
  alt="Dholera Logo"
  width={128} // Approximate width based on 4:1 aspect ratio for height 32
  height={32}
+ priority
  style={{
  height,
  width:'100%',

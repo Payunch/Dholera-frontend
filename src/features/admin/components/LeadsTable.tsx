@@ -1,7 +1,7 @@
 "use client";
 
 import { Lead } from"@/types/admin";
-import { MessageSquare, Phone, Info, Eye, Clock, ShieldCheck, MapPin, Monitor, X, Globe, Calendar, Trash2 } from"lucide-react";
+import { MessageSquare, Phone, Info, Eye, Clock, ShieldCheck, MapPin, Monitor, X, Globe, Calendar, Trash2, Target } from"lucide-react";
 import { cn } from"@/lib/utils";
 import React, { useState, useEffect } from "react";
 import { apiClient } from "@/lib/api";
@@ -144,7 +144,13 @@ export function LeadsTable({ leads: initialLeads }: LeadsTableProps) {
     <option value="Not Interested">Not Interested</option>
     <option value="Lost">Lost</option>
   </select>
-  {lead.utm_source && lead.utm_source !== 'organic' && (
+  {(lead.utm_source === 'google_ads' || lead.campaign_id) && (
+    <div className="mt-2 flex items-center gap-1 text-[9px] font-black text-blue-500 uppercase tracking-widest bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded w-fit">
+      <Target className="h-3 w-3" />
+      Google Ads
+    </div>
+  )}
+  {lead.utm_source && lead.utm_source !== 'organic' && lead.utm_source !== 'google_ads' && !lead.campaign_id && (
     <div className="mt-2 text-[8px] font-bold text-slate-400 uppercase tracking-widest">
       {lead.utm_source}
     </div>
@@ -263,6 +269,48 @@ export function LeadsTable({ leads: initialLeads }: LeadsTableProps) {
  return <p className="text-xs text-slate-500 dark:text-slate-400">Analysis pending...</p>;
  }
  })()}
+ </div>
+ </div>
+ )}
+
+ {/* Ad Campaign / Google Ads */}
+ {(selectedLead.utm_source === 'google_ads' || selectedLead.campaign_id) && (
+ <div className="space-y-4">
+ <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 flex items-center gap-2">
+ <Target className="h-3 w-3" /> Google Ads Tracking
+ </h4>
+ <div className="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-2xl p-6">
+ <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+ <div>
+ <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Campaign ID</span>
+ <span className="block text-xs font-black text-slate-900 dark:text-white mt-1">{selectedLead.campaign_id || "Unknown"}</span>
+ </div>
+ <div>
+ <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">GCLID (Click ID)</span>
+ <span className="block text-xs font-black text-slate-900 dark:text-white mt-1 break-all">{selectedLead.gcl_id || "Direct Lead Form"}</span>
+ </div>
+ </div>
+ </div>
+ </div>
+ )}
+
+ {/* Ad Campaign / Google Ads */}
+ {(selectedLead.utm_source === 'google_ads' || selectedLead.campaign_id) && (
+ <div className="space-y-4">
+ <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 flex items-center gap-2">
+ <Target className="h-3 w-3" /> Google Ads Tracking
+ </h4>
+ <div className="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-2xl p-6">
+ <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+ <div>
+ <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Campaign ID</span>
+ <span className="block text-xs font-black text-slate-900 dark:text-white mt-1">{selectedLead.campaign_id || "Unknown"}</span>
+ </div>
+ <div>
+ <span className="block text-[8px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">GCLID (Click ID)</span>
+ <span className="block text-xs font-black text-slate-900 dark:text-white mt-1 break-all">{selectedLead.gcl_id || "Direct Lead Form"}</span>
+ </div>
+ </div>
  </div>
  </div>
  )}

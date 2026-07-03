@@ -289,6 +289,7 @@ export const LeadPopup = ({
                   placeholder={t('mobile_number') || 'Mobile Number'} 
                   required
                   autoFocus
+                  autoComplete="off"
                   className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
                   value={phone} 
                   onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
@@ -337,6 +338,7 @@ export const LeadPopup = ({
                   required
                   maxLength={6}
                   autoFocus
+                  autoComplete="one-time-code"
                   className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
                   value={otpCode} 
                   onChange={(e) => setOtpCode(sanitizeDigits(e.target.value, 6))}

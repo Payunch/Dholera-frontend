@@ -19,6 +19,8 @@ export interface Lead {
  sessions?: any[];
  score?: number;
  interest_profile?: string; // JSON string from backend
+ campaign_id?: string;
+ gcl_id?: string;
 }
 
 export interface WhatsAppStats {

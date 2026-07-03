@@ -101,6 +101,13 @@ export function HomeClient() {
         (window as any).fbq('track', 'Lead');
       }
 
+      // Fire Google Ads Conversion Event
+      if (typeof window !== "undefined" && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
+          'send_to': process.env.NEXT_PUBLIC_GOOGLE_ADS_ID + '/lead_conversion_label' // Assuming a default label, they can change this later
+        });
+      }
+
       const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
       const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, '_blank');
