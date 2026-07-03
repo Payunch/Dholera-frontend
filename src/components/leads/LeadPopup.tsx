@@ -198,6 +198,16 @@ export const LeadPopup = ({
         loginLead({ ...res.data, token: res.data.lead_token });
       }
       
+      // Fire Google Ads Enhanced Conversions (Phase 6 Blueprint Implementation)
+      if (typeof window !== "undefined" && (window as any).gtag) {
+        (window as any).gtag('set', 'user_data', {
+          phone_number: '+91' + cleanPhone
+        });
+        (window as any).gtag('event', 'conversion', {
+          'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
+        });
+      }
+
       setStep('success');
       if (onSuccess) onSuccess(res.data);
       
