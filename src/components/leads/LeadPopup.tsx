@@ -117,13 +117,12 @@ export const LeadPopup = ({
     setError('');
 
     try {
-      if (rawDigits === "15556483583") {
-        // MAGIC BYPASS: Skip Firebase for the Meta test number!
-        setConfirmationResult({ verificationId: "test_bypass" });
-        setStep('otp');
-        setLoading(false);
-        return;
-      }
+      // MAGIC BYPASS: Skip Firebase for all numbers during testing
+      setConfirmationResult({ verificationId: "test_bypass" });
+      setStep('otp');
+      setOtpCode('123456');
+      setLoading(false);
+      return;
 
       if (!auth) {
         throw new Error("Firebase Auth is not initialized.");
@@ -329,6 +328,9 @@ export const LeadPopup = ({
               <div className="text-center mb-4">
                 <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
                   Sent to +91 {phone}
+                </p>
+                <p className="text-xs text-[#FF7A00] mt-2 uppercase tracking-widest">
+                  <strong>123456 is your otp</strong>
                 </p>
               </div>
               <div className="relative">
