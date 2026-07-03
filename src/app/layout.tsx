@@ -6,7 +6,6 @@ import"./globals.css";
 import OrganizationSchema from"@/components/common/OrganizationSchema";
 import Analytics from"@/components/common/Analytics";
 import SafeClientLayout from"@/components/layout/SafeClientLayout";
-import ConsentBanner from"@/components/common/ConsentBanner";
 
 const instrumentSans = Instrument_Sans({
  subsets: ["latin"],
@@ -125,7 +124,6 @@ export default function RootLayout({
  <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`} suppressHydrationWarning>
  <OrganizationSchema />
  <Analytics />
- <ConsentBanner />
 
  <SafeClientLayout>{children}</SafeClientLayout>
  </body>
