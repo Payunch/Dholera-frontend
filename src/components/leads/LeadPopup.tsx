@@ -117,27 +117,29 @@ export const LeadPopup = ({
     setError('');
 
     try {
-      // MAGIC BYPASS: Skip Firebase for all numbers during testing
-      setConfirmationResult({ verificationId: "test_bypass" });
-      setStep('otp');
-      setOtpCode('123456');
-      setLoading(false);
-      return;
+      if (process.env.NEXT_PUBLIC_TEST_LOGIN_ALLOWED === 'true') {
+        // MAGIC BYPASS: Skip Firebase for all numbers during testing
+        setConfirmationResult({ verificationId: "test_bypass" });
+        setStep('otp');
+        setOtpCode('123456');
+        setLoading(false);
+        return;
+      }
 
-      // if (!auth) {
-      //   throw new Error("Firebase Auth is not initialized.");
-      // }
-      // 
-      // initRecaptcha();
-      // const verifier = recaptchaVerifierRef.current;
-      // if (!verifier) {
-      //   throw new Error("Recaptcha verifier initialization failed.");
-      // }
-      // 
-      // const phoneNumber = `+91${cleanPhone}`;
-      // const confirmation = await signInWithPhoneNumber(auth as any, phoneNumber, verifier);
-      // setConfirmationResult(confirmation);
-      // setStep('otp');
+      if (!auth) {
+        throw new Error("Firebase Auth is not initialized.");
+      }
+      
+      initRecaptcha();
+      const verifier = recaptchaVerifierRef.current;
+      if (!verifier) {
+        throw new Error("Recaptcha verifier initialization failed.");
+      }
+      
+      const phoneNumber = `+91${cleanPhone}`;
+      const confirmation = await signInWithPhoneNumber(auth, phoneNumber, verifier);
+      setConfirmationResult(confirmation);
+      setStep('otp');
     } catch (err: any) {
       console.error('Failed to send OTP:', err);
       setError(err.message || 'Failed to send verification code. Please check your phone number.');
@@ -168,11 +170,11 @@ export const LeadPopup = ({
       }
 
       let idToken = "";
-      // if (confirmationResult.verificationId !== "test_bypass") {
-      //   await confirmationResult.confirm(code);
-      //   // Get Firebase ID Token to securely verify in our backend database
-      //   idToken = await auth?.currentUser?.getIdToken() || "";
-      // }
+      if (confirmationResult.verificationId !== "test_bypass") {
+        await confirmationResult.confirm(code);
+        // Get Firebase ID Token to securely verify in our backend database
+        idToken = await auth?.currentUser?.getIdToken() || "";
+      }
       
       const cleanPhone = sanitizeDigits(phone, 10);
       const utmSource = typeof window !== 'undefined' 
