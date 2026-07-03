@@ -60,6 +60,20 @@ export function ContactForm() {
  if (typeof window !== "undefined" && (window as any).fbq) {
    (window as any).fbq('track', 'Lead');
  }
+
+ // Fire Google Ads Enhanced Conversions
+ if (typeof window !== "undefined" && (window as any).gtag) {
+   // Hash user data or pass raw data (Google gtag hashes it automatically before transmission)
+   (window as any).gtag('set', 'user_data', {
+     email: formData.email,
+     phone_number: '+91' + formData.phone // Ensure country code
+   });
+   
+   // Fire conversion event
+   (window as any).gtag('event', 'conversion', {
+     'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
+   });
+ }
  } catch (err) {
  console.error("Submission error:", err);
  setStatus("error");

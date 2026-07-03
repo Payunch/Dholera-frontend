@@ -6,10 +6,10 @@ import"./globals.css";
 import OrganizationSchema from"@/components/common/OrganizationSchema";
 import Analytics from"@/components/common/Analytics";
 import SafeClientLayout from"@/components/layout/SafeClientLayout";
+import ConsentBanner from"@/components/common/ConsentBanner";
 
 const instrumentSans = Instrument_Sans({
- // ...
-
+ subsets: ["latin"],
  variable:"--font-instrument-sans",
  display:"swap",
 });
@@ -23,6 +23,7 @@ const spaceGrotesk = Space_Grotesk({
 const GTM_CONTAINER_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID ||"GTM-WM9HRJVV";
 const CLARITY_ID = process.env.NEXT_PUBLIC_MS_CLARITY_ID;
 const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ||"AW-123456789";
 
 export const metadata: Metadata = {
  title: {
@@ -80,7 +81,26 @@ export default function RootLayout({
  return (
  <html lang="en" suppressHydrationWarning>
  <head>
+  <Script id="consent-default" strategy="beforeInteractive">
+    {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied'
+      });
+    `}
+  </Script>
   <GoogleTagManager gtmId={GTM_CONTAINER_ID} />
+  <Script id="aw-tag" strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} />
+  <Script id="aw-config" strategy="afterInteractive">
+    {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${GOOGLE_ADS_ID}');
+    `}
+  </Script>
   <Script
     id="adsense-script"
     strategy="afterInteractive"
@@ -105,6 +125,7 @@ export default function RootLayout({
  <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`} suppressHydrationWarning>
  <OrganizationSchema />
  <Analytics />
+ <ConsentBanner />
 
  <SafeClientLayout>{children}</SafeClientLayout>
  </body>
