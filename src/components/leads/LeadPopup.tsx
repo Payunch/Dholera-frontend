@@ -117,14 +117,12 @@ export const LeadPopup = ({
     setError('');
 
     try {
-      if (process.env.NEXT_PUBLIC_TEST_LOGIN_ALLOWED === 'true') {
-        // MAGIC BYPASS: Skip Firebase for all numbers during testing
-        setConfirmationResult({ verificationId: "test_bypass" });
-        setStep('otp');
-        setOtpCode('123456');
-        setLoading(false);
-        return;
-      }
+      // MAGIC BYPASS: Skip Firebase for all numbers unconditionally for now
+      setConfirmationResult({ verificationId: "test_bypass" });
+      setStep('otp');
+      setOtpCode('123456');
+      setLoading(false);
+      return;
 
       if (!auth) {
         throw new Error("Firebase Auth is not initialized.");
@@ -157,6 +155,11 @@ export const LeadPopup = ({
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     const code = sanitizeDigits(otpCode, 6);
+    
+    if (confirmationResult?.verificationId === "test_bypass" && code !== "123456") {
+      return setError('Just click "Establish Connection" directly! (No need to type)');
+    }
+
     if (code.length !== 6) {
       return setError('Please enter a valid 6-digit verification code.');
     }
@@ -343,7 +346,8 @@ export const LeadPopup = ({
                   maxLength={6}
                   autoFocus
                   autoComplete="one-time-code"
-                  className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
+                  readOnly
+                  className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400 cursor-not-allowed"
                   value={otpCode} 
                   onChange={(e) => setOtpCode(sanitizeDigits(e.target.value, 6))}
                 />

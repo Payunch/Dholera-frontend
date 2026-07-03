@@ -16,8 +16,14 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const auth = typeof window !== "undefined" ? getAuth(app) : null;
-const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
-
+let analytics = null;
+if (typeof window !== "undefined") {
+  try {
+    analytics = getAnalytics(app);
+  } catch (err) {
+    console.error("Firebase Analytics failed to initialize (likely invalid config):", err);
+  }
+}
 // Initialize App Check (Roadmap Phase 6)
 if (typeof window !== "undefined") {
   const isHeadless = navigator.webdriver || window.name === 'puppeteer';
