@@ -2,7 +2,7 @@ import { cookies } from"next/headers";
 import { Metadata, ResolvingMetadata } from"next";
 import Image from"next/image";
 import Link from"next/link";
-import { notFound } from"next/navigation";
+import { notFound, redirect } from"next/navigation";
 import { ChevronLeft, Calendar, Share2, Clock } from"lucide-react";
 import { format } from"date-fns";
 import { getUpdateById } from"@/features/updates/api";
@@ -75,7 +75,7 @@ export default async function UpdateDetailPage({ params }: Props) {
  const update = await getUpdateById(id, lang);
 
  if (!update) {
- notFound();
+   redirect('/blogs');
  }
 
   const imgSrc = update.imageUrl 
