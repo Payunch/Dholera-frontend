@@ -168,11 +168,11 @@ export const LeadPopup = ({
       }
 
       let idToken = "";
-      if (confirmationResult.verificationId !== "test_bypass") {
-        await confirmationResult.confirm(code);
-        // Get Firebase ID Token to securely verify in our backend database
-        idToken = await auth?.currentUser?.getIdToken() || "";
-      }
+      // if (confirmationResult.verificationId !== "test_bypass") {
+      //   await confirmationResult.confirm(code);
+      //   // Get Firebase ID Token to securely verify in our backend database
+      //   idToken = await auth?.currentUser?.getIdToken() || "";
+      // }
       
       const cleanPhone = sanitizeDigits(phone, 10);
       const utmSource = typeof window !== 'undefined' 
