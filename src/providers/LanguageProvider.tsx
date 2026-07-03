@@ -102,9 +102,9 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
       }
     }
     
-    // Force a router refresh so server components re-render with the new cookie
-    router.refresh();
-  }, [fetchTranslations, router]);
+    // Force a hard reload so the browser requests the page with the new cookies
+    window.location.reload();
+  }, [fetchTranslations]);
 
   useEffect(() => {
     const initLang = async () => {
