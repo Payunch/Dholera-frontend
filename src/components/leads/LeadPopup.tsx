@@ -355,7 +355,7 @@ export const LeadPopup = ({
                   <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
                   <>
-                    Verify OTP <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    Establish Connection <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </>
                 )}
               </button>
