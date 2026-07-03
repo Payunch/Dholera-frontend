@@ -36,7 +36,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
   const [clientData, setClientData] = useState({
   token: '',
   fingerprint: '',
-  leadPhone: 'Guest',
+  leadPhone: 'ENTER MOBILE NO',
   isMobile: false
   });
 
@@ -97,7 +97,7 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
  setMounted(true);
  const token = getCookie('lead_token') ||'';
  const fingerprint = getCookie('visitorFingerprint') ||'';
- const leadPhone = getCookie('lead_phone') ||'Guest';
+ const leadPhone = getCookie('lead_phone') || 'ENTER MOBILE NO';
  
  const checkMobile = () => {
  if (typeof navigator ==='undefined') return false;
