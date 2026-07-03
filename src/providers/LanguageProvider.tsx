@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from'react';
 import { apiClient } from'@/lib/api';
 import { setCookie, getCookie } from'@/utils/cookies';
+import { useRouter } from 'next/navigation';
 
 import hi from'@/i18n/locales/hi.json';
 import en from'@/i18n/locales/en.json';
@@ -83,32 +84,38 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     }
   }, []);
 
- const setLang = useCallback(async (newLang: Language) => {
- setLangState(newLang);
- setCookie('preferred_lang', newLang);
- await fetchTranslations(newLang);
- 
- // Also sync with backend if lead_token is present
- const token = getCookie('lead_token');
- if (token) {
- try {
- await apiClient.post('/preferences/user', { language: newLang });
- } catch (err) {
- console.error('Failed to sync language with backend:', err);
- }
- }
- }, [fetchTranslations]);
+  const router = useRouter();
 
- useEffect(() => {
- const initLang = async () => {
- const savedLang = getCookie('preferred_lang') as Language | null;
- const finalLang = (savedLang ==='en' || savedLang ==='hi' || savedLang ==='gu') ? savedLang :'hi';
- setLangState(finalLang);
- await fetchTranslations(finalLang);
- setMounted(true);
- };
- initLang();
- }, [fetchTranslations]);
+  const setLang = useCallback(async (newLang: Language) => {
+    setLangState(newLang);
+    setCookie('preferred_lang', newLang);
+    setCookie('NEXT_LOCALE', newLang);
+    await fetchTranslations(newLang);
+    
+    // Also sync with backend if lead_token is present
+    const token = getCookie('lead_token');
+    if (token) {
+      try {
+        await apiClient.post('/preferences/user', { language: newLang });
+      } catch (err) {
+        console.error('Failed to sync language with backend:', err);
+      }
+    }
+    
+    // Force a router refresh so server components re-render with the new cookie
+    router.refresh();
+  }, [fetchTranslations, router]);
+
+  useEffect(() => {
+    const initLang = async () => {
+      const savedLang = getCookie('preferred_lang') as Language | null;
+      const finalLang = (savedLang === 'en' || savedLang === 'hi' || savedLang === 'gu') ? savedLang : 'hi';
+      setLangState(finalLang);
+      await fetchTranslations(finalLang);
+      setMounted(true);
+    };
+    initLang();
+  }, [fetchTranslations]);
 
  const t = (key: string) => {
  return translations[key] || key;
