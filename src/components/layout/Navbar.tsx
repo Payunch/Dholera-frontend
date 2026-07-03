@@ -37,7 +37,7 @@ export function Navbar() {
 
  return (
  <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 dark:bg-slate-950/80 dark:border-slate-800 backdrop-blur-md transition-colors">
- <div className="container mx-auto flex h-20 w-full items-center justify-between px-2 sm:px-4 md:px-8 overflow-hidden">
+ <div className="container mx-auto flex h-20 w-full items-center justify-between px-2 sm:px-4 md:px-8">
   <div className="flex items-center gap-2 md:gap-0 flex-shrink-0">
     <Link href="/" className="flex items-center flex-shrink-0">
       <div className="hidden md:block">
