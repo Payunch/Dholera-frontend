@@ -79,6 +79,7 @@ export default function RootLayout({
 }>) {
  return (
  <html lang="en" suppressHydrationWarning>
+  <GoogleTagManager gtmId={GTM_CONTAINER_ID} />
  <head>
   <Script id="consent-default" strategy="beforeInteractive">
     {`
@@ -90,7 +91,6 @@ export default function RootLayout({
       });
     `}
   </Script>
-  <GoogleTagManager gtmId={GTM_CONTAINER_ID} />
   <Script id="aw-tag" strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} />
   <Script id="aw-config" strategy="afterInteractive">
     {`
