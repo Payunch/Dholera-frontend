@@ -33,6 +33,10 @@ export function UpdatesManagement() {
  const [publishedAt, setPublishedAt] = React.useState("");
  const [imageFile, setImageFile] = React.useState<File | null>(null);
  const [imageUrl, setImageUrl] = React.useState("");
+ const [seoTitle, setSeoTitle] = React.useState("");
+ const [seoDescription, setSeoDescription] = React.useState("");
+ const [seoKeywords, setSeoKeywords] = React.useState("");
+ const [tags, setTags] = React.useState("");
  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
  const loadUpdates = async () => {
@@ -51,7 +55,7 @@ export function UpdatesManagement() {
  loadUpdates();
  }, []);
 
- const handleEdit = (update: Update |"new") => {
+ const handleEdit = (update: Update | "new") => {
  if (update ==="new") {
  setEditingId("new");
  setTitle("");
@@ -61,6 +65,10 @@ export function UpdatesManagement() {
  setPublishedAt(new Date().toISOString().slice(0, 16));
  setImageFile(null);
  setImageUrl("");
+ setSeoTitle("");
+ setSeoDescription("");
+ setSeoKeywords("");
+ setTags("");
  } else {
  setEditingId(update.id);
  setTitle(update.title);
@@ -70,6 +78,10 @@ export function UpdatesManagement() {
  setPublishedAt(new Date(update.publishedAt || update.createdAt).toISOString().slice(0, 16));
  setImageFile(null);
  setImageUrl(update.imageUrl ||"");
+ setSeoTitle(update.seoTitle || "");
+ setSeoDescription(update.seoDescription || "");
+ setSeoKeywords(update.seoKeywords || "");
+ setTags(update.tags || "");
  }
  };
 
@@ -96,6 +108,10 @@ export function UpdatesManagement() {
  formData.append("category", category);
  formData.append("published", String(published));
  formData.append("publishedAt", new Date(publishedAt).toISOString());
+ if (seoTitle) formData.append("seoTitle", seoTitle);
+ if (seoDescription) formData.append("seoDescription", seoDescription);
+ if (seoKeywords) formData.append("seoKeywords", seoKeywords);
+ if (tags) formData.append("tags", tags);
  if (imageFile) {
  formData.append("image", imageFile);
  } else if (imageUrl) {
@@ -349,6 +365,58 @@ export function UpdatesManagement() {
  placeholder="Write your analysis here..."
  className="flex-1 w-full min-h-[400px] rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-medium leading-relaxed transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 focus:ring-0 text-slate-900 dark:text-white"
  />
+ </div>
+
+ {/* SEO & Meta Details (WordPress Style) */}
+ <div className="border-t border-slate-100 dark:border-slate-800 pt-8 mt-8 space-y-6">
+ <h4 className="text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white flex items-center gap-2">
+ <Search className="h-4 w-4 text-orange-600" />
+ SEO Details & Tags
+ </h4>
+ 
+ <div className="grid gap-6 md:grid-cols-2">
+ <div className="space-y-2">
+ <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">SEO Focus Keyword</label>
+ <input
+ type="text"
+ value={seoKeywords}
+ onChange={(e) => setSeoKeywords(e.target.value)}
+ placeholder="e.g. Dholera Smart City investment"
+ className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 text-slate-900 dark:text-white"
+ />
+ </div>
+ <div className="space-y-2">
+ <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Tags (Comma Separated)</label>
+ <input
+ type="text"
+ value={tags}
+ onChange={(e) => setTags(e.target.value)}
+ placeholder="e.g. Real Estate, Investment Guide"
+ className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 text-slate-900 dark:text-white"
+ />
+ </div>
+ </div>
+
+ <div className="space-y-2">
+ <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">SEO Title (Optional)</label>
+ <input
+ type="text"
+ value={seoTitle}
+ onChange={(e) => setSeoTitle(e.target.value)}
+ placeholder="Custom SEO Title (defaults to Article Title)"
+ className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 text-slate-900 dark:text-white"
+ />
+ </div>
+
+ <div className="space-y-2 flex flex-col">
+ <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">SEO Meta Description</label>
+ <textarea
+ value={seoDescription}
+ onChange={(e) => setSeoDescription(e.target.value)}
+ placeholder="Brief summary for Google search results (150-160 chars)..."
+ className="w-full min-h-[100px] rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-medium leading-relaxed transition-all focus:border-orange-600 dark:focus:border-orange-500 text-slate-900 dark:text-white"
+ />
+ </div>
  </div>
  </div>
  </form>
