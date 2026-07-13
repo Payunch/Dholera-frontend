@@ -32,6 +32,8 @@ export default function BlogPost() {
             If you are looking for high-return investment opportunities that offer safety, transparency, and massive growth potential, Dholera SIR should be at the top of your list. But what exactly makes this mega-project the ultimate investment destination? In this comprehensive guide, we will explore the core reasons why Dholera SIR is attracting billions in investment and how you can capitalize on its unprecedented growth.
           </p>
 
+          <img src="/images/blogs/1.1.jpg" alt="Dholera Investment Destination" className="w-full rounded-xl shadow-lg my-8" />
+
           <h2 className="text-3xl font-bold mt-10 mb-4 text-slate-900 dark:text-white">The Vision Behind India's Largest Smart City</h2>
           <p className="text-lg leading-relaxed">
             To understand the investment potential of Dholera, you must first understand the scale of the project. Spanning an astonishing 920 square kilometers, Dholera SIR is larger than Singapore and twice the size of Mumbai. It is a key node on the ambitious Delhi-Mumbai Industrial Corridor (DMIC), designed to be a global manufacturing and trading hub.
@@ -39,6 +41,8 @@ export default function BlogPost() {
           <p className="text-lg leading-relaxed">
             Unlike traditional Indian cities that have expanded haphazardly over decades, Dholera is a planned greenfield city. This means every inch of infrastructure—from underground utilities to wide arterial roads—is being built before the population arrives. For investors, this meticulous planning translates to zero encroachment issues, clear land titles, and a structured zoning system that guarantees the sustained value of the property.
           </p>
+
+          <img src="/images/blogs/1.4.jpg" alt="Dholera Smart City Vision" className="w-full rounded-xl shadow-lg my-8" />
 
           <h2 className="text-3xl font-bold mt-10 mb-4 text-slate-900 dark:text-white">Unmatched Government Backing and Policy Support</h2>
           <p className="text-lg leading-relaxed">
@@ -50,6 +54,8 @@ export default function BlogPost() {
           <p className="text-lg leading-relaxed">
             When you invest in a government-backed initiative of this magnitude, the risk profile of your investment decreases significantly while the potential for high returns remains exceptionally high.
           </p>
+
+          <img src="/images/blogs/1.5.jpg" alt="Dholera Infrastructure" className="w-full rounded-xl shadow-lg my-8" />
 
           <h2 className="text-3xl font-bold mt-10 mb-4 text-slate-900 dark:text-white">Infrastructure That Guarantees Land Appreciation</h2>
           <p className="text-lg leading-relaxed">
