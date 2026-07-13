@@ -51,7 +51,22 @@ export default function TermsAndConditions() {
  </section>
 
  <section>
- <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">5. Notice and Takedown Policy (IT Act 2000, Sec 79)</h2>
+ <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">5. Acceptable Use Policy & Advertising</h2>
+ <div className="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+ <p>
+ Users are prohibited from engaging in any activity that interferes with or disrupts the services.
+ </p>
+ <p>
+ <strong>Invalid Clicks and Impressions:</strong> Users must not click on their own ads or use any means to inflate impressions and/or clicks artificially, including manual methods. Any activity that generates invalid clicks on advertisements displayed on Dholera Platform is strictly prohibited.
+ </p>
+ <p>
+ <strong>Content Guidelines:</strong> Users must not use this platform to promote illicit, illegal, or harmful content. We strictly adhere to Google AdSense Programme policies, and any violation by a user may result in immediate termination of access.
+ </p>
+ </div>
+ </section>
+
+ <section>
+ <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">6. Notice and Takedown Policy (IT Act 2000, Sec 79)</h2>
  <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
  This platform acts as an intermediary for third-party mapping and planning data. If you are a government official, copyright owner, or authorized representative and believe any content on this platform infringes upon your rights or official data policies, please submit a formal takedown request to <a href="mailto:support@dholeraplatform.com" className="text-orange-600 hover:text-orange-500">support@dholeraplatform.com</a>. We will review and remove disputed content within 36 hours of verification.
  </p>
