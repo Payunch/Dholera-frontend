@@ -73,6 +73,9 @@ export function ContactForm() {
    (window as any).gtag('event', 'conversion', {
      'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
    });
+
+   // Fire specific contact conversion event
+   (window as any).gtag('event', 'conversion_event_contact', {});
  }
  } catch (err) {
  console.error("Submission error:", err);
