@@ -142,13 +142,11 @@ export default async function UpdateDetailPage({ params }: Props) {
  <span className="text-sm font-black uppercase tracking-tight text-slate-900 dark:text-white">{update.author || "Dholera Growth Team"}</span>
  <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{update.author ? "Author" : "Verified Analysis"}</span>
  </div>
- </div>
-
- <ShareButton 
-  title={update.title} 
-  text={`Read this article on Dholera Platform: ${update.title}`} 
-  url={`${SITE_BASE_URL}/blogs/${update.id}`} 
- />
+              <ShareButton 
+                title={update.title} 
+                text={`Read this article on Dholera Platform: ${update.title}`} 
+                url={`https://dholeraplatform.com/blogs/${update.id}`} 
+              />
  </div>
  </header>
 
