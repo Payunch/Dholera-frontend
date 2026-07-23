@@ -10,6 +10,7 @@ import { ArticleBody } from"@/features/updates/components/ArticleBody";
 import { cn } from"@/lib/utils";
 import { SITE_BASE_URL } from"@/lib/api";
 import { BlogPopupTrigger } from"@/components/leads/BlogPopupTrigger";
+import { ShareButton } from "./ShareButton";
 
 interface Props {
  params: Promise<{ id: string }>;
@@ -143,9 +144,11 @@ export default async function UpdateDetailPage({ params }: Props) {
  </div>
  </div>
 
- <button className="rounded-full border-2 border-slate-100 p-2 text-slate-400 transition-all hover:border-orange-600 hover:text-orange-600">
- <Share2 className="h-5 w-5" />
- </button>
+ <ShareButton 
+  title={update.title} 
+  text={`Read this article on Dholera Platform: ${update.title}`} 
+  url={`${SITE_BASE_URL}/blogs/${update.id}`} 
+ />
  </div>
  </header>
 
