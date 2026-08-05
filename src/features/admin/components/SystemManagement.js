@@ -15,6 +15,7 @@ import {
 } from'lucide-react';
 import { API_BASE_URL, apiClient } from'@/lib/api';
 import { fetchCsrfToken } from"@/utils/csrf";
+import { cn } from'@/lib/utils';
 
 export const SystemManagement = () => {
  const [loading, setLoading] = useState(false);
@@ -42,7 +43,7 @@ export const SystemManagement = () => {
  }
  };
 
- const handleRestore = async (e.ChangeEvent<HTMLInputElement>) => {
+ const handleRestore = async (e) => {
  const file = e.target.files?.[0];
  if (!file) return;
 

@@ -1,6 +1,6 @@
 import { apiClient } from"../lib/api";
 
-let cachedCsrfToken | null = null;
+let cachedCsrfToken = null;
 
 /**
  * Fetches a fresh CSRF token from the backend.

@@ -1,7 +1,6 @@
-import { cookies } from"next/headers";
-import { Metadata, ResolvingMetadata } from"next";
 import Image from"next/image";
 import Link from"next/link";
+import { cookies } from "next/headers";
 import { notFound, redirect } from"next/navigation";
 import { ChevronLeft, Calendar, Share2, Clock } from"lucide-react";
 import { format } from"date-fns";
@@ -12,8 +11,6 @@ import { SITE_BASE_URL } from"@/lib/api";
 import { BlogPopupTrigger } from"@/components/leads/BlogPopupTrigger";
 import { ShareButton } from "./ShareButton";
 
->;
-}
 
 export const dynamic ="force-dynamic";
 

@@ -2,11 +2,6 @@ import { notFound } from"next/navigation";
 import { projects } from"@/data/projects";
 import { ProjectDetailClient } from"./ProjectDetailClient";
 
->;
-}
-
-import { Metadata } from "next";
-
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);

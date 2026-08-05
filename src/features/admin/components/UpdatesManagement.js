@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import { 
  Plus, 
  Pencil, 
@@ -210,7 +210,7 @@ export function UpdatesManagement() {
  </h4>
  
  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">
- {update.category} • {format(new Date(update.publishedAt || update.createdAt),"MMM d, yyyy")}
+ {update.category} â€¢ {format(new Date(update.publishedAt || update.createdAt),"MMM d, yyyy")}
  </p>
 
  <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">

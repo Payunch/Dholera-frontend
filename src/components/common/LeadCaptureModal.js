@@ -26,7 +26,7 @@ export default function LeadCaptureModal() {
  }
  }, [verifiedLead, leadLoading, hasDismissed]);
 
- const handlePhoneChange = (e.ChangeEvent<HTMLInputElement>) => {
+ const handlePhoneChange = (e) => {
  const val = e.target.value.replace(/\D/g,'').slice(0, 10);
  setForm({ ...form, phone: val });
  };

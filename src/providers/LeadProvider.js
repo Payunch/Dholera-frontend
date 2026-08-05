@@ -4,14 +4,9 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { usePathname } from'next/navigation';
 import { API_BASE_URL } from'@/lib/api';
 import { setCookie, getCookie, removeCookie } from'@/utils/cookies';
+const LeadContext = createContext(undefined);
 
-
-
-
-
-const LeadContext = createContext<LeadContextType | undefined>(undefined);
-
-export const LeadProvider = ({ children }: { children.ReactNode }) => {
+export const LeadProvider = ({ children }) => {
  const [verifiedLead, setVerifiedLead] = useState(null);
  const [loading, setLoading] = useState(true);
  const pathname = usePathname();
@@ -82,10 +77,10 @@ export const LeadProvider = ({ children }: { children.ReactNode }) => {
  const phone = getCookie('lead_phone');
  const email = getCookie('lead_email') || undefined;
  const idStr = getCookie('lead_id');
- const id = idStr ? Number.parseInt(idStr, 10) ;
+ const id = idStr ? Number.parseInt(idStr, 10) : undefined;
  if (name && phone) {
  setVerifiedLead({
- id.isFinite(id) ? id : undefined,
+ id: Number.isFinite(id) ? id : undefined,
  name,
  phone,
  email,

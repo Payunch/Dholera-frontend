@@ -13,8 +13,6 @@ const ClientLayout = dynamic(() => import("./ClientLayout"), {
 
 export default function SafeClientLayout({
  children,
-}: {
- children.ReactNode;
 }) {
  return <ClientLayout>{children}</ClientLayout>;
 }

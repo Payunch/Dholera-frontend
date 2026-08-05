@@ -1,7 +1,7 @@
-import { MetadataRoute } from"next";
 import { siteConfig } from"@/config/site";
 
-export default function robots().Robots {
+
+export default function robots() {
  const baseUrl = siteConfig.url;
 
  return {

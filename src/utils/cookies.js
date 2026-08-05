@@ -1,4 +1,4 @@
-export const setCookie = (name, value, days? | null, domain?) => {
+export const setCookie = (name, value, days = null, domain = null) => {
  if (typeof document ==='undefined') return;
  let expires = "";
  if (days !== undefined && days !== null) {

@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import { Folder, Users, Settings, Table, Upload, Database } from "lucide-react";
 import UserManagement from "@/Component/UserManagement";
 import GeneralSetting from "@/Component/GeneralSetting";

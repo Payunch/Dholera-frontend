@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import Link from"next/link";
 import { User, Phone, CheckCircle2, AlertCircle, ChevronRight } from"lucide-react";
 import { apiClient } from"@/lib/api";
@@ -31,7 +31,7 @@ export function ContactForm() {
 
  const [status, setStatus] = React.useState("idle");
 
- const handlePhoneChange = (e.ChangeEvent<HTMLInputElement>) => {
+ const handlePhoneChange = (e) => {
  const val = e.target.value.replace(/\D/g,'').slice(0, 10);
  setFormData({ ...formData, phone: val });
  if (status ==="error") setStatus("idle");

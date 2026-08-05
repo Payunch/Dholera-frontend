@@ -1,4 +1,4 @@
-import { MetadataRoute } from"next";
+
 import { getUpdates } from"@/features/updates/api";
 import { siteConfig } from"@/config/site";
 
@@ -16,7 +16,7 @@ export default async function sitemap() {
  console.error("Sitemap to fetch updates", error);
  }
 
- const updateEntries.Sitemap = updates.map((update) => ({
+ const updateEntries = updates.map((update) => ({
  url:`${baseUrl}/blogs/${update.id}`,
  lastModified: new Date(update.publishedAt || update.createdAt),
  changeFrequency:'weekly',

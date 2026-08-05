@@ -3,21 +3,16 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from'react';
 import { apiClient } from'@/lib/api';
 import { setCookie, getCookie } from'@/utils/cookies';
-import { useRouter } from 'next/navigation';
 
 import hi from'@/i18n/locales/hi.json';
 import en from'@/i18n/locales/en.json';
 import gu from'@/i18n/locales/gu.json';
 
-const LOCAL_TRANSLATIONS> = { hi, en, gu };
+const LOCAL_TRANSLATIONS = { hi, en, gu };
 
+const LanguageContext = createContext(undefined);
 
-
-
-
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
-export const LanguageProvider = ({ children }: { children.ReactNode }) => {
+export const LanguageProvider = ({ children }) => {
  const [lang, setLangState] = useState('hi'); // Default to Hindi
  const [translations, setTranslations] = useState({});
  const [mounted, setMounted] = useState(false);
@@ -35,7 +30,7 @@ export const LanguageProvider = ({ children }: { children.ReactNode }) => {
 
  useEffect(() => {
  const checkTheme = () => {
- const savedTheme = getCookie('user_theme') as'light' |'dark' | null;
+ const savedTheme = getCookie('user_theme');
  if (savedTheme) {
  setThemeState(savedTheme);
  updateDomTheme(savedTheme ==='dark');
@@ -77,8 +72,6 @@ export const LanguageProvider = ({ children }: { children.ReactNode }) => {
     }
   }, []);
 
-  const router = useRouter();
-
   const setLang = useCallback(async (newLang) => {
     setLangState(newLang);
     setCookie('preferred_lang', newLang);
@@ -101,7 +94,7 @@ export const LanguageProvider = ({ children }: { children.ReactNode }) => {
 
   useEffect(() => {
     const initLang = async () => {
-      const savedLang = getCookie('preferred_lang')  | null;
+      const savedLang = getCookie('preferred_lang');
       const finalLang = (savedLang === 'en' || savedLang === 'hi' || savedLang === 'gu') ? savedLang : 'hi';
       setLangState(finalLang);
       await fetchTranslations(finalLang);

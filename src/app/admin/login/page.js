@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import { useRouter } from"next/navigation";
 import { ShieldAlert, Lock, User, KeyRound, Loader2, ChevronRight } from"lucide-react";
 import { apiClient } from"@/lib/api";
@@ -9,12 +9,12 @@ import { fetchCsrfToken, clearCsrfCache } from"@/utils/csrf";
 const parseAuthError = (err) => {
  const responseData =
  typeof err ==="object" && err !== null &&"response" in err
- ? (err as { response?: { data?: { mfaRequired?; error? } } }).response?.data
+ ? err.response?.data
  : undefined;
 
  return {
  message: responseData?.error ||"Access handshake failed. Verify credentials and network integrity.",
- mfaRequired(responseData?.mfaRequired),
+ mfaRequired: Boolean(responseData?.mfaRequired),
  };
 };
 

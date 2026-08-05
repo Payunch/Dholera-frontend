@@ -2,7 +2,7 @@
 
 import { Share2 } from "lucide-react";
 
-export function ShareButton({ title, text, url }: { title, text, url }) {
+export function ShareButton({ title, text, url }) {
   const handleShare = async () => {
     if (navigator.share) {
       try {

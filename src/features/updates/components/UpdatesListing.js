@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import { Search } from"lucide-react";
 import { Update, UpdateCategory } from"@/types/update";
 import { UpdateCard } from"./UpdateCard";

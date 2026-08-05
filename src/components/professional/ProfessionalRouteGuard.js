@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import { useRouter } from"next/navigation";
 import { Loader2, ShieldAlert } from"lucide-react";
 import { useLead } from"@/providers/LeadProvider";
 
-export function ProfessionalRouteGuard({ children }: { children.ReactNode }) {
+export function ProfessionalRouteGuard({ children }) {
  const { verifiedLead, loading } = useLead();
  const router = useRouter();
 

@@ -115,7 +115,7 @@ export default function AirportPage() {
  );
 }
 
-function Translate({ id }: { id }) {
+function Translate({ id }) {
  const { t } = useLanguage();
  return <>{t(id)}</>;
 }

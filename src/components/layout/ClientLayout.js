@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useEffect } from"react";
-import * from "react";
+import * as React from "react";
 import { usePathname, useSearchParams } from"next/navigation";
 import { Navbar } from"@/components/layout/Navbar";
 import { Footer } from"@/components/layout/Footer";
@@ -15,8 +15,6 @@ import { getCookie } from"@/utils/cookies";
 
 export default function ClientLayout({
  children,
-}: {
- children.ReactNode;
 }) {
  const pathname = usePathname();
  const searchParams = useSearchParams();

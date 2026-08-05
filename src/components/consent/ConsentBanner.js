@@ -24,7 +24,6 @@ function updateGoogleConsent(choice) {
 }
 
 declare global {
- 
 }
 
 export default function ConsentBanner() {
@@ -42,7 +41,7 @@ export default function ConsentBanner() {
 
  useEffect(() => {
  setMounted(true);
- const storedChoice = getCookie(CONSENT_STORAGE_KEY)  | null;
+ const storedChoice = getCookie(CONSENT_STORAGE_KEY);
  
  // Only show if no choice has been made
  if (storedChoice !=="accepted" && storedChoice !=="rejected") {

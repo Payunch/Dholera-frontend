@@ -20,7 +20,7 @@ export const API_BASE_URL = resolveApiBaseUrl();
 export const SITE_BASE_URL = API_BASE_URL.replace(/\/api$/,"");
 
 export const apiClient = axios.create({
- baseURL,
+ baseURL: API_BASE_URL,
  withCredentials: true,
  headers: {
 "Content-Type":"application/json",

@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import Link from"next/link";
 import { 
  Calculator, 
@@ -115,7 +115,7 @@ export function ClearanceClient() {
  <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 text-center space-y-6 border border-slate-800 shadow-2xl animate-in zoom-in-95 duration-300 dark:bg-slate-900">
  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">Estimated Development Charges</span>
  <div className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white font-display tabular-nums">
- ₹{calculatedFee.toLocaleString()}
+ â‚¹{calculatedFee.toLocaleString()}
  </div>
  <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest leading-relaxed">
  *Note is an algorithmic estimate based on base GDCR rates. <br/> Actual scrutiny fees may vary by TP sub-zone and built-up area specifics.

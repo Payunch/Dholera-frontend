@@ -1,5 +1,3 @@
-export 
-
 export const projects = [
  {
  slug:"final-dholera-report",

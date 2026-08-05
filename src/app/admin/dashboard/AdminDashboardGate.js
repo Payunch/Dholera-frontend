@@ -1,10 +1,9 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import { Loader2, ShieldAlert } from"lucide-react";
 import { apiClient } from"@/lib/api";
 import { AdminDashboardClient } from"@/features/admin/components/AdminDashboardClient";
-import { Lead, WhatsAppStats } from"@/types/admin";
 
 const fallbackStats = {
  totalClicks: 0,
@@ -15,7 +14,7 @@ const fallbackStats = {
 
 const getErrorMessage = (err) => {
  if (typeof err ==="object" && err !== null &&"response" in err) {
- const response = (err as { response?: { data?: { error? } } }).response;
+ const response = err.response;
  if (response?.data?.error) {
  return response.data.error;
  }

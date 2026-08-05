@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import Image from"next/image";
 import Link from"next/link";
 import { 
@@ -55,7 +55,7 @@ export default function AboutUsPage() {
  }, [verifiedLead]);
  const [visitStatus, setVisitStatus] = React.useState("idle");
 
- const handlePhoneChange = (e.ChangeEvent<HTMLInputElement>, type) => {
+ const handlePhoneChange = (e, type) => {
  const val = e.target.value.replace(/\D/g,'').slice(0, 10);
  if (type ==='contact') setContactForm({ ...contactForm, phone: val });
  else setVisitForm({ ...visitForm, phone: val });

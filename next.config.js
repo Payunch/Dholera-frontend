@@ -12,6 +12,9 @@ try {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  turbopack: {
+    root: __dirname,
+  },
   productionBrowserSourceMaps: false,
   async headers() {
     return [

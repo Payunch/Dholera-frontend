@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import * from "react";
+import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -59,7 +59,7 @@ export function HomeClient() {
   const today = new Date().toISOString().split('T')[0];
   const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
-  const handlePhoneChange = (e.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneChange = (e) => {
     const val = e.target.value.replace(/\D/g, '').slice(0, 10);
     setVisitForm({ ...visitForm, phone: val });
     if (visitStatus === 'error') setVisitFormStatus('idle');
