@@ -81,8 +81,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 102%;
+  font-weight: 700;
   text-rendering: optimizeLegibility;
   transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition requested by user */
+}
+
+body :where(h1, h2, h3, h4, h5, h6, p, span, a, button, label, li, td, th, input, textarea, select) {
+  font-weight: 700;
 }
 
 .font-display {
