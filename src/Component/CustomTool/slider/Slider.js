@@ -1,5 +1,5 @@
 import React from "react";
-import HoCtToastContainer from '../../HOC/HoCtToastContainer'
+import HoCtToastContainer from '../../../HOC/HoCtToastContainer'
 // import './slider.scss'
 /* const slides = [
     {
