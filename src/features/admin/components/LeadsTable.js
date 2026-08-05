@@ -219,10 +219,10 @@ export function LeadsTable({ leads: initialLeads }) {
  {/* Intelligence Grid */}
  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
  {[
- { icon, label:"Time Spent", value:`${Math.round((selectedLead.totalTimeSpent || 0) / 60)}m` },
- { icon, label:"Views", value:`${selectedLead.total_sessions || 0} Sessions` },
- { icon, label:"Last IP", value: selectedLead.sessions?.[0]?.ip ||"Unknown" },
- { icon, label:"Source", value: selectedLead.source ||"Direct" },
+ { icon: Clock, label:"Time Spent", value:`${Math.round((selectedLead.totalTimeSpent || 0) / 60)}m` },
+ { icon: Eye, label:"Views", value:`${selectedLead.total_sessions || 0} Sessions` },
+ { icon: Monitor, label:"Last IP", value: selectedLead.sessions?.[0]?.ip ||"Unknown" },
+ { icon: Globe, label:"Source", value: selectedLead.source ||"Direct" },
  ].map((item, i) => (
  <div key={i} className="bg-slate-50 dark:bg-slate-950 rounded-2xl p-4 border border-slate-100 dark:border-slate-800 shadow-sm">
  <item.icon className="h-4 w-4 text-orange-600 mb-2" />

@@ -12,10 +12,10 @@ import {
 import { cn } from"@/lib/utils";
 
 const tabs = [
- { id: 0, label:"Fee Engine", icon },
- { id: 1, label:"Parking Planner", icon },
- { id: 2, label:"Zoning Map", icon },
- { id: 3, label:"Plan Drop", icon },
+ { id: 0, label:"Fee Engine", icon: Calculator },
+ { id: 1, label:"Parking Planner", icon: Car },
+ { id: 2, label:"Zoning Map", icon: Map },
+ { id: 3, label:"Plan Drop", icon: CloudUpload },
 ];
 
 export function ClearanceClient() {

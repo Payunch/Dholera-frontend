@@ -38,12 +38,12 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }) {
   const { theme, toggleTheme } = useLanguage();
 
  const tabs = [
- { label:"Leads", icon },
- { label:"Updates", icon },
- { label:"Insights", icon },
- { label:"Database", icon },
- { label:"Management", icon },
- { label:"System", icon },
+ { label:"Leads", icon: Users },
+ { label:"Updates", icon: CheckSquare },
+ { label:"Insights", icon: Activity },
+ { label:"Database", icon: Database },
+ { label:"Management", icon: Globe },
+ { label:"System", icon: Settings },
  ];
 
  const handleLogout = async () => {

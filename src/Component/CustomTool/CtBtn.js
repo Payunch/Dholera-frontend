@@ -86,13 +86,13 @@ import Button from "@mui/material/Button";
 import {
   CurrencyRupee,
   Edit,
+  Delete,
   FileCopy,
   InsertDriveFile,
   PlusOne,
   TextSnippet,
   Visibility,
 } from "@mui/icons-material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import PrintIcon from "@mui/icons-material/Print";
 import SaveIcon from "@mui/icons-material/Save";
@@ -107,7 +107,6 @@ import excel from "../../image/Gemini_Generated_Image_xtts4xxtts4xxtts.png";
 // import New from "../../images/New_Icon.png";
 import New_Blue from "../../image/Gemini_Generated_Image_q040m5q040m5q040.png";
 import New from "../../image/Gemini_Generated_Image_rgc0cbrgc0cbrgc0.png";
-import "../button.css";
 
 // import "../theam.css";
 
@@ -166,7 +165,7 @@ const CtBtn = ({
   if (iconName == "delete") {
     buttonStyle.backgroundColor = "#fe6969";
     buttonStyle.color = "#ffffff";
-    icon = <DeleteOutlineIcon />;
+    icon = <Delete />;
   } else if (iconName == "new") {
     variant === "outlined"
       ? (icon = <img src={New_Blue} alt="New" height={"25px"} width={"25px"} />)

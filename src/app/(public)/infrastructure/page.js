@@ -12,7 +12,7 @@ export default function InfrastructurePage() {
  const categories = [
  {
  title: t('industrial_semicon_title'),
- icon,
+ icon: Cpu,
  items: [
  t('tata_investment'),
  t('micron_investment'),
@@ -22,7 +22,7 @@ export default function InfrastructurePage() {
  },
  {
  title: t('utility_powerhouse_title'),
- icon,
+ icon: Zap,
  items: [
  t('solar_park'),
  t('power_supply'),
@@ -32,7 +32,7 @@ export default function InfrastructurePage() {
  },
  {
  title: t('connectivity_title'),
- icon,
+ icon: Road,
  items: [
  t('expressway_desc'),
  t('massive_10_lane'),

@@ -14,7 +14,7 @@ export default function PortalsPage() {
  id:'category-a',
  title: t('land_records_title'),
  subtitle: t('land_records_desc'),
- icon,
+ icon: MapPin,
  links: [
  {
  name:"Gujarat AnyROR (Urban)",
@@ -37,7 +37,7 @@ export default function PortalsPage() {
  id:'category-b',
  title: t('legal_compliance_title'),
  subtitle: t('legal_compliance_desc'),
- icon,
+ icon: ShieldCheck,
  links: [
  {
  name:"Gujarat RERA Portal",
@@ -55,7 +55,7 @@ export default function PortalsPage() {
  id:'category-c',
  title: t('planning_regulations_title'),
  subtitle: t('planning_regulations_desc'),
- icon,
+ icon: Scale,
  links: [
  {
  name:"Official DSIRDA Website",

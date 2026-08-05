@@ -77,9 +77,9 @@ export default function SmartCityPage() {
 
  <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-32">
  {[
- { title:"Smart Governance", desc:"Digital land management, automated approvals, and city-wide ICT integration.", icon },
- { title:"Sustainable Life", desc:"100% recycling of waste, renewable energy integration, and vast green spaces.", icon },
- { title:"Global Logistics", desc:"Proximity to the upcoming International Airport and Delhi-Mumbai Industrial Corridor.", icon },
+ { title:"Smart Governance", desc:"Digital land management, automated approvals, and city-wide ICT integration.", icon: Landmark },
+ { title:"Sustainable Life", desc:"100% recycling of waste, renewable energy integration, and vast green spaces.", icon: Shield },
+ { title:"Global Logistics", desc:"Proximity to the upcoming International Airport and Delhi-Mumbai Industrial Corridor.", icon: Globe },
  ].map((feature, i) => (
  <div key={i} className="group space-y-6 p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
  <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">

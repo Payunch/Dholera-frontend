@@ -5,15 +5,14 @@ import {
  Plus, 
  Pencil, 
  Trash2, 
- Image , 
  Loader2, 
  Check, 
  X, 
  Eye,
  Search,
- ExternalLink
+ ExternalLink,
+ ImageIcon
 } from"lucide-react";
-import { Update } from"@/types/update";
 import { apiClient } from"@/lib/api";
 import { cn } from"@/lib/utils";
 import { format } from"date-fns";
@@ -55,7 +54,7 @@ export function UpdatesManagement() {
  loadUpdates();
  }, []);
 
- const handleEdit = (update | "new") => {
+ const handleEdit = (update) => {
  if (update ==="new") {
  setEditingId("new");
  setTitle("");
@@ -267,7 +266,7 @@ export function UpdatesManagement() {
  <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Category</label>
  <select
  value={category}
- onChange={(e) => setCategory(e.target.value ["category"])}
+ onChange={(e) => setCategory(e.target.value)}
  className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold appearance-none transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 focus:ring-0 text-slate-900 dark:text-white"
  >
  <option value="Infrastructure">Infrastructure</option>

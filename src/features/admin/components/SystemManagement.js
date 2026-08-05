@@ -15,8 +15,6 @@ import {
 } from'lucide-react';
 import { API_BASE_URL, apiClient } from'@/lib/api';
 import { fetchCsrfToken } from"@/utils/csrf";
-import { cn } from'@/lib/utils';
-
 export const SystemManagement = () => {
  const [loading, setLoading] = useState(false);
  const [status, setStatus] = useState(null);
@@ -244,6 +242,3 @@ export const SystemManagement = () => {
  );
 };
 
-function cn(...classes) {
- return classes.filter(Boolean).join('');
-}

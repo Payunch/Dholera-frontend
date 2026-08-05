@@ -52,7 +52,7 @@ export const LeadPopup = ({
 
     const updateTimer = () => {
       const now = new Date().getTime();
-      const distance = parseInt(endTime!) - now;
+      const distance = parseInt(endTime, 10) - now;
       
       if (distance < 0) {
         setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
@@ -60,10 +60,10 @@ export const LeadPopup = ({
       }
 
       setTimeLeft({
-        d.floor(distance / (1000 * 60 * 60 * 24)),
-        h.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        m.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        s.floor((distance % (1000 * 60)) / 1000)
+        d: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        h: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        m: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        s: Math.floor((distance % (1000 * 60)) / 1000)
       });
     };
 

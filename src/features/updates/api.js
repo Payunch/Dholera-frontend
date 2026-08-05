@@ -1,7 +1,6 @@
-import { Update } from"@/types/update";
 import { API_BASE_URL } from"@/lib/api";
 
-export async function getUpdates(search?, lang?) {
+export async function getUpdates(search, lang) {
  const params = new URLSearchParams();
  if (search) params.append("search", search);
  if (lang) params.append("lang", lang);
@@ -20,7 +19,7 @@ export async function getUpdates(search?, lang?) {
  return Array.isArray(data) ? data : [];
 }
 
-export async function getUpdateById(id, lang?) {
+export async function getUpdateById(id, lang) {
  const query = lang ?`?lang=${lang}` :"";
   const res = await fetch(`${API_BASE_URL}/updates/${id}${query}`, {
     cache: "no-store",

@@ -15,15 +15,15 @@ export function Navbar() {
  const [isLangOpen, setIsLangOpen] = React.useState(false);
 
  const navItems = [
- { label: t('nav_home'), href:"/", icon },
- { label: t('nav_tp_maps'), href:"/tp-maps", icon },
- { label: t('nav_pdf'), href: "/pdf?trigger=true", icon },
- { label: t('nav_portals'), href:"/portals", icon },
- { label: t('nav_projects'), href:"/projects", icon },
- { label: t('nav_airport'), href:"/airport", icon },
- { label: t('nav_infrastructure'), href:"/infrastructure", icon },
- { label: t('nav_updates'), href:"/blogs", icon },
- { label: t('nav_about'), href:"/about-us", icon },
+ { label: t('nav_home'), href:"/", icon: Home },
+ { label: t('nav_tp_maps'), href:"/tp-maps", icon: Map },
+ { label: t('nav_pdf'), href: "/pdf?trigger=true", icon: FileText },
+ { label: t('nav_portals'), href:"/portals", icon: ShieldCheck },
+ { label: t('nav_projects'), href:"/projects", icon: Grid },
+ { label: t('nav_airport'), href:"/airport", icon: Plane },
+ { label: t('nav_infrastructure'), href:"/infrastructure", icon: Construction },
+ { label: t('nav_updates'), href:"/blogs", icon: Sparkles },
+ { label: t('nav_about'), href:"/about-us", icon: Users },
  ];
 
  const languages = [

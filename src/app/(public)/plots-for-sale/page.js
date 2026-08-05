@@ -42,9 +42,9 @@ export default function PlotsForSalePage() {
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
  {/* Quick Categories */}
  {[
- { title:"Residential Plots", desc:"Premium plots in TP-1 and TP-2 residential zones.", icon },
- { title:"Commercial Land", desc:"Strategic plots near the Activation Area and Linear Zone.", icon },
- { title:"Industrial Zones", desc:"Large land parcels for manufacturing and logistics units.", icon },
+ { title:"Residential Plots", desc:"Premium plots in TP-1 and TP-2 residential zones.", icon: MapPin },
+ { title:"Commercial Land", desc:"Strategic plots near the Activation Area and Linear Zone.", icon: Grid },
+ { title:"Industrial Zones", desc:"Large land parcels for manufacturing and logistics units.", icon: ShieldCheck },
  ].map((cat, i) => (
  <div key={i} className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all">
  <div className="h-16 w-16 rounded-[1.5rem] bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white mb-8">

@@ -14,10 +14,7 @@ import {
  Activity
 } from'lucide-react';
 import { API_BASE_URL } from'@/lib/api';
-
-[];
- topPurchases: { title; count }[];
-}
+import { cn } from'@/lib/utils';
 
 export const PlatformInsights = () => {
  const [data, setData] = useState(null);
@@ -41,10 +38,10 @@ export const PlatformInsights = () => {
  {/* Top Level KPIs */}
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
  {[
- { label:"Total Revenue", value:`₹${data.totalRevenue.toLocaleString()}`, icon, color:"text-green-600 dark:text-green-400", bg:"bg-green-50 dark:bg-green-600/10" },
- { label:"Conversion Rate", value:`${data.conversionRate}%`, icon, color:"text-blue-600 dark:text-blue-400", bg:"bg-blue-50 dark:bg-blue-600/10" },
- { label:"Pro Members", value: data.proCount, icon, color:"text-orange-600 dark:text-orange-400", bg:"bg-orange-50 dark:bg-orange-600/10" },
- { label:"Unique Buyers", value: data.uniqueBuyers, icon, color:"text-purple-600 dark:text-purple-400", bg:"bg-purple-50 dark:bg-purple-600/10" },
+ { label:"Total Revenue", value:`₹${data.totalRevenue.toLocaleString()}`, icon: TrendingUp, color:"text-green-600 dark:text-green-400", bg:"bg-green-50 dark:bg-green-600/10" },
+ { label:"Conversion Rate", value:`${data.conversionRate}%`, icon: ArrowUpRight, color:"text-blue-600 dark:text-blue-400", bg:"bg-blue-50 dark:bg-blue-600/10" },
+ { label:"Pro Members", value: data.proCount, icon: Trophy, color:"text-orange-600 dark:text-orange-400", bg:"bg-orange-50 dark:bg-orange-600/10" },
+ { label:"Unique Buyers", value: data.uniqueBuyers, icon: Users, color:"text-purple-600 dark:text-purple-400", bg:"bg-purple-50 dark:bg-purple-600/10" },
  ].map((stat, i) => (
  <div key={i} className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col gap-4">
  <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center", stat.bg, stat.color)}>
@@ -134,6 +131,3 @@ export const PlatformInsights = () => {
  );
 };
 
-function cn(...classes) {
- return classes.filter(Boolean).join('');
-}

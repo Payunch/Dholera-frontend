@@ -40,10 +40,10 @@ export default function TravelLifestylePage() {
  <div className="container mx-auto px-4 md:px-8">
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-32">
  {[
- { title:"Expressway", desc:"109km high-speed link reducing travel time to 60 mins.", icon },
- { title:"Int'l Airport", desc:"Upcoming logistic and passenger hub for the region.", icon },
- { title:"Premium Stay", desc:"Verified guest houses and hotels for site visitors.", icon },
- { title:"Local Sites", desc:"Explore the Gulf of Khambhat and Velavadar Park.", icon },
+ { title:"Expressway", desc:"109km high-speed link reducing travel time to 60 mins.", icon: Car },
+ { title:"Int'l Airport", desc:"Upcoming logistic and passenger hub for the region.", icon: Plane },
+ { title:"Premium Stay", desc:"Verified guest houses and hotels for site visitors.", icon: Coffee },
+ { title:"Local Sites", desc:"Explore the Gulf of Khambhat and Velavadar Park.", icon: MapPin },
  ].map((item, i) => (
  <div key={i} className="group p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
  <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">

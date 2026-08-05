@@ -43,13 +43,13 @@ export default function GovernmentSchemesPage() {
  { 
  title:"Industrial Subsidies", 
  items: ["Capital Subsidy on Fixed Assets","Interest Subsidy for MSMEs","Electricity Duty Exemptions","Stamp Duty Waivers"],
- icon,
+ icon: Landmark,
  color:"border-slate-100 bg-white/50 dark:bg-slate-900"
  },
  { 
  title:"Production Linked Incentives (PLI)", 
  items: ["Semiconductor Manufacturing Support","Electronics System Design (ESDM)","Solar PV Module Incentives","Advanced Chemistry Cell (ACC) Batteries"],
- icon,
+ icon: FileText,
  color:"border-orange-100 bg-orange-50/50"
  }
  ].map((scheme, i) => (

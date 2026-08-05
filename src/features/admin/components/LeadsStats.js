@@ -11,9 +11,9 @@ export function LeadsStats({ leads }) {
  const converted = leads.filter((l) => l.status ==="Converted").length;
 
  const stats = [
- { label:"Total Leads", value: total, icon, color:"border-slate-900 dark:border-slate-800 text-slate-900 dark:text-white bg-white dark:bg-slate-900" },
- { label:"New Inquiries", value: newLeads, icon, color:"border-orange-500 dark:border-orange-900/50 text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-600/10" },
- { label:"Converted", value: converted, icon, color:"border-green-600 dark:border-green-900/50 text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-600/10" },
+ { label:"Total Leads", value: total, icon: Users, color:"border-slate-900 dark:border-slate-800 text-slate-900 dark:text-white bg-white dark:bg-slate-900" },
+ { label:"New Inquiries", value: newLeads, icon: UserPlus, color:"border-orange-500 dark:border-orange-900/50 text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-600/10" },
+ { label:"Converted", value: converted, icon: CheckCircle2, color:"border-green-600 dark:border-green-900/50 text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-600/10" },
  ];
 
  return (

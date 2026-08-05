@@ -12,10 +12,6 @@ const ownerDetails = {
  phoneDisplay:"+91 7435808031",
 };
 
-declare global {
- 
-}
-
 const OPEN_CONSENT_EVENT ="open-consent-banner";
 
 export function Footer() {

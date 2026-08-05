@@ -16,7 +16,7 @@ const generateSessionId = () => {
 const getBrowserFingerprint = () => {
   try {
     const { userAgent, language, hardwareConcurrency } = navigator;
-    const deviceMemory = (navigator  & { deviceMemory? }).deviceMemory ?? 'unknown';
+    const deviceMemory = navigator.deviceMemory ?? 'unknown';
     const { width, height, colorDepth } = window.screen;
 
     let canvasData = 'no-canvas';
@@ -128,7 +128,7 @@ export const useVisitorTracking = () => {
             'Content-Type': 'application/json',
             'Authorization': token.startsWith('Bearer') ? token : `Bearer ${token}`
           },
-          body.stringify({
+          body: JSON.stringify({
             page: window.location.pathname, // Use window.location to ensure latest path in global interval
             timeSpent: 60
           })

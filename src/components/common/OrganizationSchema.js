@@ -30,7 +30,7 @@ export default function OrganizationSchema() {
  <Script
  id="organization-schema"
  type="application/ld+json"
- dangerouslySetInnerHTML={{ __html.stringify(jsonLd) }}
+ dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
  />
  );
 }

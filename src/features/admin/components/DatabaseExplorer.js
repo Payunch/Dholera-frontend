@@ -166,7 +166,7 @@ export const DatabaseExplorer = () => {
  <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
  {Object.values(row).map((val, j) => (
  <td key={j} className="px-4 py-3 text-[11px] font-medium text-slate-600 dark:text-slate-300 whitespace-nowrap max-w-xs overflow-hidden text-ellipsis border-r border-slate-50 dark:border-slate-800/50">
- {typeof val ==='object' ? JSON.stringify(val) (val)}
+ {typeof val ==='object' ? JSON.stringify(val) : val}
  </td>
  ))}
  </tr>

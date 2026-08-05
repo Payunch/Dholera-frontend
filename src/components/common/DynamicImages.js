@@ -5,7 +5,7 @@ import Image from'next/image';
  * Upper side is full logo, bottom size is only logo.
  * Assumes a 1:2 aspect ratio source where top half is Full and bottom is Icon.
  */
-export const SplitLogo = ({ isFull, height = 32 }: { isFull?; height? }) => {
+export const SplitLogo = ({ isFull, height = 32 }) => {
  return (
  <div
  style={{
@@ -36,7 +36,7 @@ export const SplitLogo = ({ isFull, height = 32 }: { isFull?; height? }) => {
  * Main image which contains 3 sub images. 
  * Assumes a 1:3 aspect ratio source (Vertical stack).
  */
-export const TripleSplitImage = ({ index, height = 300 }: { index; height? }) => {
+export const TripleSplitImage = ({ index, height = 300 }) => {
  return (
  <div
  style={{

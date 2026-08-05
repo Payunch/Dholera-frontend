@@ -128,10 +128,10 @@ export default function AboutUsPage() {
  {/* About Us Cards - REFACTORED FOR 1/2/3/4 RESPONSIVENESS */}
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-32">
  {[
- { title:"Verified Data", desc:"Real-time TP maps and land records cross-checked with DSIRDA.", icon, img:"/images/airportVision.webp" },
- { title:"Expert Support", desc:"Connecting you with certified developers and legal advisors.", icon, img:"/images/arialviewdholeraexpress.webp" },
- { title:"Strategic ROI", desc:"Data-driven insights to maximize your land appreciation.", icon, img:"/images/expressHighway.webp" },
- { title:"Trust Record", desc:"Over 5 years of tracking Dholera's infrastructure milestones.", icon, img:"/images/dholerasirGujrat.webp" },
+ { title:"Verified Data", desc:"Real-time TP maps and land records cross-checked with DSIRDA.", icon: ShieldCheck, img:"/images/airportVision.webp" },
+ { title:"Expert Support", desc:"Connecting you with certified developers and legal advisors.", icon: Users, img:"/images/arialviewdholeraexpress.webp" },
+ { title:"Strategic ROI", desc:"Data-driven insights to maximize your land appreciation.", icon: Target, img:"/images/expressHighway.webp" },
+ { title:"Trust Record", desc:"Over 5 years of tracking Dholera's infrastructure milestones.", icon: History, img:"/images/dholerasirGujrat.webp" },
  ].map((item, i) => (
  <div key={i} className="group bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl dark:hover:shadow-black/100 hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col">
  <div className="relative h-56 w-full">

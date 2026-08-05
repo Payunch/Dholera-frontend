@@ -23,9 +23,6 @@ function updateGoogleConsent(choice) {
  });
 }
 
-declare global {
-}
-
 export default function ConsentBanner() {
  const [isVisible, setIsVisible] = useState(false);
  const [mounted, setMounted] = useState(false);

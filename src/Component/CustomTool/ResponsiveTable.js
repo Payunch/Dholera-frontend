@@ -8,7 +8,6 @@ import { Edit, Delete, Print, Label, Upgrade } from "@mui/icons-material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import MaterialTable from "./MaterialTable";
 import MobileTable from "./MobileTable";
-import "../Table.css";
 
 const CtART = ({
   id,

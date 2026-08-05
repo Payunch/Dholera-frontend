@@ -22,9 +22,11 @@ const CtMultiLineText = ({
   const curVariant = variant ? variant : "standard";
 
   const style = {
-    width(width).includes("%") || String(width).includes("px")
+    width:
+      typeof width === "string" &&
+      (width.includes("%") || width.includes("px"))
         ? width
-        : width + "px",
+        : `${width}px`,
   };
 
   const inputPropsStyle =

@@ -17,7 +17,7 @@ import {
   getYMDfromDMY,
 } from "../SystemUtility/SystemUtility";
 import TableList from "./CustomTool/TableList";
-import readXlsxFile from "read-excel-file";
+import readXlsxFile from "read-excel-file/browser";
 import { fetchBillSetting, fetchImportDetails } from "./API";
 import Progress from "./CustomTool/Progress";
 import CtCheckBox from "./CustomTool/CtCheckBox";
