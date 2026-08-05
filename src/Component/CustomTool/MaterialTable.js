@@ -17,8 +17,8 @@ import {
   CopyAll,
 } from "@mui/icons-material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import Revision from "../../images/revision.png";
-import FileView from "../../images/file.png";
+import Revision from "../../image/Gemini_Generated_Image_fguz5rfguz5rfguz.png";
+import FileView from "../../image/Gemini_Generated_Image_xtts4xxtts4xxtts.png";
 
 const CtMRT = ({
   id,

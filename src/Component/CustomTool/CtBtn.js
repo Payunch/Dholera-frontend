@@ -102,11 +102,11 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import CachedIcon from "@mui/icons-material/Cached";
 import { Upgrade } from "@mui/icons-material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import excel from "../../images/excel.png";
+import excel from "../../image/Gemini_Generated_Image_xtts4xxtts4xxtts.png";
 // import New_Blue from "../../images/New_Icon_Blue.png";
 // import New from "../../images/New_Icon.png";
-import New_Blue from "../../images/New_Icon_page_Blue.png";
-import New from "../../images/New_Icon_page.png";
+import New_Blue from "../../image/Gemini_Generated_Image_q040m5q040m5q040.png";
+import New from "../../image/Gemini_Generated_Image_rgc0cbrgc0cbrgc0.png";
 import "../button.css";
 
 // import "../theam.css";
