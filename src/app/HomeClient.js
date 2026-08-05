@@ -166,17 +166,18 @@ export function HomeClient() {
         </div>
 
         <div className="container relative z-10 px-4 md:px-8 mx-auto py-12 md:py-20 flex justify-center">
-          <div className="max-w-4xl w-full backdrop-blur-xl bg-white/70 dark:bg-slate-950/25 p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-slate-200/60 dark:border-white/10 shadow-2xl relative overflow-hidden">
+          <div className="max-w-4xl w-full backdrop-blur-xl bg-white/95 dark:bg-slate-950/80 p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-white/80 dark:border-white/10 shadow-2xl relative overflow-hidden">
             {/* Background Image for the Content Box */}
-            <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+            <div className="absolute inset-0 z-0 opacity-20 dark:opacity-25 pointer-events-none">
               <Image
                 src="/images/futuristic_dholera.png"
                 alt="Dholera Future Vision"
                 fill
-                className="object-cover"
+                className="object-cover object-right-center"
                 sizes="(max-width: 768px) 100vw, 800px"
               />
             </div>
+            <div className="absolute inset-0 z-0 bg-gradient-to-r from-white via-white/95 to-white/70 dark:from-slate-950 dark:via-slate-950/90 dark:to-slate-950/65 pointer-events-none" />
 
             <div className="relative z-10">
               <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2.5 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-8 animate-fade-in">
@@ -193,11 +194,11 @@ export function HomeClient() {
                 <span className="sm:hidden">{t('verified_data')}</span>
               </div>
 
-              <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-slate-900 dark:text-white uppercase leading-[0.95] mb-8">
+              <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-black tracking-normal text-slate-950 dark:text-white uppercase leading-[1.05] mb-8 max-w-3xl">
                 {t('hero_title')}
               </h1>
 
-              <p className="max-w-2xl text-base sm:text-lg md:text-xl font-medium text-slate-700 dark:text-slate-200 leading-relaxed mb-12 opacity-90">
+              <p className="max-w-2xl text-base sm:text-lg md:text-xl font-semibold text-slate-800 dark:text-slate-100 leading-relaxed mb-12">
                 {t('hero_desc')}
               </p>
 
