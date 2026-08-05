@@ -190,15 +190,15 @@ export function HomeClient() {
                     className="object-contain"
                   />
                 </div>
-                <span className="hidden sm:inline">{t('verified_data')}</span>
-                <span className="sm:hidden">{t('verified_data')}</span>
+                <span className="hidden sm:inline font-black">{t('verified_data')}</span>
+                <span className="sm:hidden font-black">{t('verified_data')}</span>
               </div>
 
-              <h1 className="font-display text-3xl sm:text-5xl md:text-7xl font-black tracking-normal text-slate-950 dark:text-white uppercase leading-[1.05] mb-8 max-w-3xl">
+              <h1 className="font-display text-[1.913rem] sm:text-[3.188rem] md:text-[4.463rem] font-black tracking-normal text-slate-950 dark:text-white uppercase leading-[1.05] mb-8 max-w-3xl">
                 {t('hero_title')}
               </h1>
 
-              <p className="max-w-2xl text-base sm:text-lg md:text-xl font-semibold text-slate-800 dark:text-slate-100 leading-relaxed mb-12">
+              <p className="max-w-2xl text-[1.02rem] sm:text-[1.148rem] md:text-[1.275rem] font-bold text-slate-800 dark:text-slate-100 leading-relaxed mb-12">
                 {t('hero_desc')}
               </p>
 
@@ -227,7 +227,7 @@ export function HomeClient() {
                     </div>
                   ))}
                 </div>
-                <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('trusted_by')}</p>
+                <p className="text-[8.16px] sm:text-[10.2px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('trusted_by')}</p>
               </div>
             </div>
           </div>
