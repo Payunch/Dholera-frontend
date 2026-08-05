@@ -1,0 +1,138 @@
+"use client";
+
+import React, { createContext, useContext, useState, useEffect, useCallback } from'react';
+import { apiClient } from'@/lib/api';
+import { setCookie, getCookie } from'@/utils/cookies';
+import { useRouter } from 'next/navigation';
+
+import hi from'@/i18n/locales/hi.json';
+import en from'@/i18n/locales/en.json';
+import gu from'@/i18n/locales/gu.json';
+
+const LOCAL_TRANSLATIONS> = { hi, en, gu };
+
+
+
+
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export const LanguageProvider = ({ children }: { children.ReactNode }) => {
+ const [lang, setLangState] = useState('hi'); // Default to Hindi
+ const [translations, setTranslations] = useState({});
+ const [mounted, setMounted] = useState(false);
+ const [themeMode, setThemeState] = useState('light');
+
+ const updateDomTheme = useCallback((isDark) => {
+   if (isDark) {
+     document.documentElement.classList.add('dark');
+     document.documentElement.classList.remove('light');
+   } else {
+     document.documentElement.classList.remove('dark');
+     document.documentElement.classList.add('light');
+   }
+ }, []);
+
+ useEffect(() => {
+ const checkTheme = () => {
+ const savedTheme = getCookie('user_theme') as'light' |'dark' | null;
+ if (savedTheme) {
+ setThemeState(savedTheme);
+ updateDomTheme(savedTheme ==='dark');
+ } else {
+ // Fallback to system preference if no cookie
+ const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+ setThemeState(isDark ?'dark' :'light');
+ updateDomTheme(isDark);
+ }
+ };
+ checkTheme();
+ }, [updateDomTheme]);
+
+ const setTheme = (newTheme) => {
+ setThemeState(newTheme);
+ setCookie('user_theme', newTheme);
+ updateDomTheme(newTheme ==='dark');
+ };
+
+ const toggleTheme = () => {
+ const nextTheme = themeMode ==='light' ?'dark' :'light';
+ setTheme(nextTheme);
+ };
+
+ const fetchTranslations = useCallback(async (l) => {
+    // Start with local translations
+    const localDict = LOCAL_TRANSLATIONS[l] || {};
+    setTranslations(localDict);
+
+    try {
+      // Sync with backend for dynamic content or updates
+      const response = await apiClient.get(`/preferences/translations/${l}`);
+      // ONLY merge if response.data is a valid object (not a string/HTML)
+      if (response.data && typeof response.data === 'object' && !Array.isArray(response.data)) {
+        setTranslations(prev => ({ ...prev, ...response.data }));
+      }
+    } catch (err) {
+      // Fallback is already set to localDict
+    }
+  }, []);
+
+  const router = useRouter();
+
+  const setLang = useCallback(async (newLang) => {
+    setLangState(newLang);
+    setCookie('preferred_lang', newLang);
+    setCookie('NEXT_LOCALE', newLang);
+    await fetchTranslations(newLang);
+    
+    // Also sync with backend if lead_token is present
+    const token = getCookie('lead_token');
+    if (token) {
+      try {
+        await apiClient.post('/preferences/user', { language: newLang });
+      } catch (err) {
+        console.error('Failed to sync language with backend:', err);
+      }
+    }
+    
+    // Force a hard reload so the browser requests the page with the new cookies
+    window.location.reload();
+  }, [fetchTranslations]);
+
+  useEffect(() => {
+    const initLang = async () => {
+      const savedLang = getCookie('preferred_lang')  | null;
+      const finalLang = (savedLang === 'en' || savedLang === 'hi' || savedLang === 'gu') ? savedLang : 'hi';
+      setLangState(finalLang);
+      await fetchTranslations(finalLang);
+      setMounted(true);
+    };
+    initLang();
+  }, [fetchTranslations]);
+
+ const t = (key) => {
+ return translations[key] || key;
+ };
+
+ if (!mounted) {
+ return (
+ <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
+ <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+ </div>
+ );
+ }
+
+ return (
+ <LanguageContext.Provider value={{ lang, setLang, t, theme: themeMode, setTheme, toggleTheme }}>
+ {children}
+ </LanguageContext.Provider>
+ );
+};
+
+export const useLanguage = () => {
+ const context = useContext(LanguageContext);
+ if (context === undefined) {
+ throw new Error('useLanguage must be used within a LanguageProvider');
+ }
+ return context;
+};
