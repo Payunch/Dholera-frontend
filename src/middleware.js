@@ -5,8 +5,8 @@ export function middleware(request) {
     const { pathname } = request.nextUrl;
     const token = request.cookies.get('admin_access_token')?.value;
 
-    // Protect admin dashboard routes
-    if (pathname.startsWith('/admin/leads')) {
+    // Protect all admin routes except login
+    if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
         if (!token) {
             const url = request.nextUrl.clone();
             url.pathname = '/admin/login';
@@ -18,7 +18,7 @@ export function middleware(request) {
     if (pathname === '/admin/login') {
         if (token) {
             const url = request.nextUrl.clone();
-            url.pathname = '/admin/leads';
+            url.pathname = '/admin/leads'; // Default dashboard after login
             return NextResponse.redirect(url);
         }
     }
@@ -27,5 +27,5 @@ export function middleware(request) {
 }
 
 export const config = {
-    matcher: ['/admin/leads', '/admin/leads/:path*', '/admin/login'],
+    matcher: ['/admin/:path*'],
 };
