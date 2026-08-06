@@ -72,13 +72,13 @@ export default function TermsAndConditions() {
  </p>
  </section>
   <section>
-  <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">7. User-Generated Content & Liability Disclaimer</h2>
+  <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">7. User-Generated Content & Safe Harbor</h2>
   <div className="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
   <p>
-  <strong>No Liability for User Actions:</strong> The Dholera Platform acts strictly as a neutral hosting provider and intermediary. Users (including dealers, agents, and the general public) are solely responsible for any content, listings, or information they upload, share, or transmit through our platform.
+  <strong>Safe Harbor Protection:</strong> The Dholera Platform acts strictly as a neutral hosting provider and intermediary under the Digital Millennium Copyright Act (DMCA) and equivalent global laws ("Safe Harbor"). Users (including dealers, agents, and the general public) are solely responsible for the legality, accuracy, and ownership of any content, listings, or information they upload, share, or transmit through our platform.
   </p>
   <p>
-  The platform, its creators, and administrators strictly disclaim any and all liability for fraudulent, illegal, or misused information uploaded by third parties. We do not endorse or verify the legal standing of user-generated claims.
+  The platform, its creators, and administrators strictly disclaim any and all liability for fraudulent, illegal, or misused information uploaded by third parties. We do not endorse or verify the legal standing of user-generated claims. We reserve the right to remove or moderate content at our discretion without prior notice.
   </p>
   </div>
   </section>

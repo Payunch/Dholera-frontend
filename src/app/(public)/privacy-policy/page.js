@@ -16,9 +16,16 @@ export default function PrivacyPolicy() {
  </section>
 
  <section>
- <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">2. How We Use Your Information</h2>
+ <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">2. How We Use Your Information (CRM Purposes)</h2>
  <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
- We use your name and phone number to verify document access and process automated payments via Razorpay. We may use your contact details to provide project updates or critical alerts regarding Dholera SIR.
+ We use your name and phone number strictly for internal Customer Relationship Management (CRM) purposes, to verify document access, and to process automated payments via Razorpay. We may use your contact details to provide project updates or critical alerts regarding Dholera SIR. Your data is never sold to third-party marketing agencies.
+ </p>
+ </section>
+
+ <section>
+ <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">2.1 Data Retention and Purging</h2>
+ <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+ We retain your CRM data only as long as necessary to provide our services. Test data and stale accounts are periodically purged from our databases to ensure data security and compliance with data protection best practices.
  </p>
  </section>
 
