@@ -17,10 +17,10 @@ const validatePhone = (phone) => /^\d{10,15}$/.test(phone);
 
 
 
-export const LeadPopup = ({ 
-  sessionId, 
-  fingerprint, 
-  compulsory = false, 
+export const LeadPopup = ({
+  sessionId,
+  fingerprint,
+  compulsory = false,
   onSuccess,
   onClose,
   title,
@@ -53,7 +53,7 @@ export const LeadPopup = ({
     const updateTimer = () => {
       const now = new Date().getTime();
       const distance = parseInt(endTime, 10) - now;
-      
+
       if (distance < 0) {
         setTimeLeft({ d: 0, h: 0, m: 0, s: 0 });
         return;
@@ -100,7 +100,7 @@ export const LeadPopup = ({
     e.preventDefault();
     const rawDigits = phone.replace(/\D/g, '');
     const cleanPhone = rawDigits.length > 10 ? rawDigits : sanitizeDigits(phone, 10);
-    
+
     if (!validatePhone(cleanPhone)) return setError(t('err_phone') || 'Please enter a valid 10-digit mobile number.');
     if (!agreedToTerms) return setError(t('err_terms') || 'You must agree to the terms and privacy policy.');
 
@@ -109,10 +109,10 @@ export const LeadPopup = ({
 
     try {
       // Direct bypass: Skip OTP entirely and save directly
-      const utmSource = typeof window !== 'undefined' 
-        ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
+      const utmSource = typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic'
         : 'organic';
-      
+
       const res = await apiClient.post('/leads/verify-otp', {
         name: name.trim(),
         phone: cleanPhone,
@@ -126,7 +126,7 @@ export const LeadPopup = ({
       if (res.data.lead_token) {
         loginLead({ ...res.data, token: res.data.lead_token });
       }
-      
+
       // Fire Google Ads Enhanced Conversions
       if (typeof window !== "undefined" && window.gtag) {
         window.gtag('set', 'user_data', {
@@ -139,7 +139,7 @@ export const LeadPopup = ({
 
       setStep('success');
       if (onSuccess) onSuccess(res.data);
-      
+
       setTimeout(() => {
         setOpen(false);
       }, 1500);
@@ -155,7 +155,7 @@ export const LeadPopup = ({
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     const code = sanitizeDigits(otpCode, 6);
-    
+
     if (confirmationResult?.verificationId === "test_bypass" && code !== "123456") {
       return setError('Just click "Establish Connection" directly! (No need to type)');
     }
@@ -178,12 +178,12 @@ export const LeadPopup = ({
         // Get Firebase ID Token to securely verify in our backend database
         idToken = await auth?.currentUser?.getIdToken() || "";
       }
-      
+
       const cleanPhone = sanitizeDigits(phone, 10);
-      const utmSource = typeof window !== 'undefined' 
-        ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
+      const utmSource = typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic'
         : 'organic';
-      
+
       const res = await apiClient.post('/leads/verify-otp', {
         name: name.trim(),
         phone: cleanPhone,
@@ -197,7 +197,7 @@ export const LeadPopup = ({
       if (res.data.lead_token) {
         loginLead({ ...res.data, token: res.data.lead_token });
       }
-      
+
       // Fire Google Ads Enhanced Conversions (Phase 6 Blueprint Implementation)
       if (typeof window !== "undefined" && (window).gtag) {
         (window).gtag('set', 'user_data', {
@@ -210,7 +210,7 @@ export const LeadPopup = ({
 
       setStep('success');
       if (onSuccess) onSuccess(res.data);
-      
+
       setTimeout(() => {
         setOpen(false);
         // Do not call onClose() here. Success means we completed the flow, not canceled it.
@@ -229,25 +229,25 @@ export const LeadPopup = ({
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/80 backdrop-blur-lg p-4 animate-in fade-in duration-500">
       <div className="relative w-full max-w-3xl overflow-hidden rounded-[2.5rem] bg-white/10 dark:bg-slate-950/20 backdrop-blur-2xl shadow-2xl border border-white/20 dark:border-slate-800/60 animate-in zoom-in-95 duration-300">
         {!compulsory && (
-          <button 
+          <button
             onClick={() => {
               setOpen(false);
               if (onClose) onClose();
-            }} 
+            }}
             className="absolute right-6 top-6 text-white/60 hover:text-white dark:text-white/60 dark:hover:text-white transition-all z-20"
           >
             <X className="h-5 w-5" />
           </button>
         )}
-        
+
         <div className="p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-          
+
           {/* Left Column */}
           <div className="flex-1 w-full text-center md:text-left flex flex-col justify-center">
             <div className="flex justify-center md:justify-start mb-6 md:mb-10 brightness-0 invert">
               <SplitLogo height={42} isFull={true} />
             </div>
-            
+
             <div>
               {step === 'details' && (compulsory || showCountdown) && (
                 <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/50 bg-orange-500/20 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-6 animate-pulse shadow-[0_0_15px_rgba(255,122,0,0.3)]">
@@ -260,7 +260,7 @@ export const LeadPopup = ({
               <p className="text-[10px] md:text-xs font-bold text-slate-300 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
                 {step === 'otp' ? t('enter_verification_code') : (subtitle || t('verify_desc'))}
               </p>
-              
+
               {step === 'details' && (compulsory || showCountdown) && timeLeft && (
                 <>
                   <div className="mt-8 flex justify-center md:justify-start gap-3">
@@ -294,111 +294,111 @@ export const LeadPopup = ({
               </div>
             )}
 
-          {step === 'details' && (
-            <form onSubmit={handleSendOtp} className="space-y-4">
-              <div className="relative">
-                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-                <input
-                  type="tel" 
-                  placeholder={t('mobile_number') || 'Mobile Number'} 
-                  required
-                  autoFocus
-                  autoComplete="off"
-                  className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
-                  value={phone} 
-                  onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
-                />
-              </div>
+            {step === 'details' && (
+              <form onSubmit={handleSendOtp} className="space-y-4">
+                <div className="relative">
+                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                  <input
+                    type="tel"
+                    placeholder={t('mobile_number') || 'Mobile Number'}
+                    required
+                    autoFocus
+                    autoComplete="off"
+                    className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 pl-12 pr-4 font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
+                    value={phone}
+                    onChange={(e) => setPhone(sanitizeDigits(e.target.value, 10))}
+                  />
+                </div>
 
-              <div className="flex items-start gap-3 pt-2">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  className="mt-1 h-4 w-4 rounded border-white/20 bg-transparent text-[#FF7A00] focus:ring-[#FF7A00] cursor-pointer"
-                  checked={agreedToTerms}
-                  onChange={(e) => setAgreedToTerms(e.target.checked)}
-                />
-                <label htmlFor="terms" className="text-[10px] font-bold text-slate-300 leading-relaxed cursor-pointer uppercase tracking-tight">
-                  {t('terms_agree') || 'I agree to the'} <Link href="/terms-and-conditions" className="text-[#FF7A00] font-black">{t('terms') || 'Terms'}</Link> {t('and') || 'and'} <Link href="/privacy-policy" className="text-[#FF7A00] font-black">{t('privacy') || 'Privacy Policy'}</Link>.
-                </label>
-              </div>
-              
-              <button 
-                disabled={loading} 
-                className="mt-2 w-full h-14 rounded-2xl bg-[#FF7A00] hover:bg-orange-600 disabled:bg-slate-700 text-white font-black uppercase tracking-widest text-[10px] transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 active:scale-95 group"
-              >
-                {loading ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <>
-                    Send OTP <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </>
-                )}
-              </button>
-            </form>
-          )}
+                <div className="flex items-start gap-3 pt-2">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    className="mt-1 h-4 w-4 rounded border-white/20 bg-transparent text-[#FF7A00] focus:ring-[#FF7A00] cursor-pointer"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                  />
+                  <label htmlFor="terms" className="text-[10px] font-bold text-slate-300 leading-relaxed cursor-pointer uppercase tracking-tight">
+                    {t('terms_agree') || 'I agree to the'} <Link href="/terms-and-conditions" className="text-[#FF7A00] font-black">{t('terms') || 'Terms'}</Link> {t('and') || 'and'} <Link href="/privacy-policy" className="text-[#FF7A00] font-black">{t('privacy') || 'Privacy Policy'}</Link>.
+                  </label>
+                </div>
 
-          {step === 'otp' && (
-            <form onSubmit={handleVerifyOtp} className="space-y-4">
-              <div className="text-center mb-4">
-                <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-                  Sent to +91 {phone}
-                </p>
-                <p className="text-xs text-[#FF7A00] mt-2 uppercase tracking-widest">
-                  <strong>123456 is your otp</strong>
-                </p>
-              </div>
-              <div className="relative">
-                <input
-                  type="text" 
-                  placeholder="ENTER 6-DIGIT OTP" 
-                  required
-                  maxLength={6}
-                  autoFocus
-                  autoComplete="one-time-code"
-                  readOnly
-                  className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400 cursor-not-allowed"
-                  value={otpCode} 
-                  onChange={(e) => setOtpCode(sanitizeDigits(e.target.value, 6))}
-                />
-              </div>
-              
-              <button 
-                disabled={loading} 
-                className="mt-2 w-full h-14 rounded-2xl bg-[#FF7A00] hover:bg-orange-600 disabled:bg-slate-700 text-white font-black uppercase tracking-widest text-[10px] transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 active:scale-95 group"
-              >
-                {loading ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <>
-                    Establish Connection <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </>
-                )}
-              </button>
-              
-              <div className="text-center pt-4">
                 <button
-                  type="button"
-                  onClick={() => {
-                    setStep('details');
-                    setError('');
-                  }}
-                  className="text-[9px] font-black uppercase tracking-widest text-slate-400 hover:text-[#FF7A00] transition-colors"
+                  disabled={loading}
+                  className="mt-2 w-full h-14 rounded-2xl bg-[#FF7A00] hover:bg-orange-600 disabled:bg-slate-700 text-white font-black uppercase tracking-widest text-[10px] transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 active:scale-95 group"
                 >
-                  Change Phone Number
+                  {loading ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <>
+                     Enter<ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </button>
-              </div>
-            </form>
-          )}
+              </form>
+            )}
 
-          {step === 'success' && (
-            <div className="flex flex-col items-center py-6 space-y-6 animate-in fade-in zoom-in-90 duration-500">
-              <div className="h-24 w-24 rounded-full bg-green-500/10 dark:bg-green-950/30 flex items-center justify-center text-green-400 border border-green-500/20">
-                <CheckCircle2 className="h-12 w-12" />
+            {step === 'otp' && (
+              <form onSubmit={handleVerifyOtp} className="space-y-4">
+                <div className="text-center mb-4">
+                  <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
+                    Sent to +91 {phone}
+                  </p>
+                  <p className="text-xs text-[#FF7A00] mt-2 uppercase tracking-widest">
+                    <strong>123456 is your otp</strong>
+                  </p>
+                </div>
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="ENTER 6-DIGIT OTP"
+                    required
+                    maxLength={6}
+                    autoFocus
+                    autoComplete="one-time-code"
+                    readOnly
+                    className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400 cursor-not-allowed"
+                    value={otpCode}
+                    onChange={(e) => setOtpCode(sanitizeDigits(e.target.value, 6))}
+                  />
+                </div>
+
+                <button
+                  disabled={loading}
+                  className="mt-2 w-full h-14 rounded-2xl bg-[#FF7A00] hover:bg-orange-600 disabled:bg-slate-700 text-white font-black uppercase tracking-widest text-[10px] transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center gap-3 active:scale-95 group"
+                >
+                  {loading ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <>
+                      Establish Connection <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
+                </button>
+
+                <div className="text-center pt-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setStep('details');
+                      setError('');
+                    }}
+                    className="text-[9px] font-black uppercase tracking-widest text-slate-400 hover:text-[#FF7A00] transition-colors"
+                  >
+                    Change Phone Number
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {step === 'success' && (
+              <div className="flex flex-col items-center py-6 space-y-6 animate-in fade-in zoom-in-90 duration-500">
+                <div className="h-24 w-24 rounded-full bg-green-500/10 dark:bg-green-950/30 flex items-center justify-center text-green-400 border border-green-500/20">
+                  <CheckCircle2 className="h-12 w-12" />
+                </div>
+                <p className="text-sm font-black uppercase tracking-[0.2em] text-white">{t('access_granted') || 'Access Granted'}</p>
               </div>
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-white">{t('access_granted') || 'Access Granted'}</p>
-            </div>
-          )}
+            )}
           </div>
         </div>
       </div>

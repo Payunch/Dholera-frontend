@@ -8,6 +8,7 @@ import { projects as staticProjects } from"@/data/projects";
 import { useLanguage } from"@/providers/LanguageProvider";
 import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight, Loader2, X } from"lucide-react";
 import { StaticPdfViewer } from"@/components/pdf/StaticPdfViewer";
+import { cn } from "@/lib/utils";
 
 
 
@@ -127,8 +128,9 @@ export default function ProjectsPage() {
  <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Scanning Platform Archives...</p>
  </div>
  ) : filteredProjects.length > 0 ? (
- <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
- {filteredProjects.map((project) => {
+ <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-flow-row-dense gap-6 md:gap-8">
+ {filteredProjects.map((project, index) => {
+ const isFeatured = index % 5 === 0;
  const projectDesc = t(project.descKey);
  return (
  <Link
@@ -140,11 +142,14 @@ export default function ProjectsPage() {
      setPreviewPdf("/Final_Dholera_Report.pdf");
    }
  }}
- className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
+ className={cn(
+   "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between",
+   isFeatured ? "md:col-span-2 md:row-span-2" : "col-span-1 row-span-1"
+ )}
  >
  <div>
  {/* Project Image */}
- <div className="relative h-64 w-full bg-white dark:bg-slate-800 overflow-hidden">
+ <div className={cn("relative w-full bg-white dark:bg-slate-800 overflow-hidden", isFeatured ? "h-80 md:h-[28rem]" : "h-64")}>
  <Image
  src={project.image.startsWith('/') ? project.image :`/images/${project.image}`}
  alt={project.name}
@@ -174,7 +179,7 @@ export default function ProjectsPage() {
  {project.location.split(",")[0]}
  </div>
 
- <h3 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-colors duration-300">
+ <h3 className={cn("font-display font-black uppercase tracking-tight text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-colors duration-300", isFeatured ? "text-3xl md:text-4xl" : "text-2xl")}>
  {project.name}
  </h3>
 
