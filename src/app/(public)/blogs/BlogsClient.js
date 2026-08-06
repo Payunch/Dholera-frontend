@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 
 
-export default function BlogsClient({ initialUpdates }) {
+export default function BlogsClient({ initialUpdates, hasError }) {
   const { t } = useLanguage();
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("All");
@@ -104,7 +104,17 @@ export default function BlogsClient({ initialUpdates }) {
       <section className="py-16">
         <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
           
-          {filtered.length === 0 ? (
+          {hasError ? (
+            <div className="py-32 text-center space-y-4">
+              <div className="mx-auto w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mb-6">
+                <Search className="h-8 w-8 text-orange-600" />
+              </div>
+              <h3 className="text-2xl font-black uppercase text-slate-900 dark:text-white tracking-tight">Temporarily Unavailable</h3>
+              <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto text-sm">
+                We are currently performing scheduled maintenance on our intelligence feed to bring you better insights. Please check back shortly.
+              </p>
+            </div>
+          ) : filtered.length === 0 ? (
             <div className="py-32 text-center space-y-4">
               <Filter className="h-12 w-12 text-slate-200 mx-auto" />
               <h3 className="text-xl font-black uppercase text-slate-300 tracking-tight">No intelligence matches your filter</h3>

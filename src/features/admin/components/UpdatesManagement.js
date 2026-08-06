@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import { 
@@ -29,6 +29,7 @@ export function UpdatesManagement() {
  const [content, setContent] = React.useState("");
  const [category, setCategory] = React.useState("General");
  const [published, setPublished] = React.useState(true);
+ const [isApproved, setIsApproved] = React.useState(true);
  const [publishedAt, setPublishedAt] = React.useState("");
  const [imageFile, setImageFile] = React.useState(null);
  const [imageUrl, setImageUrl] = React.useState("");
@@ -61,6 +62,7 @@ export function UpdatesManagement() {
  setContent("");
  setCategory("General");
  setPublished(true);
+ setIsApproved(true);
  setPublishedAt(new Date().toISOString().slice(0, 16));
  setImageFile(null);
  setImageUrl("");
@@ -74,6 +76,7 @@ export function UpdatesManagement() {
  setContent(update.content);
  setCategory(update.category);
  setPublished(update.published);
+ setIsApproved(update.isApproved !== false);
  setPublishedAt(new Date(update.publishedAt || update.createdAt).toISOString().slice(0, 16));
  setImageFile(null);
  setImageUrl(update.imageUrl ||"");
@@ -106,6 +109,7 @@ export function UpdatesManagement() {
  formData.append("content", content);
  formData.append("category", category);
  formData.append("published", String(published));
+ formData.append("isApproved", String(isApproved));
  formData.append("publishedAt", new Date(publishedAt).toISOString());
  if (seoTitle) formData.append("seoTitle", seoTitle);
  if (seoDescription) formData.append("seoDescription", seoDescription);
@@ -181,10 +185,11 @@ export function UpdatesManagement() {
  >
  <div className="flex items-start justify-between mb-4">
  <span className={cn(
-"rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white",
- update.published ?"bg-orange-600 shadow-md shadow-orange-600/20 dark:shadow-orange-600/60" :"bg-slate-400"
+ "rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white",
+ !update.isApproved ? "bg-red-500 shadow-md shadow-red-500/20 dark:shadow-red-500/60" :
+ update.published ? "bg-orange-600 shadow-md shadow-orange-600/20 dark:shadow-orange-600/60" : "bg-slate-400"
  )}>
- {update.published ?"Published" :"Draft"}
+ {!update.isApproved ? "Pending Approval" : update.published ? "Published" : "Draft"}
  </span>
  <div className="flex gap-2">
  <button 
@@ -209,7 +214,7 @@ export function UpdatesManagement() {
  </h4>
  
  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">
- {update.category} â€¢ {format(new Date(update.publishedAt || update.createdAt),"MMM d, yyyy")}
+ {update.category} • {format(new Date(update.publishedAt || update.createdAt),"MMM d, yyyy")}
  </p>
 
  <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
@@ -260,8 +265,8 @@ export function UpdatesManagement() {
  />
  </div>
 
- {/* Category & Status */}
- <div className="grid grid-cols-2 gap-4">
+ {/* Category & Status & Content Safety */}
+ <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
  <div className="space-y-2">
  <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Category</label>
  <select
@@ -282,7 +287,7 @@ export function UpdatesManagement() {
  type="button"
  onClick={() => setPublished(!published)}
  className={cn(
-"flex w-full items-center justify-center gap-2 rounded-2xl border py-4 text-sm font-black uppercase tracking-widest transition-all",
+ "flex w-full items-center justify-center gap-2 rounded-2xl border py-4 text-sm font-black uppercase tracking-widest transition-all",
  published 
  ?"border-orange-200 dark:border-orange-900/30 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400" 
  :"border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400"
@@ -290,6 +295,22 @@ export function UpdatesManagement() {
  >
  {published ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
  {published ?"Published" :"Draft"}
+ </button>
+ </div>
+ <div className="space-y-2">
+ <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Content Safety</label>
+ <button
+ type="button"
+ onClick={() => setIsApproved(!isApproved)}
+ className={cn(
+ "flex w-full items-center justify-center gap-2 rounded-2xl border py-4 text-sm font-black uppercase tracking-widest transition-all",
+ isApproved 
+ ?"border-green-200 dark:border-green-900/30 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400" 
+ :"border-red-200 dark:border-red-900/30 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400"
+ )}
+ >
+ {isApproved ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
+ {isApproved ?"Approved" :"Pending"}
  </button>
  </div>
  </div>

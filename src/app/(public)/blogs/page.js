@@ -9,6 +9,8 @@ export default async function BlogsPage() {
   const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
   
   let updates = [];
+  let hasError = false;
+
   try {
     updates = await getUpdates(undefined, lang);
   } catch (error) {
@@ -18,10 +20,11 @@ export default async function BlogsPage() {
       updates = await getUpdates();
     } catch (fallbackError) {
       console.error("Fallback fetch also failed:", fallbackError);
+      hasError = true;
     }
   }
 
-  return <BlogsClient initialUpdates={updates} />;
+  return <BlogsClient initialUpdates={updates} hasError={hasError} />;
 }
 
 // "use client";
