@@ -6,19 +6,19 @@ import {
   mapStatetoProps,
 } from "../store/mapReduxProps";
 import { Box, Grid, Typography } from "@mui/material";
-import CtDtp from "./CustomTool/CtDtp";
+import CtDtp from "./custom-tool/CtDtp";
 import { Check, Delete, Edit, Payment } from "@mui/icons-material";
-import TableList from "./CustomTool/TableList";
-// import Checkbox from './CustomTool/CtCheckBox';
+import TableList from "./custom-tool/TableList";
+// import Checkbox from './custom-tool/CtCheckBox';
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CtBtn from "./CustomTool/CtBtn";
-import { CtCmbEditable } from "./CustomTool/CtCmbEditable";
-import { CtCmb } from "./CustomTool/CtCmb";
-import { CtTxtAmt } from "./CustomTool/CtTxtAmt";
+import CtBtn from "./custom-tool/CtBtn";
+import { CtCmbEditable } from "./custom-tool/CtCmbEditable";
+import { CtCmb } from "./custom-tool/CtCmb";
+import { CtTxtAmt } from "./custom-tool/CtTxtAmt";
 import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
 import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
-import { fetchDefaultEntrySetting } from "./API";
+import { fetchDefaultEntrySetting } from "./api";
 import { getRowData } from "../utils/SystemUtility";
 
 class DefaultEntrySetting extends Component {

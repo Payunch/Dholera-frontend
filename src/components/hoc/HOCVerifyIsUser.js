@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { fetchUser, loginPath } from "../components/API";
+import { fetchUser, loginPath } from "../components/api";
 import { toast } from "react-toastify";
 import { setMenuPrivileges } from "../utils/MenuUtility";
 

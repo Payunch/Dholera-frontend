@@ -2,7 +2,7 @@
 import React from 'react';
 import { UpdatesManagement } from '@/features/admin/components/UpdatesManagement';
 
-export default function AdminBlogsPage() {
+export default function adminBlogsPage() {
   return (
     <div className="w-full">
       <div className="mb-6">

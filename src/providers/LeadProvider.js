@@ -10,7 +10,7 @@ export const LeadProvider = ({ children }) => {
  const [verifiedLead, setVerifiedLead] = useState(null);
  const [loading, setLoading] = useState(true);
  const pathname = usePathname();
- const isAdminPath = pathname?.startsWith('/admin');
+ const isadminPath = pathname?.startsWith('/admin');
 
  const loginLead = useCallback((leadData) => {
  const domain = typeof window !== 'undefined' && window.location.hostname.includes('dholeraplatform.com') 
@@ -36,7 +36,7 @@ export const LeadProvider = ({ children }) => {
 
  useEffect(() => {
  // DO NOT run lead verification on admin pages to avoid state loops
- if (isAdminPath) {
+ if (isadminPath) {
  setLoading(false);
  return;
  }
@@ -96,7 +96,7 @@ export const LeadProvider = ({ children }) => {
  verifySession();
 
  return () => { cancelled = true; };
- }, [logoutLead, isAdminPath]);
+ }, [logoutLead, isadminPath]);
 
  return (
  <LeadContext.Provider value={{ verifiedLead, loginLead, logoutLead, loading }}>

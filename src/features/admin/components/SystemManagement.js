@@ -130,7 +130,7 @@ export const SystemManagement = () => {
  </div>
  <div className="relative z-10">
  <h2 className="text-4xl font-black uppercase tracking-tighter">System <span className="text-orange-500 italic">Integrity</span></h2>
- <p className="text-slate-500 dark:text-slate-400 font-medium max-w-lg mt-4 uppercase tracking-[0.2em] text-[10px]">Administrative portability, local resource synchronization, and disaster recovery tools.</p>
+ <p className="text-slate-500 dark:text-slate-400 font-medium max-w-lg mt-4 uppercase tracking-[0.2em] text-[10px]">administrative portability, local resource synchronization, and disaster recovery tools.</p>
  </div>
  </div>
 

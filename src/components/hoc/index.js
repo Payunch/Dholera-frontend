@@ -1,7 +1,7 @@
 // HOC directory index
 import React from 'react';
 
-export function withAdminContext(Component) {
+export function withadminContext(Component) {
   return function WrappedComponent(props) {
     return <Component {...props} />;
   };

@@ -18,7 +18,7 @@ const parseAuthError = (err) => {
  };
 };
 
-export default function AdminLoginPage() {
+export default function adminLoginPage() {
  const router = useRouter();
  const [username, setUsername] = React.useState("");
  const [password, setPassword] = React.useState("");
@@ -77,7 +77,7 @@ export default function AdminLoginPage() {
  <ShieldAlert className="h-8 w-8" />
  </div>
  <div className="space-y-1">
- <h1 className="text-2xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Admin <span className="text-orange-500">Access</span></h1>
+ <h1 className="text-2xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">admin <span className="text-orange-500">Access</span></h1>
  <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Master Control Terminal v4.0</p>
  </div>
  </div>

@@ -49,14 +49,14 @@ const getBrowserFingerprint = () => {
 
 export const useVisitorTracking = () => {
   const pathname = usePathname();
-  const isAdminPath = pathname.startsWith('/admin');
+  const isadminPath = pathname.startsWith('/admin');
 
   const [sessionId, setSessionId] = useState(null);
   const [fingerprint, setFingerprint] = useState(null);
 
   // Initialize fingerprint and session once
   useEffect(() => {
-    if (typeof window === 'undefined' || isAdminPath) return;
+    if (typeof window === 'undefined' || isadminPath) return;
 
     let nextSessionId = getCookie('visitorSessionId');
     let nextFingerprint = getCookie('visitorFingerprint');
@@ -74,11 +74,11 @@ export const useVisitorTracking = () => {
     setSessionId(nextSessionId);
     setFingerprint(nextFingerprint);
 
-  }, [isAdminPath]);
+  }, [isadminPath]);
 
   // Check visitor status once per fingerprint
   useEffect(() => {
-    if (typeof window === 'undefined' || isAdminPath || !fingerprint) return;
+    if (typeof window === 'undefined' || isadminPath || !fingerprint) return;
     if (globalHasCheckedVisitor) return;
 
     const checkReturning = async () => {
@@ -109,11 +109,11 @@ export const useVisitorTracking = () => {
     };
 
     checkReturning();
-  }, [fingerprint, isAdminPath]);
+  }, [fingerprint, isadminPath]);
 
   // Handle active page tracking and interval polling
   useEffect(() => {
-    if (typeof window === 'undefined' || isAdminPath) return;
+    if (typeof window === 'undefined' || isadminPath) return;
     if (globalHasStartedTracker) return; // Only run one global interval
 
     globalHasStartedTracker = true;
@@ -140,7 +140,7 @@ export const useVisitorTracking = () => {
       // We don't clear the global tracker on unmount of one component
       // so it runs cleanly across the entire app lifecycle
     };
-  }, [isAdminPath]);
+  }, [isadminPath]);
 
   return { sessionId, fingerprint };
 };

@@ -526,7 +526,7 @@ export function setMenuPrivilegesToFalse(
     જણસી: "",
     પાર્ટી: "",
     ખેડૂતબિલ: "",
-    AdminType: "",
+    adminType: "",
   });
 }
 
@@ -543,7 +543,7 @@ export function setUserPrivileges_ToRedux(
       });
     }
   });
-  UserPrivileges["AdminType"] = adminType;
+  UserPrivileges["adminType"] = adminType;
   setUserPrivileges(UserPrivileges);
 }
 //#endregion

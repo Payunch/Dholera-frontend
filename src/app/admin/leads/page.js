@@ -5,7 +5,7 @@ import { LeadsTable } from '@/features/admin/components/LeadsTable';
 import { apiClient } from '@/lib/api';
 import { Loader2 } from 'lucide-react';
 
-export default function AdminLeadsPage() {
+export default function adminLeadsPage() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
 

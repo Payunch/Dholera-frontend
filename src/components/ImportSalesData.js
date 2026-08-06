@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Grid, Box } from "@mui/material";
-import CtCmb from "./CustomTool/CtCmb";
-import CtBtn from "./CustomTool/CtBtn";
+import CtCmb from "./custom-tool/CtCmb";
+import CtBtn from "./custom-tool/CtBtn";
 import { connect } from "react-redux";
 import {
   mapStatetoProps,
   mapSetActiveMenu_MenuVisibility_ToProps,
 } from "../store/mapReduxProps";
-import { apiURL, fetchGeneralSetting } from "./API";
+import { apiURL, fetchGeneralSetting } from "./api";
 import { withRouter } from "../components/hoc/withRouter";
 import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
 import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
@@ -16,11 +16,11 @@ import {
   getYMDfromMDY,
   getYMDfromDMY,
 } from "../utils/SystemUtility";
-import TableList from "./CustomTool/TableList";
+import TableList from "./custom-tool/TableList";
 import readXlsxFile from "read-excel-file/browser";
-import { fetchBillSetting, fetchImportDetails } from "./API";
-import Progress from "./CustomTool/Progress";
-import CtCheckBox from "./CustomTool/CtCheckBox";
+import { fetchBillSetting, fetchImportDetails } from "./api";
+import Progress from "./custom-tool/Progress";
+import CtCheckBox from "./custom-tool/CtCheckBox";
 
 class ImportSalesData extends Component {
   state = {

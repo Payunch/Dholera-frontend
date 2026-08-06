@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import CtTxt from "./CustomTool/CtTxt";
-import CtDtp from "./CustomTool/CtDtp";
-import CtCmb from "./CustomTool/CtCmb";
-import CtBtn from "./CustomTool/CtBtn";
-import TableList from "./CustomTool/TableList";
+import CtTxt from "./custom-tool/CtTxt";
+import CtDtp from "./custom-tool/CtDtp";
+import CtCmb from "./custom-tool/CtCmb";
+import CtBtn from "./custom-tool/CtBtn";
+import TableList from "./custom-tool/TableList";
 import { withRouter } from "../components/hoc/withRouter";
 import { connect } from "react-redux";
 import {
@@ -12,14 +12,14 @@ import {
 } from "../store/mapReduxProps";
 import { Box, Grid } from "@mui/material";
 import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
-import { fetchBillSetting } from "./API";
+import { fetchBillSetting } from "./api";
 import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
 import { Delete, Edit } from "@mui/icons-material";
-import AlertResponsiveDialog from "./CustomTool/AlertResponsiveDialog";
-import Progress from "./CustomTool/Progress";
-import CtCheckBox from "./CustomTool/CtCheckBox";
-import CtCmbEditable from "./CustomTool/CtCmbEditable";
-import CtMultiLineText from "./CustomTool/CtMultiLineText";
+import AlertResponsiveDialog from "./custom-tool/AlertResponsiveDialog";
+import Progress from "./custom-tool/Progress";
+import CtCheckBox from "./custom-tool/CtCheckBox";
+import CtCmbEditable from "./custom-tool/CtCmbEditable";
+import CtMultiLineText from "./custom-tool/CtMultiLineText";
 import {
   applyTrimOnObjectValues,
   isValidItem,

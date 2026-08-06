@@ -34,12 +34,12 @@ apiClient.interceptors.request.use(async (config) => {
  const requestUrl = config.url || "";
  
  // Identify if the TARGET is an admin API or if we are on an AUTH request
- const isApiAdminRequest = requestUrl.includes('/admin/') || (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin'));
+ const isApiadminRequest = requestUrl.includes('/admin/') || (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin'));
  const isAuthRequest = requestUrl.includes('/auth/');
  
  // We attach lead_token to any request that is NOT an admin task and NOT an auth task.
  // This ensures public syncs (like language preferences) work even if the user is on an admin page.
- if (!isApiAdminRequest && !isAuthRequest) {
+ if (!isApiadminRequest && !isAuthRequest) {
  const leadToken = getCookie('lead_token');
  
  // Use config.headers.get/set for Axios 1.x compatibility
@@ -98,11 +98,11 @@ apiClient.interceptors.response.use(
  const requestUrl = error.config?.url ||"";
  
  // Determine if this is an administrative request
- const isAdminTask = pathname.startsWith('/admin') || 
+ const isadminTask = pathname.startsWith('/admin') || 
  requestUrl.includes('/admin/') || 
  requestUrl.includes('/auth/login');
 
- if (isAdminTask && (error.response?.status === 401 || error.response?.status === 403)) {
+ if (isadminTask && (error.response?.status === 401 || error.response?.status === 403)) {
  const isLoginPage = pathname ==="/admin/login";
  if (!isLoginPage) {
  // Delay redirect slightly to ensure backend'Set-Cookie' (clearCookie) is processed

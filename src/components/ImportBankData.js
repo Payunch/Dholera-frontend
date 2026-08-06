@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Grid, Box } from "@mui/material";
-import CtCmb from "./CustomTool/CtCmb";
-import CtBtn from "./CustomTool/CtBtn";
+import CtCmb from "./custom-tool/CtCmb";
+import CtBtn from "./custom-tool/CtBtn";
 import { connect } from "react-redux";
 import {
   mapStatetoProps,
   mapSetActiveMenu_MenuVisibility_ToProps,
 } from "../store/mapReduxProps";
-import { apiURL, fetchGeneralSetting } from "./API";
+import { apiURL, fetchGeneralSetting } from "./api";
 import { withRouter } from "../components/hoc/withRouter";
 import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
 import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
@@ -17,9 +17,9 @@ import {
   getYMDfromDMY,
 } from "../utils/SystemUtility";
 import readXlsxFile from "read-excel-file/browser";
-import TableList from "../components/CustomTool/TableList";
-import { fetchBillSetting, fetchImportDetails } from "./API";
-import Progress from "./CustomTool/Progress";
+import TableList from "../components/custom-tool/TableList";
+import { fetchBillSetting, fetchImportDetails } from "./api";
+import Progress from "./custom-tool/Progress";
 
 class ImportBankData extends Component {
   state = {

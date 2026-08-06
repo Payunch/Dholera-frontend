@@ -2,7 +2,7 @@
 import React from 'react';
 import { DatabaseExplorer } from '@/features/admin/components/DatabaseExplorer';
 
-export default function AdminDatabasePage() {
+export default function adminDatabasePage() {
   return (
     <div className="w-full">
       <div className="mb-6">

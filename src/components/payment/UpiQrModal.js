@@ -113,9 +113,9 @@ export const UpiQrModal = ({
  </button>
 
  <div className="mb-6">
- <h3 className="text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white">Admin Approval</h3>
+ <h3 className="text-lg font-black uppercase tracking-tight text-slate-900 dark:text-white">admin Approval</h3>
  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed mt-1">
- Paid already? Enter your Transaction ID / UTR No. for Admin verification.
+ Paid already? Enter your Transaction ID / UTR No. for admin verification.
  </p>
  </div>
 
@@ -148,7 +148,7 @@ export const UpiQrModal = ({
  </div>
 
  <p className="mt-8 text-[8px] font-bold leading-relaxed text-slate-500 dark:text-slate-400 uppercase tracking-widest text-center">
- Once submitted, Admin will verify the payment in GPay/Bank and unlock your documents.
+ Once submitted, admin will verify the payment in GPay/Bank and unlock your documents.
  </p>
  </div>
  </div>

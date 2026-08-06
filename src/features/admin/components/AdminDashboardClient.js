@@ -31,7 +31,7 @@ import { AccountManagement } from "./AccountManagement";
 
 
 
-export function AdminDashboardClient({ initialLeads, initialWaStats }) {
+export function adminDashboardClient({ initialLeads, initialWaStats }) {
  const router = useRouter();
   const [activeTab, setActiveTab] = React.useState(0);
   const [isLoggingOut, setIsLoggingOut] = React.useState(false);
@@ -52,7 +52,7 @@ export function AdminDashboardClient({ initialLeads, initialWaStats }) {
  try {
  await apiClient.post("/auth/logout");
  } catch (err) {
- console.error("Admin logout failed:", err);
+ console.error("admin logout failed:", err);
  } finally {
  window.location.href ="/admin/login";
  }

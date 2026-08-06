@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Grid, Box } from "@mui/material";
-import CtCmb from "./CustomTool/CtCmb";
-import CtBtn from "./CustomTool/CtBtn";
+import CtCmb from "./custom-tool/CtCmb";
+import CtBtn from "./custom-tool/CtBtn";
 import { connect } from "react-redux";
 import {
   mapStatetoProps,
   mapSetActiveMenu_MenuVisibility_ToProps,
 } from "../store/mapReduxProps";
-import { apiURL, fetchGeneralSetting } from "./API";
+import { apiURL, fetchGeneralSetting } from "./api";
 import { withRouter } from "../components/hoc/withRouter";
 import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
 import HoCtToastContainer from "../components/hoc/HoCtToastContainer";

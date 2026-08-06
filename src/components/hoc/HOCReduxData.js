@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { fetchCompany } from "../components/API";
-import AlertResponsiveDialog from "../components/CustomTool/AlertResponsiveDialog";
+import { fetchCompany } from "../components/api";
+import AlertResponsiveDialog from "../components/custom-tool/AlertResponsiveDialog";
 import CompanyList from "../components/CompanyList";
 import { getAcYear_YYYY } from "../utils/SystemUtility";
 import { setMenuPrivileges } from "../utils/MenuUtility";

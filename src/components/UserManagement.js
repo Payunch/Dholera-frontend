@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import { Grid, Box } from "@mui/material";
-import TableList from "./CustomTool/TableList";
-import CtTxt from "./CustomTool/CtTxt";
-import CtBtn from "./CustomTool/CtBtn";
+import TableList from "./custom-tool/TableList";
+import CtTxt from "./custom-tool/CtTxt";
+import CtBtn from "./custom-tool/CtBtn";
 import { Edit, Delete } from "@mui/icons-material";
-import Progress from "./CustomTool/Progress";
+import Progress from "./custom-tool/Progress";
 import { connect } from "react-redux";
 import {
   mapStatetoProps,
   mapSetActiveMenu_MenuVisibility_ToProps,
 } from "../store/mapReduxProps";
-import AlertResponsiveDialog from "./CustomTool/AlertResponsiveDialog";
+import AlertResponsiveDialog from "./custom-tool/AlertResponsiveDialog";
 import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
-import CtTextFieldPWD from "./CustomTool/CtTxtPWD";
-import { fetchUser } from "./API";
+import CtTextFieldPWD from "./custom-tool/CtTxtPWD";
+import { fetchUser } from "./api";
 import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
-import CtTxtNum from "./CustomTool/CtTxtNum";
+import CtTxtNum from "./custom-tool/CtTxtNum";
 import CheckboxTree from "react-checkbox-tree";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import {
@@ -24,8 +24,8 @@ import {
   getRowOfRT,
   setKeyboardShortcuts,
 } from "../utils/SystemUtility";
-import CtART from "./CustomTool/ResponsiveTable";
-import ControlledCheckbox from "./CustomTool/CtCheckBox";
+import CtART from "./custom-tool/ResponsiveTable";
+import ControlledCheckbox from "./custom-tool/CtCheckBox";
 class UserManagement extends Component {
   state = {
     removeKeyboardShortCuts: null,
@@ -88,9 +88,9 @@ class UserManagement extends Component {
       txtMobileNo: "",
       txtEmail: "",
       txtCI: "",
-      chkAdmin: false,
-      EditUserIsAdmin: 0,
-      EditUserIsSupperAdmin: 0,
+      chkadmin: false,
+      EditUserIsadmin: 0,
+      EditUserIsSupperadmin: 0,
     },
 
     dataLoadStatus: true,
@@ -248,7 +248,7 @@ class UserManagement extends Component {
       formData: {
         ...this.state.formData,
         [e.target.name]: e.target.checked,
-        EditUserIsAdmin: e.target.checked == true ? 1 : 0,
+        EditUserIsadmin: e.target.checked == true ? 1 : 0,
       },
     });
   };
@@ -281,10 +281,10 @@ class UserManagement extends Component {
       actionName = row.actionName;
 
     if (actionName === "Edit") {
-      const EditUserIsAdmin = row.int_admin,
-        EditUserIsSupperAdmin = row.int_sa,
-        chkAdmin =
-          EditUserIsAdmin === 1 || EditUserIsSupperAdmin === 1 ? true : false;
+      const EditUserIsadmin = row.int_admin,
+        EditUserIsSupperadmin = row.int_sa,
+        chkadmin =
+          EditUserIsadmin === 1 || EditUserIsSupperadmin === 1 ? true : false;
       this.setState(
         {
           formData: {
@@ -297,9 +297,9 @@ class UserManagement extends Component {
             txtMobileNo,
             txtEmail,
             txtCI,
-            chkAdmin,
-            EditUserIsAdmin,
-            EditUserIsSupperAdmin,
+            chkadmin,
+            EditUserIsadmin,
+            EditUserIsSupperadmin,
           },
         },
         () => {
@@ -338,10 +338,10 @@ class UserManagement extends Component {
       txtMobileNo = row.vac_mobileno,
       txtEmail = row.vac_email,
       txtCI = row.bint_ci,
-      EditUserIsAdmin = row.int_admin,
-      EditUserIsSupperAdmin = row.int_sa,
-      chkAdmin =
-        EditUserIsAdmin === 1 || EditUserIsSupperAdmin === 1 ? true : false;
+      EditUserIsadmin = row.int_admin,
+      EditUserIsSupperadmin = row.int_sa,
+      chkadmin =
+        EditUserIsadmin === 1 || EditUserIsSupperadmin === 1 ? true : false;
 
     this.setState(
       {
@@ -355,9 +355,9 @@ class UserManagement extends Component {
           txtMobileNo,
           txtEmail,
           txtCI,
-          chkAdmin,
-          EditUserIsAdmin,
-          EditUserIsSupperAdmin,
+          chkadmin,
+          EditUserIsadmin,
+          EditUserIsSupperadmin,
         },
       },
       () => {
@@ -380,8 +380,8 @@ class UserManagement extends Component {
           handleOnclickSave: () => {
             if (
               this.state.formData.EditUserID.length > 0 &&
-              this.state.formData.EditUserIsSupperAdmin === 1 &&
-              this.props.userPrivilege.AdminType !== "SA"
+              this.state.formData.EditUserIsSupperadmin === 1 &&
+              this.props.userPrivilege.adminType !== "SA"
             ) {
               this.props.toastErrorMsg("Save Action Not Allowed.");
             } else {
@@ -390,7 +390,7 @@ class UserManagement extends Component {
           },
           handleOnclickNew: this.clearInfo,
           handleOnclickDelete: () => {
-            if (this.state.formData.EditUserIsSupperAdmin !== 1) {
+            if (this.state.formData.EditUserIsSupperadmin !== 1) {
               this.DeleteData(this.state.formData.EditUserID);
             } else {
               this.props.toastErrorMsg("Delete Action Not Allowed.");
@@ -404,7 +404,7 @@ class UserManagement extends Component {
   trimFormData = (nextFunctionCall) => {
     let formData = applyTrimOnObjectValues({
       formData: this.state.formData,
-      excludeKeysArray: ["txtPassword", "txtConfirmPassword", "chkAdmin"],
+      excludeKeysArray: ["txtPassword", "txtConfirmPassword", "chkadmin"],
     });
     this.setState({ formData }, () => {
       if (nextFunctionCall) {
@@ -529,8 +529,8 @@ class UserManagement extends Component {
           vac_mobileno: this.state.formData.txtMobileNo,
           vac_email: this.state.formData.txtEmail,
           beprivileges: this.getLastCheckedPrivileges(),
-          int_admin: this.state.formData.EditUserIsAdmin,
-          int_superadmin: this.state.formData.EditUserIsSupperAdmin,
+          int_admin: this.state.formData.EditUserIsadmin,
+          int_superadmin: this.state.formData.EditUserIsSupperadmin,
         };
         // console.log("reqData", reqData);
         fetchUser(reqData)
@@ -635,7 +635,7 @@ class UserManagement extends Component {
       const reqData = {
         Op: "UserList",
         bint_ci: localStorage.getItem("CI"),
-        admin_cat: this.props.userPrivilege.AdminType,
+        admin_cat: this.props.userPrivilege.adminType,
       };
       fetchUser(reqData)
         .then((res) => {
@@ -680,7 +680,7 @@ class UserManagement extends Component {
       txtConfirmPassword = "",
       txtMobileNo = "",
       txtEmail = "",
-      chkAdmin = false;
+      chkadmin = false;
     this.setState(
       {
         formData: {
@@ -693,9 +693,9 @@ class UserManagement extends Component {
           txtConfirmPassword,
           txtMobileNo,
           txtEmail,
-          chkAdmin,
-          EditUserIsAdmin: 0,
-          EditUserIsSupperAdmin: 0,
+          chkadmin,
+          EditUserIsadmin: 0,
+          EditUserIsSupperadmin: 0,
         },
         checked: [],
         expanded: [],
@@ -1084,8 +1084,8 @@ class UserManagement extends Component {
                   maxLength={10}
                   // width="130"
                   width={
-                    this.props.userPrivilege.AdminType == "Admin" ||
-                    this.props.userPrivilege.AdminType == "SA"
+                    this.props.userPrivilege.adminType == "admin" ||
+                    this.props.userPrivilege.adminType == "SA"
                       ? "130"
                       : ""
                   }
@@ -1102,8 +1102,8 @@ class UserManagement extends Component {
                   maxLength={50}
                   // width="200"
                   width={
-                    this.props.userPrivilege.AdminType == "Admin" ||
-                    this.props.userPrivilege.AdminType == "SA"
+                    this.props.userPrivilege.adminType == "admin" ||
+                    this.props.userPrivilege.adminType == "SA"
                       ? "170"
                       : ""
                   }
@@ -1117,19 +1117,19 @@ class UserManagement extends Component {
                   handleOnChange={this.handleOnChange}
                 />
               </Grid>
-              {(this.props.userPrivilege.AdminType == "Admin" ||
-                this.props.userPrivilege.AdminType == "SA") && (
+              {(this.props.userPrivilege.adminType == "admin" ||
+                this.props.userPrivilege.adminType == "SA") && (
                 <Grid item marginTop={3}>
                   <ControlledCheckbox
-                    id="chkAdmin"
-                    checked={this.state.formData.chkAdmin}
-                    label="Admin"
+                    id="chkadmin"
+                    checked={this.state.formData.chkadmin}
+                    label="admin"
                     // width='400'
-                    value={this.state.formData.chkAdmin}
+                    value={this.state.formData.chkadmin}
                     // onKeyDown={this.props.onKeyDown}
                     handleCheckChange={this.handleOnCheckChange}
                     disabled={
-                      this.state.formData.EditUserIsSupperAdmin === 1
+                      this.state.formData.EditUserIsSupperadmin === 1
                         ? true
                         : false
                     }
@@ -1155,8 +1155,8 @@ class UserManagement extends Component {
                   }}
                   disabled={
                     this.state.formData.EditUserID.length > 0 &&
-                    this.state.formData.EditUserIsSupperAdmin === 1 &&
-                    this.props.userPrivilege.AdminType !== "SA"
+                    this.state.formData.EditUserIsSupperadmin === 1 &&
+                    this.props.userPrivilege.adminType !== "SA"
                       ? true
                       : false
                   }
@@ -1176,7 +1176,7 @@ class UserManagement extends Component {
                     this.DeleteData(this.state.formData.EditUserID);
                   }}
                   disabled={
-                    this.state.formData.EditUserIsSupperAdmin === 1
+                    this.state.formData.EditUserIsSupperadmin === 1
                       ? true
                       : false
                   }

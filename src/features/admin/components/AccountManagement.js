@@ -6,7 +6,7 @@ import UserManagement from "@/components/UserManagement";
 import GeneralSetting from "@/components/GeneralSetting";
 import InvoiceSetting from "@/components/InvoiceSetting";
 import DefaultEntrySetting from "@/components/DefaultEntrySetting";
-import TableList from "@/components/CustomTool/TableList";
+import TableList from "@/components/custom-tool/TableList";
 import ImportSalesData from "@/components/ImportSalesData";
 import ImportBankData from "@/components/ImportBankData";
 

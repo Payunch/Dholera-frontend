@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export default function AdminLayout({ children }) {
+export default function adminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const pathname = usePathname();
 
@@ -62,9 +62,9 @@ export default function AdminLayout({ children }) {
 
         {/* Navbar */}
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shadow-sm">
-          <h1 className="text-2xl font-black text-slate-800 tracking-tight uppercase">Admin Portal</h1>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight uppercase">admin Portal</h1>
           <div className="flex items-center gap-4">
-            <span className="text-sm font-bold text-slate-500 uppercase">Welcome, Admin</span>
+            <span className="text-sm font-bold text-slate-500 uppercase">Welcome, admin</span>
             <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold border border-blue-200">
               A
             </div>

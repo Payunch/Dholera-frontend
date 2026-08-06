@@ -44,7 +44,7 @@ const initState = {
     જણસી: "",
     પાર્ટી: "",
     ખેડૂતબિલ: "",
-    AdminType: "",
+    adminType: "",
   },
   defAcYearCompany: {
     CompanyName: "",
@@ -155,14 +155,14 @@ const RootReducers = (state = initState, action) => {
         જણસી: action.UserPrivileges["જણસી"],
         પાર્ટી: action.UserPrivileges["પાર્ટી"],
         ખેડૂતબિલ: action.UserPrivileges["ખેડૂત બિલ"],
-        AdminType: action.UserPrivileges["AdminType"],
+        adminType: action.UserPrivileges["adminType"],
       },
     };
     return newstate;
-  } else if (action.type === "SET_UserAdmin") {
+  } else if (action.type === "SET_Useradmin") {
     let newstate = {
       ...state,
-      AdminType: action.admin,
+      adminType: action.admin,
     };
     return newstate;
   }

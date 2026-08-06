@@ -20,9 +20,9 @@ export default function ClientLayout({
  const searchParams = useSearchParams();
 
  // Robust admin check-based + Cookie-based
- const isAdminPath = pathname?.startsWith('/admin');
- const hasAdminCookie = typeof window !=="undefined" && (getCookie('admin_access_token') || getCookie('admin_refresh_token'));
- const isActuallyAdmin = isAdminPath || hasAdminCookie;
+ const isadminPath = pathname?.startsWith('/admin');
+ const hasadminCookie = typeof window !=="undefined" && (getCookie('admin_access_token') || getCookie('admin_refresh_token'));
+ const isActuallyadmin = isadminPath || hasadminCookie;
 
  useEffect(() => {
  if (typeof window !== "undefined") {
@@ -43,8 +43,8 @@ export default function ClientLayout({
  }
  }, [searchParams]);
 
- // Return clean layout for Admin
- if (isActuallyAdmin) {
+ // Return clean layout for admin
+ if (isActuallyadmin) {
  return (
  <ClientProviders>
  <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white">
