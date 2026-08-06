@@ -71,8 +71,26 @@ export default function TermsAndConditions() {
  This platform acts as an intermediary for third-party mapping and planning data. If you are a government official, copyright owner, or authorized representative and believe any content on this platform infringes upon your rights or official data policies, please submit a formal takedown request to <a href="mailto:support@dholeraplatform.com" className="text-orange-600 hover:text-orange-500">support@dholeraplatform.com</a>. We will review and remove disputed content within 36 hours of verification.
  </p>
  </section>
- </div>
- </div>
- </div>
+  <section>
+  <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">7. User-Generated Content & Liability Disclaimer</h2>
+  <div className="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+  <p>
+  <strong>No Liability for User Actions:</strong> The Dholera Platform acts strictly as a neutral hosting provider and intermediary. Users (including dealers, agents, and the general public) are solely responsible for any content, listings, or information they upload, share, or transmit through our platform.
+  </p>
+  <p>
+  The platform, its creators, and administrators strictly disclaim any and all liability for fraudulent, illegal, or misused information uploaded by third parties. We do not endorse or verify the legal standing of user-generated claims.
+  </p>
+  </div>
+  </section>
+
+  <section>
+  <h2 className="text-2xl font-black uppercase mb-4 text-slate-900 dark:text-white">8. Indemnification</h2>
+  <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+  You agree to indemnify, defend, and hold harmless the Dholera Platform, its owners, developers, and affiliates from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms or your use of the platform, including but not limited to, your User Contributions and any use of the platform's content, services, and products.
+  </p>
+  </section>
+  </div>
+  </div>
+  </div>
  );
 }
