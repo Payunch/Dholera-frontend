@@ -14,12 +14,11 @@ export default function AdminLayout({ children }) {
   }
 
   const menuItems = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: '📊' },
     { name: 'Leads', path: '/admin/leads', icon: '👥' },
     { name: 'Updates', path: '/admin/blogs', icon: '📝' },
     { name: 'Insights', path: '/admin/insights', icon: '📈' },
     { name: 'Database', path: '/admin/database', icon: '🗄️' },
-    { name: 'Settings', path: '/admin/settings', icon: '⚙️' }
+    { name: 'System', path: '/admin/settings', icon: '⚙️' }
   ];
 
   return (
