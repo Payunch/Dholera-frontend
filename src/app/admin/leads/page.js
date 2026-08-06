@@ -47,7 +47,7 @@ export default function AdminLeadsPage() {
 
       <MasterTable 
         title="All Leads"
-        apiEndpoint={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/leads`}
+        apiEndpoint={`${process.env.NEXT_PUBLIC_API_URL || 'https://api.dholeraplatform.com'}/api/leads`}
         columns={columns}
         onEdit={handleEdit}
         onDelete={handleDelete}

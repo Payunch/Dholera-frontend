@@ -53,7 +53,7 @@ export default function AdminBlogsPage() {
 
       <MasterTable 
         title="All Blog Posts"
-        apiEndpoint={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/updates?all=true`}
+        apiEndpoint={`${process.env.NEXT_PUBLIC_API_URL || 'https://api.dholeraplatform.com'}/api/updates?all=true`}
         columns={columns}
         onEdit={handleEdit}
         onDelete={handleDelete}
