@@ -19,13 +19,12 @@ export default function AdminLayout({ children }) {
     { name: 'Updates', path: '/admin/blogs', icon: '📝' },
     { name: 'Insights', path: '/admin/insights', icon: '📈' },
     { name: 'Database', path: '/admin/database', icon: '🗄️' },
-    { name: 'Master Table', path: '/admin/master-table', icon: '📋' },
     { name: 'Settings', path: '/admin/settings', icon: '⚙️' }
   ];
 
   return (
     <div className="flex h-screen bg-slate-100 overflow-hidden font-sans">
-      
+
       {/* Sidebar (Menubar) */}
       <aside className={`bg-slate-900 text-white transition-all duration-300 ease-in-out ${sidebarOpen ? 'w-64' : 'w-20'} flex flex-col`}>
         <div className="h-16 flex items-center justify-between px-4 border-b border-slate-700 bg-slate-950">
@@ -34,7 +33,7 @@ export default function AdminLayout({ children }) {
             {sidebarOpen ? '◀' : '▶'}
           </button>
         </div>
-        
+
         <nav className="flex-1 py-4 flex flex-col gap-2 overflow-y-auto">
           {menuItems.map((item) => {
             const isActive = pathname.startsWith(item.path);
@@ -48,7 +47,7 @@ export default function AdminLayout({ children }) {
             );
           })}
         </nav>
-        
+
         <div className="p-4 border-t border-slate-700">
           <Link href="/admin/login">
             <div className="px-4 py-3 rounded-lg cursor-pointer transition-colors flex items-center text-red-400 hover:bg-slate-800">
@@ -61,7 +60,7 @@ export default function AdminLayout({ children }) {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        
+
         {/* Navbar */}
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shadow-sm">
           <h1 className="text-2xl font-black text-slate-800 tracking-tight uppercase">Admin Portal</h1>
