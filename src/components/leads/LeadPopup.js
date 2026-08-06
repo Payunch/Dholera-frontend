@@ -108,36 +108,45 @@ export const LeadPopup = ({
     setError('');
 
     try {
-      // MAGIC BYPASS Firebase for all numbers unconditionally for now
-      setConfirmationResult({ verificationId: "test_bypass" });
-      setStep('otp');
-      setOtpCode('123456');
-      setLoading(false);
-      return;
+      // Direct bypass: Skip OTP entirely and save directly
+      const utmSource = typeof window !== 'undefined' 
+        ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
+        : 'organic';
+      
+      const res = await apiClient.post('/leads/verify-otp', {
+        name: name.trim(),
+        phone: cleanPhone,
+        firebaseToken: "",
+        sessionId,
+        browserFingerprint: fingerprint,
+        preferred_language: lang,
+        utm_source: utmSource
+      });
 
-      // if (!auth) {
-      //   throw new Error("Firebase Auth is not initialized.");
-      // }
-      // 
-      // initRecaptcha();
-      // const verifier = recaptchaVerifierRef.current;
-      // if (!verifier) {
-      //   throw new Error("Recaptcha verifier initialization failed.");
-      // }
-      // 
-      // const phoneNumber = `+91${cleanPhone}`;
-      // const confirmation = await signInWithPhoneNumber(auth, phoneNumber, verifier);
-      // setConfirmationResult(confirmation);
-      // setStep('otp');
+      if (res.data.lead_token) {
+        loginLead({ ...res.data, token: res.data.lead_token });
+      }
+      
+      // Fire Google Ads Enhanced Conversions
+      if (typeof window !== "undefined" && window.gtag) {
+        window.gtag('set', 'user_data', {
+          phone_number: '+91' + cleanPhone
+        });
+        window.gtag('event', 'conversion', {
+          'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
+        });
+      }
+
+      setStep('success');
+      if (onSuccess) onSuccess(res.data);
+      
+      setTimeout(() => {
+        setOpen(false);
+      }, 1500);
+
     } catch (err) {
-      console.error('Failed to send OTP:', err);
-      setError(err.message || 'Failed to send verification code. Please check your phone number.');
-      // if (recaptchaVerifierRef.current) {
-      //   try {
-      //     recaptchaVerifierRef.current.clear();
-      //   } catch (e) {}
-      //   recaptchaVerifierRef.current = null;
-      // }
+      console.error('Failed to save lead:', err);
+      setError(err.response?.data?.error || err.message || 'Failed to connect. Please try again.');
     } finally {
       setLoading(false);
     }

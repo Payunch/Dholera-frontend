@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -166,7 +166,7 @@ export function HomeClient() {
         </div>
 
         <div className="container relative z-10 px-4 md:px-8 mx-auto py-12 md:py-20 flex justify-center">
-          <div className="max-w-4xl w-full backdrop-blur-xl bg-white/95 dark:bg-slate-950/80 p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] border border-white/80 dark:border-white/10 shadow-2xl relative overflow-hidden">
+          <div className="max-w-4xl w-full glass-panel p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] shadow-heavy relative overflow-hidden">
             {/* Background Image for the Content Box */}
             <div className="absolute inset-0 z-0 opacity-45 dark:opacity-40 pointer-events-none">
               <Image
@@ -205,15 +205,14 @@ export function HomeClient() {
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <Link
                   href="/contact"
-                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/10 active:scale-95"
+                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#F59E0B] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-[#d97706] hover:scale-105 shadow-heavy sm:w-auto active:scale-95"
                 >
                   {t('talk_to_owner')}
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <Link
                   href="/projects"
-                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-orange-600 sm:w-auto shadow-xl shadow-orange-600/10 active:scale-95"
-                //  className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border-2 border-white/20 bg-white/5 backdrop-blur-md px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-white dark:hover:bg-slate-800/10 sm:w-auto active:scale-95 dark:bg-slate-900"
+                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#0A192F] dark:bg-white dark:text-[#0A192F] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:scale-105 shadow-heavy sm:w-auto active:scale-95"
                 >
                   {t('view_projects')}
                 </Link>
@@ -436,7 +435,7 @@ export function HomeClient() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden z-10">
+            <div className="glass-panel rounded-[1.5rem] p-8 md:p-10 shadow-heavy relative overflow-hidden z-10 hover:shadow-[0_20px_50px_rgba(245,158,11,0.15)] transition-shadow duration-500">
               {visitStatus === 'error' && (
                 <div className="mb-8 flex flex-col gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-[10px] font-bold text-red-400 uppercase tracking-widest leading-relaxed">
                   <div className="flex items-center gap-3">

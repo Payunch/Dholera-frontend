@@ -1,21 +1,20 @@
-
 import Script from"next/script";
 import { GoogleTagManager } from '@next/third-parties/google';
-import { Instrument_Sans, Space_Grotesk } from"next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import"./globals.css";
 import OrganizationSchema from"@/components/common/OrganizationSchema";
 import Analytics from"@/components/common/Analytics";
 import SafeClientLayout from"@/components/layout/SafeClientLayout";
 
-const instrumentSans = Instrument_Sans({
+const inter = Inter({
  subsets: ["latin"],
- variable:"--font-instrument-sans",
+ variable:"--font-inter",
  display:"swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const outfit = Outfit({
  subsets: ["latin"],
- variable:"--font-space-grotesk",
+ variable:"--font-outfit",
  display:"swap",
 });
 
@@ -117,7 +116,7 @@ export default function RootLayout({ children }) {
     `}
   </Script>
  </head>
- <body className={`${instrumentSans.variable} ${spaceGrotesk.variable} font-sans antialiased`} suppressHydrationWarning>
+ <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`} suppressHydrationWarning>
  <OrganizationSchema />
  <Analytics />
 

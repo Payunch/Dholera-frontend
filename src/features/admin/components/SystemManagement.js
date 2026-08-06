@@ -217,25 +217,6 @@ export const SystemManagement = () => {
  Export Leads to Excel
  </button>
  </div>
-
-  {/* Purge Leads Data */}
-  <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 p-10 shadow-xl flex flex-col justify-between group hover:border-red-200 dark:hover:border-red-900/30 transition-all">
-  <div>
-  <div className="h-16 w-16 rounded-3xl bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400 mb-8 group-hover:scale-110 transition-transform">
-  <Trash2 className="h-8 w-8" />
-  </div>
-  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Purge Test Leads</h3>
-  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Instantly wipe all leads and their associated activity logs. Use this to clear test data before launch.</p>
-  </div>
-  <button 
-  onClick={handlePurgeLeads}
-  disabled={loading}
-  className="mt-10 w-full py-4 rounded-2xl bg-red-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-red-700 shadow-xl shadow-red-600/10 dark:shadow-red-600/60 flex items-center justify-center gap-3"
-  >
-  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-  Clear Lead Data
-  </button>
-  </div>
  </div>
 
  </div>
