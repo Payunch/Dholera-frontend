@@ -19,6 +19,7 @@ export default function AdminLayout({ children }) {
     { name: 'Updates', path: '/admin/blogs', icon: '📝' },
     { name: 'Insights', path: '/admin/insights', icon: '📈' },
     { name: 'Database', path: '/admin/database', icon: '🗄️' },
+    { name: 'Master Table', path: '/admin/master-table', icon: '📋' },
     { name: 'Settings', path: '/admin/settings', icon: '⚙️' }
   ];
 
