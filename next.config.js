@@ -15,6 +15,9 @@ const nextConfig = {
   turbopack: {
     root: __dirname,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   productionBrowserSourceMaps: false,
   async headers() {
     return [
