@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { fetchCompany } from "../Component/API";
-import AlertResponsiveDialog from "../Component/CustomTool/AlertResponsiveDialog";
-import CompanyList from "../Component/CompanyList";
-import { getAcYear_YYYY } from "../SystemUtility/SystemUtility";
-import { setMenuPrivileges } from "../SystemUtility/MenuUtility";
+import { fetchCompany } from "../components/API";
+import AlertResponsiveDialog from "../components/CustomTool/AlertResponsiveDialog";
+import CompanyList from "../components/CompanyList";
+import { getAcYear_YYYY } from "../utils/SystemUtility";
+import { setMenuPrivileges } from "../utils/MenuUtility";
 
 const HOCReduxData = (ReduxDataValidator) => {
   const setInfo = ({

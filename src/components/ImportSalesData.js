@@ -6,16 +6,16 @@ import { connect } from "react-redux";
 import {
   mapStatetoProps,
   mapSetActiveMenu_MenuVisibility_ToProps,
-} from "../mapRedux/mapReduxProps";
+} from "../store/mapReduxProps";
 import { apiURL, fetchGeneralSetting } from "./API";
-import { withRouter } from "../HOC/withRouter";
-import HOCVerifyIsUser from "../HOC/HOCVerifyIsUser";
-import HoCtToastContainer from "../HOC/HoCtToastContainer";
+import { withRouter } from "../components/hoc/withRouter";
+import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
+import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
 import {
   getRowData,
   getYMDfromMDY,
   getYMDfromDMY,
-} from "../SystemUtility/SystemUtility";
+} from "../utils/SystemUtility";
 import TableList from "./CustomTool/TableList";
 import readXlsxFile from "read-excel-file/browser";
 import { fetchBillSetting, fetchImportDetails } from "./API";

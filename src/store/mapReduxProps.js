@@ -1,8 +1,8 @@
 import { SatelliteAlt } from "@mui/icons-material";
-import { setActiveMenu, setSubMenu_Master_Entry } from "../actions/navAction";
-import { setDefAcYearCompany, setPrevAcYearCompany } from '../actions/defSelectionAction'
-import { setAcYearCompanyList } from '../actions/listAction'
-import { setUserPrivileges } from '../actions/privilegesAction'
+import { setActiveMenu, setSubMenu_Master_Entry } from "../store/navAction";
+import { setDefAcYearCompany, setPrevAcYearCompany } from '../store/defSelectionAction'
+import { setAcYearCompanyList } from '../store/listAction'
+import { setUserPrivileges } from '../store/privilegesAction'
 
 export const mapStatetoProps = (state) => {
   return {

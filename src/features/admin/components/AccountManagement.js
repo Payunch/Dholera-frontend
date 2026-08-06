@@ -2,13 +2,13 @@
 
 import * as React from "react";
 import { Folder, Users, Settings, Table, Upload, Database } from "lucide-react";
-import UserManagement from "@/Component/UserManagement";
-import GeneralSetting from "@/Component/GeneralSetting";
-import InvoiceSetting from "@/Component/InvoiceSetting";
-import DefaultEntrySetting from "@/Component/DefaultEntrySetting";
+import UserManagement from "@/components/UserManagement";
+import GeneralSetting from "@/components/GeneralSetting";
+import InvoiceSetting from "@/components/InvoiceSetting";
+import DefaultEntrySetting from "@/components/DefaultEntrySetting";
 import TableList from "@/components/CustomTool/TableList";
-import ImportSalesData from "@/Component/ImportSalesData";
-import ImportBankData from "@/Component/ImportBankData";
+import ImportSalesData from "@/components/ImportSalesData";
+import ImportBankData from "@/components/ImportBankData";
 
 export function AccountManagement() {
   const [subTab, setSubTab] = React.useState("tblmng");

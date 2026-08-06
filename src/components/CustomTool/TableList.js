@@ -1,6 +1,6 @@
 /**
  * TableList.js - Table Management Frontend Component
- * Converted from general-account-1.1.0/src/Component/CustomTool/TableList.js
+ * Converted from general-account-1.1.0/src/components/CustomTool/TableList.js
  * Written in React JS (MUI @mui/material, pure .js extension)
  */
 

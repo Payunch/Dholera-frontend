@@ -9,12 +9,12 @@ import { connect } from "react-redux";
 import {
   mapStatetoProps,
   mapSetActiveMenu_MenuVisibility_ToProps,
-} from "../mapRedux/mapReduxProps";
+} from "../store/mapReduxProps";
 import AlertResponsiveDialog from "./CustomTool/AlertResponsiveDialog";
-import HoCtToastContainer from "../HOC/HoCtToastContainer";
+import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
 import CtTextFieldPWD from "./CustomTool/CtTxtPWD";
 import { fetchUser } from "./API";
-import HOCVerifyIsUser from "../HOC/HOCVerifyIsUser";
+import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
 import CtTxtNum from "./CustomTool/CtTxtNum";
 import CheckboxTree from "react-checkbox-tree";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
@@ -23,7 +23,7 @@ import {
   csvFileName,
   getRowOfRT,
   setKeyboardShortcuts,
-} from "../SystemUtility/SystemUtility";
+} from "../utils/SystemUtility";
 import CtART from "./CustomTool/ResponsiveTable";
 import ControlledCheckbox from "./CustomTool/CtCheckBox";
 class UserManagement extends Component {

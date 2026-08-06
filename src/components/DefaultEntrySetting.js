@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "../HOC/withRouter";
+import { withRouter } from "../components/hoc/withRouter";
 import {
   mapSetActiveMenu_MenuVisibility_ToProps,
   mapStatetoProps,
-} from "../mapRedux/mapReduxProps";
+} from "../store/mapReduxProps";
 import { Box, Grid, Typography } from "@mui/material";
 import CtDtp from "./CustomTool/CtDtp";
 import { Check, Delete, Edit, Payment } from "@mui/icons-material";
@@ -16,10 +16,10 @@ import CtBtn from "./CustomTool/CtBtn";
 import { CtCmbEditable } from "./CustomTool/CtCmbEditable";
 import { CtCmb } from "./CustomTool/CtCmb";
 import { CtTxtAmt } from "./CustomTool/CtTxtAmt";
-import HoCtToastContainer from "../HOC/HoCtToastContainer";
-import HOCVerifyIsUser from "../HOC/HOCVerifyIsUser";
+import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
+import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
 import { fetchDefaultEntrySetting } from "./API";
-import { getRowData } from "../SystemUtility/SystemUtility";
+import { getRowData } from "../utils/SystemUtility";
 
 class DefaultEntrySetting extends Component {
   state = {

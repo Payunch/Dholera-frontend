@@ -4,16 +4,16 @@ import CtDtp from "./CustomTool/CtDtp";
 import CtCmb from "./CustomTool/CtCmb";
 import CtBtn from "./CustomTool/CtBtn";
 import TableList from "./CustomTool/TableList";
-import { withRouter } from "../HOC/withRouter";
+import { withRouter } from "../components/hoc/withRouter";
 import { connect } from "react-redux";
 import {
   mapSetActiveMenu_MenuVisibility_ToProps,
   mapStatetoProps,
-} from "../mapRedux/mapReduxProps";
+} from "../store/mapReduxProps";
 import { Box, Grid } from "@mui/material";
-import HOCVerifyIsUser from "../HOC/HOCVerifyIsUser";
+import HOCVerifyIsUser from "../components/hoc/HOCVerifyIsUser";
 import { fetchBillSetting } from "./API";
-import HoCtToastContainer from "../HOC/HoCtToastContainer";
+import HoCtToastContainer from "../components/hoc/HoCtToastContainer";
 import { Delete, Edit } from "@mui/icons-material";
 import AlertResponsiveDialog from "./CustomTool/AlertResponsiveDialog";
 import Progress from "./CustomTool/Progress";
@@ -23,7 +23,7 @@ import CtMultiLineText from "./CustomTool/CtMultiLineText";
 import {
   applyTrimOnObjectValues,
   isValidItem,
-} from "../SystemUtility/SystemUtility";
+} from "../utils/SystemUtility";
 
 class InvoiceSetting extends Component {
   state = {

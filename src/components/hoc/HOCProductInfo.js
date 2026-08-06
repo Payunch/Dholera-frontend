@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { getRowData } from '../SystemUtility/SystemUtility'
+import { getRowData } from '../utils/SystemUtility'
 
 const HOCProductInfo = (ProductInfoLoader) => {
 
