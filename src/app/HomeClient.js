@@ -107,14 +107,15 @@ export function HomeClient() {
           'send_to': process.env.NEXT_PUBLIC_GOOGLE_ADS_ID + '/lead_conversion_label' // Assuming a default label, they can change this later
         });
       }
-
+    } catch (err) {
+      console.error("Site visit submission error:", err);
+      setVisitFormStatus("error");
+    } finally {
+      // ALWAYS open WhatsApp regardless of DB success (fallback)
       const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
       const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, '_blank');
       setVisitForm({ name: "", phone: "", date: tomorrow });
-    } catch (err) {
-      console.error("Site visit submission error:", err);
-      setVisitFormStatus("error");
     }
   };
 

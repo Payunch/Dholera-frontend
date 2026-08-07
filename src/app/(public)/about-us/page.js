@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Image from"next/image";
@@ -90,9 +90,13 @@ export default function AboutUsPage() {
  notes:`Requested site visit for: ${visitForm.date}`
  });
  setVisitStatus("success");
- setVisitForm({ name:"", phone:"", date: tomorrow });
  } catch (err) {
  setVisitStatus("error");
+ } finally {
+ const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request from the About Us page.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
+ const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(whatsappMessage)}`;
+ window.open(whatsappUrl, '_blank');
+ setVisitForm({ name:"", phone:"", date: tomorrow });
  }
  };
 
