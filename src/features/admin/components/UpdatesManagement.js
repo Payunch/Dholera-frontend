@@ -22,6 +22,7 @@ export function UpdatesManagement() {
  const [updates, setUpdates] = React.useState([]);
  const [loading, setLoading] = React.useState(true);
  const [search, setSearch] = React.useState("");
+ const [activeTab, setActiveTab] = React.useState("all");
  const [editingId, setEditingId] = React.useState(null);
  
  // Form State
@@ -140,10 +141,15 @@ export function UpdatesManagement() {
  }
  };
 
- const filteredUpdates = updates.filter(u => 
- u.title.toLowerCase().includes(search.toLowerCase()) ||
- u.category.toLowerCase().includes(search.toLowerCase())
- );
+ const filteredUpdates = updates.filter(u => {
+   const matchesSearch = u.title.toLowerCase().includes(search.toLowerCase()) ||
+                         u.category.toLowerCase().includes(search.toLowerCase());
+   if (!matchesSearch) return false;
+   if (activeTab === "published") return u.published && u.isApproved;
+   if (activeTab === "pending") return !u.isApproved;
+   if (activeTab === "drafts") return !u.published && u.isApproved;
+   return true;
+ });
 
  if (loading && updates.length === 0) {
  return (
@@ -156,7 +162,24 @@ export function UpdatesManagement() {
  return (
  <div className="space-y-8 transition-colors duration-300">
  {/* Header & Search */}
- <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+ <div className="flex flex-col gap-6">
+   <div className="flex flex-wrap items-center gap-2">
+     {["all", "published", "pending", "drafts"].map(tab => (
+       <button
+         key={tab}
+         onClick={() => setActiveTab(tab)}
+         className={cn(
+           "px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-colors",
+           activeTab === tab
+             ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md"
+             : "bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
+         )}
+       >
+         {tab === "pending" ? "Pending Approval" : tab}
+       </button>
+     ))}
+   </div>
+   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
  <div className="relative flex-1 max-w-md">
  <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
  <input
