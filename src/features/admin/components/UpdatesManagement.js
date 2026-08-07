@@ -17,6 +17,7 @@ import { apiClient } from"@/lib/api";
 import { cn } from"@/lib/utils";
 import { format } from"date-fns";
 import Image from"next/image";
+import { fetchCsrfToken } from "@/utils/csrf";
 
 export function UpdatesManagement() {
  const [updates, setUpdates] = React.useState([]);
@@ -92,7 +93,10 @@ export function UpdatesManagement() {
  if (!confirm("Are you sure you want to delete this update? This action cannot be undone.")) return;
  
  try {
- await apiClient.delete(`/updates/${id}`);
+ const csrf = await fetchCsrfToken();
+ await apiClient.delete(`/updates/${id}`, {
+   headers: { 'X-CSRF-Token': csrf || '' }
+ });
  setUpdates(updates.filter(u => u.id !== id));
  } catch (err) {
  alert("Failed to delete update");
@@ -122,10 +126,13 @@ export function UpdatesManagement() {
  formData.append("imageUrl", imageUrl);
  }
 
+ const csrf = await fetchCsrfToken();
+ const config = { headers: { 'X-CSRF-Token': csrf || '' } };
+
  if (editingId ==="new") {
- await apiClient.post("/updates", formData);
+ await apiClient.post("/updates", formData, config);
  } else {
- await apiClient.put(`/updates/${editingId}`, formData);
+ await apiClient.put(`/updates/${editingId}`, formData, config);
  }
 
  await loadUpdates();
