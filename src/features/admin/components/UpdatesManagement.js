@@ -198,6 +198,7 @@ export function UpdatesManagement() {
  New Update
  </button>
  </div>
+ </div>
 
  {/* Grid of Updates */}
  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
