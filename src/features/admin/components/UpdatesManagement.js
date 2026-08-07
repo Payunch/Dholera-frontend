@@ -123,13 +123,9 @@ export function UpdatesManagement() {
  }
 
  if (editingId ==="new") {
- await apiClient.post("/updates", formData, {
- headers: {"Content-Type":"multipart/form-data" }
- });
+ await apiClient.post("/updates", formData);
  } else {
- await apiClient.put(`/updates/${editingId}`, formData, {
- headers: {"Content-Type":"multipart/form-data" }
- });
+ await apiClient.put(`/updates/${editingId}`, formData);
  }
 
  await loadUpdates();
