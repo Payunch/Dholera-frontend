@@ -8,14 +8,12 @@ import { cn } from "@/lib/utils";
 import { SplitLogo } from "@/components/common/DynamicImages";
 import { useLanguage } from "@/providers/LanguageProvider";
 import { SidebarDrawer } from "@/components/layout/SidebarDrawer";
-import { LeadPopup } from "@/components/leads/LeadPopup";
 
 export function Navbar() {
   const pathname = usePathname();
   const { lang, setLang, t, theme, toggleTheme } = useLanguage();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [isLangOpen, setIsLangOpen] = React.useState(false);
-  const [isLoginOpen, setIsLoginOpen] = React.useState(false);
 
   const navItems = [
     { label: t('nav_home'), href: "/", icon: Home },
@@ -159,16 +157,7 @@ export function Navbar() {
       <SidebarDrawer
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-        onOpenLogin={() => setIsLoginOpen(true)}
       />
-
-      {/* Lead Login Popup when triggered */}
-      {isLoginOpen && (
-        <LeadPopup
-          onClose={() => setIsLoginOpen(false)}
-          onSuccess={() => setIsLoginOpen(false)}
-        />
-      )}
     </>
   );
 }

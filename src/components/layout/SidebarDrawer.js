@@ -5,50 +5,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
   X, Home, Map, FileText, ShieldCheck, Grid, Plane, 
-  Construction, Sparkles, Users, PhoneCall, LogOut, 
-  LogIn, Languages, Sun, Moon, Smartphone, ChevronRight, Calculator
+  Construction, Sparkles, Users, PhoneCall, 
+  Languages, Sun, Moon, Smartphone, ChevronRight, Calculator
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/providers/LanguageProvider";
-import { getCookie, removeCookie } from "@/utils/cookies";
 import { SplitLogo } from "@/components/common/DynamicImages";
 
-export function SidebarDrawer({ isOpen, onClose, onOpenLogin }) {
+export function SidebarDrawer({ isOpen, onClose }) {
   const pathname = usePathname();
   const { lang, setLang, t, theme, toggleTheme } = useLanguage();
-  
-  // Lead / User Session State
-  const [user, setUser] = React.useState(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const name = getCookie("lead_name");
-      const phone = getCookie("lead_phone");
-      const email = getCookie("lead_email");
-      const token = getCookie("lead_token");
-
-      if (name || phone || token) {
-        setUser({
-          name: name || "Verified Investor",
-          phone: phone || "",
-          email: email || "",
-          token: token || "",
-        });
-      } else {
-        setUser(null);
-      }
-    }
-  }, [isOpen, pathname]);
-
-  const handleLogout = () => {
-    removeCookie("lead_token");
-    removeCookie("lead_name");
-    removeCookie("lead_phone");
-    removeCookie("lead_email");
-    removeCookie("lead_id");
-    setUser(null);
-    onClose();
-  };
 
   // Close on Escape key
   useEffect(() => {
@@ -93,18 +59,6 @@ export function SidebarDrawer({ isOpen, onClose, onOpenLogin }) {
     { code: "gu", label: "ગુજરાતી" },
   ];
 
-  // Helper for User Avatar Initials
-  const getInitials = (name) => {
-    if (!name) return "U";
-    return name
-      .trim()
-      .split(/\s+/)
-      .slice(0, 2)
-      .map((part) => part[0])
-      .join("")
-      .toUpperCase();
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -136,50 +90,20 @@ export function SidebarDrawer({ isOpen, onClose, onOpenLogin }) {
             </button>
           </div>
 
-          {/* User Status / Login Profile Block */}
-          {user ? (
-            <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-orange-500/10 border border-orange-500/20 dark:bg-orange-950/30 dark:border-orange-500/30">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-black text-sm shadow-md shadow-orange-500/30">
-                {getInitials(user.name)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-black text-slate-900 dark:text-white truncate uppercase tracking-tight">
-                  {user.name}
-                </p>
-                <p className="text-[10px] font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest">
-                  Dholera Investor
-                </p>
-              </div>
-              <button 
-                onClick={handleLogout}
-                title="Sign Out"
-                className="p-2 rounded-xl text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
+          {/* Platform Portal Header Card */}
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-orange-500/10 border border-orange-500/20 dark:bg-orange-950/30 dark:border-orange-500/30">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-600 text-white font-black text-xs shadow-md shadow-orange-600/30">
+              SIR
             </div>
-          ) : (
-            <div className="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800">
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                  Dholera Portal
-                </p>
-                <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">
-                  Investor Access
-                </p>
-              </div>
-              <button 
-                onClick={() => {
-                  onClose();
-                  if (onOpenLogin) onOpenLogin();
-                }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-[10px] font-black uppercase tracking-wider transition-all shadow-md shadow-orange-600/20"
-              >
-                <LogIn className="h-3.5 w-3.5" />
-                Sign In
-              </button>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-black text-slate-900 dark:text-white truncate uppercase tracking-tight">
+                Dholera Smart City
+              </p>
+              <p className="text-[10px] font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest">
+                Official Platform
+              </p>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Navigation Items List */}
