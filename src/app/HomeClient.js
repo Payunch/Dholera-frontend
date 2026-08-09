@@ -12,7 +12,12 @@ import {
   ArrowRight,
   X,
   AlertCircle,
-  Calendar 
+  Calendar,
+  Sparkles,
+  Lock,
+  Shield,
+  Bell,
+  FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
@@ -48,6 +53,34 @@ export function HomeClient() {
     "/images/airportVision.webp",
     "/images/expressHighway.webp",
     "/images/dholerasirGujrat.webp"
+  ];
+
+  const uniqueHighlights = [
+    {
+      icon: Sparkles,
+      title: "Daily admin updates",
+      text: "Fresh Dholera posts can be published by admin every day and shown inside the app for logged-in users."
+    },
+    {
+      icon: Lock,
+      title: "Logged-in only access",
+      text: "Exclusive posts, PDFs, and reports can be hidden from anonymous visitors and unlocked after login."
+    },
+    {
+      icon: Shield,
+      title: "Secure account flow",
+      text: "Users sign up with mobile, email, and password while the app keeps the session and initials safe."
+    },
+    {
+      icon: Bell,
+      title: "Real-time notifications",
+      text: "Important updates and new content can be pushed to the app so users return when something changes."
+    },
+    {
+      icon: FileText,
+      title: "Watermarked reports",
+      text: "PDF previews can be stamped with the user name and mobile number so shared documents stay traceable."
+    }
   ];
 
   React.useEffect(() => {
@@ -299,6 +332,69 @@ export function HomeClient() {
             {/* Gradient Overlays for smooth edges */}
             <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-slate-950 to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-slate-950 to-transparent z-10 pointer-events-none" />
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-b border-slate-800 bg-slate-950 py-24 text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,122,0,0.18),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.12),_transparent_30%)]" />
+        <div className="container relative z-10 mx-auto px-4 md:px-8">
+          <div className="mx-auto mb-14 max-w-4xl text-center space-y-5">
+            <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.28em] text-orange-300">
+              <Sparkles className="h-3.5 w-3.5" />
+              Unique App Features
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase leading-tight">
+              Why users keep coming back to the Dholera app
+            </h2>
+            <p className="mx-auto max-w-2xl text-sm md:text-base font-medium text-slate-300 leading-relaxed">
+              The website should explain the app clearly: daily admin posts, locked content for logged-in users, secure account access, notifications, and protected PDF viewing.
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {uniqueHighlights.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="group rounded-[1.75rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-400/40 hover:bg-white/10"
+                >
+                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-300 ring-1 ring-orange-500/20">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-lg font-black uppercase tracking-tight text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-300">
+                    {item.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-orange-500/20 bg-orange-500/10 px-6 py-8 text-center md:flex-row md:justify-between md:text-left">
+            <div>
+              <h3 className="text-xl font-black uppercase text-white">Daily content, built for trust</h3>
+              <p className="mt-2 max-w-2xl text-sm text-slate-300">
+                Use the home page to explain what users get after login: verified updates, exclusive reports, and a secure account that remembers the user on return.
+              </p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-3 md:justify-end">
+              <Link
+                href="/blogs"
+                className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-all hover:bg-orange-600"
+              >
+                View Updates
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex h-12 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-all hover:border-orange-400/40 hover:bg-white/10"
+              >
+                Talk to Team
+              </Link>
+            </div>
           </div>
         </div>
       </section>
