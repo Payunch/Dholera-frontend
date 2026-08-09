@@ -47,6 +47,7 @@ export function HomeClient() {
   const [hoveredGrid, setHoveredGrid] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const apkUrl = process.env.NEXT_PUBLIC_APK_URL || "https://dholeraplatform.com/downloads/dholera.apk";
 
   const heroImages = [
     "/images/arialviewdholeraexpress.webp",
@@ -398,6 +399,135 @@ export function HomeClient() {
           </div>
         </div>
       </section>
+
+      <section className="bg-white py-20 dark:bg-slate-950">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              className="group text-left rounded-[2rem] border border-slate-200 bg-slate-50 p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-[#FF7A00] hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+            >
+              <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF7A00]/10 text-[#FF7A00] ring-1 ring-[#FF7A00]/20">
+                <Image
+                  src="/images/hp.png"
+                  alt="Dholera app icon"
+                  width={34}
+                  height={34}
+                />
+              </div>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
+                App Preview
+              </p>
+              <h3 className="mt-3 text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                What the Dholera app gives users
+              </h3>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                Tap to see the app summary. This card explains the daily admin updates, logged-in-only content, secure login flow, notifications, and protected PDF access that users get after installation.
+              </p>
+              <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">
+                Open details
+                <ArrowRight className="h-4 w-4" />
+              </span>
+            </button>
+
+            <a
+              href={appStoreUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="group rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-[#FF7A00] hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+            >
+              <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950 text-white dark:bg-white dark:text-slate-950">
+                <Image
+                  src="/images/hp.png"
+                  alt="Open app link"
+                  width={34}
+                  height={34}
+                />
+              </div>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
+                Direct APK Link
+              </p>
+              <h3 className="mt-3 text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
+                Download the APK directly
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                Use this tile if you want users to download the APK from the website instead of the Play Store.
+              </p>
+              <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#FF7A00]">
+                Download APK
+                <ArrowRight className="h-4 w-4" />
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 px-4 py-8 backdrop-blur-sm">
+          <div className="relative w-full max-w-3xl rounded-[2rem] border border-white/10 bg-white p-8 shadow-2xl dark:bg-slate-950">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              className="absolute right-5 top-5 rounded-full border border-slate-200 p-2 text-slate-500 transition-colors hover:text-slate-950 dark:border-slate-800 dark:text-slate-400 dark:hover:text-white"
+              aria-label="Close app details"
+            >
+              <X className="h-4 w-4" />
+            </button>
+
+            <div className="flex flex-col gap-6 md:flex-row md:items-start">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] bg-[#FF7A00]/10 ring-1 ring-[#FF7A00]/20">
+                <Image
+                  src="/images/hp.png"
+                  alt="Dholera app icon"
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div className="space-y-4">
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
+                  Dholera App Summary
+                </p>
+                <h3 className="text-3xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
+                  Built to share Dholera information clearly
+                </h3>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                  The app is meant to share Dholera-related updates, secure user content, PDFs, and daily admin posts. It should be described exactly that way in your store listing and website, without claiming official government affiliation unless you truly have it.
+                </p>
+                <div className="grid gap-3 md:grid-cols-2">
+                  {[
+                    "Daily admin-posted updates",
+                    "Login required for private content",
+                    "Secure account and password flow",
+                    "Notifications and PDF access"
+                  ].map((item) => (
+                    <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href={apkUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-xs font-black uppercase tracking-[0.2em] text-white transition-colors hover:bg-orange-600"
+                  >
+                    Download APK
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setIsModalOpen(false)}
+                    className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 px-5 text-xs font-black uppercase tracking-[0.2em] text-slate-700 transition-colors hover:border-[#FF7A00] hover:text-[#FF7A00] dark:border-slate-800 dark:text-slate-300"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 1.25 FEATURED PROJECTS SECTION */}
       <section className="py-24 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">
