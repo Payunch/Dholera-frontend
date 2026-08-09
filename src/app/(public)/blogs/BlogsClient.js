@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from "next/link";
-import { ArrowRight, TrendingUp, Landmark, HardHat, Search, Filter } from "lucide-react";
+import { ArrowRight, TrendingUp, Landmark, HardHat, Search, Filter, Lock } from "lucide-react";
 import Image from "next/image";
 import { SITE_BASE_URL } from "@/lib/api";
 import { format } from "date-fns";
@@ -153,9 +153,16 @@ export default function BlogsClient({ initialUpdates, hasError }) {
                     <div className="p-8 md:p-10 flex-1 flex flex-col">
                       <div className="flex items-center justify-between mb-8">
                         <div className="flex flex-col gap-2">
-                          <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#FF7A00] px-3 py-1 bg-orange-50 dark:bg-orange-950/10 rounded-lg border border-orange-100/50 dark:border-orange-500/20 self-start">
-                            {post.category}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#FF7A00] px-3 py-1 bg-orange-50 dark:bg-orange-950/10 rounded-lg border border-orange-100/50 dark:border-orange-500/20 self-start">
+                              {post.category}
+                            </span>
+                            {post.isExclusive && (
+                              <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-amber-500 px-2.5 py-1 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                                <Lock className="h-2.5 w-2.5" /> App Exclusive
+                              </span>
+                            )}
+                          </div>
                           {post.author && (
                             <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 capitalize">
                               By {post.author}

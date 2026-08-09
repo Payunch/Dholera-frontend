@@ -2,7 +2,7 @@ import Image from"next/image";
 import Link from"next/link";
 import { cookies } from "next/headers";
 import { notFound, redirect } from"next/navigation";
-import { ChevronLeft, Calendar, Share2, Clock } from"lucide-react";
+import { ChevronLeft, Calendar, Share2, Clock, Lock, Smartphone } from "lucide-react";
 import { format } from"date-fns";
 import { getUpdateById } from"@/features/updates/api";
 import { ArticleBody } from"@/features/updates/components/ArticleBody";
@@ -160,8 +160,45 @@ export default async function UpdateDetailPage({ params }) {
  </div>
  )}
 
- {/* Article Content */}
- <ArticleBody content={update.content} />
+  {/* Article Content */}
+  {update.isExclusive ? (
+    <div className="my-12 p-8 md:p-12 rounded-[2.5rem] bg-gradient-to-br from-slate-900 via-slate-950 to-black text-white border border-slate-800 shadow-2xl relative overflow-hidden text-center space-y-6">
+      <div className="mx-auto w-16 h-16 rounded-2xl bg-orange-600/20 border border-orange-500/30 flex items-center justify-center text-orange-500 shadow-xl shadow-orange-600/20">
+        <Lock className="h-8 w-8" />
+      </div>
+      <div className="max-w-2xl mx-auto space-y-3">
+        <span className="inline-block px-3 py-1 rounded-full bg-orange-600 text-white text-[10px] font-black uppercase tracking-widest">
+          📱 Mobile App Exclusive Content
+        </span>
+        <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+          Unlock Full Insight in Dholera App
+        </h3>
+        <p className="text-sm text-slate-400 font-medium leading-relaxed">
+          This spatial report and investor analysis is reserved exclusively for Dholera Mobile App users. Download the official app to access interactive GIS maps, real-time plot updates, and offline PDF reports.
+        </p>
+      </div>
+      <div className="pt-4 flex flex-wrap justify-center gap-4">
+        <a 
+          href="https://play.google.com/store" 
+          target="_blank" 
+          rel="noreferrer"
+          className="px-8 py-3.5 rounded-full bg-orange-600 hover:bg-orange-500 text-white text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-orange-600/30"
+        >
+          Download for Android
+        </a>
+        <a 
+          href="https://apple.com/app-store" 
+          target="_blank" 
+          rel="noreferrer"
+          className="px-8 py-3.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-black uppercase tracking-widest border border-slate-700 transition-all"
+        >
+          Download for iOS
+        </a>
+      </div>
+    </div>
+  ) : (
+    <ArticleBody content={update.content} />
+  )}
 
  {/* Bottom Image */}
  {imgSrc && imgPos ==="bottom" && (
