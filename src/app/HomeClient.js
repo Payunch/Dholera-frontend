@@ -26,6 +26,7 @@ export function HomeClient() {
   const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   // Site Visit Form State
   const [visitForm, setVisitForm] = React.useState({ name: "", phone: "", date: tomorrow });
+  const [visitError, setVisitError] = React.useState("");
 
   // Pre-fill form if lead is already verified
   React.useEffect(() => {
@@ -62,7 +63,10 @@ export function HomeClient() {
   const handlePhoneChange = (e) => {
     const val = e.target.value.replace(/\D/g, '').slice(0, 10);
     setVisitForm({ ...visitForm, phone: val });
-    if (visitStatus === 'error') setVisitFormStatus('idle');
+    if (visitStatus === 'error') {
+      setVisitFormStatus('idle');
+      setVisitError("");
+    }
   };
 
   const handleVisitSubmit = async (e) => {
@@ -70,6 +74,7 @@ export function HomeClient() {
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!visitForm.name || !phoneRegex.test(visitForm.phone)) {
       setVisitFormStatus("error");
+      setVisitError(!visitForm.name ? "Please enter your full name." : "Please enter a valid 10-digit mobile number.");
       return;
     }
 
@@ -79,6 +84,7 @@ export function HomeClient() {
 
     if (selectedDate > maxDate) {
       setVisitFormStatus("error");
+      setVisitError("Please choose a date within the next 7 days.");
       return;
     }
 
@@ -110,6 +116,12 @@ export function HomeClient() {
     } catch (err) {
       console.error("Site visit submission error:", err);
       setVisitFormStatus("error");
+      setVisitError(
+        err?.response?.data?.error ||
+        err?.response?.data?.message ||
+        err?.message ||
+        ""
+      );
     } finally {
       // ALWAYS open WhatsApp regardless of DB success (fallback)
       const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
@@ -444,9 +456,7 @@ export function HomeClient() {
                     <span>{t('transmission_failed')}</span>
                   </div>
                   <p className="text-[9px] text-red-500/80 pl-8">
-                    {new Date(visitForm.date) > new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-                      ? t('date_limit_msg')
-                      : t('err_generic')}
+                    {visitError || t('err_generic')}
                   </p>
                 </div>
               )}

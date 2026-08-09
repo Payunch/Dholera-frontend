@@ -30,17 +30,25 @@ export function ContactForm() {
  }, [verifiedLead]);
 
  const [status, setStatus] = React.useState("idle");
+ const [errorMessage, setErrorMessage] = React.useState("");
 
  const handlePhoneChange = (e) => {
  const val = e.target.value.replace(/\D/g,'').slice(0, 10);
  setFormData({ ...formData, phone: val });
- if (status ==="error") setStatus("idle");
+ if (status ==="error") {
+ setStatus("idle");
+ setErrorMessage("");
+ }
  };
 
  const handleSubmit = async (e) => {
  e.preventDefault();
  const phoneRegex = /^[6-9]\d{9}$/;
- if (!formData.name || !phoneRegex.test(formData.phone)) return;
+ if (!formData.name || !phoneRegex.test(formData.phone)) {
+ setStatus("error");
+ setErrorMessage(!formData.name ? "Please enter your full name." : "Please enter a valid 10-digit mobile number.");
+ return;
+ }
 
  setStatus("loading");
  try {
@@ -54,6 +62,7 @@ export function ContactForm() {
  preferred_language: window.localStorage.getItem('preferred_lang') ||'en'
  });
  setStatus("success");
+ setErrorMessage("");
  setFormData({ name:"", phone:"", email: "", notes: "" });
  
  // Fire Meta Pixel Event
@@ -80,6 +89,12 @@ export function ContactForm() {
  } catch (err) {
  console.error("Submission error:", err);
  setStatus("error");
+ setErrorMessage(
+   err?.response?.data?.error ||
+   err?.response?.data?.message ||
+   err?.message ||
+   ""
+ );
  }
  };
 
@@ -112,7 +127,7 @@ export function ContactForm() {
  <span>{t('transmission_failed')}</span>
  </div>
  <p className="text-[9px] text-red-500/80 pl-8">
- {t('err_generic')}
+ {errorMessage || t('err_generic')}
  </p>
  </div>
  )}
