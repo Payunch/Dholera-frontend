@@ -10,16 +10,13 @@ import {
   MapPin,
   Building,
   ArrowRight,
-  X,
   AlertCircle,
   Calendar,
   Sparkles,
   Lock,
   Shield,
   Bell,
-  FileText,
-  Download,
-  Smartphone
+  FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
@@ -47,43 +44,13 @@ export function HomeClient() {
   }, [verifiedLead]);
   const [visitStatus, setVisitFormStatus] = React.useState("idle");
   const [hoveredGrid, setHoveredGrid] = React.useState(null);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-  const apkUrl = process.env.NEXT_PUBLIC_APK_URL || "/downloads/dholera.apk";
 
   const heroImages = [
     "/images/arialviewdholeraexpress.webp",
     "/images/airportVision.webp",
     "/images/expressHighway.webp",
     "/images/dholerasirGujrat.webp"
-  ];
-
-  const uniqueHighlights = [
-    {
-      icon: Sparkles,
-      title: "Daily admin updates",
-      text: "Fresh Dholera posts can be published by admin every day and shown inside the app for logged-in users."
-    },
-    {
-      icon: Lock,
-      title: "Logged-in only access",
-      text: "Exclusive posts, PDFs, and reports can be hidden from anonymous visitors and unlocked after login."
-    },
-    {
-      icon: Shield,
-      title: "Secure account flow",
-      text: "Users sign up with mobile, email, and password while the app keeps the session and initials safe."
-    },
-    {
-      icon: Bell,
-      title: "Real-time notifications",
-      text: "Important updates and new content can be pushed to the app so users return when something changes."
-    },
-    {
-      icon: FileText,
-      title: "Watermarked reports",
-      text: "PDF previews can be stamped with the user name and mobile number so shared documents stay traceable."
-    }
   ];
 
   React.useEffect(() => {
@@ -339,195 +306,67 @@ export function HomeClient() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-b border-slate-800 bg-slate-950 py-24 text-white">
+      <section className="relative overflow-hidden border-b border-slate-800 bg-slate-950 py-14 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,122,0,0.18),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.12),_transparent_30%)]" />
         <div className="container relative z-10 mx-auto px-4 md:px-8">
-          <div className="mx-auto mb-14 max-w-4xl text-center space-y-5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.28em] text-orange-300">
-              <Sparkles className="h-3.5 w-3.5" />
-              Unique App Features
-            </span>
-            <h2 className="text-3xl md:text-5xl font-black uppercase leading-tight">
-              Why users keep coming back to the Dholera app
-            </h2>
-            <p className="mx-auto max-w-2xl text-sm md:text-base font-medium text-slate-300 leading-relaxed">
-              The website should explain the app clearly: daily admin posts, locked content for logged-in users, secure account access, notifications, and protected PDF viewing.
-            </p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {uniqueHighlights.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.title}
-                  className="group rounded-[1.75rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-400/40 hover:bg-white/10"
-                >
-                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-300 ring-1 ring-orange-500/20">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-lg font-black uppercase tracking-tight text-white">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                    {item.text}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-orange-500/20 bg-orange-500/10 px-6 py-8 text-center md:flex-row md:justify-between md:text-left">
-            <div>
-              <h3 className="text-xl font-black uppercase text-white">Daily content, built for trust</h3>
-              <p className="mt-2 max-w-2xl text-sm text-slate-300">
-                Use the home page to explain what users get after login: verified updates, exclusive reports, and a secure account that remembers the user on return.
-              </p>
-            </div>
-            <div className="flex flex-wrap justify-center gap-3 md:justify-end">
-              <Link
-                href="/blogs"
-                className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-all hover:bg-orange-600"
-              >
-                View Updates
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex h-12 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-all hover:border-orange-400/40 hover:bg-white/10"
-              >
-                Talk to Team
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white py-20 dark:bg-slate-950">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="group text-left rounded-[2rem] border border-slate-200 bg-slate-50 p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-[#FF7A00] hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
-            >
-              <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF7A00]/10 text-[#FF7A00] ring-1 ring-[#FF7A00]/20">
-                <Image
-                  src="/images/hp.png"
-                  alt="Dholera app icon"
-                  width={34}
-                  height={34}
-                />
-              </div>
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
-                App Preview
-              </p>
-              <h3 className="mt-3 text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-                Download the Dholera app
-              </h3>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                Tap to see the app summary. You’ll get one clear popup with the basic details, then you can continue to the dedicated download page.
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">
-                Open details
-                <ArrowRight className="h-4 w-4" />
-              </span>
-            </button>
-            <Link
-              href="/download"
-              className="group rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-[#FF7A00] hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
-            >
-              <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF7A00]/10 text-[#FF7A00] ring-1 ring-[#FF7A00]/20">
-                <Download className="h-6 w-6" />
-              </div>
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
-                Dedicated page
-              </p>
-              <h3 className="mt-3 text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-                Open the download page
-              </h3>
-              <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                A polished page with the APK button, version note, install steps, and a clean download experience.
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#FF7A00]">
-                View page
-                <ArrowRight className="h-4 w-4" />
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 px-4 py-8 backdrop-blur-sm">
-          <div className="relative w-full max-w-3xl rounded-[2rem] border border-white/10 bg-white p-8 shadow-2xl dark:bg-slate-950">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              className="absolute right-5 top-5 rounded-full border border-slate-200 p-2 text-slate-500 transition-colors hover:text-slate-950 dark:border-slate-800 dark:text-slate-400 dark:hover:text-white"
-              aria-label="Close app details"
-            >
-              <X className="h-4 w-4" />
-            </button>
-
-            <div className="flex flex-col gap-6 md:flex-row md:items-start">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] bg-[#FF7A00]/10 ring-1 ring-[#FF7A00]/20">
-                <Image
-                  src="/images/hp.png"
-                  alt="Dholera app icon"
-                  width={48}
-                  height={48}
-                />
-              </div>
-              <div className="space-y-4">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
-                  App Summary
+          <div className="mx-auto max-w-5xl rounded-[2.25rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl md:p-8">
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.28em] text-orange-300">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Our App
+                </span>
+                <h2 className="mt-5 max-w-xl text-3xl font-black uppercase leading-tight md:text-5xl">
+                  Daily updates. Secure access. One download page.
+                </h2>
+                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300">
+                  A short app preview for logged-in users, private PDFs, notifications, and the latest Dholera APK.
                 </p>
-                <h3 className="text-3xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
-                  One clean popup, then the download page
-                </h3>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                  The app shares Dholera updates, secure content, PDFs, and daily posts. Open the page for the full download experience.
-                </p>
-                <div className="grid gap-3 md:grid-cols-2">
-                  {[
-                    "Daily admin-posted updates",
-                    "Login required for private content",
-                    "Secure account and password flow",
-                    "Notifications and PDF access"
-                  ].map((item) => (
-                    <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {["Daily admin posts", "Locked content", "Notifications", "Protected PDFs"].map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-100"
+                    >
                       {item}
-                    </div>
+                    </span>
                   ))}
                 </div>
-                <div className="flex flex-col gap-3 sm:flex-row">
+                <div className="mt-6">
                   <Link
                     href="/download"
-                    className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-xs font-black uppercase tracking-[0.2em] text-white transition-colors hover:bg-orange-600"
+                    className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-all hover:bg-orange-600"
                   >
-                    Go to download page
+                    Open Download Page
                   </Link>
-                  <a
-                    href={apkUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 px-5 text-xs font-black uppercase tracking-[0.2em] text-slate-700 transition-colors hover:border-[#FF7A00] hover:text-[#FF7A00] dark:border-slate-800 dark:text-slate-300"
-                  >
-                    Download APK
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 px-5 text-xs font-black uppercase tracking-[0.2em] text-slate-700 transition-colors hover:border-[#FF7A00] hover:text-[#FF7A00] dark:border-slate-800 dark:text-slate-300"
-                  >
-                    Close
-                  </button>
+                </div>
+              </div>
+
+              <div className="rounded-[2rem] border border-white/10 bg-slate-950/70 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
+                <div className="rounded-[1.6rem] border border-white/10 bg-gradient-to-br from-[#111827] via-[#0f172a] to-[#1e293b] p-5">
+                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">
+                    <span>Dholera app</span>
+                    <span>Latest build</span>
+                  </div>
+                  <div className="mt-5 flex items-center gap-4 rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FF7A00]/10 ring-1 ring-[#FF7A00]/20">
+                      <Image src="/images/hp.png" alt="App logo" width={38} height={38} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-300">
+                        Download ready
+                      </p>
+                      <p className="mt-1 text-sm font-semibold text-slate-100">
+                        Tap the download page for the APK and install steps.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      )}
+      </section>
 
       {/* 1.25 FEATURED PROJECTS SECTION */}
       <section className="py-24 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">
@@ -773,3 +612,4 @@ export function HomeClient() {
     </div>
   );
 }
+

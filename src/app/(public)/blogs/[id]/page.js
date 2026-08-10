@@ -174,12 +174,12 @@ export default async function UpdateDetailPage({ params }) {
           Unlock Full Insight in Dholera App
         </h3>
         <p className="text-sm text-slate-400 font-medium leading-relaxed">
-          This spatial report and investor analysis is reserved exclusively for Dholera Mobile App users. Download the official app to access interactive GIS maps, real-time plot updates, and offline PDF reports.
+          This spatial report and investor analysis is reserved exclusively for Dholera app users. Download the app to access interactive GIS maps, real-time plot updates, and offline PDF reports.
         </p>
       </div>
       <div className="pt-4 flex flex-wrap justify-center gap-4">
         <a 
-          href="https://play.google.com/store" 
+          href="/download" 
           target="_blank" 
           rel="noreferrer"
           className="px-8 py-3.5 rounded-full bg-orange-600 hover:bg-orange-500 text-white text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-orange-600/30"

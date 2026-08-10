@@ -18,7 +18,7 @@ const apkUrl = process.env.NEXT_PUBLIC_APK_URL || "/downloads/dholera.apk";
 export const metadata = {
   title: "Download Dholera App | APK Download",
   description:
-    "Download the latest Dholera Android app APK from the official website. View app highlights, install steps, and basic details on one clean page.",
+    "Download the latest Dholera Android app APK from the website. View app highlights, install steps, and basic details on one clean page.",
   alternates: {
     canonical: `${siteConfig.url}/download`,
   },
@@ -57,7 +57,7 @@ export default function DownloadPage() {
             <div className="mb-8 flex flex-wrap items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-orange-300">
               <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2">
                 <Sparkles className="h-3.5 w-3.5" />
-                Official download page
+                Download page
               </span>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2">
                 Latest Android build
@@ -70,7 +70,7 @@ export default function DownloadPage() {
                   Dholera platform apk
                 </p>
                 <h1 className="max-w-3xl text-4xl font-black uppercase leading-[1.02] tracking-tight sm:text-5xl md:text-6xl">
-                  One clean popup, one dedicated download page
+                  One clean page, one dedicated download page
                 </h1>
                 <p className="max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
                   Download the Android app from a page that explains the basics clearly, keeps the homepage simple, and avoids confusing navigation.
@@ -236,7 +236,7 @@ export default function DownloadPage() {
                   Keep the site clean, keep the APK separate
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-slate-600">
-                  If you want, the homepage popup can stay as the single entry point, and this page can handle the actual APK download.
+                  If you want, the homepage can stay as the single entry point, and this page can handle the actual APK download.
                 </p>
                 <div className="mt-6 flex flex-col gap-3">
                   <Link

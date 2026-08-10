@@ -43,6 +43,7 @@ export function SidebarDrawer({ isOpen, onClose }) {
     { label: t("nav_home"), href: "/", icon: Home },
     { label: t("nav_tp_maps"), href: "/tp-maps", icon: Map },
     { label: t("nav_pdf"), href: "/pdf?trigger=true", icon: FileText },
+    { label: "Our App", href: "/download", icon: Smartphone },
     { label: t("nav_portals"), href: "/portals", icon: ShieldCheck },
     { label: t("nav_projects"), href: "/projects", icon: Grid },
     { label: t("nav_airport"), href: "/airport", icon: Plane },
@@ -100,7 +101,7 @@ export function SidebarDrawer({ isOpen, onClose }) {
                 Dholera Smart City
               </p>
               <p className="text-[10px] font-bold text-orange-600 dark:text-orange-400 uppercase tracking-widest">
-                Official Platform
+                Independent Platform
               </p>
             </div>
           </div>
@@ -157,15 +158,14 @@ export function SidebarDrawer({ isOpen, onClose }) {
               <p className="text-[10px] text-slate-400 leading-relaxed font-medium">
                 Access exclusive GIS map layers, offline PDFs & instant push alerts.
               </p>
-              <a 
-                href="https://play.google.com/store" 
-                target="_blank" 
-                rel="noreferrer"
+              <Link
+                href="/download"
+                onClick={onClose}
                 className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-orange-400 hover:text-orange-300 pt-1"
               >
                 <span>Download App</span>
                 <ChevronRight className="h-3 w-3" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
