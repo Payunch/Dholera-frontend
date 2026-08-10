@@ -17,7 +17,9 @@ import {
   Lock,
   Shield,
   Bell,
-  FileText
+  FileText,
+  Download,
+  Smartphone
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
@@ -420,45 +422,37 @@ export function HomeClient() {
                 App Preview
               </p>
               <h3 className="mt-3 text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-                What the Dholera app gives users
+                Download the Dholera app
               </h3>
               <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                Tap to see the app summary. This card explains the daily admin updates, logged-in-only content, secure login flow, notifications, and protected PDF access that users get after installation.
+                Tap to see the app summary. You’ll get one clear popup with the basic details, then you can continue to the dedicated download page.
               </p>
               <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">
                 Open details
                 <ArrowRight className="h-4 w-4" />
               </span>
             </button>
-
-            <a
-              href={apkUrl}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              href="/download"
               className="group rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-[#FF7A00] hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
             >
-              <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950 text-white dark:bg-white dark:text-slate-950">
-                <Image
-                  src="/images/hp.png"
-                  alt="Download APK"
-                  width={34}
-                  height={34}
-                />
+              <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF7A00]/10 text-[#FF7A00] ring-1 ring-[#FF7A00]/20">
+                <Download className="h-6 w-6" />
               </div>
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
-                Direct APK Link
+                Dedicated page
               </p>
               <h3 className="mt-3 text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-                Download the APK directly
+                Open the download page
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                Use this tile to download the Android app from the website without affecting the rest of the site.
+                A polished page with the APK button, version note, install steps, and a clean download experience.
               </p>
               <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#FF7A00]">
-                Download APK
+                View page
                 <ArrowRight className="h-4 w-4" />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -486,13 +480,13 @@ export function HomeClient() {
               </div>
               <div className="space-y-4">
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
-                  Dholera App Summary
+                  App Summary
                 </p>
                 <h3 className="text-3xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
-                  Built to share Dholera information clearly
+                  One clean popup, then the download page
                 </h3>
                 <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                  The app is meant to share Dholera-related updates, secure user content, PDFs, and daily admin posts. It should be described exactly that way in your store listing and website, without claiming official government affiliation unless you truly have it.
+                  The app shares Dholera updates, secure content, PDFs, and daily posts. Open the page for the full download experience.
                 </p>
                 <div className="grid gap-3 md:grid-cols-2">
                   {[
@@ -507,11 +501,17 @@ export function HomeClient() {
                   ))}
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row">
+                  <Link
+                    href="/download"
+                    className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-xs font-black uppercase tracking-[0.2em] text-white transition-colors hover:bg-orange-600"
+                  >
+                    Go to download page
+                  </Link>
                   <a
                     href={apkUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-xs font-black uppercase tracking-[0.2em] text-white transition-colors hover:bg-orange-600"
+                    className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-200 px-5 text-xs font-black uppercase tracking-[0.2em] text-slate-700 transition-colors hover:border-[#FF7A00] hover:text-[#FF7A00] dark:border-slate-800 dark:text-slate-300"
                   >
                     Download APK
                   </a>
