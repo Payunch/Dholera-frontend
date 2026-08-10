@@ -47,7 +47,6 @@ export function HomeClient() {
   const [hoveredGrid, setHoveredGrid] = React.useState(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-  const apkUrl = process.env.NEXT_PUBLIC_APK_URL || "https://dholeraplatform.com/downloads/dholera.apk";
 
   const heroImages = [
     "/images/arialviewdholeraexpress.webp",
@@ -431,34 +430,32 @@ export function HomeClient() {
               </span>
             </button>
 
-            <a
-              href={appStoreUrl}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              href="/projects"
               className="group rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-[#FF7A00] hover:shadow-2xl dark:border-slate-800 dark:bg-slate-900"
             >
               <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950 text-white dark:bg-white dark:text-slate-950">
                 <Image
                   src="/images/hp.png"
-                  alt="Open app link"
+                  alt="Explore projects"
                   width={34}
                   height={34}
                 />
               </div>
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
-                Direct APK Link
+                Explore the site
               </p>
               <h3 className="mt-3 text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-                Download the APK directly
+                Browse projects and updates
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                Use this tile if you want users to download the APK from the website instead of the Play Store.
+                Use this tile to navigate through the main website sections, including projects, blogs, and contact.
               </p>
               <span className="mt-6 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#FF7A00]">
-                Download APK
+                Open site
                 <ArrowRight className="h-4 w-4" />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -507,14 +504,12 @@ export function HomeClient() {
                   ))}
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <a
-                    href={apkUrl}
-                    target="_blank"
-                    rel="noreferrer"
+                  <Link
+                    href="/contact"
                     className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-xs font-black uppercase tracking-[0.2em] text-white transition-colors hover:bg-orange-600"
                   >
-                    Download APK
-                  </a>
+                    Contact Team
+                  </Link>
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
