@@ -1,9 +1,10 @@
 import { API_BASE_URL } from"@/lib/api";
 
-export async function getUpdates(search, lang) {
- const params = new URLSearchParams();
- if (search) params.append("search", search);
- if (lang) params.append("lang", lang);
+export async function getUpdates(search, lang, audience = "web") {
+  const params = new URLSearchParams();
+  if (search) params.append("search", search);
+  if (lang) params.append("lang", lang);
+  if (audience) params.append("audience", audience);
  
  const query = params.toString() ?`?${params.toString()}` :"";
  const res = await fetch(`${API_BASE_URL}/updates${query}`, {
@@ -19,9 +20,10 @@ export async function getUpdates(search, lang) {
  return Array.isArray(data) ? data : [];
 }
 
-export async function getUpdateById(id, lang) {
- const query = lang ?`?lang=${lang}` :"";
-  const res = await fetch(`${API_BASE_URL}/updates/${id}${query}`, {
+export async function getUpdateById(id, lang, audience = "web") {
+  const query = lang ?`?lang=${lang}` :"";
+  const audienceQuery = audience ? `${query ? "&" : "?"}audience=${audience}` : "";
+  const res = await fetch(`${API_BASE_URL}/updates/${id}${query}${audienceQuery}`, {
     cache: "no-store",
   });
 

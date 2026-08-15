@@ -16,14 +16,15 @@ export const dynamic ="force-dynamic";
 
 // Dynamic SEO
 export async function generateMetadata(
- { params },
+ { params, searchParams },
  parent
 ) {
  const { id } = await params;
+ const audience = searchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||'en';
  
- const update = await getUpdateById(id, lang);
+ const update = await getUpdateById(id, lang, audience);
  if (!update) return {};
 
  const previousImages = (await parent).openGraph?.images || [];
@@ -64,12 +65,13 @@ const CATEGORY_COLORS = {
  General:"text-slate-600 dark:text-slate-400 border-slate-100 bg-white dark:bg-slate-900",
 };
 
-export default async function UpdateDetailPage({ params }) {
+export default async function UpdateDetailPage({ params, searchParams }) {
  const { id } = await params;
+ const audience = searchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||'en';
 
- const update = await getUpdateById(id, lang);
+ const update = await getUpdateById(id, lang, audience);
 
  if (!update) {
    redirect('/blogs');
@@ -142,7 +144,7 @@ export default async function UpdateDetailPage({ params }) {
               <ShareButton 
                 title={update.title} 
                 text={`Read this article on Dholera Platform: ${update.title}`} 
-                url={`https://dholeraplatform.com/blogs/${update.id}`} 
+                url={`https://dholeraplatform.com/blogs/${update.id}${update.isExclusive ? "?audience=app" : ""}`} 
               />
  </div>
  </header>

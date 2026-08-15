@@ -9,6 +9,7 @@ import {
  Check, 
  X, 
  Eye,
+ Lock,
  Search,
  ExternalLink,
  ImageIcon
@@ -32,6 +33,7 @@ export function UpdatesManagement() {
  const [category, setCategory] = React.useState("General");
  const [published, setPublished] = React.useState(true);
  const [isApproved, setIsApproved] = React.useState(true);
+ const [isExclusive, setIsExclusive] = React.useState(false);
  const [publishedAt, setPublishedAt] = React.useState("");
  const [imageFile, setImageFile] = React.useState(null);
  const [imageUrl, setImageUrl] = React.useState("");
@@ -44,7 +46,7 @@ export function UpdatesManagement() {
  const loadUpdates = async () => {
  setLoading(true);
  try {
- const res = await apiClient.get("/updates?all=true");
+ const res = await apiClient.get("/updates/admin/all");
  setUpdates(Array.isArray(res.data) ? res.data : []);
  } catch (err) {
  console.error("Failed to load updates:", err);
@@ -65,6 +67,7 @@ export function UpdatesManagement() {
  setCategory("General");
  setPublished(true);
  setIsApproved(true);
+ setIsExclusive(false);
  setPublishedAt(new Date().toISOString().slice(0, 16));
  setImageFile(null);
  setImageUrl("");
@@ -79,6 +82,7 @@ export function UpdatesManagement() {
  setCategory(update.category);
  setPublished(update.published);
  setIsApproved(update.isApproved !== false);
+ setIsExclusive(update.isExclusive === true);
  setPublishedAt(new Date(update.publishedAt || update.createdAt).toISOString().slice(0, 16));
  setImageFile(null);
  setImageUrl(update.imageUrl ||"");
@@ -115,6 +119,7 @@ export function UpdatesManagement() {
  formData.append("category", category);
  formData.append("published", String(published));
  formData.append("isApproved", String(isApproved));
+ formData.append("isExclusive", String(isExclusive));
  formData.append("publishedAt", new Date(publishedAt).toISOString());
  if (seoTitle) formData.append("seoTitle", seoTitle);
  if (seoDescription) formData.append("seoDescription", seoDescription);
@@ -148,9 +153,10 @@ export function UpdatesManagement() {
    const matchesSearch = u.title.toLowerCase().includes(search.toLowerCase()) ||
                          u.category.toLowerCase().includes(search.toLowerCase());
    if (!matchesSearch) return false;
-   if (activeTab === "published") return u.published && u.isApproved;
+   if (activeTab === "published") return u.published && u.isApproved && !u.isExclusive;
    if (activeTab === "pending") return !u.isApproved;
    if (activeTab === "drafts") return !u.published && u.isApproved;
+   if (activeTab === "app-only") return u.isExclusive === true;
    return true;
  });
 
@@ -167,7 +173,7 @@ export function UpdatesManagement() {
  {/* Header & Search */}
  <div className="flex flex-col gap-6">
    <div className="flex flex-wrap items-center gap-2">
-     {["all", "published", "pending", "drafts"].map(tab => (
+     {["all", "published", "pending", "drafts", "app-only"].map(tab => (
        <button
          key={tab}
          onClick={() => setActiveTab(tab)}
@@ -178,7 +184,7 @@ export function UpdatesManagement() {
              : "bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
          )}
        >
-         {tab === "pending" ? "Pending Approval" : tab}
+         {tab === "pending" ? "Pending Approval" : tab === "app-only" ? "App Only" : tab}
        </button>
      ))}
    </div>
@@ -200,6 +206,16 @@ export function UpdatesManagement() {
  <Plus className="h-4 w-4" />
  New Update
  </button>
+ <button
+ onClick={() => {
+   handleEdit("new");
+   setIsExclusive(true);
+ }}
+ className="flex items-center justify-center gap-2 rounded-2xl border border-orange-200 bg-orange-50 px-6 py-3 text-xs font-black uppercase tracking-widest text-orange-700 transition-all hover:bg-orange-100 dark:border-orange-900/30 dark:bg-orange-950/20 dark:text-orange-300 dark:hover:bg-orange-900/30"
+ >
+ <Plus className="h-4 w-4" />
+ New App Only Blog
+ </button>
  </div>
  </div>
 
@@ -218,6 +234,11 @@ export function UpdatesManagement() {
  )}>
  {!update.isApproved ? "Pending Approval" : update.published ? "Published" : "Draft"}
  </span>
+ {update.isExclusive && (
+   <span className="rounded-full bg-amber-500 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-md shadow-amber-500/20">
+     App Only
+   </span>
+ )}
  <div className="flex gap-2">
  <button 
  onClick={() => handleEdit(update)}
@@ -246,7 +267,7 @@ export function UpdatesManagement() {
 
  <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
  <a 
- href={`/blogs/${update.id}`} 
+ href={`/blogs/${update.id}${update.isExclusive ? "?audience=app" : ""}`} 
  target="_blank" 
  rel="noopener noreferrer"
  className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white flex items-center gap-1"
@@ -263,9 +284,11 @@ export function UpdatesManagement() {
  <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
  <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-200 flex flex-col">
  {/* Modal Header */}
- <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 p-8">
+<div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 p-8">
  <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
- {editingId ==="new" ?"Create New Update" :"Edit Update"}
+ {editingId ==="new"
+   ? (isExclusive ? "Create App Only Blog" : "Create New Update")
+   : (isExclusive ? "Edit App Only Blog" : "Edit Update")}
  </h3>
  <button 
  onClick={() => setEditingId(null)}
@@ -340,6 +363,23 @@ export function UpdatesManagement() {
  {isApproved ?"Approved" :"Pending"}
  </button>
  </div>
+</div>
+
+ <div className="space-y-2">
+ <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Audience</label>
+ <button
+ type="button"
+ onClick={() => setIsExclusive(!isExclusive)}
+ className={cn(
+ "flex w-full items-center justify-center gap-2 rounded-2xl border py-4 text-sm font-black uppercase tracking-widest transition-all",
+ isExclusive
+ ? "border-amber-200 dark:border-amber-900/30 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400"
+ : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400"
+ )}
+ >
+ {isExclusive ? <Lock className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+ {isExclusive ? "App Only" : "Public Web + App"}
+ </button>
  </div>
 
  {/* Published Date */}
