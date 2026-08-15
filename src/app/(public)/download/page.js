@@ -14,7 +14,8 @@ import {
 import { siteConfig } from "@/config/site";
 
 const apkVersion = process.env.NEXT_PUBLIC_APK_VERSION || "1.0.2+3";
-const apkVersionedUrl = `/downloads/dholera-${apkVersion}.apk`;
+const apkFileVersion = apkVersion.replace(/\+/g, "-");
+const apkVersionedUrl = `/downloads/dholera-${apkFileVersion}.apk`;
 
 export const metadata = {
   title: "Download Dholera App | APK Download",

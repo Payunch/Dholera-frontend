@@ -3,6 +3,7 @@ const apiBase =
   process.env.NEXT_PUBLIC_API_URL ||
   "https://api.dholeraplatform.com/api";
 const apkVersion = process.env.NEXT_PUBLIC_APK_VERSION || "1.0.2+3";
+const apkFileVersion = apkVersion.replace(/\+/g, "-");
 
 let apiHostname = "api.dholeraplatform.com";
 try {
@@ -15,9 +16,6 @@ try {
 const nextConfig = {
   turbopack: {
     root: __dirname,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   productionBrowserSourceMaps: false,
   async headers() {
@@ -61,7 +59,7 @@ const nextConfig = {
     return [
       {
         source: "/downloads/dholera.apk",
-        destination: `/downloads/dholera-${apkVersion}.apk`,
+        destination: `/downloads/dholera-${apkFileVersion}.apk`,
         permanent: false,
       },
       {
