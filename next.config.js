@@ -2,6 +2,7 @@ const apiBase =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
   "https://api.dholeraplatform.com/api";
+const apkVersion = process.env.NEXT_PUBLIC_APK_VERSION || "1.0.2+3";
 
 let apiHostname = "api.dholeraplatform.com";
 try {
@@ -58,6 +59,11 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      {
+        source: "/downloads/dholera.apk",
+        destination: `/downloads/dholera-${apkVersion}.apk`,
+        permanent: false,
+      },
       {
         source: "/updates",
         destination: "/blogs",

@@ -13,7 +13,8 @@ import {
 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 
-const apkUrl = process.env.NEXT_PUBLIC_APK_URL || "/downloads/dholera.apk";
+const apkVersion = process.env.NEXT_PUBLIC_APK_VERSION || "1.0.2+3";
+const apkVersionedUrl = `/downloads/dholera-${apkVersion}.apk`;
 
 export const metadata = {
   title: "Download Dholera App | APK Download",
@@ -78,9 +79,8 @@ export default function DownloadPage() {
 
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href={apkUrl}
-                    target="_blank"
-                    rel="noreferrer"
+                    href={apkVersionedUrl}
+                    download
                     className="inline-flex h-14 items-center justify-center gap-3 rounded-2xl bg-[#FF7A00] px-6 text-xs font-black uppercase tracking-[0.2em] text-white shadow-[0_18px_40px_rgba(255,122,0,0.28)] transition-all hover:-translate-y-0.5 hover:bg-orange-600"
                   >
                     <Download className="h-4 w-4" />
@@ -132,7 +132,7 @@ export default function DownloadPage() {
                   <div className="overflow-hidden rounded-[1.6rem] border border-white/10 bg-gradient-to-br from-[#111827] via-[#0f172a] to-[#1e293b] p-5">
                     <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">
                       <span>Dholera app</span>
-                      <span>v1.0.1+2</span>
+                      <span>v{apkVersion}</span>
                     </div>
 
                     <div className="mt-5 flex items-center gap-4 rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
@@ -162,9 +162,8 @@ export default function DownloadPage() {
                     </div>
 
                     <a
-                      href={apkUrl}
-                      target="_blank"
-                      rel="noreferrer"
+                      href={apkVersionedUrl}
+                      download
                       className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#FF7A00] px-5 text-xs font-black uppercase tracking-[0.2em] text-white transition-colors hover:bg-orange-600"
                     >
                       <Download className="h-4 w-4" />
@@ -262,7 +261,8 @@ export default function DownloadPage() {
                   File path
                 </p>
                 <p className="mt-2 text-sm font-semibold text-slate-700">
-                  The APK is served from <span className="font-black">/downloads/dholera.apk</span>
+                  The APK is served from{" "}
+                  <span className="font-black">/downloads/dholera-{apkVersion}.apk</span>
                 </p>
               </div>
               <Link
