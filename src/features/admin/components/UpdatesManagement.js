@@ -158,10 +158,11 @@ export function UpdatesManagement() {
  }
  };
 
- const handleSubmit = async (e) => {
- e.preventDefault();
+ const handleSubmit = async (e, { saveAsDraft = false } = {}) => {
+ e?.preventDefault();
  if (isSubmitting) return;
- if (published && seoReview.score < 90) {
+ const publishNow = saveAsDraft ? false : published;
+ if (publishNow && seoReview.score < 90) {
    alert(`This post is ${seoReview.score}/100. Publishing is locked until its SEO score reaches 90.`);
    return;
  }
@@ -172,7 +173,7 @@ export function UpdatesManagement() {
  formData.append("title", title);
  formData.append("content", content);
  formData.append("category", category);
- formData.append("published", String(published));
+ formData.append("published", String(publishNow));
  formData.append("isApproved", String(isApproved));
  formData.append("isExclusive", String(isExclusive));
  formData.append("publishedAt", new Date(publishedAt).toISOString());
@@ -602,21 +603,29 @@ export function UpdatesManagement() {
  Cancel
  </button>
  <button
- onClick={handleSubmit}
- disabled={isSubmitting || (published && seoReview.score < 90)}
- className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:opacity-60"
+ type="button"
+ onClick={() => handleSubmit(null, { saveAsDraft: true })}
+ disabled={isSubmitting}
+ className="flex items-center justify-center gap-3 rounded-2xl border border-slate-300 bg-white px-7 py-4 text-xs font-black uppercase tracking-widest text-slate-700 shadow-sm transition-all hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 disabled:opacity-60"
  >
  {isSubmitting ? (
  <>
  <Loader2 className="h-4 w-4 animate-spin" />
- Synchronizing...
+ Saving...
  </>
  ) : (
  <>
  <Check className="h-4 w-4" />
- {published && seoReview.score < 90 ? `SEO score ${seoReview.score}/100` : "Save Update"}
+ Save Draft
  </>
  )}
+ </button>
+ <button
+ type="submit"
+ disabled={isSubmitting || !published || seoReview.score < 90}
+ className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+ >
+ {isSubmitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</> : <><Check className="h-4 w-4" />{seoReview.score < 90 ? `Publish locked: ${seoReview.score}/100` : "Publish update"}</>}
  </button>
  </div>
  </div>
