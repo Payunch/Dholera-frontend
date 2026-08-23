@@ -339,10 +339,10 @@ export function UpdatesManagement() {
 
  {/* Edit/New Modal Overlay */}
  {editingId !== null && (
- <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
- <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-2xl border border-slate-100 dark:border-slate-800 animate-in zoom-in-95 duration-200 flex flex-col">
+ <div className="fixed inset-0 z-[300] flex bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+ <div className="relative flex h-dvh w-screen flex-col overflow-hidden bg-white shadow-2xl dark:bg-slate-900">
  {/* Modal Header */}
-<div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 p-8">
+<div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 px-6 py-5 lg:px-10">
  <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
  {editingId ==="new"
    ? (isExclusive ? "Create App Only Blog" : "Create New Update")
@@ -357,7 +357,7 @@ export function UpdatesManagement() {
  </div>
 
  {/* Modal Content - Scrollable */}
- <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-8 space-y-8">
+ <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-6 space-y-8 lg:px-10">
  <section className="rounded-3xl border border-indigo-200 bg-gradient-to-r from-indigo-50 via-white to-orange-50 p-5 dark:border-indigo-900/40 dark:from-indigo-950/30 dark:via-slate-900 dark:to-orange-950/20">
    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
      <div><div className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-indigo-700 dark:text-indigo-300"><Sparkles className="h-4 w-4" />AI SEO Assistant</div><p className="mt-1 text-sm font-medium text-slate-600 dark:text-slate-300">Review this complete draft with your server-side Gemini key. It suggests improvements; you choose what to apply.</p></div>
@@ -369,7 +369,7 @@ export function UpdatesManagement() {
      {aiReview.faqQuestions?.length > 0 && <div className="mt-4"><p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Suggested FAQ questions</p><p className="mt-1 text-sm text-slate-700 dark:text-slate-200">{aiReview.faqQuestions.join(" · ")}</p></div>}
    </div>}
  </section>
- <div className="grid gap-8 lg:grid-cols-2">
+ <div className="grid gap-8 xl:grid-cols-[minmax(360px,0.85fr)_minmax(600px,1.5fr)]">
  <div className="space-y-6">
  {/* Title */}
  <div className="space-y-2">
@@ -511,12 +511,12 @@ export function UpdatesManagement() {
  className="flex-1 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-xs font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 text-slate-900 dark:text-white"
  />
  </div>
+ </div>
+ )}
  <div className="grid gap-4 md:grid-cols-2">
    <div className="space-y-2"><label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Image ALT Text</label><input value={imageAltText} onChange={(e) => setImageAltText(e.target.value)} placeholder="Describe the image with the focus keyword" className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white" /></div>
    <div className="space-y-2"><label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Image Title</label><input value={imageTitle} onChange={(e) => setImageTitle(e.target.value)} placeholder="Descriptive image title" className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white" /></div>
  </div>
- </div>
- )}
  </div>
  </div>
 
@@ -533,7 +533,7 @@ export function UpdatesManagement() {
  </div>
 
  {/* SEO & Meta Details (WordPress Style) */}
- <div className="border-t border-slate-100 dark:border-slate-800 pt-8 mt-8 space-y-6">
+ <div className="border-t border-slate-100 dark:border-slate-800 pt-8 mt-8 space-y-6 xl:col-span-2">
  <h4 className="text-sm font-black uppercase tracking-widest text-slate-900 dark:text-white flex items-center gap-2">
  <Search className="h-4 w-4 text-orange-600" />
  SEO Details & Tags
@@ -593,7 +593,7 @@ export function UpdatesManagement() {
  </form>
 
  {/* Modal Footer */}
- <div className="flex items-center justify-end gap-4 border-t border-slate-100 dark:border-slate-800 p-8 bg-slate-50/50 dark:bg-slate-900/50">
+ <div className="flex items-center justify-end gap-4 border-t border-slate-100 dark:border-slate-800 px-6 py-5 lg:px-10 bg-slate-50/50 dark:bg-slate-900/50">
  <button
  type="button"
  onClick={() => setEditingId(null)}
