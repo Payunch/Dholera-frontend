@@ -14,6 +14,8 @@ import {
  ExternalLink,
  ImageIcon
 } from"lucide-react";
+import { SeoReadinessPanel } from "@/features/admin/components/SeoReadinessPanel";
+import { getSeoReview, makeSlug } from "@/features/admin/utils/seoScore";
 import { apiClient } from"@/lib/api";
 import { cn } from"@/lib/utils";
 import { format } from"date-fns";
@@ -40,6 +42,9 @@ export function UpdatesManagement() {
  const [seoTitle, setSeoTitle] = React.useState("");
  const [seoDescription, setSeoDescription] = React.useState("");
  const [seoKeywords, setSeoKeywords] = React.useState("");
+ const [slug, setSlug] = React.useState("");
+ const [imageAltText, setImageAltText] = React.useState("");
+ const [imageTitle, setImageTitle] = React.useState("");
  const [tags, setTags] = React.useState("");
  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -74,6 +79,9 @@ export function UpdatesManagement() {
  setSeoTitle("");
  setSeoDescription("");
  setSeoKeywords("");
+ setSlug("");
+ setImageAltText("");
+ setImageTitle("");
  setTags("");
  } else {
  setEditingId(update.id);
@@ -89,9 +97,17 @@ export function UpdatesManagement() {
  setSeoTitle(update.seoTitle || "");
  setSeoDescription(update.seoDescription || "");
  setSeoKeywords(update.seoKeywords || "");
+ setSlug(update.slug || makeSlug(update.title || ""));
+ setImageAltText(update.imageAltText || "");
+ setImageTitle(update.imageTitle || "");
  setTags(update.tags || "");
  }
  };
+
+ const seoReview = React.useMemo(() => getSeoReview({
+   title, content, focusKeyword: seoKeywords, seoTitle: seoTitle || title,
+   seoDescription, slug, imageUrl: imageFile || imageUrl, imageAltText, tags
+ }), [title, content, seoKeywords, seoTitle, seoDescription, slug, imageFile, imageUrl, imageAltText, tags]);
 
  const handleDelete = async (id) => {
  if (!confirm("Are you sure you want to delete this update? This action cannot be undone.")) return;
@@ -110,6 +126,10 @@ export function UpdatesManagement() {
  const handleSubmit = async (e) => {
  e.preventDefault();
  if (isSubmitting) return;
+ if (published && seoReview.score < 90) {
+   alert(`This post is ${seoReview.score}/100. Publishing is locked until its SEO score reaches 90.`);
+   return;
+ }
 
  setIsSubmitting(true);
  try {
@@ -124,6 +144,9 @@ export function UpdatesManagement() {
  if (seoTitle) formData.append("seoTitle", seoTitle);
  if (seoDescription) formData.append("seoDescription", seoDescription);
  if (seoKeywords) formData.append("seoKeywords", seoKeywords);
+ if (slug) formData.append("slug", slug);
+ if (imageAltText) formData.append("imageAltText", imageAltText);
+ if (imageTitle) formData.append("imageTitle", imageTitle);
  if (tags) formData.append("tags", tags);
  if (imageFile) {
  formData.append("image", imageFile);
@@ -310,6 +333,11 @@ export function UpdatesManagement() {
  type="text"
  value={title}
  onChange={(e) => setTitle(e.target.value)}
+ onBlur={() => {
+   if (!slug) setSlug(makeSlug(title));
+   if (!seoTitle) setSeoTitle(title);
+   if (!seoKeywords) setSeoKeywords(title.split(/\s+/).slice(0, 4).join(" "));
+ }}
  placeholder="Enter a compelling title..."
  className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 focus:ring-0 text-slate-900 dark:text-white"
  />
@@ -437,6 +465,10 @@ export function UpdatesManagement() {
  className="flex-1 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-xs font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-slate-950 text-slate-900 dark:text-white"
  />
  </div>
+ <div className="grid gap-4 md:grid-cols-2">
+   <div className="space-y-2"><label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Image ALT Text</label><input value={imageAltText} onChange={(e) => setImageAltText(e.target.value)} placeholder="Describe the image with the focus keyword" className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white" /></div>
+   <div className="space-y-2"><label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Image Title</label><input value={imageTitle} onChange={(e) => setImageTitle(e.target.value)} placeholder="Descriptive image title" className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white" /></div>
+ </div>
  </div>
  )}
  </div>
@@ -472,6 +504,11 @@ export function UpdatesManagement() {
  className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 text-slate-900 dark:text-white"
  />
  </div>
+
+ <div className="space-y-2">
+ <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">WordPress-ready URL Slug</label>
+ <input value={slug} onChange={(e) => setSlug(makeSlug(e.target.value))} placeholder="dholera-smart-city-investment" className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold text-slate-900 dark:text-white" />
+ </div>
  <div className="space-y-2">
  <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Tags (Comma Separated)</label>
  <input
@@ -482,6 +519,7 @@ export function UpdatesManagement() {
  className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 text-slate-900 dark:text-white"
  />
  </div>
+ <SeoReadinessPanel review={seoReview} />
  </div>
 
  <div className="space-y-2">
@@ -519,7 +557,7 @@ export function UpdatesManagement() {
  </button>
  <button
  onClick={handleSubmit}
- disabled={isSubmitting}
+ disabled={isSubmitting || (published && seoReview.score < 90)}
  className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:opacity-60"
  >
  {isSubmitting ? (
@@ -530,7 +568,7 @@ export function UpdatesManagement() {
  ) : (
  <>
  <Check className="h-4 w-4" />
- Save Update
+ {published && seoReview.score < 90 ? `SEO score ${seoReview.score}/100` : "Save Update"}
  </>
  )}
  </button>
