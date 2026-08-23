@@ -12,7 +12,9 @@ import {
  Lock,
  Search,
  ExternalLink,
- ImageIcon
+ ImageIcon,
+ Sparkles,
+ WandSparkles
 } from"lucide-react";
 import { SeoReadinessPanel } from "@/features/admin/components/SeoReadinessPanel";
 import { getSeoReview, makeSlug } from "@/features/admin/utils/seoScore";
@@ -47,6 +49,8 @@ export function UpdatesManagement() {
  const [imageTitle, setImageTitle] = React.useState("");
  const [tags, setTags] = React.useState("");
  const [isSubmitting, setIsSubmitting] = React.useState(false);
+ const [aiReview, setAiReview] = React.useState(null);
+ const [isReviewing, setIsReviewing] = React.useState(false);
 
  const loadUpdates = async () => {
  setLoading(true);
@@ -83,6 +87,7 @@ export function UpdatesManagement() {
  setImageAltText("");
  setImageTitle("");
  setTags("");
+ setAiReview(null);
  } else {
  setEditingId(update.id);
  setTitle(update.title);
@@ -101,6 +106,7 @@ export function UpdatesManagement() {
  setImageAltText(update.imageAltText || "");
  setImageTitle(update.imageTitle || "");
  setTags(update.tags || "");
+ setAiReview(null);
  }
  };
 
@@ -108,6 +114,35 @@ export function UpdatesManagement() {
    title, content, focusKeyword: seoKeywords, seoTitle: seoTitle || title,
    seoDescription, slug, imageUrl: imageFile || imageUrl, imageAltText, tags
  }), [title, content, seoKeywords, seoTitle, seoDescription, slug, imageFile, imageUrl, imageAltText, tags]);
+
+ const runAiReview = async () => {
+   if (!title.trim() || !content.trim()) {
+     alert("Add an article title and content first, then ask AI to review it.");
+     return;
+   }
+   setIsReviewing(true);
+   try {
+     const csrf = await fetchCsrfToken();
+     const response = await apiClient.post("/updates/seo-review", {
+       title, content, category, focusKeyword: seoKeywords, seoTitle: seoTitle || title,
+       seoDescription, slug, imageAltText, tags
+     }, { headers: { "X-CSRF-Token": csrf || "" } });
+     setAiReview(response.data);
+   } catch (error) {
+     alert(error.response?.data?.error || "AI review could not be completed. Please try again.");
+   } finally { setIsReviewing(false); }
+ };
+
+ const applyAiBasics = () => {
+   if (!aiReview) return;
+   if (aiReview.primaryKeyword) setSeoKeywords(aiReview.primaryKeyword);
+   if (aiReview.seoTitle) setSeoTitle(aiReview.seoTitle);
+   if (aiReview.metaDescription) setSeoDescription(aiReview.metaDescription);
+   if (aiReview.slug) setSlug(aiReview.slug);
+   if (aiReview.imageAltText) setImageAltText(aiReview.imageAltText);
+   if (aiReview.imageTitle) setImageTitle(aiReview.imageTitle);
+   if (aiReview.tags?.length) setTags(aiReview.tags.join(", "));
+ };
 
  const handleDelete = async (id) => {
  if (!confirm("Are you sure you want to delete this update? This action cannot be undone.")) return;
@@ -323,6 +358,17 @@ export function UpdatesManagement() {
 
  {/* Modal Content - Scrollable */}
  <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-8 space-y-8">
+ <section className="rounded-3xl border border-indigo-200 bg-gradient-to-r from-indigo-50 via-white to-orange-50 p-5 dark:border-indigo-900/40 dark:from-indigo-950/30 dark:via-slate-900 dark:to-orange-950/20">
+   <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+     <div><div className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-indigo-700 dark:text-indigo-300"><Sparkles className="h-4 w-4" />AI SEO Assistant</div><p className="mt-1 text-sm font-medium text-slate-600 dark:text-slate-300">Review this complete draft with your server-side Gemini key. It suggests improvements; you choose what to apply.</p></div>
+     <button type="button" onClick={runAiReview} disabled={isReviewing} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-indigo-700 px-5 py-3 text-xs font-black uppercase tracking-widest text-white transition hover:bg-indigo-800 disabled:opacity-60"><WandSparkles className="h-4 w-4" />{isReviewing ? "Reviewing…" : "Review with AI"}</button>
+   </div>
+   {aiReview && <div className="mt-5 rounded-2xl bg-white/90 p-4 shadow-sm dark:bg-slate-950/60">
+     <div className="flex flex-wrap items-center justify-between gap-3"><p className="text-sm font-black text-slate-900 dark:text-white">AI estimate: {aiReview.estimatedScore}/100</p><button type="button" onClick={applyAiBasics} className="rounded-xl border border-indigo-200 px-3 py-2 text-[11px] font-black uppercase tracking-wider text-indigo-700 hover:bg-indigo-50 dark:border-indigo-800 dark:text-indigo-300"><WandSparkles className="mr-1 inline h-3.5 w-3.5" />Apply SEO basics</button></div>
+     <div className="mt-3 grid gap-4 md:grid-cols-2"><div><p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Fix before publishing</p><ul className="mt-2 space-y-1 text-sm text-slate-700 dark:text-slate-200">{aiReview.missingItems?.map((item) => <li key={item}>• {item}</li>)}</ul></div><div><p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Suggestions</p><ul className="mt-2 space-y-1 text-sm text-slate-700 dark:text-slate-200">{aiReview.improvements?.map((item) => <li key={item}>• {item}</li>)}</ul></div></div>
+     {aiReview.faqQuestions?.length > 0 && <div className="mt-4"><p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Suggested FAQ questions</p><p className="mt-1 text-sm text-slate-700 dark:text-slate-200">{aiReview.faqQuestions.join(" · ")}</p></div>}
+   </div>}
+ </section>
  <div className="grid gap-8 lg:grid-cols-2">
  <div className="space-y-6">
  {/* Title */}
