@@ -2,6 +2,8 @@ import { Metadata } from"next";
 import { siteConfig } from"@/config/site";
 import { HomeClient } from"./HomeClient";
 import { Translate } from"@/components/i18n/Translate";
+import { getUpdates } from "@/features/updates/api";
+import { cookies } from "next/headers";
 
 export const metadata = {
  title:"Independent Dholera Platform | Infrastructure Intelligence & Planning Maps",
@@ -26,7 +28,18 @@ export const metadata = {
  }
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const cookieStore = await cookies();
+  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
+  
+  let recentUpdates = [];
+  try {
+    const allUpdates = await getUpdates(undefined, lang);
+    recentUpdates = allUpdates.slice(0, 6); // fetch up to 6 for the homepage
+  } catch (err) {
+    console.error("Failed to fetch recent updates for homepage:", err);
+  }
+
  return (
  <div className="flex flex-col space-y-20 pb-20">
  {/* 
@@ -34,7 +47,7 @@ export default function HomePage() {
  the active tab state and scroll interaction, 
  but we pass critical SEO text as props if needed.
  */}
- <HomeClient />
+ <HomeClient recentUpdates={recentUpdates} />
 
  {/* 
  Hidden or visually subtle semantic content for SEO domination.

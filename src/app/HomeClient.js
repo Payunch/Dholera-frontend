@@ -23,8 +23,9 @@ import { projects } from "@/data/projects";
 import { useLanguage } from "@/providers/LanguageProvider";
 import { useLead } from "@/providers/LeadProvider";
 import { apiClient } from "@/lib/api";
+import { HomeBlogsList } from "@/components/home/HomeBlogsList";
 
-export function HomeClient() {
+export function HomeClient({ recentUpdates }) {
   const { t } = useLanguage();
   const { verifiedLead } = useLead();
   const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -402,6 +403,9 @@ export function HomeClient() {
 
         </div>
       </section>
+
+      {/* Latest Blogs Section */}
+      <HomeBlogsList updates={recentUpdates} />
 
       {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
       <section id="site-visit" className="bg-white dark:bg-slate-950 py-32 relative overflow-hidden transition-colors">

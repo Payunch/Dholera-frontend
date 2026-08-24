@@ -41,6 +41,7 @@ export function SidebarDrawer({ isOpen, onClose }) {
 
   const navItems = [
     { label: t("nav_home"), href: "/", icon: Home },
+    { label: "Blogs", href: "/blogs", icon: Sparkles },
     { label: t("nav_tp_maps"), href: "/tp-maps", icon: Map },
     { label: t("nav_pdf"), href: "/pdf?trigger=true", icon: FileText },
     { label: "Our App", href: "/download", icon: Smartphone },
@@ -48,7 +49,6 @@ export function SidebarDrawer({ isOpen, onClose }) {
     { label: t("nav_projects"), href: "/projects", icon: Grid },
     { label: t("nav_airport"), href: "/airport", icon: Plane },
     { label: t("nav_infrastructure"), href: "/infrastructure", icon: Construction },
-    { label: t("nav_updates"), href: "/blogs", icon: Sparkles },
     { label: "Clearance Engine", href: "/clearance-engine", icon: Calculator },
     { label: t("nav_about"), href: "/about-us", icon: Users },
     { label: t("nav_contact"), href: "/contact", icon: PhoneCall },
