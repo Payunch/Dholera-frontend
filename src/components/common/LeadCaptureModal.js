@@ -16,7 +16,8 @@ export default function LeadCaptureModal() {
  const [hasDismissed, setHasDismissed] = useState(false);
 
  useEffect(() => {
- // Only show if not verified, not loading, and hasn't been dismissed in this session
+ // Disabled automatic popup to reduce friction for SEO and ads
+ /*
  if (!verifiedLead && !leadLoading && !hasDismissed) {
  const timer = setTimeout(() => {
  setIsOpen(true);
@@ -24,6 +25,15 @@ export default function LeadCaptureModal() {
 
  return () => clearTimeout(timer);
  }
+ */
+
+ // Allow opening modal via explicit CTA triggers
+ const handleOpenModal = () => setIsOpen(true);
+ window.addEventListener('openLeadModal', handleOpenModal);
+ 
+ return () => {
+ window.removeEventListener('openLeadModal', handleOpenModal);
+ };
  }, [verifiedLead, leadLoading, hasDismissed]);
 
  const handlePhoneChange = (e) => {

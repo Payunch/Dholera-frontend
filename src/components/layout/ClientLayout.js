@@ -1,9 +1,22 @@
-﻿"use client";
+"use client";
 
 import { useEffect } from"react";
 import * as React from "react";
 import { usePathname, useSearchParams } from"next/navigation";
 import { Navbar } from"@/components/layout/Navbar";
+
+function UtmTracker() {
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const utm = searchParams?.get("utm_source");
+      if (utm) {
+        sessionStorage.setItem("dholera_utm_source", utm);
+      }
+    }
+  }, [searchParams]);
+  return null;
+}
 import { Footer } from"@/components/layout/Footer";
 import { ClientProviders } from"@/providers/ClientProviders";
 import { VisitorTracker } from"@/components/common/VisitorTracker";
@@ -17,7 +30,6 @@ export default function ClientLayout({
  children,
 }) {
  const pathname = usePathname();
- const searchParams = useSearchParams();
 
  // Robust admin check-based + Cookie-based
  const isadminPath = pathname?.startsWith('/admin');
@@ -25,23 +37,16 @@ export default function ClientLayout({
  const isActuallyadmin = isadminPath || hasadminCookie;
 
  useEffect(() => {
- if (typeof window !== "undefined") {
-   const utm = searchParams?.get("utm_source");
-   if (utm) {
-     sessionStorage.setItem("dholera_utm_source", utm);
-   }
- }
+  import("bootstrap/dist/js/bootstrap.bundle.min.js");
 
- import("bootstrap/dist/js/bootstrap.bundle.min.js");
-
- if (typeof window !=="undefined" &&"serviceWorker" in navigator) {
- navigator.serviceWorker.getRegistrations().then((registrations) => {
- for (const registration of registrations) {
- registration.unregister();
- }
- });
- }
- }, [searchParams]);
+  if (typeof window !=="undefined" &&"serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+  for (const registration of registrations) {
+  registration.unregister();
+  }
+  });
+  }
+  }, []);
 
  // Return clean layout for admin
  if (isActuallyadmin) {
@@ -68,6 +73,9 @@ export default function ClientLayout({
  </div>
  <React.Suspense fallback={null}>
  <VisitorTracker />
+ </React.Suspense>
+ <React.Suspense fallback={null}>
+ <UtmTracker />
  </React.Suspense>
  <ConsentBanner />
  <LanguageGate />

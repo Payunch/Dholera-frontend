@@ -1,7 +1,8 @@
 "use client";
 
 import React, { Suspense } from 'react';
-import { PdfListing } from '@/components/pdf/PdfListing';
+import dynamic from 'next/dynamic';
+const PdfListing = dynamic(() => import('@/components/pdf/PdfListing').then(mod => mod.PdfListing), { ssr: false });
 
 export default function PdfPage() {
   return (

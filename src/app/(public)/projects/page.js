@@ -7,7 +7,8 @@ import { apiClient } from"@/lib/api";
 import { projects as staticProjects } from"@/data/projects";
 import { useLanguage } from"@/providers/LanguageProvider";
 import { ShieldCheck, MapPin, Search, Grid, Building, Landmark, ChevronRight, Loader2, X } from"lucide-react";
-import { StaticPdfViewer } from"@/components/pdf/StaticPdfViewer";
+import dynamic from "next/dynamic";
+const StaticPdfViewer = dynamic(() => import("@/components/pdf/StaticPdfViewer").then(mod => mod.StaticPdfViewer), { ssr: false });
 import { cn } from "@/lib/utils";
 
 

@@ -306,67 +306,6 @@ export function HomeClient() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-b border-slate-800 bg-slate-950 py-14 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,122,0,0.18),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.12),_transparent_30%)]" />
-        <div className="container relative z-10 mx-auto px-4 md:px-8">
-          <div className="mx-auto max-w-5xl rounded-[2.25rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.25)] backdrop-blur-xl md:p-8">
-            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-              <div>
-                <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.28em] text-orange-300">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Our App
-                </span>
-                <h2 className="mt-5 max-w-xl text-3xl font-black uppercase leading-tight md:text-5xl">
-                  Daily updates. Secure access. One download page.
-                </h2>
-                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300">
-                  A short app preview for logged-in users, private PDFs, notifications, and the latest Dholera APK.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {["Daily admin posts", "Locked content", "Notifications", "Protected PDFs"].map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-100"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-6">
-                  <Link
-                    href="/download"
-                    className="inline-flex h-12 items-center justify-center rounded-xl bg-[#FF7A00] px-5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-all hover:bg-orange-600"
-                  >
-                    Open Download Page
-                  </Link>
-                </div>
-              </div>
-
-              <div className="rounded-[2rem] border border-white/10 bg-slate-950/70 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
-                <div className="rounded-[1.6rem] border border-white/10 bg-gradient-to-br from-[#111827] via-[#0f172a] to-[#1e293b] p-5">
-                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">
-                    <span>Dholera app</span>
-                    <span>Latest build</span>
-                  </div>
-                  <div className="mt-5 flex items-center gap-4 rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FF7A00]/10 ring-1 ring-[#FF7A00]/20">
-                      <Image src="/images/hp.png" alt="App logo" width={38} height={38} />
-                    </div>
-                    <div>
-                      <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-300">
-                        Download ready
-                      </p>
-                      <p className="mt-1 text-sm font-semibold text-slate-100">
-                        Tap the download page for the APK and install steps.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 1.25 FEATURED PROJECTS SECTION */}
       <section className="py-24 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">

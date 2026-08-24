@@ -13,8 +13,8 @@ const LOCAL_TRANSLATIONS = { hi, en, gu };
 const LanguageContext = createContext(undefined);
 
 export const LanguageProvider = ({ children }) => {
- const [lang, setLangState] = useState('hi'); // Default to Hindi
- const [translations, setTranslations] = useState({});
+ const [lang, setLangState] = useState('en'); // Default to English for SSR
+ const [translations, setTranslations] = useState(LOCAL_TRANSLATIONS['en']);
  const [mounted, setMounted] = useState(false);
  const [themeMode, setThemeState] = useState('light');
 
@@ -95,7 +95,7 @@ export const LanguageProvider = ({ children }) => {
   useEffect(() => {
     const initLang = async () => {
       const savedLang = getCookie('preferred_lang');
-      const finalLang = (savedLang === 'en' || savedLang === 'hi' || savedLang === 'gu') ? savedLang : 'hi';
+      const finalLang = (savedLang === 'en' || savedLang === 'hi' || savedLang === 'gu') ? savedLang : 'en';
       setLangState(finalLang);
       await fetchTranslations(finalLang);
       setMounted(true);
@@ -104,16 +104,9 @@ export const LanguageProvider = ({ children }) => {
   }, [fetchTranslations]);
 
  const t = (key) => {
- return translations[key] || key;
+ return translations[key] || LOCAL_TRANSLATIONS['en'][key] || key;
  };
 
- if (!mounted) {
- return (
- <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
- <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
- </div>
- );
- }
 
  return (
  <LanguageContext.Provider value={{ lang, setLang, t, theme: themeMode, setTheme, toggleTheme }}>
