@@ -56,10 +56,7 @@ export default async function HomePage() {
  <section className="sr-only">
  <h2 className="text-3xl font-black uppercase text-slate-900 dark:text-white mb-8"><Translate id="about_dholera_platform" /></h2>
  <p>
- The Dholera Platform is the definitive source for intelligence on the Dholera Special Investment Region (DSIR). 
- We specialize in providing high-resolution planning maps, including Town Planning (TP) maps, Development Plan (DP) maps, 
- and public DSIRDA documentation. Our goal is to provide investors and professionals with verified growth evidence 
- for India&apos;s first operational smart city.
+  <Translate id="seo_desc_1" />
  </p>
  <ul className="list-disc pl-6 space-y-4 text-slate-600 dark:text-slate-400 font-medium">
  <li><Translate id="verified_maps" /></li>

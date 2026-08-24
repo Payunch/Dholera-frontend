@@ -39,7 +39,7 @@ export default function LandingPage() {
           </h1>
           
           <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10">
-            Skip the guesswork. Get verified Town Planning (TP) maps, exact plot pricing, and expert guidance for Dholera Special Investment Region.
+            Skip the guesswork. Get verified Town Planning (TP) maps, indicative plot pricing trends, and expert guidance for Dholera Special Investment Region.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -84,7 +84,7 @@ export default function LandingPage() {
                 <Building className="h-8 w-8" />
               </div>
               <h3 className="font-black uppercase mb-3">Smart Infrastructure</h3>
-              <p className="text-sm text-slate-600">Underground utilities, massive solar parks, and smart grid technology powering a green, zero-waste city.</p>
+              <p className="text-sm text-slate-600">Underground utilities, massive solar parks, and smart grid technology designed for sustainable waste management.</p>
             </div>
             
             <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 text-center">
@@ -92,7 +92,7 @@ export default function LandingPage() {
                 <CheckCircle2 className="h-8 w-8" />
               </div>
               <h3 className="font-black uppercase mb-3">Infrastructure Growth</h3>
-              <p className="text-sm text-slate-600">Early investor advantage in residential, commercial, and industrial zones approved by DSIRDA.</p>
+              <p className="text-sm text-slate-600">Emerging infrastructure zones in residential, commercial, and industrial sectors based on public DSIRDA master plans.</p>
             </div>
           </div>
         </div>

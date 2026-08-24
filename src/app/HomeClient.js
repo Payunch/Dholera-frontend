@@ -220,13 +220,13 @@ export function HomeClient({ recentUpdates }) {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Link
-                  href="/contact"
+                <button
+                  onClick={() => window.dispatchEvent(new Event("openLeadModal"))}
                   className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#F59E0B] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-[#d97706] hover:scale-105 shadow-heavy sm:w-auto active:scale-95"
                 >
                   {t('talk_to_owner')}
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                </button>
                 <Link
                   href="/projects"
                   className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#0A192F] dark:bg-white dark:text-[#0A192F] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:scale-105 shadow-heavy sm:w-auto active:scale-95"
