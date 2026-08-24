@@ -162,8 +162,8 @@ export function UpdatesManagement() {
  e?.preventDefault();
  if (isSubmitting) return;
  const publishNow = forcePublish ? true : (saveAsDraft ? false : published);
- if (publishNow && seoReview.score < 90) {
-   alert(`This post is ${seoReview.score}/100. Publishing is locked until its SEO score reaches 90.`);
+ if (publishNow && seoReview.score < 80) {
+   alert(`This post is ${seoReview.score}/100. Publishing is locked until its SEO score reaches 80.`);
    return;
  }
 
