@@ -199,7 +199,10 @@ export default async function UpdateDetailPage({ params, searchParams }) {
       </div>
     </div>
   ) : (
-    <ArticleBody content={update.content} />
+    <>
+      <ArticleBody content={update.content} />
+      <FaqSchema content={update.content} />
+    </>
   )}
 
  {/* Bottom Image */}
@@ -236,4 +239,38 @@ export default async function UpdateDetailPage({ params, searchParams }) {
  </div>
  </article>
  );
+}
+
+export function FaqSchema({ content }) {
+  if (!content) return null;
+  const regex = /<h3>Q:\s*(.*?)<\/h3>[\s\S]*?<p>A:\s*(.*?)<\/p>/g;
+  const faqs = [];
+  let match;
+  while ((match = regex.exec(content)) !== null) {
+    faqs.push({ question: match[1].trim(), answer: match[2].trim() });
+  }
+
+  if (faqs.length < 2) return null;
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question.replace(/<[^>]*>?/gm, ''),
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer.replace(/<[^>]*>?/gm, '')
+      }
+    }))
+  };
+
+  const jsonLdString = JSON.stringify(schema).replace(/</g, '\\u003c');
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: jsonLdString }}
+    />
+  );
 }
