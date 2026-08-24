@@ -2,7 +2,7 @@ const apiBase =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
   "https://api.dholeraplatform.com/api";
-const apkVersion = process.env.NEXT_PUBLIC_APK_VERSION || "1.0.2+4";
+const apkVersion = process.env.NEXT_PUBLIC_APK_VERSION || "1.0.2+5";
 const apkFileVersion = apkVersion.replace(/\+/g, "-");
 
 let apiHostname = "api.dholeraplatform.com";
