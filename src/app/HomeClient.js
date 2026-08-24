@@ -250,6 +250,9 @@ export function HomeClient({ recentUpdates }) {
         </div>
       </section>
 
+      {/* Latest Blogs Section */}
+      <HomeBlogsList updates={recentUpdates} />
+
       {/* 1.2 TRUST BANNER */}
       <section className="bg-white dark:bg-slate-950 py-16 border-b border-slate-100 dark:border-slate-800 overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8">
@@ -403,9 +406,6 @@ export function HomeClient({ recentUpdates }) {
 
         </div>
       </section>
-
-      {/* Latest Blogs Section */}
-      <HomeBlogsList updates={recentUpdates} />
 
       {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
       <section id="site-visit" className="bg-white dark:bg-slate-950 py-32 relative overflow-hidden transition-colors">

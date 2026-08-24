@@ -17,7 +17,7 @@ export function Navbar() {
 
   const navItems = [
     { label: t('nav_home'), href: "/", icon: Home },
-    { label: "Blogs", href: "/blogs", icon: Sparkles },
+    { label: t('nav_blogs'), href: "/blogs", icon: Sparkles },
     { label: t('nav_tp_maps'), href: "/tp-maps", icon: Map },
     { label: t('nav_pdf'), href: "/pdf?trigger=true", icon: FileText },
     { label: "Our App", href: "/download", icon: Smartphone },

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from"next/link";
-import { Globe, Radio, Camera, PlayCircle, Mail, Phone, User } from"lucide-react";
+import { Globe, Radio, Camera, PlayCircle, Mail, Phone, User, Smartphone } from"lucide-react";
 import { siteConfig } from"@/config/site";
 import { useLanguage } from"@/providers/LanguageProvider";
 
@@ -48,6 +48,12 @@ export function Footer() {
               </Link>
               <Link href={siteConfig.links.youtube} className="text-slate-400 hover:text-[#FF7A00] transition-colors">
                 <PlayCircle className="h-5 w-5" />
+              </Link>
+            </div>
+            <div className="pt-4">
+              <Link href="/download" className="inline-flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all">
+                <Smartphone className="h-4 w-4" />
+                {t('download_app') || 'Download App'}
               </Link>
             </div>
           </div>

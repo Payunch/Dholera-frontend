@@ -7,8 +7,10 @@ import { ArrowRight, TrendingUp, Lock } from 'lucide-react';
 import { SITE_BASE_URL } from '@/lib/api';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/providers/LanguageProvider';
 
 export function HomeBlogsList({ updates = [] }) {
+  const { t } = useLanguage();
   if (!updates || updates.length === 0) return null;
 
   return (
@@ -17,17 +19,17 @@ export function HomeBlogsList({ updates = [] }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="space-y-4">
             <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-slate-900 dark:text-white tracking-tight">
-              Latest <span className="text-orange-600">Blogs</span>
+              {t('latest')} <span className="text-orange-600">{t('blogs')}</span>
             </h2>
             <p className="text-sm font-bold text-slate-500 uppercase tracking-[0.2em]">
-              Intelligence feed from Dholera SIR
+              {t('intelligence_feed_desc')}
             </p>
           </div>
           <Link 
             href="/blogs"
             className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#FF7A00] hover:text-orange-600 transition-colors group"
           >
-            View all updates
+            {t('view_all_updates')}
             <ArrowRight className="h-4 w-4 transform group-hover:translate-x-2 transition-transform" />
           </Link>
         </div>
@@ -69,7 +71,7 @@ export function HomeBlogsList({ updates = [] }) {
                       </span>
                       {post.isExclusive && (
                         <span className="inline-flex items-center gap-1 text-[8px] font-black uppercase tracking-widest text-amber-500 px-2 py-1 bg-amber-500/10 rounded-lg border border-amber-500/20">
-                          <Lock className="h-2 w-2" /> Exclusive
+                          <Lock className="h-2 w-2" /> {t('exclusive') || 'Exclusive'}
                         </span>
                       )}
                     </div>
@@ -88,7 +90,7 @@ export function HomeBlogsList({ updates = [] }) {
                   </p>
 
                   <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[9px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-all duration-300">
-                    <span>Read Analysis</span>
+                    <span>{t('read_analysis') || 'Read Analysis'}</span>
                     <ArrowRight className="h-3 w-3 transform group-hover:translate-x-2 transition-transform" />
                   </div>
                 </div>
