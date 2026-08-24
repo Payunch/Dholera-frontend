@@ -241,7 +241,7 @@ export function UpdatesManagement() {
            activeTab === tab
              ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md"
              : "bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
-         )}
+          )}
        >
          {tab === "pending" ? "Pending Approval" : tab === "app-only" ? "App Only" : tab}
        </button>
@@ -623,15 +623,16 @@ export function UpdatesManagement() {
  <button
  type="button"
  onClick={() => handleSubmit(null, { publishNow: true })}
- disabled={isSubmitting || seoReview.score < 90}
+ disabled={isSubmitting || seoReview.score < 80}
  className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
  >
- {isSubmitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</> : <><Check className="h-4 w-4" />{seoReview.score < 90 ? `Publish locked: ${seoReview.score}/100` : "Publish update"}</>}
+ {isSubmitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</> : <><Check className="h-4 w-4" />{seoReview.score < 80 ? `Publish locked: ${seoReview.score}/100` : "Publish update"}</>}
  </button>
  </div>
  </div>
  </div>
  )}
+
  </div>
- );
+  );
 }
