@@ -1,7 +1,7 @@
 import Image from"next/image";
 import Link from"next/link";
 import { cookies } from "next/headers";
-import { redirect } from"next/navigation";
+import { redirect, permanentRedirect } from "next/navigation";
 import { ChevronLeft, Calendar, Share2, Clock, Lock, Smartphone } from "lucide-react";
 import { format } from"date-fns";
 import { getUpdateById } from"@/features/updates/api";
@@ -21,13 +21,17 @@ export async function generateMetadata(
  { params, searchParams },
  parent
 ) {
- const { id } = await params;
+ const { slug } = await params;
+ const idMatch = slug.match(/^(\d+)/);
+ const id = idMatch ? idMatch[1] : slug;
  const audience = searchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||'en';
  
  const update = await getUpdateById(id, lang, audience);
  if (!update) return {};
+
+ const expectedSlug = update.title ? `${id}-${update.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}` : id.toString();
 
  const previousImages = (await parent).openGraph?.images || [];
   const imgSrc = update.imageUrl 
@@ -41,7 +45,7 @@ export async function generateMetadata(
  return {
  title: update.seoTitle || update.title,
  description: update.seoDescription || update.content.slice(0, 160).replace(/\n/g,""),
- alternates: { canonical: `/blogs/${id}` },
+ alternates: { canonical: `/blogs/${expectedSlug}` },
  authors: [{ name: update.author || "Naresh Gohel", url: "/author/naresh-gohel" }],
  keywords: update.seoKeywords || "Dholera, Real Estate, Investment",
  openGraph: {
@@ -70,7 +74,9 @@ const CATEGORY_COLORS = {
 };
 
 export default async function UpdateDetailPage({ params, searchParams }) {
- const { id } = await params;
+ const { slug } = await params;
+ const idMatch = slug.match(/^(\d+)/);
+ const id = idMatch ? idMatch[1] : slug;
  const audience = searchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||'en';
@@ -79,6 +85,11 @@ export default async function UpdateDetailPage({ params, searchParams }) {
 
  if (!update) {
    redirect('/blogs');
+ }
+
+ const expectedSlug = update.title ? `${id}-${update.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}` : id.toString();
+ if (slug !== expectedSlug) {
+   permanentRedirect(`/blogs/${expectedSlug}${audience === 'app' ? '?audience=app' : ''}`);
  }
 
   const imgSrc = update.imageUrl 
@@ -97,7 +108,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
    headline: update.title,
    datePublished: publishedAt,
    dateModified: update.updatedAt || publishedAt,
-   mainEntityOfPage: `${siteConfig.url}/blogs/${update.id}`,
+   mainEntityOfPage: `${siteConfig.url}/blogs/${expectedSlug}`,
    author: { "@type": "Person", name: update.author || "Naresh Gohel", url: `${siteConfig.url}/author/naresh-gohel` },
    publisher: { "@type": "Organization", name: "Dholera Platform", url: siteConfig.url },
    ...(imgSrc ? { image: [imgSrc] } : {}),
@@ -105,7 +116,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
 
  return (
  <article className="bg-white dark:bg-slate-900 pt-24 pb-32">
- <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Blogs", path: "/blogs" }, { name: update.title, path: `/blogs/${update.id}` }]} />
+ <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Blogs", path: "/blogs" }, { name: update.title, path: `/blogs/${expectedSlug}` }]} />
  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
  <BlogPopupTrigger blogTitle={update.title} />
  <div className="container mx-auto px-4 md:px-8">
@@ -162,7 +173,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
               <ShareButton 
                 title={update.title} 
                 text={`Read this article on Dholera Platform: ${update.title}`} 
-                url={`${siteConfig.url}/blogs/${update.id}${update.isExclusive ? "?audience=app" : ""}`}
+                url={`${siteConfig.url}/blogs/${expectedSlug}${update.isExclusive ? "?audience=app" : ""}`}
               />
  </div>
  </header>

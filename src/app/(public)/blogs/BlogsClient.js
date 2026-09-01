@@ -9,7 +9,11 @@ import { format } from "date-fns";
 import { useLanguage } from '@/providers/LanguageProvider';
 import { cn } from "@/lib/utils";
 
-
+export function generateSlug(id, title) {
+  if (!title) return id.toString();
+  const slugifiedTitle = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  return `${id}-${slugifiedTitle}`;
+}
 
 export default function BlogsClient({ initialUpdates, hasError }) {
   const { t } = useLanguage();
@@ -151,7 +155,7 @@ export default function BlogsClient({ initialUpdates, hasError }) {
                 return (
                   <Link 
                     key={post.id} 
-                    href={`/blogs/${post.id}`}
+                    href={`/blogs/${generateSlug(post.id, post.title)}`}
                     className="group flex flex-col bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl dark:hover:shadow-black/100 hover:border-[#FF7A00] hover:-translate-y-2 overflow-hidden"
                   >
                     {imgSrc && (
