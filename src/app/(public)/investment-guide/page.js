@@ -6,6 +6,7 @@ import Link from"next/link";
 export const metadata = {
  title:"Dholera Investment Guide | Strategic Land Acquisition Strategies",
  description:"Comprehensive guide for investing in Dholera SIR. Real estate ROI, industrial allotment policies, and legal compliance for NRI and domestic investors.",
+ alternates: { canonical: "/investment-guide" },
 };
 
 export default function InvestmentGuidePage() {
