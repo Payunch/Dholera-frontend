@@ -134,16 +134,18 @@ export function UpdatesManagement() {
    } finally { setIsReviewing(false); }
  };
 
- const applyAiBasics = () => {
-   if (!aiReview) return;
-   if (aiReview.primaryKeyword) setSeoKeywords(aiReview.primaryKeyword);
-   if (aiReview.seoTitle) setSeoTitle(aiReview.seoTitle);
-   if (aiReview.metaDescription) setSeoDescription(aiReview.metaDescription);
-   if (aiReview.slug) setSlug(aiReview.slug);
-   if (aiReview.imageAltText) setImageAltText(aiReview.imageAltText);
-   if (aiReview.imageTitle) setImageTitle(aiReview.imageTitle);
-   if (aiReview.tags?.length) setTags(aiReview.tags.join(", "));
- };
+  const applyAiBasics = (e) => {
+    if (e) e.preventDefault();
+    if (!aiReview) return;
+    if (aiReview.primaryKeyword) setSeoKeywords(aiReview.primaryKeyword);
+    if (aiReview.seoTitle) setSeoTitle(aiReview.seoTitle);
+    if (aiReview.metaDescription) setSeoDescription(aiReview.metaDescription);
+    if (aiReview.slug) setSlug(aiReview.slug);
+    if (aiReview.imageAltText) setImageAltText(aiReview.imageAltText);
+    if (aiReview.imageTitle) setImageTitle(aiReview.imageTitle);
+    if (aiReview.tags?.length) setTags(aiReview.tags.join(", "));
+    alert("✅ SEO basics have been successfully applied! Scroll down to the 'SEO Details & Tags' section to review them.");
+  };
 
  const handleDelete = async (id) => {
  if (!confirm("Are you sure you want to delete this update? This action cannot be undone.")) return;
