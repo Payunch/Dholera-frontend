@@ -71,6 +71,23 @@ export default function InfrastructurePage() {
  </div>
  </section>
 
+ <section className="border-b border-slate-200 bg-slate-50 py-20 dark:border-slate-800 dark:bg-slate-950">
+ <div className="mx-auto max-w-5xl px-4 md:px-8">
+ <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">Connectivity guide</p>
+ <h2 className="mt-3 text-3xl font-black text-slate-950 dark:text-white md:text-5xl">Ahmedabad to Dholera distance and expressway context</h2>
+ <div className="mt-6 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-300">
+ <p>The Ahmedabad–Dholera Greenfield Expressway corridor extends approximately <strong className="text-slate-950 dark:text-white">109.019 km</strong>. It connects the Ahmedabad region with Dholera SIR and provides connectivity toward Dholera International Airport.</p>
+ <p>The corridor length is not an exact door-to-door distance for every journey. Actual road distance and travel time vary according to the starting point in Ahmedabad, destination within Dholera, route access, traffic, and current operating conditions.</p>
+ <p className="text-sm">Source checked 1 September 2026: Ministry of Road Transport and Highways information published through the Press Information Bureau.</p>
+ </div>
+ <div className="mt-8 flex flex-wrap gap-4">
+ <a href="https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2233516&lang=2&reg=48" target="_blank" rel="noopener noreferrer" className="rounded-full bg-orange-600 px-6 py-3 text-sm font-black text-white">Read the government corridor update</a>
+ <Link href="/airport" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">Dholera Airport guide</Link>
+ <Link href="/smart-city" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">Dholera SIR facts</Link>
+ </div>
+ </div>
+ </section>
+
  {/* Grid Content - REFACTORED FOR RESPONSIVENESS */}
  <section className="py-24 bg-white dark:bg-[#0B132B] dark:bg-slate-900">
  <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
@@ -111,11 +128,11 @@ export default function InfrastructurePage() {
  </p>
  <div className="flex flex-wrap gap-4">
  <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl dark:bg-slate-900">
- <p className="text-3xl font-black text-orange-500">₹3000cr+</p>
+ <p className="text-3xl font-black text-orange-500">₹3,000 cr+</p>
  <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-300 tracking-widest">{t('trunk_infra_spent')}</p>
  </div>
  <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl dark:bg-slate-900">
- <p className="text-3xl font-black text-orange-500">22.5km²</p>
+ <p className="text-3xl font-black text-orange-500">22.5 km²</p>
  <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-300 tracking-widest">{t('activation_area_val')}</p>
  </div>
  </div>

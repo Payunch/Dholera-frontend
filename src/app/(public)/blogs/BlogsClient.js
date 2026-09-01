@@ -63,6 +63,23 @@ export default function BlogsClient({ initialUpdates, hasError }) {
         </div>
       </section>
 
+      <section className="border-b border-slate-200 bg-slate-50 py-12 dark:border-slate-800 dark:bg-slate-950">
+        <div className="mx-auto max-w-5xl px-4 md:px-8">
+          <h2 className="text-3xl font-black text-slate-950 dark:text-white">Dholera news, infrastructure updates and planning analysis</h2>
+          <p className="mt-4 max-w-4xl text-base leading-8 text-slate-600 dark:text-slate-300">
+            Follow dated coverage of Dholera SIR infrastructure, industrial announcements, planning, policy and property due diligence. Time-sensitive claims should be checked against the linked primary source and the article&apos;s publication or update date.
+          </p>
+          <nav aria-label="Dholera topic guides" className="mt-7 flex flex-wrap gap-3">
+            <Link href="/tp-maps" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">TP maps</Link>
+            <Link href="/smart-city" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Dholera SIR facts</Link>
+            <Link href="/infrastructure" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Infrastructure</Link>
+            <Link href="/airport" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Airport</Link>
+            <Link href="/investment-guide" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Due diligence</Link>
+            <Link href="/editorial-policy" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Editorial standards</Link>
+          </nav>
+        </div>
+      </section>
+
       {/* Filter & Tabs Bar */}
       <section className="sticky top-20 z-[140] bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800 py-6">
         <div className="container mx-auto px-4 md:px-8 max-w-[1600px] flex flex-col md:flex-row items-center justify-between gap-6">
