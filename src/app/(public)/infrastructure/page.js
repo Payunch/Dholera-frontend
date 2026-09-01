@@ -62,7 +62,7 @@ export default function InfrastructurePage() {
  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-400 bg-orange-600/20 px-4 py-1.5 rounded-full border border-orange-500/30">
  {t('exclusive_offer')}
  </span>
- <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.85]">
+ <h1 className="min-w-0 break-words text-3xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-tight sm:leading-[0.85] [overflow-wrap:anywhere]">
  {t('smart_infra_title')}
  </h1>
  <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed uppercase tracking-widest">
@@ -121,7 +121,7 @@ export default function InfrastructurePage() {
  
  <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
  <div className="space-y-8">
- <h2 className="text-4xl md:text-5xl font-black uppercase leading-tight">
+ <h2 className="break-words text-3xl md:text-5xl font-black uppercase leading-tight">
  {t('decide_ground_reality')}
  </h2>
  <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">

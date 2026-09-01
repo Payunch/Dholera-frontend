@@ -93,25 +93,25 @@ export default function ConsentBanner() {
 
  {isVisible && (
  <div className="fixed inset-x-0 bottom-0 z-[1000] px-4 pb-4 pointer-events-auto">
- <div className="mx-auto flex max-w-4xl flex-col gap-4 rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-2xl shadow-slate-900/5 backdrop-blur md:flex-row md:items-center md:justify-between animate-fade-up dark:bg-slate-900">
- <div className="space-y-1">
+ <div className="mx-auto flex w-full min-w-0 max-w-4xl flex-col gap-4 rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-2xl shadow-slate-900/5 backdrop-blur md:flex-row md:items-center md:justify-between animate-fade-up dark:bg-slate-900">
+ <div className="min-w-0 space-y-1">
  <p className="text-sm font-semibold text-slate-900 dark:text-white">Cookies and analytics</p>
  <p className="max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-400">
  We use Google Analytics to understand traffic and improve the site. Accept to allow analytics cookies, or reject to keep them disabled.
  </p>
  </div>
- <div className="flex shrink-0 gap-3">
+ <div className="grid w-full min-w-0 grid-cols-2 gap-3 md:flex md:w-auto md:shrink-0">
  <button
  type="button"
  onClick={() => handleChoice("rejected")}
- className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900"
+ className="min-h-11 min-w-0 rounded-full border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 md:px-5"
  >
  Reject
  </button>
  <button
  type="button"
  onClick={() => handleChoice("accepted")}
- className="rounded-full bg-orange-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-700"
+ className="min-h-11 min-w-0 rounded-full bg-orange-600 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-orange-700 md:px-5"
  >
  Accept
  </button>

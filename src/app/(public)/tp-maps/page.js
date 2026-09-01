@@ -60,7 +60,7 @@ export default function TpMapsPage() {
 
  <div className="container relative z-10 mx-auto px-4 md:px-8 text-center">
  <div className="max-w-4xl mx-auto">
- <h1 className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+ <h1 className="font-display min-w-0 break-words text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
  {t('tp_maps_matrix_title')}
  </h1>
  <p className="mt-6 text-xs sm:text-sm md:text-base font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
@@ -114,7 +114,7 @@ export default function TpMapsPage() {
  key={filter}
  onClick={() => setActiveFilter(filter)}
  className={cn(
-"px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
+"min-h-11 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
  activeFilter === filter 
  ?"bg-[#FF7A00] text-white border-[#FF7A00] shadow-lg shadow-orange-600/10 dark:shadow-orange-600/50" 
  :"bg-white dark:bg-[#111A35] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:bg-slate-900"

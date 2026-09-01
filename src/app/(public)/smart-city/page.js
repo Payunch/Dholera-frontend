@@ -41,7 +41,7 @@ export default function SmartCityPage() {
  <div className="inline-flex items-center rounded-full bg-slate-900/50 border border-slate-700 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-slate-900 dark:text-white backdrop-blur-sm">
  {t('smart_hero_badge')}
  </div>
- <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none">
+ <h1 className="font-display min-w-0 break-words text-3xl sm:text-5xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight sm:leading-none">
  {t('smart_hero_title')}
  </h1>
  <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
@@ -53,9 +53,9 @@ export default function SmartCityPage() {
  <div className="container mx-auto px-4 md:px-8">
  <section className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-32">
  <div className="space-y-10">
- <h2 className="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none">{t('smart_vision_title')}</h2>
+ <h2 className="break-words text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight sm:text-4xl sm:leading-none">{t('smart_vision_title')}</h2>
  <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{t('smart_vision_desc')}</p>
- <div className="grid grid-cols-2 gap-8">
+ <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-8">
  <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
  <div className="text-5xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-orange-600 transition-colors">920</div>
  <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('smart_total_area_short')}</div>
@@ -123,7 +123,7 @@ export default function SmartCityPage() {
  <div className="absolute inset-0 opacity-10 mix-blend-overlay">
  <Image src="/images/airportVision.webp" alt="Background" fill className="object-cover" />
  </div>
- <h2 className="text-4xl md:text-6xl font-black uppercase mb-8 tracking-tighter relative z-10">{t('smart_cta_title')}</h2>
+ <h2 className="break-words text-3xl md:text-6xl font-black uppercase mb-8 tracking-tighter relative z-10">{t('smart_cta_title')}</h2>
  <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto uppercase tracking-widest text-xs leading-loose mb-12 relative z-10">{t('smart_cta_desc')}</p>
  <Link href="/contact" className="relative z-10 inline-flex items-center gap-3 px-12 py-5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 hover:text-white transition-all shadow-xl active:scale-95">
  {t('smart_cta_button')} <ArrowRight className="h-4 w-4" />

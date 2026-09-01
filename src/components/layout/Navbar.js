@@ -40,28 +40,28 @@ export function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 dark:bg-slate-950/80 dark:border-slate-800 backdrop-blur-md transition-colors">
-        <div className="container mx-auto flex h-20 w-full items-center justify-between px-2 sm:px-4 md:px-8">
-          <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="container mx-auto flex h-20 w-full min-w-0 items-center justify-between gap-2 px-2 sm:px-4 md:px-8">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             {/* Side Menu Drawer Button */}
             <button
               onClick={toggleSidebar}
-              className="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-800 hover:border-orange-500 hover:text-orange-600 transition-all shadow-sm group"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-800 hover:border-orange-500 hover:text-orange-600 transition-all shadow-sm group"
               title="Open Side Menu"
               aria-label="Side menu"
             >
               <AlignLeft className="h-5 w-5 transition-transform group-hover:scale-110" />
             </button>
 
-            <Link href="/" className="flex items-center flex-shrink-0">
+            <Link href="/" className="flex min-h-11 shrink-0 items-center">
               <div className="hidden md:block">
                 <SplitLogo height={50} isFull />
               </div>
               <div className="block md:hidden -ml-1">
-                <SplitLogo height={42} isFull />
+                <SplitLogo height={32} isFull />
               </div>
             </Link>
             
-            <div className="md:hidden flex items-center border-l-2 border-slate-200 dark:border-slate-800 pl-2 ml-1 h-5 overflow-hidden">
+            <div className="hidden min-w-0 items-center overflow-hidden border-l-2 border-slate-200 pl-2 ml-1 h-5 dark:border-slate-800 sm:flex md:hidden">
               <span className="text-[9px] font-black uppercase tracking-[0.1em] text-[#FF7A00] truncate max-w-[90px] xs:max-w-[120px]">
                 {navItems.find(item => item.href === "/" ? pathname === "/" : pathname.startsWith(item.href.split('?')[0]))?.label || "DHOLERA"}
               </span>
@@ -136,19 +136,13 @@ export function Navbar() {
           </nav>
 
           {/* Mobile Nav Toggle */}
-          <div className="md:hidden flex items-center gap-2 flex-shrink-0">
+          <div className="md:hidden flex shrink-0 items-center gap-2">
             <button
               onClick={toggleTheme}
-              className="flex items-center justify-center h-9 w-9 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 transition-all"
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 transition-all"
+              aria-label="Toggle color theme"
             >
               {theme === 'light' ? <Sun className="h-4 w-4 text-orange-500" /> : <Moon className="h-4 w-4 text-amber-400" />}
-            </button>
-            <button 
-              className="flex items-center justify-center h-9 w-9 rounded-xl bg-orange-600 text-white shadow-md shadow-orange-600/20" 
-              onClick={toggleSidebar}
-              title="Side Menu"
-            >
-              <AlignLeft className="h-5 w-5" />
             </button>
           </div>
         </div>
