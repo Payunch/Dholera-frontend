@@ -8,6 +8,7 @@ import { useLanguage } from'@/providers/LanguageProvider';
 
 export default function InfrastructurePage() {
  const { t } = useLanguage();
+ const plainText = (key) => t(key).replace(/<[^>]*>/g, "");
 
  const categories = [
  {
@@ -73,17 +74,17 @@ export default function InfrastructurePage() {
 
  <section className="border-b border-slate-200 bg-slate-50 py-20 dark:border-slate-800 dark:bg-slate-950">
  <div className="mx-auto max-w-5xl px-4 md:px-8">
- <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">Connectivity guide</p>
- <h2 className="mt-3 text-3xl font-black text-slate-950 dark:text-white md:text-5xl">Ahmedabad to Dholera distance and expressway context</h2>
+ <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">{t('connectivity_guide')}</p>
+ <h2 className="mt-3 text-3xl font-black text-slate-950 dark:text-white md:text-5xl">{t('ahmedabad_to_dholera_distance')}</h2>
  <div className="mt-6 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-300">
- <p>The Ahmedabad–Dholera Greenfield Expressway corridor extends approximately <strong className="text-slate-950 dark:text-white">109.019 km</strong>. It connects the Ahmedabad region with Dholera SIR and provides connectivity toward Dholera International Airport.</p>
- <p>The corridor length is not an exact door-to-door distance for every journey. Actual road distance and travel time vary according to the starting point in Ahmedabad, destination within Dholera, route access, traffic, and current operating conditions.</p>
- <p className="text-sm">Source checked 1 September 2026: Ministry of Road Transport and Highways information published through the Press Information Bureau.</p>
+ <p>{plainText('expressway_length_desc')}</p>
+ <p>{t('corridor_length_disclaimer')}</p>
+ <p className="text-sm">{t('source_checked_morth')}</p>
  </div>
  <div className="mt-8 flex flex-wrap gap-4">
- <a href="https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2233516&lang=2&reg=48" target="_blank" rel="noopener noreferrer" className="rounded-full bg-orange-600 px-6 py-3 text-sm font-black text-white">Read the government corridor update</a>
- <Link href="/airport" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">Dholera Airport guide</Link>
- <Link href="/smart-city" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">Dholera SIR facts</Link>
+ <a href="https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2233516&lang=2&reg=48" target="_blank" rel="noopener noreferrer" className="rounded-full bg-orange-600 px-6 py-3 text-sm font-black text-white">{t('read_govt_corridor_update')}</a>
+ <Link href="/airport" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">{t('dholera_airport_guide')}</Link>
+ <Link href="/smart-city" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">{t('dholera_sir_facts')}</Link>
  </div>
  </div>
  </section>
@@ -145,11 +146,11 @@ export default function InfrastructurePage() {
  <div className="grid grid-cols-2 gap-4">
  <div className="aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4 dark:bg-slate-900">
  <ShieldCheck className="h-10 w-10 text-orange-500" />
- <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Verified Plots</span>
+ <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('verified_plots')}</span>
  </div>
  <div className="mt-8 aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4 dark:bg-slate-900">
  <Road className="h-10 w-10 text-orange-500" />
- <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Internal Roads</span>
+ <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('internal_roads')}</span>
  </div>
  </div>
  </div>

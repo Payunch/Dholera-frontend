@@ -72,16 +72,16 @@ export default function TpMapsPage() {
 
  <section className="border-b border-slate-200 bg-slate-50 py-16 dark:border-slate-800 dark:bg-slate-950">
  <div className="mx-auto max-w-5xl px-4 md:px-8">
- <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">Planning document guide</p>
- <h2 className="mt-3 text-3xl font-black text-slate-950 dark:text-white md:text-5xl">Dholera Smart City Map PDF and TP Scheme Guide</h2>
+ <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">{t('planning_document_guide')}</p>
+ <h2 className="mt-3 text-3xl font-black text-slate-950 dark:text-white md:text-5xl">{t('tp_scheme_guide')}</h2>
  <div className="mt-6 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-300">
- <p>Dholera SIR&apos;s developable area is organized into six Town Planning Schemes. TP1 and TP2 form Phase I, while the initial 22.5 sq km Activation Area was identified within TP2 East and part of TP4. Use the searchable matrix below to find available planning documents and related map records.</p>
- <p>A map is a planning reference, not proof of ownership, title, current zoning permission, or approval for a particular transaction. Check the document title, issuing authority, revision date, plot boundaries, road reservations, and current official records before relying on it.</p>
+ <p>{t('tp_developable_area_desc')}</p>
+ <p>{t('map_reference_disclaimer')}</p>
  </div>
  <div className="mt-8 flex flex-wrap gap-4">
- <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&reg=48&relid=122140" target="_blank" rel="noopener noreferrer" className="rounded-full bg-orange-600 px-6 py-3 text-sm font-black text-white">Government source: TP schemes and Activation Area</a>
- <Link href="/investment-guide" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">Read the due-diligence guide</Link>
- <Link href="/smart-city" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">Dholera SIR overview</Link>
+ <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&reg=48&relid=122140" target="_blank" rel="noopener noreferrer" className="rounded-full bg-orange-600 px-6 py-3 text-sm font-black text-white">{t('govt_source_tp_schemes')}</a>
+ <Link href="/investment-guide" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">{t('read_due_diligence_guide')}</Link>
+ <Link href="/smart-city" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">{t('dholera_sir_overview')}</Link>
  </div>
  </div>
  </section>
@@ -130,7 +130,7 @@ export default function TpMapsPage() {
  {loading ? (
  <div className="flex flex-col items-center justify-center py-20">
  <Loader2 className="h-12 w-12 text-orange-600 animate-spin" />
- <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Loading Intelligence Matrix...</p>
+ <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('tp_loading_matrix')}</p>
  </div>
  ) : (
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 lg:gap-10 max-w-[1600px] mx-auto">
@@ -165,7 +165,7 @@ export default function TpMapsPage() {
  <div className="group/info relative cursor-help">
  <HelpCircle className="h-6 w-6 text-slate-300 hover:text-[#FF7A00] transition-colors" />
  <div className="absolute right-0 top-8 w-48 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[8px] font-black uppercase tracking-widest p-4 rounded-xl opacity-0 pointer-events-none group-hover/info:opacity-100 transition-all duration-300 z-20 shadow-2xl">
- Verify exact plot boundaries, road widths, and zoning use-cases for this specific Town Planning scheme.
+ {t('tp_verify_boundaries')}
  </div>
  </div>
  </div>
@@ -187,7 +187,7 @@ export default function TpMapsPage() {
  </div>
 
  <div className="w-full h-14 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10">
- Explore Data Matrix <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
+ {t('tp_explore_matrix')} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
  </div>
  </Link>
  ))}

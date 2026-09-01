@@ -1,16 +1,26 @@
-import { Metadata } from"next";
-import Image from"next/image";
-import { Landmark, Construction, Globe, Shield, ArrowRight } from"lucide-react";
-import Link from"next/link";
-import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
+"use client";
 
-export const metadata = {
- title:"About Dholera Smart City | Area, Planning & DSIR Facts",
- description:"Understand Dholera SIR's approximately 920 sq km planned area, 422 sq km developable area, 22 villages, six TP schemes, and 22.54 sq km Activation Area.",
- alternates: { canonical: "/smart-city" },
-};
+import Image from "next/image";
+import { Landmark, Construction, Globe, Shield, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 export default function SmartCityPage() {
+  const { t } = useLanguage();
+  const plainText = (key) => t(key).replace(/<[^>]*>/g, "");
+  const metrics = [
+    [t('smart_metric_total_value'), t('smart_metric_total_label')],
+    [t('smart_metric_developable_value'), t('smart_metric_developable_label')],
+    [t('smart_metric_villages_value'), t('smart_metric_villages_label')],
+    [t('smart_metric_schemes_value'), t('smart_metric_schemes_label')],
+    [t('smart_metric_activation_value'), t('smart_metric_activation_label')],
+  ];
+  const features = [
+    { title: t('smart_governance_title'), desc: t('smart_governance_desc'), icon: Landmark },
+    { title: t('sustainable_life_title'), desc: t('sustainable_life_desc'), icon: Shield },
+    { title: t('global_logistics_title'), desc: t('global_logistics_desc'), icon: Globe },
+  ];
  return (
  <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden dark:bg-slate-900">
  <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Dholera Smart City", path: "/smart-city" }]} />
@@ -29,13 +39,13 @@ export default function SmartCityPage() {
 
  <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
  <div className="inline-flex items-center rounded-full bg-slate-900/50 border border-slate-700 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-slate-900 dark:text-white backdrop-blur-sm">
- Future of Urban Living
+ {t('smart_hero_badge')}
  </div>
  <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-none">
- Dholera <span className="text-orange-600 italic">Smart</span> City
+ {t('smart_hero_title')}
  </h1>
  <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
- The Industrialized Future of Gujarat
+ {t('smart_hero_subtitle')}
  </p>
  </div>
  </section>
@@ -43,20 +53,16 @@ export default function SmartCityPage() {
  <div className="container mx-auto px-4 md:px-8">
  <section className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-32">
  <div className="space-y-10">
- <h2 className="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none">The Vision of <span className="text-orange-600">DSIR</span></h2>
- <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
- Dholera Special Investment Region (DSIR) is a major Greenfield Industrial Hub planned and located 
- approximately 100 km southwest of Ahmedabad. Government and NICDC sources describe the planned
- region as approximately 920 sq km across 22 villages. The developable area is ~422 sq km.
- </p>
+ <h2 className="text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-none">{t('smart_vision_title')}</h2>
+ <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{t('smart_vision_desc')}</p>
  <div className="grid grid-cols-2 gap-8">
  <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
  <div className="text-5xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-orange-600 transition-colors">920</div>
- <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Sq KM Total Area</div>
+ <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('smart_total_area_short')}</div>
  </div>
  <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
  <div className="text-5xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-orange-600 transition-colors">22</div>
- <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Villages in Planned Region</div>
+ <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('smart_villages_short')}</div>
  </div>
  </div>
  </div>
@@ -73,35 +79,36 @@ export default function SmartCityPage() {
  </div>
  </div>
  <div className="absolute bottom-8 left-8">
- <span className="px-4 py-2 bg-orange-600 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-lg">Real-time Growth</span>
+ <span className="px-4 py-2 bg-orange-600 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-lg">{t('smart_growth_badge')}</span>
  </div>
  </div>
  </section>
 
  <section className="mb-32 rounded-[3rem] border border-slate-200 bg-slate-50 p-8 dark:border-slate-800 dark:bg-slate-950 md:p-14">
- <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">Dholera SIR at a glance</p>
- <h2 className="mt-3 text-3xl font-black text-slate-950 dark:text-white md:text-5xl">Area, planning phases and authorities</h2>
- <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
- {[['~920 sq km','Total planned DSIR area'],['~422 sq km','Developable area'],['22 villages','Area encompassed by DSIR'],['6 schemes','Town Planning Schemes'],['~22.54 sq km','Phase-I Activation Area (TP2/TP4)']].map(([value,label]) => <div key={label} className="rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900"><p className="text-3xl font-black text-orange-600">{value}</p><p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">{label}</p></div>)}
- </div>
- <div className="mt-10 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-300">
- <p>The approximately 920 sq km figure describes the total planned Special Investment Region, while the developable area is ~422 sq km. The initial Phase-I Activation Area (~22.54 sq km) is located within Town Planning Schemes 2 & 4 (TP2/TP4), where initial trunk infrastructure is concentrated.</p>
- <p><strong className="text-slate-950 dark:text-white">DSIRDA</strong> (Dholera Special Investment Region Development Authority) serves as the regulatory authority. <strong className="text-slate-950 dark:text-white">DICDL</strong> (Dholera Industrial City Development Limited) operates as the SPV implementation arm. <strong className="text-slate-950 dark:text-white">NICDC</strong> supports India&apos;s industrial-corridor programme. Dholera Platform is an independent private information service and is not affiliated with these bodies.</p>
- </div>
+        <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">{t('smart_city_at_a_glance')}</p>
+        <h2 className="mt-3 text-3xl font-black text-slate-950 dark:text-white md:text-5xl">{t('smart_facts_heading')}</h2>
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {metrics.map(([value,label]) => <div key={label} className="rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900"><p className="text-3xl font-black text-orange-600">{value}</p><p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">{label}</p></div>)}
+        </div>
+        <div className="mt-10 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-300">
+          <p>{plainText('smart_city_area_desc')}</p>
+          <p>{plainText('smart_city_tp_desc')}</p>
+          <p>{plainText('smart_city_source_1')}</p>
+          <h3 className="mt-12 text-2xl font-black text-slate-950 dark:text-white">{t('governance_and_authorities')}</h3>
+          <p>{plainText('governance_dsirda')}</p>
+          <p>{plainText('governance_dicdl')}</p>
+          <p className="text-sm border-t border-slate-200 dark:border-slate-800 pt-4 mt-8 italic">{t('governance_disclaimer')}</p>
+        </div>
  <div className="mt-8 flex flex-wrap gap-4">
- <a href="https://nicdc.in/projects/4-projects-developed/dholera-special-investment-region-gujarat" target="_blank" rel="noopener noreferrer" className="rounded-full bg-orange-600 px-6 py-3 text-sm font-black text-white">NICDC project source</a>
- <a href="https://www.dpiit.gov.in/static/uploads/2025/07/663d1af8115f934e9f04ee504c76ca3e.pdf" target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">DPIIT planning source</a>
- <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&reg=48&relid=122140" target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">PIB planning source</a>
- <Link href="/tp-maps" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">Explore TP maps</Link>
+ <a href="https://nicdc.in/projects/4-projects-developed/dholera-special-investment-region-gujarat" target="_blank" rel="noopener noreferrer" className="rounded-full bg-orange-600 px-6 py-3 text-sm font-black text-white">{t('nicdc_project_source')}</a>
+ <a href="https://www.dpiit.gov.in/static/uploads/2025/07/663d1af8115f934e9f04ee504c76ca3e.pdf" target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">{t('dpiit_planning_source')}</a>
+ <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&reg=48&relid=122140" target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">{t('pib_planning_source')}</a>
+ <Link href="/tp-maps" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">{t('explore_tp_maps')}</Link>
  </div>
  </section>
 
  <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-32">
- {[
- { title:"Smart Governance", desc:"Digital land management, automated approvals, and city-wide ICT integration.", icon: Landmark },
- { title:"Sustainable Life", desc:"100% recycling of waste, renewable energy integration, and vast green spaces.", icon: Shield },
- { title:"Global Logistics", desc:"Proximity to the upcoming International Airport and Delhi-Mumbai Industrial Corridor.", icon: Globe },
- ].map((feature, i) => (
+ {features.map((feature, i) => (
  <div key={i} className="group space-y-6 p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
  <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
  <feature.icon className="h-7 w-7" />
@@ -116,12 +123,10 @@ export default function SmartCityPage() {
  <div className="absolute inset-0 opacity-10 mix-blend-overlay">
  <Image src="/images/airportVision.webp" alt="Background" fill className="object-cover" />
  </div>
- <h2 className="text-4xl md:text-6xl font-black uppercase mb-8 tracking-tighter relative z-10">Building India&apos;s <br/> <span className="text-orange-600 italic">First Smart Core</span>.</h2>
- <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto uppercase tracking-widest text-xs leading-loose mb-12 relative z-10">
- A global manufacturing and trading hub that provides a high-quality lifestyle with smart infrastructure and a world-class environment.
- </p>
+ <h2 className="text-4xl md:text-6xl font-black uppercase mb-8 tracking-tighter relative z-10">{t('smart_cta_title')}</h2>
+ <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto uppercase tracking-widest text-xs leading-loose mb-12 relative z-10">{t('smart_cta_desc')}</p>
  <Link href="/contact" className="relative z-10 inline-flex items-center gap-3 px-12 py-5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 hover:text-white transition-all shadow-xl active:scale-95">
- Secure Your Stake <ArrowRight className="h-4 w-4" />
+ {t('smart_cta_button')} <ArrowRight className="h-4 w-4" />
  </Link>
  </div>
  </div>
