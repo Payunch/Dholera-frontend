@@ -1,7 +1,7 @@
 import Image from"next/image";
 import Link from"next/link";
 import { cookies } from "next/headers";
-import { notFound, redirect } from"next/navigation";
+import { redirect } from"next/navigation";
 import { ChevronLeft, Calendar, Share2, Clock, Lock, Smartphone } from "lucide-react";
 import { format } from"date-fns";
 import { getUpdateById } from"@/features/updates/api";
@@ -10,6 +10,7 @@ import { cn } from"@/lib/utils";
 import { SITE_BASE_URL } from"@/lib/api";
 import { BlogPopupTrigger } from"@/components/leads/BlogPopupTrigger";
 import { ShareButton } from "./ShareButton";
+import { siteConfig } from "@/config/site";
 
 
 export const dynamic ="force-dynamic";
@@ -39,6 +40,8 @@ export async function generateMetadata(
  return {
  title: update.seoTitle || update.title,
  description: update.seoDescription || update.content.slice(0, 160).replace(/\n/g,""),
+ alternates: { canonical: `/blogs/${id}` },
+ authors: [{ name: update.author || "Naresh Gohel", url: "/author/naresh-gohel" }],
  keywords: update.seoKeywords || "Dholera, Real Estate, Investment",
  openGraph: {
  title: update.seoTitle || update.title,
@@ -86,9 +89,22 @@ export default async function UpdateDetailPage({ params, searchParams }) {
   : null;
  const imgPos = update.imagePosition ||"top";
  const catColor = CATEGORY_COLORS[update.category] || CATEGORY_COLORS.General;
+ const publishedAt = update.publishedAt || update.createdAt;
+ const articleSchema = {
+   "@context": "https://schema.org",
+   "@type": "Article",
+   headline: update.title,
+   datePublished: publishedAt,
+   dateModified: update.updatedAt || publishedAt,
+   mainEntityOfPage: `${siteConfig.url}/blogs/${update.id}`,
+   author: { "@type": "Person", name: update.author || "Naresh Gohel", url: `${siteConfig.url}/author/naresh-gohel` },
+   publisher: { "@type": "Organization", name: "Dholera Platform", url: siteConfig.url },
+   ...(imgSrc ? { image: [imgSrc] } : {}),
+ };
 
  return (
  <article className="bg-white dark:bg-slate-900 pt-24 pb-32">
+ <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
  <BlogPopupTrigger blogTitle={update.title} />
  <div className="container mx-auto px-4 md:px-8">
  <div className="mx-auto max-w-4xl">
@@ -137,14 +153,14 @@ export default async function UpdateDetailPage({ params, searchParams }) {
  DP
  </div>
  <div className="flex flex-col">
- <span className="text-sm font-black uppercase tracking-tight text-slate-900 dark:text-white">{update.author || "Dholera Growth Team"}</span>
+ <Link href="/author/naresh-gohel" className="text-sm font-black uppercase tracking-tight text-slate-900 hover:text-orange-600 dark:text-white">{update.author || "Naresh Gohel"}</Link>
  <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{update.author ? "Author" : "Verified Analysis"}</span>
  </div>
  </div>
               <ShareButton 
                 title={update.title} 
                 text={`Read this article on Dholera Platform: ${update.title}`} 
-                url={`https://dholeraplatform.com/blogs/${update.id}${update.isExclusive ? "?audience=app" : ""}`} 
+                url={`${siteConfig.url}/blogs/${update.id}${update.isExclusive ? "?audience=app" : ""}`}
               />
  </div>
  </header>

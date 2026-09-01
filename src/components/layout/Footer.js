@@ -76,6 +76,8 @@ export function Footer() {
               <li><Link href="/privacy-policy" className="hover:text-[#FF7A00] transition-all duration-300">{t('privacy_policy')}</Link></li>
               <li><Link href="/terms-and-conditions" className="hover:text-[#FF7A00] transition-all duration-300">{t('terms_of_service')}</Link></li>
               <li><Link href="/contact" className="hover:text-[#FF7A00] transition-all duration-300">{t('contact')}</Link></li>
+              <li><Link href="/author/naresh-gohel" className="hover:text-[#FF7A00] transition-all duration-300">About the author</Link></li>
+              <li><Link href="/editorial-policy" className="hover:text-[#FF7A00] transition-all duration-300">Editorial policy</Link></li>
               <li>
                 <button type="button" onClick={handleCookieSettings} className="hover:text-[#FF7A00] transition-all duration-300">
                   Cookie settings

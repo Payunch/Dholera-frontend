@@ -19,7 +19,8 @@ const outfit = Outfit({
 });
 
 const GTM_CONTAINER_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID ||"GTM-WM9HRJVV";
-const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ||"AW-123456789";
+const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export const metadata = {
  title: {
@@ -28,7 +29,7 @@ export const metadata = {
  },
  description:"Independent Dholera Platform for infrastructure intelligence, planning maps, TP maps, and land investment growth evidence in Dholera Smart City.",
  keywords: ["Dholera Platform","Dholera Smart City","Dholera Maps","Dholera Planning","TP Map Dholera","Dholera Investment","Dholera Growth Evidence"],
- authors: [{ name:"Dholera Growth Team" }],
+ authors: [{ name:"Naresh Gohel", url:"/author/naresh-gohel" }],
  creator:"Dholera Platform",
  publisher:"Dholera Platform",
  formatDetection: {
@@ -81,22 +82,22 @@ export default function RootLayout({ children }) {
       });
     `}
   </Script>
-  <Script id="aw-tag" strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} />
-  <Script id="aw-config" strategy="afterInteractive">
+  {GOOGLE_ADS_ID && <Script id="aw-tag" strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} />}
+  {GOOGLE_ADS_ID && <Script id="aw-config" strategy="afterInteractive">
     {`
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', '${GOOGLE_ADS_ID}');
     `}
-  </Script>
+  </Script>}
   <Script
     id="adsense-script"
-    strategy="afterInteractive"
+    strategy="lazyOnload"
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6979634293826789"
     crossOrigin="anonymous"
   />
-  <Script id="meta-pixel" strategy="afterInteractive">
+  {META_PIXEL_ID && <Script id="meta-pixel" strategy="afterInteractive">
     {`
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -106,10 +107,10 @@ export default function RootLayout({ children }) {
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '${process.env.NEXT_PUBLIC_META_PIXEL_ID || "YOUR_PIXEL_ID"}');
+      fbq('init', '${META_PIXEL_ID}');
       fbq('track', 'PageView');
     `}
-  </Script>
+  </Script>}
  </head>
  <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`} suppressHydrationWarning>
  <OrganizationSchema />
