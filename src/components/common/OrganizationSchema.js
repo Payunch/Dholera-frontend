@@ -2,7 +2,7 @@ import React from"react";
 import Script from"next/script";
 
 export default function OrganizationSchema() {
- const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ||"https://www.dholeraplatform.com";
+ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.includes('localhost') ? process.env.NEXT_PUBLIC_SITE_URL : "https://www.dholeraplatform.com";
  
  const jsonLd = {
 "@context":"https://schema.org",

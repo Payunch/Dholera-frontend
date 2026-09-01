@@ -37,7 +37,7 @@ export const metadata = {
  address: false,
  telephone: false,
  },
- metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ||"https://www.dholeraplatform.com"),
+ metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL?.includes('localhost') ? process.env.NEXT_PUBLIC_SITE_URL : "https://www.dholeraplatform.com"),
  openGraph: {
  title:"Dholera Platform | Growth Evidence & Planning Maps",
  description:"Intelligence and planning resources for Dholera Special Investment Region.",
