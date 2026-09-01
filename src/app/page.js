@@ -1,4 +1,3 @@
-import { Metadata } from"next";
 import { siteConfig } from"@/config/site";
 import { HomeClient } from"./HomeClient";
 import { Translate } from"@/components/i18n/Translate";
@@ -49,16 +48,12 @@ export default async function HomePage() {
  */}
  <HomeClient recentUpdates={recentUpdates} />
 
- {/* 
- Hidden or visually subtle semantic content for SEO domination.
- This section provides Google with deep topical context.
- */}
- <section className="sr-only">
- <h2 className="text-3xl font-black uppercase text-slate-900 dark:text-white mb-8"><Translate id="about_dholera_platform" /></h2>
- <p>
+ <section className="mx-auto w-full max-w-6xl px-6 py-12">
+ <h2 className="mb-5 text-3xl font-black text-slate-900 dark:text-white"><Translate id="about_dholera_platform" /></h2>
+ <p className="max-w-4xl text-base leading-8 text-slate-600 dark:text-slate-300">
   <Translate id="seo_desc_1" />
  </p>
- <ul className="list-disc pl-6 space-y-4 text-slate-600 dark:text-slate-400 font-medium">
+ <ul className="mt-6 grid gap-3 text-slate-700 dark:text-slate-300 sm:grid-cols-2">
  <li><Translate id="verified_maps" /></li>
  <li><Translate id="realtime_updates" /></li>
  <li><Translate id="fee_calculator" /></li>

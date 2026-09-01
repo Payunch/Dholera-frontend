@@ -119,7 +119,7 @@ const DholeraPostContainer = () => {
 
         <h2>Your Next Step for a Secure Dholera Smart City Investment</h2>
         <p className="text-base leading-relaxed">
-          Navigating a greenfield smart city investment requires expert guidance. You need to identify which town planning schemes offer the best returns, verify land titles, and ensure the plots are RERA-approved and clear of any legal encumbrances. If you want to capitalise on the Dholera boom, you need <a href="https://dholerahub.com/" className="text-blue-600 underline font-medium">accurate information and verified opportunities</a>.
+          Evaluating land in a greenfield smart city requires careful due diligence. Compare town planning schemes, verify title and zoning records, and confirm which approvals apply to the property and project. Start with our <a href="/investment-guide" className="text-blue-600 underline font-medium">Dholera investment and due-diligence guide</a>, then confirm material decisions with current official records and qualified legal advice.
         </p>
       </article>
     </div>

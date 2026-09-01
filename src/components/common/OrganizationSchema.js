@@ -2,7 +2,7 @@ import React from"react";
 import Script from"next/script";
 
 export default function OrganizationSchema() {
- const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ||"https://dholeraplatform.com";
+ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ||"https://www.dholeraplatform.com";
  
  const jsonLd = {
 "@context":"https://schema.org",
@@ -18,7 +18,7 @@ export default function OrganizationSchema() {
  ],
 "contactPoint": {
 "@type":"ContactPoint",
-"telephone":"+91-XXXXXXXXXX", // This should be dynamic from site data
+"telephone":"+91-7435808031",
 "contactType":"customer service",
 "email":"gohelnaresh7707@gmail.com",
 "areaServed":"IN",

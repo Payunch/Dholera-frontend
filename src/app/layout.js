@@ -19,8 +19,6 @@ const outfit = Outfit({
 });
 
 const GTM_CONTAINER_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID ||"GTM-WM9HRJVV";
-const CLARITY_ID = process.env.NEXT_PUBLIC_MS_CLARITY_ID;
-const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ||"AW-123456789";
 
 export const metadata = {
@@ -38,14 +36,11 @@ export const metadata = {
  address: false,
  telephone: false,
  },
- metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ||"https://dholeraplatform.com"),
- alternates: {
- canonical:"/",
- },
+ metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ||"https://www.dholeraplatform.com"),
  openGraph: {
  title:"Dholera Platform | Growth Evidence & Planning Maps",
  description:"Intelligence and planning resources for Dholera Special Investment Region.",
- url:"https://dholeraplatform.com",
+ url:"https://www.dholeraplatform.com",
  siteName:"Dholera Platform",
  locale:"en_IN",
  type:"website",

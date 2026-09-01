@@ -1,7 +1,7 @@
 export const siteConfig = {
  name:"Dholera Platform",
- url: process.env.NEXT_PUBLIC_SITE_URL ||"https://dholeraplatform.com",
- ogImage:"https://dholeraplatform.com/og.png",
+ url: process.env.NEXT_PUBLIC_SITE_URL ||"https://www.dholeraplatform.com",
+ ogImage:"https://www.dholeraplatform.com/og.png",
  description:"Independent Dholera Platform for infrastructure intelligence, planning maps, TP maps, and land investment growth evidence in Dholera Smart City.",
  links: {
  facebook:"https://www.facebook.com/dholeraplatform",
