@@ -1,4 +1,5 @@
 import { API_BASE_URL } from"@/lib/api";
+import { getBlogSlug, getNumericBlogId, slugifyBlogTitle } from "@/lib/blogSlug";
 
 export async function getUpdates(search, lang, audience = "web") {
   const params = new URLSearchParams();
@@ -37,4 +38,16 @@ export async function getUpdateById(id, lang, audience = "web") {
  // But usually /updates/:id returns a single object.
  const data = await res.json();
  return data;
+}
+
+export async function getUpdateByRouteKey(routeKey, lang, audience = "web") {
+  const numericId = getNumericBlogId(routeKey);
+  if (numericId) return getUpdateById(numericId, lang, audience);
+
+  const normalizedKey = slugifyBlogTitle(routeKey);
+  const updates = await getUpdates(undefined, lang, audience);
+  const match = updates.find((update) => getBlogSlug(update) === normalizedKey);
+  if (!match?.id) return null;
+
+  return getUpdateById(match.id, lang, audience);
 }

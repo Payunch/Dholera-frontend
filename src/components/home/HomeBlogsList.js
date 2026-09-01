@@ -8,6 +8,7 @@ import { SITE_BASE_URL } from '@/lib/api';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/providers/LanguageProvider';
+import { getBlogPath } from '@/lib/blogSlug';
 
 export function HomeBlogsList({ updates = [] }) {
   const { t } = useLanguage();
@@ -47,7 +48,7 @@ export function HomeBlogsList({ updates = [] }) {
             return (
               <Link 
                 key={post.id} 
-                href={`/blogs/${post.id}`}
+                href={getBlogPath(post)}
                 className="group flex flex-col bg-white dark:bg-slate-950 rounded-[1.5rem] border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl dark:hover:shadow-black/100 hover:border-[#FF7A00] hover:-translate-y-2 overflow-hidden"
               >
                 {imgSrc && (

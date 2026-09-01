@@ -1,5 +1,6 @@
 import { getUpdates } from "@/features/updates/api";
 import { siteConfig } from "@/config/site";
+import { getBlogPath } from "@/lib/blogSlug";
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +41,7 @@ export default async function sitemap() {
   const blogEntries = updates
     .filter((update) => update?.id)
     .map((update) => ({
-      url: `${siteConfig.url}/blogs/${update.id}`,
+      url: `${siteConfig.url}${getBlogPath(update)}`,
       lastModified: new Date(update.publishedAt || update.createdAt || Date.now()),
       changeFrequency: "weekly",
       priority: 0.7,

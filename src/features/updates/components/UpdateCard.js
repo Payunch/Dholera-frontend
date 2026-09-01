@@ -5,6 +5,7 @@ import { format } from"date-fns";
 import { Update } from"@/types/update";
 import { cn } from"@/lib/utils";
 import { SITE_BASE_URL } from"@/lib/api";
+import { getBlogPath } from "@/lib/blogSlug";
 
 
 
@@ -28,7 +29,7 @@ export function UpdateCard({ update }) {
 
  return (
  <Link
- href={`/blogs/${update.id}`}
+ href={getBlogPath(update)}
  className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white dark:bg-slate-900 transition-all hover:-translate-y-2 hover:shadow-2xl hover:border-orange-200"
  >
  {/* Image or Banner */}

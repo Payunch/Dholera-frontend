@@ -1,10 +1,10 @@
 import Image from"next/image";
 import Link from"next/link";
 import { cookies } from "next/headers";
-import { redirect, permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { ChevronLeft, Calendar, Share2, Clock, Lock, Smartphone } from "lucide-react";
 import { format } from"date-fns";
-import { getUpdateById } from"@/features/updates/api";
+import { getUpdateByRouteKey } from"@/features/updates/api";
 import { ArticleBody } from"@/features/updates/components/ArticleBody";
 import { cn } from"@/lib/utils";
 import { SITE_BASE_URL } from"@/lib/api";
@@ -12,6 +12,7 @@ import { BlogPopupTrigger } from"@/components/leads/BlogPopupTrigger";
 import { ShareButton } from "./ShareButton";
 import { siteConfig } from "@/config/site";
 import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
+import { getBlogSlug } from "@/lib/blogSlug";
 
 
 export const dynamic ="force-dynamic";
@@ -22,16 +23,15 @@ export async function generateMetadata(
  parent
 ) {
  const { slug } = await params;
- const idMatch = slug.match(/^(\d+)/);
- const id = idMatch ? idMatch[1] : slug;
- const audience = searchParams?.audience === "app" ? "app" : "web";
+ const resolvedSearchParams = await searchParams;
+ const audience = resolvedSearchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||'en';
  
- const update = await getUpdateById(id, lang, audience);
+ const update = await getUpdateByRouteKey(slug, lang, audience);
  if (!update) return {};
 
- const expectedSlug = update.title ? `${id}-${update.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}` : id.toString();
+ const expectedSlug = getBlogSlug(update);
 
  const previousImages = (await parent).openGraph?.images || [];
   const imgSrc = update.imageUrl 
@@ -75,19 +75,18 @@ const CATEGORY_COLORS = {
 
 export default async function UpdateDetailPage({ params, searchParams }) {
  const { slug } = await params;
- const idMatch = slug.match(/^(\d+)/);
- const id = idMatch ? idMatch[1] : slug;
- const audience = searchParams?.audience === "app" ? "app" : "web";
+ const resolvedSearchParams = await searchParams;
+ const audience = resolvedSearchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||'en';
 
- const update = await getUpdateById(id, lang, audience);
+ const update = await getUpdateByRouteKey(slug, lang, audience);
 
  if (!update) {
-   redirect('/blogs');
+   notFound();
  }
 
- const expectedSlug = update.title ? `${id}-${update.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}` : id.toString();
+ const expectedSlug = getBlogSlug(update);
  if (slug !== expectedSlug) {
    permanentRedirect(`/blogs/${expectedSlug}${audience === 'app' ? '?audience=app' : ''}`);
  }

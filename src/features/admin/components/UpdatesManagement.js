@@ -23,6 +23,7 @@ import { cn } from"@/lib/utils";
 import { format } from"date-fns";
 import Image from"next/image";
 import { fetchCsrfToken } from "@/utils/csrf";
+import { getBlogPath } from "@/lib/blogSlug";
 
 export function UpdatesManagement() {
  const [updates, setUpdates] = React.useState([]);
@@ -326,7 +327,7 @@ export function UpdatesManagement() {
 
  <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
  <a 
- href={`/blogs/${update.id}${update.isExclusive ? "?audience=app" : ""}`} 
+ href={`${getBlogPath(update)}${update.isExclusive ? "?audience=app" : ""}`} 
  target="_blank" 
  rel="noopener noreferrer"
  className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white flex items-center gap-1"
