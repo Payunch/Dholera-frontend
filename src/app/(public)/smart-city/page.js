@@ -2,16 +2,18 @@ import { Metadata } from"next";
 import Image from"next/image";
 import { Landmark, Construction, Globe, Shield, ArrowRight } from"lucide-react";
 import Link from"next/link";
+import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
 
 export const metadata = {
  title:"About Dholera Smart City | Area, Planning & DSIR Facts",
- description:"Understand Dholera SIR's approximately 920 sq km planned area, 22 villages, six TP schemes, 22.5 sq km Activation Area, and responsible authorities.",
+ description:"Understand Dholera SIR's approximately 920 sq km planned area, 422 sq km developable area, 22 villages, six TP schemes, and 22.54 sq km Activation Area.",
  alternates: { canonical: "/smart-city" },
 };
 
 export default function SmartCityPage() {
  return (
  <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden dark:bg-slate-900">
+ <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Dholera Smart City", path: "/smart-city" }]} />
  
  {/* Header Block */}
  <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24 dark:bg-slate-900">
@@ -45,7 +47,7 @@ export default function SmartCityPage() {
  <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
  Dholera Special Investment Region (DSIR) is a major Greenfield Industrial Hub planned and located 
  approximately 100 km southwest of Ahmedabad. Government and NICDC sources describe the planned
- region as approximately 920 sq km across 22 villages.
+ region as approximately 920 sq km across 22 villages. The developable area is ~422 sq km.
  </p>
  <div className="grid grid-cols-2 gap-8">
  <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
@@ -80,14 +82,15 @@ export default function SmartCityPage() {
  <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">Dholera SIR at a glance</p>
  <h2 className="mt-3 text-3xl font-black text-slate-950 dark:text-white md:text-5xl">Area, planning phases and authorities</h2>
  <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
- {[['~920 sq km','Total planned DSIR area'],['22 villages','Area encompassed by DSIR'],['6 schemes','Town Planning Schemes'],['22.5 sq km','Phase-I Activation Area']].map(([value,label]) => <div key={label} className="rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900"><p className="text-3xl font-black text-orange-600">{value}</p><p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">{label}</p></div>)}
+ {[['~920 sq km','Total planned DSIR area'],['~422 sq km','Developable area'],['22 villages','Area encompassed by DSIR'],['6 schemes','Town Planning Schemes'],['~22.54 sq km','Phase-I Activation Area (TP2/TP4)']].map(([value,label]) => <div key={label} className="rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900"><p className="text-3xl font-black text-orange-600">{value}</p><p className="mt-2 text-sm font-bold text-slate-600 dark:text-slate-300">{label}</p></div>)}
  </div>
  <div className="mt-10 space-y-5 text-base leading-8 text-slate-600 dark:text-slate-300">
- <p>The approximately 920 sq km figure describes the total planned Special Investment Region. It should not be confused with the developable area or the smaller Phase-I Activation Area where initial trunk infrastructure was concentrated.</p>
- <p><strong className="text-slate-950 dark:text-white">DSIRDA</strong> is the regional development authority. <strong className="text-slate-950 dark:text-white">DICDL</strong> is the special-purpose implementation company formed by central and state entities. <strong className="text-slate-950 dark:text-white">NICDC</strong> supports India&apos;s industrial-corridor programme. Dholera Platform is an independent private information service and is not affiliated with these bodies.</p>
+ <p>The approximately 920 sq km figure describes the total planned Special Investment Region, while the developable area is ~422 sq km. The initial Phase-I Activation Area (~22.54 sq km) is located within Town Planning Schemes 2 & 4 (TP2/TP4), where initial trunk infrastructure is concentrated.</p>
+ <p><strong className="text-slate-950 dark:text-white">DSIRDA</strong> (Dholera Special Investment Region Development Authority) serves as the regulatory authority. <strong className="text-slate-950 dark:text-white">DICDL</strong> (Dholera Industrial City Development Limited) operates as the SPV implementation arm. <strong className="text-slate-950 dark:text-white">NICDC</strong> supports India&apos;s industrial-corridor programme. Dholera Platform is an independent private information service and is not affiliated with these bodies.</p>
  </div>
  <div className="mt-8 flex flex-wrap gap-4">
  <a href="https://nicdc.in/projects/4-projects-developed/dholera-special-investment-region-gujarat" target="_blank" rel="noopener noreferrer" className="rounded-full bg-orange-600 px-6 py-3 text-sm font-black text-white">NICDC project source</a>
+ <a href="https://www.dpiit.gov.in/static/uploads/2025/07/663d1af8115f934e9f04ee504c76ca3e.pdf" target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">DPIIT planning source</a>
  <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&reg=48&relid=122140" target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">PIB planning source</a>
  <Link href="/tp-maps" className="rounded-full border border-slate-300 px-6 py-3 text-sm font-black dark:border-slate-700">Explore TP maps</Link>
  </div>

@@ -58,6 +58,17 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "dholeraplatform.com",
+          },
+        ],
+        destination: "https://www.dholeraplatform.com/:path*",
+        permanent: true,
+      },
+      {
         source: "/downloads/dholera.apk",
         destination: `/downloads/dholera-${apkFileVersion}.apk`,
         permanent: false,

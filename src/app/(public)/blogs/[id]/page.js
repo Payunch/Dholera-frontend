@@ -11,6 +11,7 @@ import { SITE_BASE_URL } from"@/lib/api";
 import { BlogPopupTrigger } from"@/components/leads/BlogPopupTrigger";
 import { ShareButton } from "./ShareButton";
 import { siteConfig } from "@/config/site";
+import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
 
 
 export const dynamic ="force-dynamic";
@@ -92,7 +93,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
  const publishedAt = update.publishedAt || update.createdAt;
  const articleSchema = {
    "@context": "https://schema.org",
-   "@type": "Article",
+   "@type": update.category === "News" ? "NewsArticle" : "Article",
    headline: update.title,
    datePublished: publishedAt,
    dateModified: update.updatedAt || publishedAt,
@@ -104,6 +105,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
 
  return (
  <article className="bg-white dark:bg-slate-900 pt-24 pb-32">
+ <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Blogs", path: "/blogs" }, { name: update.title, path: `/blogs/${update.id}` }]} />
  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
  <BlogPopupTrigger blogTitle={update.title} />
  <div className="container mx-auto px-4 md:px-8">
@@ -233,8 +235,28 @@ export default async function UpdateDetailPage({ params, searchParams }) {
  </div>
  )}
 
- {/* Footer Navigation */}
  <footer className="mt-20 border-t border-slate-100 pt-12 text-center">
+ <h4 className="mb-6 text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Explore Core Intelligence Hubs</h4>
+ <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
+ <Link
+ href="/smart-city"
+ className="rounded-full bg-slate-100 dark:bg-slate-800 px-6 py-3 font-bold uppercase tracking-widest text-slate-900 dark:text-white transition-colors hover:bg-orange-600 hover:text-white text-xs"
+ >
+ Dholera SIR Facts
+ </Link>
+ <Link
+ href="/infrastructure"
+ className="rounded-full bg-slate-100 dark:bg-slate-800 px-6 py-3 font-bold uppercase tracking-widest text-slate-900 dark:text-white transition-colors hover:bg-orange-600 hover:text-white text-xs"
+ >
+ Expressway & Infrastructure
+ </Link>
+ <Link
+ href="/tp-maps"
+ className="rounded-full bg-slate-100 dark:bg-slate-800 px-6 py-3 font-bold uppercase tracking-widest text-slate-900 dark:text-white transition-colors hover:bg-orange-600 hover:text-white text-xs"
+ >
+ TP Maps Guide
+ </Link>
+ </div>
  <h4 className="mb-6 text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Ready to invest in Dholera SIR?</h4>
  <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
  <Link
