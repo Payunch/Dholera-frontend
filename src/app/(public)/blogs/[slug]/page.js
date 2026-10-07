@@ -47,7 +47,7 @@ export async function generateMetadata(
  title: update.seoTitle || update.title,
  description: update.seoDescription || update.content.slice(0, 160).replace(/\n/g,""),
  alternates: { canonical: `/blogs/${expectedSlug}` },
- authors: [{ name: update.author || "Naresh Gohel", url: "/author/naresh-gohel" }],
+ authors: [{ name: "Naresh Gohel", url: "/author/naresh-gohel" }],
  keywords: update.seoKeywords || "Dholera, Real Estate, Investment",
  openGraph: {
  title: update.seoTitle || update.title,
@@ -55,7 +55,7 @@ export async function generateMetadata(
  images: imgSrc ? [imgSrc, ...previousImages] : previousImages,
  type:"article",
  publishedTime: update.publishedAt || update.createdAt,
- authors: [update.author || "Dholera Growth Team"],
+ authors: ["Naresh Gohel"],
  },
  twitter: {
  card:"summary_large_image",
@@ -109,7 +109,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
    datePublished: publishedAt,
    dateModified: update.updatedAt || publishedAt,
    mainEntityOfPage: `${siteConfig.url}/blogs/${expectedSlug}`,
-   author: { "@type": "Person", name: update.author || "Naresh Gohel", url: `${siteConfig.url}/author/naresh-gohel` },
+   author: { "@type": "Person", name: "Naresh Gohel", url: `${siteConfig.url}/author/naresh-gohel` },
    publisher: { "@type": "Organization", name: "Dholera Platform", url: siteConfig.url },
    ...(imgSrc ? { image: [imgSrc] } : {}),
  };
@@ -166,8 +166,8 @@ export default async function UpdateDetailPage({ params, searchParams }) {
  DP
  </div>
  <div className="flex flex-col">
- <Link href="/author/naresh-gohel" className="text-sm font-black uppercase tracking-tight text-slate-900 hover:text-orange-600 dark:text-white">{update.author || "Naresh Gohel"}</Link>
- <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{update.author ? "Author" : "Verified Analysis"}</span>
+ <Link href="/author/naresh-gohel" className="text-sm font-black uppercase tracking-tight text-slate-900 hover:text-orange-600 dark:text-white">Naresh Gohel</Link>
+ <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Verified Analysis</span>
  </div>
  </div>
               <ShareButton 
