@@ -41,6 +41,26 @@ export const SystemManagement = () => {
  }
  };
 
+ const handleExportLeads = async () => {
+ try {
+ setLoading(true);
+ const res = await apiClient.get('/leads/export', { responseType: 'blob' });
+ const url = window.URL.createObjectURL(new Blob([res.data]));
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = `leads_export_${new Date().toISOString().split('T')[0]}.xlsx`;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setStatus({ type: 'success', message: 'Leads exported successfully.' });
+ } catch (err) {
+ console.error(err);
+ setStatus({ type: 'error', message: 'Failed to export leads.' });
+ } finally {
+ setLoading(false);
+ }
+ };
+
  const handleRestore = async (e) => {
  const file = e.target.files?.[0];
  if (!file) return;
@@ -210,10 +230,11 @@ export const SystemManagement = () => {
  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Export all lead contact information and technical dossiers to a Microsoft Excel file.</p>
  </div>
  <button 
- onClick={() => window.open(`${API_BASE_URL}/analytics/export-leads`,'_blank')}
+ onClick={handleExportLeads}
+ disabled={loading}
  className="mt-10 w-full py-4 rounded-2xl bg-purple-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-purple-700 shadow-xl shadow-purple-600/10 dark:shadow-purple-600/60 flex items-center justify-center gap-3"
  >
- <CloudDownload className="h-4 w-4" />
+ {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <CloudDownload className="h-4 w-4" />}
  Export Leads to Excel
  </button>
  </div>
