@@ -19,15 +19,12 @@ import { CommentSection } from "@/features/updates/components/CommentSection";
 export const dynamic ="force-dynamic";
 
 // Dynamic SEO
-export async function generateMetadata(
- { params, searchParams },
- parent
-) {
+export async function generateMetadata({ params, searchParams, explicitLang }, parent) {
  const { slug } = await params;
  const resolvedSearchParams = await searchParams;
  const audience = resolvedSearchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
- const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||'en';
+ const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||const lang = explicitLang || cookieStore.get(\'NEXT_LOCALE\')?.value || cookieStore.get(\'preferred_language\')?.value || \'en\';
  
  const update = await getUpdateByRouteKey(slug, lang, audience);
  if (!update) return {};
@@ -46,7 +43,15 @@ export async function generateMetadata(
  return {
  title: update.seoTitle || update.title,
  description: update.seoDescription || update.content.slice(0, 160).replace(/\n/g,""),
- alternates: { canonical: `/blogs/${expectedSlug}` },
+ alternates: { 
+   canonical: `https://www.dholeraplatform.com/blogs/${expectedSlug}`,
+   languages: {
+     'en': `https://www.dholeraplatform.com/blogs/${expectedSlug}`,
+     'gu': `https://www.dholeraplatform.com/gu/blogs/${expectedSlug}`,
+     'hi': `https://www.dholeraplatform.com/hi/blogs/${expectedSlug}`,
+     'x-default': `https://www.dholeraplatform.com/blogs/${expectedSlug}`,
+   }
+ },
  authors: [{ name: "Naresh Gohel", url: "/author/naresh-gohel" }],
  keywords: update.seoKeywords || "Dholera, Real Estate, Investment",
  openGraph: {
@@ -74,12 +79,12 @@ const CATEGORY_COLORS = {
  General:"text-slate-600 dark:text-slate-400 border-slate-100 bg-white dark:bg-slate-900",
 };
 
-export default async function UpdateDetailPage({ params, searchParams }) {
+export default async function UpdateDetailPage({ params, searchParams, explicitLang }) {
  const { slug } = await params;
  const resolvedSearchParams = await searchParams;
  const audience = resolvedSearchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
- const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||'en';
+ const lang = explicitLang || cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
 
  const update = await getUpdateByRouteKey(slug, lang, audience);
 
