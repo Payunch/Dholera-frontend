@@ -103,6 +103,21 @@ const nextConfig = {
         destination: "/terms-and-conditions",
         permanent: true,
       },
+      {
+        source: "/blogs/ahmedabad-metro-phase-3-cleared-a-major-boost-for-dholera-airport-link",
+        destination: "/blogs/ahmedabad-metro-phase-3-pib-clearance-boosting-connectivity-to-dholera-smart-city",
+        permanent: true,
+      },
+      {
+        source: "/blogs/ahmedabad-metro-phase-3-gets-pib-clearance-dholera-airport-link-moves-closer",
+        destination: "/blogs/ahmedabad-metro-phase-3-pib-clearance-boosting-connectivity-to-dholera-smart-city",
+        permanent: true,
+      },
+      {
+        source: "/blogs/western-railway-floats-18901-crore-tender-for-dholera-smart-city",
+        destination: "/blogs/western-railway-has-floated-a-massive-1890168-crore-tender",
+        permanent: true,
+      },
     ];
   },
   images: {
