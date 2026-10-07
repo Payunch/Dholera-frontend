@@ -41,6 +41,26 @@ export const SystemManagement = () => {
  }
  };
 
+ const handleSqliteBackup = async () => {
+ try {
+ setLoading(true);
+ const res = await apiClient.get('/admin/backup/sqlite', { responseType: 'blob' });
+ const blob = new Blob([res.data]);
+ const url = window.URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = `database_live_${new Date().toISOString().split('T')[0]}.sqlite`;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setStatus({ type:'success', message:'SQLite Database downloaded successfully.' });
+ } catch (err) {
+ setStatus({ type:'error', message:'Failed to download SQLite Database.' });
+ } finally {
+ setLoading(false);
+ }
+ };
+
  const handleExportLeads = async () => {
  try {
  setLoading(true);
@@ -164,14 +184,24 @@ export const SystemManagement = () => {
  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Full System Backup</h3>
  <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Download a complete JSON snapshot of all leads, purchases, updates, and system logs.</p>
  </div>
+ <div className="mt-10 flex flex-col gap-3">
  <button 
  onClick={handleBackup}
  disabled={loading}
- className="mt-10 w-full py-4 rounded-2xl bg-blue-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-blue-700 shadow-xl shadow-blue-600/10 dark:shadow-blue-600/60 flex items-center justify-center gap-3"
+ className="w-full py-4 rounded-2xl bg-blue-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-blue-700 shadow-xl shadow-blue-600/10 dark:shadow-blue-600/60 flex items-center justify-center gap-3"
  >
  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <CloudDownload className="h-4 w-4" />}
- Generate Snapshot
+ Generate JSON Snapshot
  </button>
+ <button 
+ onClick={handleSqliteBackup}
+ disabled={loading}
+ className="w-full py-4 rounded-2xl bg-indigo-600 text-white text-xs font-black uppercase tracking-widest transition-all hover:bg-indigo-700 shadow-xl shadow-indigo-600/10 dark:shadow-indigo-600/60 flex items-center justify-center gap-3"
+ >
+ {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Database className="h-4 w-4" />}
+ Download SQLite DB
+ </button>
+ </div>
  </div>
 
  {/* Restore Card */}
