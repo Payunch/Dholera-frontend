@@ -7,7 +7,9 @@ import { format } from "date-fns";
 export function CommentSection({ updateId }) {
   const [comments, setComments] = useState([]);
   const [authorName, setAuthorName] = useState("");
-  const [content, setContent] = useState("");
+  const [authorEmail, setAuthorEmail] = useState("");
+  const [body, setBody] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -38,7 +40,7 @@ export function CommentSection({ updateId }) {
       const res = await fetch(`${API_BASE_URL}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ update_id: updateId, author_name: authorName, content }),
+        body: JSON.stringify({ updateId, authorName, authorEmail, body, honeypot }),
       });
 
       const data = await res.json();
@@ -46,9 +48,11 @@ export function CommentSection({ updateId }) {
       if (!res.ok) {
         setError(data.error || "Failed to post comment.");
       } else {
-        setSuccess("Comment posted successfully!");
+        setSuccess(data.message || "Comment posted successfully!");
         setAuthorName("");
-        setContent("");
+        setAuthorEmail("");
+        setBody("");
+        setHoneypot("");
         fetchComments();
       }
     } catch (err) {
@@ -79,16 +83,36 @@ export function CommentSection({ updateId }) {
             />
           </div>
           <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Email (Optional, not published)</label>
+            <input
+              type="email"
+              value={authorEmail}
+              onChange={(e) => setAuthorEmail(e.target.value)}
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+              placeholder="you@example.com"
+            />
+          </div>
+          <div style={{ display: 'none' }}>
+            <label>Website</label>
+            <input
+              type="text"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex="-1"
+              autoComplete="off"
+            />
+          </div>
+          <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Comment</label>
             <textarea
               required
               rows="4"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
               className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
               placeholder="Share your thoughts..."
             />
-            <p className="text-[10px] text-slate-400 mt-2">* Comments with inappropriate language will be automatically hidden.</p>
+            <p className="text-[10px] text-slate-400 mt-2">* Comments with external links are not allowed. Your comment will be moderated before appearing.</p>
           </div>
           
           {error && <div className="text-red-500 text-sm font-semibold">{error}</div>}
