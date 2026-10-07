@@ -22,8 +22,8 @@ export function CommentSection({ updateId }) {
     try {
       const res = await fetch(`${API_BASE_URL}/comments/${updateId}`);
       if (res.ok) {
-        const data = await res.json();
-        setComments(data);
+        const payload = await res.json();
+        setComments(payload.data || payload || []);
       }
     } catch (err) {
       console.error("Failed to fetch comments", err);

@@ -16,6 +16,7 @@ export default function adminLayout({ children }) {
   const menuItems = [
     { name: 'Leads', path: '/admin/leads', icon: '👥' },
     { name: 'Updates', path: '/admin/blogs', icon: '📝' },
+    { name: 'Comments', path: '/admin/comments', icon: '💬' },
     { name: 'Insights', path: '/admin/insights', icon: '📈' },
     { name: 'Database', path: '/admin/database', icon: '🗄️' },
     { name: 'System', path: '/admin/settings', icon: '⚙️' }
