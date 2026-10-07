@@ -24,7 +24,7 @@ export async function generateMetadata({ params, searchParams, explicitLang }, p
  const resolvedSearchParams = await searchParams;
  const audience = resolvedSearchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
- const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value ||const lang = explicitLang || cookieStore.get(\'NEXT_LOCALE\')?.value || cookieStore.get(\'preferred_language\')?.value || \'en\';
+ const lang = explicitLang || cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
  
  const update = await getUpdateByRouteKey(slug, lang, audience);
  if (!update) return {};
