@@ -1,7 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 import { getAuth } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyBN6qClTk28er9L_AoQnko6M8weNp4bLZk",
@@ -16,14 +15,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const auth = typeof window !== "undefined" ? getAuth(app) : null;
-let analytics = null;
-if (typeof window !== "undefined") {
-  try {
-    analytics = getAnalytics(app);
-  } catch (err) {
-    console.error("Firebase Analytics failed to initialize (likely invalid config):", err);
-  }
-}
+// Firebase Analytics has been removed to prevent double-tagging. 
+// We are using Google Tag Manager (GTM) for analytics instead.
 // Initialize App Check (Roadmap Phase 6)
 if (typeof window !== "undefined") {
   const isHeadless = navigator.webdriver || window.name === 'puppeteer';
@@ -39,4 +32,4 @@ if (typeof window !== "undefined") {
   }
 }
 
-export { app, auth, analytics };
+export { app, auth };

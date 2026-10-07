@@ -6,11 +6,21 @@ import React, { useEffect } from"react";
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID ||"GTM-WM9HRJVV";
 const CLARITY_ID = process.env.NEXT_PUBLIC_MS_CLARITY_ID;
 
+export const trackCustomEvent = (eventName, params = {}) => {
+  if (typeof window !== "undefined" && window.dataLayer) {
+    window.dataLayer.push({
+      event: eventName,
+      ...params,
+    });
+  }
+};
+
+
 export default function Analytics() {
  useEffect(() => {
   const handleClick = (event) => {
    const link = event.target.closest?.("a[href]");
-   if (!link || typeof window.gtag !== "function") return;
+   if (!link || !window.dataLayer) return;
 
    const href = link.getAttribute("href") || "";
    let eventName;
@@ -19,7 +29,12 @@ export default function Analytics() {
    else if (href.startsWith("mailto:")) eventName = "email_click";
    else if (href.startsWith("/download") || href.includes(".apk")) eventName = "download_click";
 
-   if (eventName) window.gtag("event", eventName, { link_url: link.href, page_path: window.location.pathname });
+   if (eventName) {
+     trackCustomEvent(eventName, { 
+       link_url: link.href, 
+       page_path: window.location.pathname 
+     });
+   }
   };
 
   document.addEventListener("click", handleClick);
