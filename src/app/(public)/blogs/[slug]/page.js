@@ -13,6 +13,7 @@ import { ShareButton } from "./ShareButton";
 import { siteConfig } from "@/config/site";
 import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
 import { getBlogSlug } from "@/lib/blogSlug";
+import { CommentSection } from "@/features/updates/components/CommentSection";
 
 
 export const dynamic ="force-dynamic";
@@ -230,6 +231,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
     <>
       <ArticleBody content={update.content} />
       <FaqSchema content={update.content} />
+      <CommentSection updateId={update.id} />
     </>
   )}
 
