@@ -147,7 +147,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
  </div>
 
  <h1 className="text-4xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white md:text-6xl uppercase">
- {update.title}
+ {update.seoTitle || update.title}
  </h1>
 
  {update.tags && (
