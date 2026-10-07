@@ -23,6 +23,7 @@ export function Navbar() {
     { label: "Our App", href: "/download", icon: Smartphone },
     { label: t('nav_portals'), href: "/portals", icon: ShieldCheck },
     { label: t('nav_projects'), href: "/projects", icon: Grid },
+    { label: "Investment Guide", href: "/investment-guide", icon: Landmark },
     { label: t('nav_airport'), href: "/airport", icon: Plane },
     { label: t('nav_infrastructure'), href: "/infrastructure", icon: Construction },
     { label: t('nav_about'), href: "/about-us", icon: Users },

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { 
   X, Home, Map, FileText, ShieldCheck, Grid, Plane, 
   Construction, Sparkles, Users, PhoneCall, 
-  Languages, Sun, Moon, Smartphone, ChevronRight, Calculator
+  Languages, Sun, Moon, Smartphone, ChevronRight, Calculator, Landmark
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/providers/LanguageProvider";
@@ -47,6 +47,7 @@ export function SidebarDrawer({ isOpen, onClose }) {
     { label: "Our App", href: "/download", icon: Smartphone },
     { label: t("nav_portals"), href: "/portals", icon: ShieldCheck },
     { label: t("nav_projects"), href: "/projects", icon: Grid },
+    { label: "Investment Guide", href: "/investment-guide", icon: Landmark },
     { label: t("nav_airport"), href: "/airport", icon: Plane },
     { label: t("nav_infrastructure"), href: "/infrastructure", icon: Construction },
     { label: "Clearance Engine", href: "/clearance-engine", icon: Calculator },

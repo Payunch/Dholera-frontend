@@ -63,6 +63,10 @@ export function Footer() {
             <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t('platform')}</h4>
             <ul className="space-y-4 text-sm font-semibold text-slate-300 dark:text-slate-600">
               <li><Link href="/" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_home')}</Link></li>
+              <li><Link href="/projects" className="hover:text-[#FF7A00] transition-all duration-300">Projects</Link></li>
+              <li><Link href="/investment-guide" className="hover:text-[#FF7A00] transition-all duration-300">Investment Guide</Link></li>
+              <li><Link href="/government-schemes" className="hover:text-[#FF7A00] transition-all duration-300">Government Schemes</Link></li>
+              <li><Link href="/travel-lifestyle" className="hover:text-[#FF7A00] transition-all duration-300">Travel & Lifestyle</Link></li>
               <li><Link href="/clearance-engine" className="hover:text-[#FF7A00] transition-all duration-300">{t('clearance_engine')}</Link></li>
               <li><Link href="/blogs" className="hover:text-[#FF7A00] transition-all duration-300">{t('growth_updates')}</Link></li>
               <li><Link href="/pdf?trigger=true" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_pdf')}</Link></li>

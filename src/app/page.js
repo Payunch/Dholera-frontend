@@ -59,6 +59,10 @@ export default async function HomePage() {
  <li><Translate id="fee_calculator" /></li>
  <li><Translate id="compliance_verification" /></li>
  </ul>
+ <div className="mt-10 flex flex-wrap gap-4">
+   <a href="/projects" className="inline-flex items-center rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">View Verified Projects</a>
+   <a href="/investment-guide" className="inline-flex items-center rounded-xl border-2 border-slate-200 px-6 py-3 font-semibold text-slate-900 transition-colors hover:border-slate-300 dark:border-slate-800 dark:text-white dark:hover:border-slate-700">Read the Investment Guide</a>
+ </div>
  </section>
  </div>
  );
