@@ -94,7 +94,7 @@ export default async function UpdateDetailPage({ params, searchParams, explicitL
 
  const expectedSlug = getBlogSlug(update);
  if (slug !== expectedSlug) {
-   permanentRedirect(`/blogs/${expectedSlug}${audience === 'app' ? '?audience=app' : ''}`);
+   permanentRedirect(`${require("@/lib/blogSlug").getBlogPath(update)}${audience === "app" ? "?audience=app" : ""}`);
  }
 
   const imgSrc = update.imageUrl 
