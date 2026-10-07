@@ -8,7 +8,7 @@ export default function robots() {
  rules: {
  userAgent:"*",
  allow:"/",
- disallow: ["/admin/","/api/","/pdf/","/portals/"],
+ disallow: ["/admin/","/pdf/","/portals/"],
  },
  sitemap:`${baseUrl}/sitemap.xml`,
  host: baseUrl,
