@@ -46,7 +46,7 @@ export function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/80 dark:bg-slate-950/80 dark:border-slate-800 backdrop-blur-md transition-colors">
-        <div className="container mx-auto flex h-20 w-full min-w-0 items-center justify-between gap-2 px-2 sm:px-4 md:px-8">
+        <div className="container mx-auto flex min-h-[5rem] py-3 w-full min-w-0 items-center justify-between gap-4 px-2 sm:px-4 md:px-8 flex-wrap">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             {/* Side Menu Drawer Button */}
             <button
@@ -75,7 +75,7 @@ export function Navbar() {
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-5 text-[10px] font-black uppercase tracking-wider font-display">
+          <nav className="hidden md:flex flex-wrap justify-end items-center gap-x-3 gap-y-3 text-[10px] font-black uppercase tracking-wider font-display">
             {navItems.map((item) => (
               <Link
                 key={item.href}
