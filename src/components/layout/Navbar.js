@@ -14,15 +14,25 @@ export function Navbar() {
   const { lang, setLang, t, theme, toggleTheme } = useLanguage();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [isLangOpen, setIsLangOpen] = React.useState(false);
+  const [isMoreOpen, setIsMoreOpen] = React.useState(false);
+  const toggleMore = () => setIsMoreOpen(!isMoreOpen);
 
   const navItems = [
-    { label: t('nav_home'), href: "/", icon: Home },
-    { label: t('nav_projects'), href: "/projects", icon: Grid },
-    { label: "Invest Guide", href: "/investment-guide", icon: Landmark },
-    { label: t('nav_blogs'), href: "/blogs", icon: Sparkles },
-    { label: t('nav_tp_maps'), href: "/tp-maps", icon: Map },
-    { label: t('nav_portals'), href: "/portals", icon: ShieldCheck },
+    { label: t('nav_home'), href: '/', icon: Home },
+    { label: t('nav_blogs'), href: '/blogs', icon: Sparkles },
+    { label: t('nav_tp_maps'), href: '/tp-maps', icon: Map },
+    { label: t('nav_pdf'), href: '/pdf?trigger=true', icon: FileText },
+    { label: 'Our App', href: '/download', icon: Smartphone },
+    { label: t('nav_portals'), href: '/portals', icon: ShieldCheck },
+    { label: t('nav_projects'), href: '/projects', icon: Grid },
+    { label: 'Investment Guide', href: '/investment-guide', icon: Landmark },
+    { label: t('nav_airport'), href: '/airport', icon: Plane },
+    { label: t('nav_infrastructure'), href: '/infrastructure', icon: Construction },
+    { label: t('nav_about'), href: '/about-us', icon: Users },
   ];
+
+  const primaryNavItems = navItems.slice(0, 5);
+  const moreNavItems = navItems.slice(5);
 
   const languages = [
     { code: "en", label: "English" },
@@ -65,7 +75,7 @@ export function Navbar() {
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-8 text-[10px] font-black uppercase tracking-wider font-display">
+          <nav className="hidden md:flex items-center space-x-5 text-[10px] font-black uppercase tracking-wider font-display">
             {navItems.map((item) => (
               <Link
                 key={item.href}
