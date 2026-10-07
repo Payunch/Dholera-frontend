@@ -55,6 +55,18 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/:lang(hi|gu)/:path*",
+        destination: "/:path*?explicitLang=:lang",
+      },
+      {
+        source: "/:lang(hi|gu)",
+        destination: "/?explicitLang=:lang",
+      },
+    ];
+  },
   async redirects() {
     return [
       {

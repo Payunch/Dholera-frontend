@@ -4,9 +4,10 @@ import BlogsClient from "./BlogsClient";
 
 export const dynamic = "force-dynamic";
 
-export default async function BlogsPage() {
+export default async function BlogsPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
   const cookieStore = await cookies();
-  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
+  const lang = resolvedSearchParams?.explicitLang || cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
   
   let updates = [];
   let hasError = false;

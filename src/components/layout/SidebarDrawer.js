@@ -190,20 +190,31 @@ export function SidebarDrawer({ isOpen, onClose }) {
               Language:
             </span>
             <div className="flex gap-1">
-              {languages.map((l) => (
-                <button
-                  key={l.code}
-                  onClick={() => setLang(l.code)}
-                  className={cn(
-                    "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border transition-all",
-                    lang === l.code
-                      ? "bg-orange-600 border-orange-600 text-white"
-                      : "border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300"
-                  )}
-                >
-                  {l.code}
-                </button>
-              ))}
+              {languages.map((l) => {
+                let currentPath = pathname;
+                if (currentPath.startsWith('/hi/') || currentPath === '/hi') {
+                  currentPath = currentPath.replace(/^\/hi/, '') || '/';
+                } else if (currentPath.startsWith('/gu/') || currentPath === '/gu') {
+                  currentPath = currentPath.replace(/^\/gu/, '') || '/';
+                }
+                const localizedPath = l.code === 'en' ? currentPath : `/${l.code}${currentPath === '/' ? '' : currentPath}`;
+                
+                return (
+                  <Link
+                    key={l.code}
+                    href={localizedPath}
+                    onClick={() => setLang(l.code)}
+                    className={cn(
+                      "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border transition-all",
+                      lang === l.code
+                        ? "bg-orange-600 border-orange-600 text-white"
+                        : "border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-300"
+                    )}
+                  >
+                    {l.code}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>

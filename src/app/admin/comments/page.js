@@ -17,8 +17,8 @@ export default function AdminCommentsPage() {
   const fetchComments = async () => {
     try {
       setLoading(true);
-      const res = await apiClient.get('/updates/comments/admin/all');
-      setComments(res.data);
+      const res = await apiClient.get('/comments/admin/all');
+      setComments(res.data.data || res.data || []);
     } catch (err) {
       console.error(err);
       setError("Failed to fetch comments.");
@@ -29,7 +29,7 @@ export default function AdminCommentsPage() {
 
   const handleModerate = async (id, status) => {
     try {
-      await apiClient.patch(`/updates/comments/admin/${id}`, { status });
+      await apiClient.patch(`/comments/admin/${id}`, { status });
       // Update local state to reflect the change
       setComments((prev) =>
         prev.map((c) => (c.id === id ? { ...c, status } : c))

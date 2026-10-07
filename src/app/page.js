@@ -27,9 +27,10 @@ export const metadata = {
  }
 };
 
-export default async function HomePage() {
+export default async function HomePage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
   const cookieStore = await cookies();
-  const lang = cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
+  const lang = resolvedSearchParams?.explicitLang || cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
   
   let recentUpdates = [];
   try {

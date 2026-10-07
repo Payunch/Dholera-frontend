@@ -19,12 +19,12 @@ import { CommentSection } from "@/features/updates/components/CommentSection";
 export const dynamic ="force-dynamic";
 
 // Dynamic SEO
-export async function generateMetadata({ params, searchParams, explicitLang }, parent) {
+export async function generateMetadata({ params, searchParams }, parent) {
  const { slug } = await params;
  const resolvedSearchParams = await searchParams;
  const audience = resolvedSearchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
- const lang = explicitLang || cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
+ const lang = resolvedSearchParams?.explicitLang || cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
  
  const update = await getUpdateByRouteKey(slug, lang, audience);
  if (!update) return {};
@@ -79,12 +79,12 @@ const CATEGORY_COLORS = {
  General:"text-slate-600 dark:text-slate-400 border-slate-100 bg-white dark:bg-slate-900",
 };
 
-export default async function UpdateDetailPage({ params, searchParams, explicitLang }) {
+export default async function UpdateDetailPage({ params, searchParams }) {
  const { slug } = await params;
  const resolvedSearchParams = await searchParams;
  const audience = resolvedSearchParams?.audience === "app" ? "app" : "web";
  const cookieStore = await cookies();
- const lang = explicitLang || cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
+ const lang = resolvedSearchParams?.explicitLang || cookieStore.get('NEXT_LOCALE')?.value || cookieStore.get('preferred_language')?.value || 'en';
 
  const update = await getUpdateByRouteKey(slug, lang, audience);
 
