@@ -22,7 +22,7 @@ export function Navbar() {
     { label: t('nav_pdf') || 'Documents', href: '/pdf?trigger=true' },
     { label: t('nav_portals') || 'Portals', href: '/portals' },
     { label: t('nav_projects') || 'Projects', href: '/projects' },
-    { label: 'Investment Guide', href: '/investment-guide' },
+    { label: t('nav_investment_guide') || 'Investment Guide', href: '/investment-guide' },
     { label: t('nav_airport') || 'Airport', href: '/airport' },
     { label: t('nav_infrastructure') || 'Infrastructure', href: '/infrastructure' },
     { label: t('nav_about') || 'About Us', href: '/about-us' },

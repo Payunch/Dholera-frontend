@@ -47,7 +47,7 @@ export function SidebarDrawer({ isOpen, onClose }) {
     { label: "Our App", href: "/download", icon: Smartphone },
     { label: t("nav_portals"), href: "/portals", icon: ShieldCheck },
     { label: t("nav_projects"), href: "/projects", icon: Grid },
-    { label: "Investment Guide", href: "/investment-guide", icon: Landmark },
+    { label: t("nav_investment_guide") || "Investment Guide", href: "/investment-guide", icon: Landmark },
     { label: t("nav_airport"), href: "/airport", icon: Plane },
     { label: t("nav_infrastructure"), href: "/infrastructure", icon: Construction },
     { label: "Clearance Engine", href: "/clearance-engine", icon: Calculator },

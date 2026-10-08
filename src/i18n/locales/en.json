@@ -36,7 +36,7 @@
     "footer_owner": "Contact Owner",
     "growth_updates": "Growth Updates",
     "clearance_engine": "Clearance Engine (Legal & RERA)",
-    "hero_title": "Dholera Platform",
+    "hero_title": "Dholera Smart City",
     "hero_desc": "Dholera Platform is a comprehensive application designed for exploring and tracking real estate investments, smart city developments, and infrastructure progress in Dholera SIR.",
     "view_projects": "View Projects",
     "trusted_by": "Trusted by 12,000+ Investors",
@@ -127,7 +127,7 @@
     "expected_2025": "Expected 2025-26",
     "terminal_capacity": "Runway and Terminal building for 1.5 million passengers per year.",
     "planned": "Planned",
-    "expected_2030": "2030+",
+    "expected_2030": "Expected 2030",
     "expansion_desc": "Expansion to handle larger cargo and increased passenger traffic.",
     "expressway_linked": "Expressway Linked",
     "ongoing": "Ongoing",
@@ -264,5 +264,11 @@
     "smart_cta_button": "Contact the platform",
     "tp_loading_matrix": "Loading intelligence matrix...",
     "tp_verify_boundaries": "Verify exact plot boundaries, road widths, and zoning use-cases for this Town Planning scheme.",
-    "tp_explore_matrix": "Explore data matrix"
+    "tp_explore_matrix": "Explore data matrix",
+    "nav_investment_guide": "Investment Guide",
+    "contact": "Contact",
+    "phone_too_short": "Phone number is too short",
+    "terms_and_conditions": "Terms and Conditions",
+    "last_updated": "Last Updated",
+    "exclusive_access": "Exclusive Access"
 }
