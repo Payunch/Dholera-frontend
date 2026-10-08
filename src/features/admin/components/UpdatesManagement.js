@@ -52,6 +52,12 @@ export function UpdatesManagement() {
  const [isSubmitting, setIsSubmitting] = React.useState(false);
  const [aiReview, setAiReview] = React.useState(null);
  const [isReviewing, setIsReviewing] = React.useState(false);
+ const [titleHi, setTitleHi] = React.useState("");
+ const [contentHi, setContentHi] = React.useState("");
+ const [titleGu, setTitleGu] = React.useState("");
+ const [contentGu, setContentGu] = React.useState("");
+ const [isTranslating, setIsTranslating] = React.useState(false);
+ const [translationStatus, setTranslationStatus] = React.useState("");
 
  const loadUpdates = async () => {
  setLoading(true);
@@ -89,6 +95,11 @@ export function UpdatesManagement() {
  setImageTitle("");
  setTags("");
  setAiReview(null);
+ setTitleHi("");
+ setContentHi("");
+ setTitleGu("");
+ setContentGu("");
+ setTranslationStatus("");
  } else {
  setEditingId(update.id);
  setTitle(update.title);
@@ -108,6 +119,11 @@ export function UpdatesManagement() {
  setImageTitle(update.imageTitle || "");
  setTags(update.tags || "");
  setAiReview(null);
+ setTitleHi(update.title_hi || "");
+ setContentHi(update.content_hi || "");
+ setTitleGu(update.title_gu || "");
+ setContentGu(update.content_gu || "");
+ setTranslationStatus((update.title_hi && update.title_gu) ? "Hindi & Gujarati translations ready ✓" : "");
  }
  };
 
@@ -185,6 +201,10 @@ export function UpdatesManagement() {
  if (seoKeywords) formData.append("seoKeywords", seoKeywords);
  if (slug) formData.append("slug", slug);
  if (imageAltText) formData.append("imageAltText", imageAltText);
+ if (titleHi) formData.append("title_hi", titleHi);
+ if (contentHi) formData.append("content_hi", contentHi);
+ if (titleGu) formData.append("title_gu", titleGu);
+ if (contentGu) formData.append("content_gu", contentGu);
  if (imageTitle) formData.append("imageTitle", imageTitle);
  if (tags) formData.append("tags", tags);
  if (imageFile) {
@@ -366,13 +386,17 @@ export function UpdatesManagement() {
  <section className="rounded-3xl border border-indigo-200 bg-gradient-to-r from-indigo-50 via-white to-orange-50 p-5 dark:border-indigo-900/40 dark:from-indigo-950/30 dark:via-slate-900 dark:to-orange-950/20">
    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
      <div><div className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-indigo-700 dark:text-indigo-300"><Sparkles className="h-4 w-4" />AI SEO Assistant</div><p className="mt-1 text-sm font-medium text-slate-600 dark:text-slate-300">Review this complete draft with your server-side Gemini key. It suggests improvements; you choose what to apply.</p></div>
-     <button type="button" onClick={runAiReview} disabled={isReviewing} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-indigo-700 px-5 py-3 text-xs font-black uppercase tracking-widest text-white transition hover:bg-indigo-800 disabled:opacity-60"><WandSparkles className="h-4 w-4" />{isReviewing ? "Reviewing…" : "Review with AI"}</button>
+     <div className="flex flex-wrap items-center gap-3">
+        <button type="button" onClick={runAiReview} disabled={isReviewing} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-indigo-700 px-5 py-3 text-xs font-black uppercase tracking-widest text-white transition hover:bg-indigo-800 disabled:opacity-60"><WandSparkles className="h-4 w-4" />{isReviewing ? "Reviewing…" : "Review with AI"}</button>
+        <button type="button" onClick={handleAutoTranslate} disabled={isTranslating} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-emerald-700 px-5 py-3 text-xs font-black uppercase tracking-widest text-white transition hover:bg-emerald-800 disabled:opacity-60"><Languages className="h-4 w-4" />{isTranslating ? "Translating…" : "Auto-Translate (Hindi & Gujarati)"}</button>
+      </div>
    </div>
    {aiReview && <div className="mt-5 rounded-2xl bg-white/90 p-4 shadow-sm dark:bg-slate-950/60">
      <div className="flex flex-wrap items-center justify-between gap-3"><p className="text-sm font-black text-slate-900 dark:text-white">AI estimate: {aiReview.estimatedScore}/100</p><button type="button" onClick={applyAiBasics} className="rounded-xl border border-indigo-200 px-3 py-2 text-[11px] font-black uppercase tracking-wider text-indigo-700 hover:bg-indigo-50 dark:border-indigo-800 dark:text-indigo-300"><WandSparkles className="mr-1 inline h-3.5 w-3.5" />Apply SEO basics</button></div>
      <div className="mt-3 grid gap-4 md:grid-cols-2"><div><p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Fix before publishing</p><ul className="mt-2 space-y-1 text-sm text-slate-700 dark:text-slate-200">{aiReview.missingItems?.map((item) => <li key={item}>• {item}</li>)}</ul></div><div><p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Suggestions</p><ul className="mt-2 space-y-1 text-sm text-slate-700 dark:text-slate-200">{aiReview.improvements?.map((item) => <li key={item}>• {item}</li>)}</ul></div></div>
      {aiReview.faqQuestions?.length > 0 && <div className="mt-4"><p className="text-[11px] font-black uppercase tracking-widest text-slate-500">Suggested FAQ questions</p><p className="mt-1 text-sm text-slate-700 dark:text-slate-200">{aiReview.faqQuestions.join(" · ")}</p></div>}
    </div>}
+ {translationStatus && <div className="mt-4 flex items-center gap-2 rounded-2xl bg-emerald-50 px-4 py-3 text-xs font-bold text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"><Check className="h-4 w-4 shrink-0 text-emerald-600" />{translationStatus}</div>}
  </section>
  <div className="grid gap-8 xl:grid-cols-[minmax(360px,0.85fr)_minmax(600px,1.5fr)]">
  <div className="space-y-6">
