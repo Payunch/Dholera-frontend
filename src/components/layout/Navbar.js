@@ -45,146 +45,120 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/90 dark:bg-slate-950/90 dark:border-slate-800 backdrop-blur-md transition-colors">
-        <div className="container mx-auto flex min-h-[5rem] py-2.5 w-full min-w-0 items-center justify-between gap-3 px-2 sm:px-4 md:px-6 lg:px-8">
-          {/* Logo & Side Menu Drawer Button (Untouched) */}
-          <div className="flex min-w-0 items-center gap-2 sm:gap-3 shrink-0">
-            <button
-              onClick={toggleSidebar}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-800 hover:border-orange-500 hover:text-orange-600 transition-all shadow-sm group"
-              title="Open Side Menu"
-              aria-label="Side menu"
-            >
-              <AlignLeft className="h-5 w-5 transition-transform group-hover:scale-110" />
-            </button>
-
-            <Link href="/" className="flex min-h-11 shrink-0 items-center">
-              <div className="hidden md:block">
-                <SplitLogo height={50} isFull />
-              </div>
-              <div className="block md:hidden -ml-1">
-                <SplitLogo height={32} isFull />
-              </div>
-            </Link>
+      <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/95 dark:bg-slate-950/95 dark:border-slate-800 backdrop-blur-md transition-colors shadow-sm">
+        <div className="container mx-auto px-2 sm:px-3 md:px-4 lg:px-6 py-2.5">
+          <div className="grid grid-cols-12 items-center gap-1.5 md:gap-2 lg:gap-3 w-full">
             
-            <div className="hidden min-w-0 items-center overflow-hidden border-l-2 border-slate-200 pl-3 ml-2 h-6 dark:border-slate-800 sm:flex md:hidden">
-              <span className="text-[9px] font-black uppercase tracking-[0.15em] text-[#FF7A00] truncate max-w-[120px]">
-                {navItems.find(item => isItemActive(item.href))?.label || "DHOLERA"}
-              </span>
-            </div>
-          </div>
-
-          {/* Desktop Nav: 7 Columns & 2 Rows with NO BOX (Visible only on xl+ screens >= 1280px) */}
-          <div className="hidden xl:flex items-center gap-4 shrink-0">
-            <nav className="grid grid-cols-7 gap-x-3.5 2xl:gap-x-4 gap-y-1.5 font-display items-center text-center">
-              {navItems.map((item) => {
-                const active = isItemActive(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "transition-colors text-[9.5px] 2xl:text-[10.5px] font-black uppercase tracking-wider text-center whitespace-nowrap py-0.5",
-                      active
-                        ? "text-orange-600 dark:text-orange-500"
-                        : "text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-
-            <div className="h-9 w-px bg-slate-200 dark:bg-slate-800" />
-          </div>
-
-          {/* Utility Controls (Theme, Language, Contact) for All Screens */}
-          <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 hover:border-orange-600 transition-all group shadow-sm shrink-0"
-              title="Toggle Theme"
-              aria-label="Toggle color theme"
-            >
-              {theme === 'light' ? <Sun className="h-4 w-4 text-orange-500" /> : <Moon className="h-4 w-4 text-amber-400" />}
-            </button>
-
-            {/* Language Switcher */}
-            <div className="relative">
+            {/* LEFT 2 COLUMNS (Constant): Menu Icon + Logo */}
+            <div className="col-span-7 sm:col-span-6 md:col-span-2 flex items-center gap-1.5 sm:gap-2 min-w-0">
               <button
-                onClick={toggleLang}
-                className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/50 text-orange-600 font-black transition-all hover:bg-orange-100 shrink-0"
-                aria-label="Select language"
+                onClick={toggleSidebar}
+                className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-800 hover:border-orange-500 hover:text-orange-600 transition-all shadow-sm group"
+                title="Open Side Menu"
+                aria-label="Side menu"
               >
-                <Languages className="h-3.5 w-3.5" />
-                <span className="text-[10px] uppercase font-black">{lang}</span>
-                <ChevronDown className={cn("h-3 w-3 transition-transform", isLangOpen && "rotate-180")} />
+                <AlignLeft className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:scale-110" />
               </button>
-              {isLangOpen && (
-                <div className="absolute right-0 mt-3 w-36 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-2 shadow-2xl animate-in fade-in zoom-in-95 z-[200]">
-                  {languages.map((l) => {
-                    let currentPath = pathname;
-                    if (currentPath.startsWith('/hi/') || currentPath === '/hi') {
-                      currentPath = currentPath.replace(/^\/hi/, '') || '/';
-                    } else if (currentPath.startsWith('/gu/') || currentPath === '/gu') {
-                      currentPath = currentPath.replace(/^\/gu/, '') || '/';
-                    }
-                    const localizedPath = l.code === 'en' ? currentPath : `/${l.code}${currentPath === '/' ? '' : currentPath}`;
 
-                    return (
-                      <Link
-                        key={l.code}
-                        href={localizedPath}
-                        onClick={() => {
-                          setLang(l.code);
-                          setIsLangOpen(false);
-                        }}
-                        className={cn(
-                          "block w-full rounded-lg px-3 py-1.5 text-left text-[10px] font-black uppercase tracking-widest transition-colors",
-                          lang === l.code ? "bg-orange-600 text-white" : "text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-orange-600"
-                        )}
-                      >
-                        {l.label}
-                      </Link>
-                    );
-                  })}
+              <Link href="/" className="flex items-center min-w-0 shrink-0">
+                <div className="hidden md:block">
+                  <SplitLogo height={42} isFull />
                 </div>
-              )}
+                <div className="block md:hidden">
+                  <SplitLogo height={32} isFull />
+                </div>
+              </Link>
             </div>
 
-            {/* Contact Button */}
-            <Link
-              href="/contact"
-              className="hidden sm:inline-flex rounded-full bg-orange-600 hover:bg-orange-500 px-3.5 sm:px-4 py-2 text-white text-[10px] font-black uppercase tracking-wider transition-all shadow-md shadow-orange-600/10 shrink-0"
-            >
-              {t('nav_contact')}
-            </Link>
-          </div>
-        </div>
+            {/* MIDDLE 8 COLUMNS (Flexible): 10 Buttons in 2 Rows Without Box */}
+            <div className="hidden md:block md:col-span-8 min-w-0">
+              <nav className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 md:gap-x-2 lg:gap-x-2.5 xl:gap-x-3.5 gap-y-1 font-display items-center text-center w-full">
+                {navItems.map((item, idx) => {
+                  const active = isItemActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        "transition-colors text-[8px] md:text-[8.5px] lg:text-[9.5px] xl:text-[10px] 2xl:text-[10.5px] font-black uppercase tracking-tight md:tracking-normal lg:tracking-wider text-center py-0.5 leading-tight block truncate",
+                        active
+                          ? "text-orange-600 dark:text-orange-500 font-black"
+                          : "text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400"
+                      )}
+                      title={item.label}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
 
-        {/* Dedicated Tablet Navigation Bar: 7 Columns & 2 Rows with NO BOX (Visible on tablet: md to xl) */}
-        <div className="hidden md:block xl:hidden w-full border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-900/50 py-2 px-3 sm:px-4 md:px-6">
-          <nav className="container mx-auto grid grid-cols-7 gap-x-2 md:gap-x-3.5 gap-y-1.5 font-display items-center text-center">
-            {navItems.map((item) => {
-              const active = isItemActive(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "transition-colors text-[9.5px] md:text-[10px] lg:text-[10.5px] font-black uppercase tracking-wider text-center whitespace-nowrap py-0.5",
-                    active
-                      ? "text-orange-600 dark:text-orange-500"
-                      : "text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400"
-                  )}
+            {/* RIGHT 2 COLUMNS (Constant): Mode Select + Language + Contact Us */}
+            <div className="col-span-5 sm:col-span-6 md:col-span-2 flex items-center justify-end gap-1 sm:gap-1.5 md:gap-2 min-w-0">
+              {/* Mode Select (Theme Toggle) */}
+              <button
+                onClick={toggleTheme}
+                className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 hover:border-orange-600 transition-all group shadow-sm"
+                title="Toggle Theme"
+                aria-label="Toggle color theme"
+              >
+                {theme === 'light' ? <Sun className="h-4 w-4 text-orange-500" /> : <Moon className="h-4 w-4 text-amber-400" />}
+              </button>
+
+              {/* Language Select */}
+              <div className="relative shrink-0">
+                <button
+                  onClick={toggleLang}
+                  className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/50 text-orange-600 font-black transition-all hover:bg-orange-100"
+                  aria-label="Select language"
                 >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
+                  <Languages className="h-3.5 w-3.5" />
+                  <span className="text-[10px] uppercase font-black">{lang}</span>
+                  <ChevronDown className={cn("h-3 w-3 transition-transform", isLangOpen && "rotate-180")} />
+                </button>
+                {isLangOpen && (
+                  <div className="absolute right-0 mt-3 w-36 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-2 shadow-2xl animate-in fade-in zoom-in-95 z-[200]">
+                    {languages.map((l) => {
+                      let currentPath = pathname;
+                      if (currentPath.startsWith('/hi/') || currentPath === '/hi') {
+                        currentPath = currentPath.replace(/^\/hi/, '') || '/';
+                      } else if (currentPath.startsWith('/gu/') || currentPath === '/gu') {
+                        currentPath = currentPath.replace(/^\/gu/, '') || '/';
+                      }
+                      const localizedPath = l.code === 'en' ? currentPath : `/${l.code}${currentPath === '/' ? '' : currentPath}`;
+
+                      return (
+                        <Link
+                          key={l.code}
+                          href={localizedPath}
+                          onClick={() => {
+                            setLang(l.code);
+                            setIsLangOpen(false);
+                          }}
+                          className={cn(
+                            "block w-full rounded-lg px-3 py-1.5 text-left text-[10px] font-black uppercase tracking-widest transition-colors",
+                            lang === l.code ? "bg-orange-600 text-white" : "text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-orange-600"
+                          )}
+                        >
+                          {l.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Contact Us */}
+              <Link
+                href="/contact"
+                className="hidden sm:inline-flex rounded-full bg-orange-600 hover:bg-orange-500 px-2.5 sm:px-3 md:px-3.5 py-1.5 text-white text-[9px] md:text-[9.5px] font-black uppercase tracking-wider transition-all shadow-md shadow-orange-600/10 shrink-0"
+              >
+                {t('nav_contact')}
+              </Link>
+            </div>
+
+          </div>
         </div>
       </header>
 
