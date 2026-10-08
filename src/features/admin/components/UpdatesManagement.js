@@ -14,8 +14,9 @@ import {
  ExternalLink,
  ImageIcon,
  Sparkles,
- WandSparkles
-} from"lucide-react";
+ WandSparkles,
+ Languages
+} from "lucide-react";
 import { SeoReadinessPanel } from "@/features/admin/components/SeoReadinessPanel";
 import { getSeoReview, makeSlug } from "@/features/admin/utils/seoScore";
 import { apiClient } from"@/lib/api";
