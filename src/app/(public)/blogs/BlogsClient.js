@@ -10,17 +10,16 @@ import { useLanguage } from '@/providers/LanguageProvider';
 import { cn } from "@/lib/utils";
 import { getBlogPath } from "@/lib/blogSlug";
 
-
 export default function BlogsClient({ initialUpdates, hasError }) {
   const { t } = useLanguage();
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("All");
 
   const TABS = [
-    { id: "All", label: "All News", keywords: [] },
-    { id: "Investment", label: "Investment", keywords: ["investment", "price", "market"] },
-    { id: "Infrastructure", label: "Infrastructure", keywords: ["infrastructure", "construction", "project"] },
-    { id: "Legal", label: "Legal & Planning", keywords: ["planning", "policy", "legal", "subsidy", "registration"] },
+    { id: "All", label: t('all_news') || "All News", keywords: [] },
+    { id: "Investment", label: t('investment') || "Investment", keywords: ["investment", "price", "market"] },
+    { id: "Infrastructure", label: t('nav_infrastructure') || "Infrastructure", keywords: ["infrastructure", "construction", "project"] },
+    { id: "Legal", label: t('legal_planning') || "Legal & Planning", keywords: ["planning", "policy", "legal", "subsidy", "registration"] },
   ];
 
   const filtered = initialUpdates.filter(post => {
@@ -28,25 +27,25 @@ export default function BlogsClient({ initialUpdates, hasError }) {
       `${post.title} ${post.category} ${post.content}`.toLowerCase().includes(search.toLowerCase());
     
     if (activeTab === "All") return matchesSearch;
-    
-    const tab = TABS.find(t => t.id === activeTab);
-    const matchesTab = tab?.keywords.some(k => (post.category || "").toLowerCase().includes(k));
-    
-    return matchesSearch && matchesTab;
+    const tabObj = TABS.find(t => t.id === activeTab);
+    if (!tabObj) return true;
+    return tabObj.keywords.some(k => 
+      `${post.title} ${post.category} ${post.content}`.toLowerCase().includes(k)
+    );
   });
 
   return (
-    <div className="bg-white dark:bg-slate-950 min-h-screen font-sans w-full overflow-x-hidden transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans">
       
-      {/* Dynamic Header */}
-      <section className="relative bg-slate-900 pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-40">
-          <Image 
-            src="/images/dholerasirGujrat.webp" 
-            alt="Intelligence Feed" 
-            fill 
-            className="object-cover grayscale brightness-50"
-            sizes="100vw"
+      {/* Hero Header */}
+      <section className="relative overflow-hidden bg-slate-950 py-24 md:py-32 border-b border-slate-800">
+        <div className="absolute inset-0 opacity-40 mix-blend-luminosity">
+          <Image
+            src="/images/expresswayVision.webp"
+            alt="Dholera Intelligence Network"
+            fill
+            className="object-cover"
+            priority
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-950" />
@@ -54,10 +53,10 @@ export default function BlogsClient({ initialUpdates, hasError }) {
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center pt-20">
           <div className="max-w-4xl mx-auto space-y-6">
             <h1 className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-white leading-[0.85]">
-              Intelligence <span className="text-orange-600 italic">Feed</span>
+              {t('intelligence_feed_title') || "Intelligence Feed"}
             </h1>
             <p className="text-sm md:text-xl text-slate-400 font-bold uppercase tracking-[0.3em]">
-              Live updates from India's first smart city
+              {t('intelligence_feed_subtitle') || "Live updates from India's first smart city"}
             </p>
           </div>
         </div>
@@ -65,17 +64,31 @@ export default function BlogsClient({ initialUpdates, hasError }) {
 
       <section className="border-b border-slate-200 bg-slate-50 py-12 dark:border-slate-800 dark:bg-slate-950">
         <div className="mx-auto max-w-5xl px-4 md:px-8">
-          <h2 className="text-3xl font-black text-slate-950 dark:text-white">Dholera news, infrastructure updates and planning analysis</h2>
+          <h2 className="text-3xl font-black text-slate-950 dark:text-white">
+            {t('blogs_header_title') || "Dholera news, infrastructure updates and planning analysis"}
+          </h2>
           <p className="mt-4 max-w-4xl text-base leading-8 text-slate-600 dark:text-slate-300">
-            Follow dated coverage of Dholera SIR infrastructure, industrial announcements, planning, policy and property due diligence. Time-sensitive claims should be checked against the linked primary source and the article&apos;s publication or update date.
+            {t('blogs_header_desc') || "Follow dated coverage of Dholera SIR infrastructure, industrial announcements, planning, policy and property due diligence. Time-sensitive claims should be checked against the linked primary source and the article's publication or update date."}
           </p>
           <nav aria-label="Dholera topic guides" className="mt-7 flex flex-wrap gap-3">
-            <Link href="/tp-maps" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">TP maps</Link>
-            <Link href="/smart-city" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Dholera SIR facts</Link>
-            <Link href="/infrastructure" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Infrastructure</Link>
-            <Link href="/airport" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Airport</Link>
-            <Link href="/investment-guide" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Due diligence</Link>
-            <Link href="/editorial-policy" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">Editorial standards</Link>
+            <Link href="/tp-maps" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+              {t('topic_tp_maps') || "TP maps"}
+            </Link>
+            <Link href="/smart-city" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+              {t('topic_dholera_facts') || "Dholera SIR facts"}
+            </Link>
+            <Link href="/infrastructure" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+              {t('topic_infrastructure') || "Infrastructure"}
+            </Link>
+            <Link href="/airport" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+              {t('topic_airport') || "Airport"}
+            </Link>
+            <Link href="/investment-guide" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+              {t('topic_due_diligence') || "Due diligence"}
+            </Link>
+            <Link href="/editorial-policy" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+              {t('topic_editorial_standards') || "Editorial standards"}
+            </Link>
           </nav>
         </div>
       </section>
@@ -110,35 +123,31 @@ export default function BlogsClient({ initialUpdates, hasError }) {
               placeholder={t?.('search_placeholder') || 'Search intelligence...'}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-xs font-black uppercase tracking-widest outline-none focus:border-[#FF7A00] transition-all text-slate-900 dark:text-white"
+              className="w-full pl-11 pr-4 py-3 rounded-full bg-slate-100 dark:bg-slate-900 border border-transparent dark:border-slate-800 text-xs font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#FF7A00]"
             />
           </div>
 
         </div>
       </section>
 
-      {/* Main Grid */}
-      <section className="py-16">
+      {/* Grid Content */}
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
           
           {hasError ? (
-            <div className="py-32 text-center space-y-4">
-              <div className="mx-auto w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mb-6">
-                <Search className="h-8 w-8 text-orange-600" />
-              </div>
-              <h3 className="text-2xl font-black uppercase text-slate-900 dark:text-white tracking-tight">Temporarily Unavailable</h3>
-              <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto text-sm">
-                We are currently performing scheduled maintenance on our intelligence feed to bring you better insights. Please check back shortly.
+            <div className="py-24 text-center">
+              <p className="text-sm font-black uppercase tracking-widest text-red-500">
+                {t('feed_offline_notice')}
               </p>
             </div>
           ) : filtered.length === 0 ? (
-            <div className="py-32 text-center space-y-4">
-              <Filter className="h-12 w-12 text-slate-200 mx-auto" />
-              <h3 className="text-xl font-black uppercase text-slate-300 tracking-tight">No intelligence matches your filter</h3>
-              <button onClick={() => { setActiveTab("All"); setSearch(""); }} className="text-orange-600 text-xs font-black uppercase tracking-widest underline underline-offset-4">Reset all filters</button>
+            <div className="py-24 text-center">
+              <p className="text-sm font-black uppercase tracking-widest text-slate-400">
+                {t('no_records_found')}
+              </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
               {filtered.map(post => {
                 const imgSrc = post.imageUrl 
                   ? (

@@ -1,30 +1,30 @@
 "use client";
 
-import Link from"next/link";
-import { Globe, Radio, Camera, PlayCircle, Mail, Phone, User, Smartphone } from"lucide-react";
-import { siteConfig } from"@/config/site";
-import { useLanguage } from"@/providers/LanguageProvider";
+import Link from "next/link";
+import { Globe, Radio, Camera, PlayCircle, Mail, Phone, User, Smartphone } from "lucide-react";
+import { siteConfig } from "@/config/site";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 const ownerDetails = {
- brandName:"dholera platform",
- operatorName:"Naresh Gohel",
- email:"gohelnaresh7707@gmail.com",
- phoneDisplay:"+91 7435808031",
+  brandName: "dholera platform",
+  operatorName: "Naresh Gohel",
+  email: "gohelnaresh7707@gmail.com",
+  phoneDisplay: "+91 7435808031",
 };
 
-const OPEN_CONSENT_EVENT ="open-consent-banner";
+const OPEN_CONSENT_EVENT = "open-consent-banner";
 
 export function Footer() {
- const { t } = useLanguage();
- const handleCookieSettings = () => {
- if (typeof window ==="undefined") {
- return;
- }
+  const { t } = useLanguage();
+  const handleCookieSettings = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
 
- window.dispatchEvent(new Event(OPEN_CONSENT_EVENT));
- };
+    window.dispatchEvent(new Event(OPEN_CONSENT_EVENT));
+  };
 
- return (
+  return (
     <footer className="w-full border-t border-slate-800 dark:border-slate-200 bg-slate-950 dark:bg-white text-slate-100 dark:text-slate-900 pb-24 md:pb-0 transition-colors">
       <div className="container mx-auto px-4 py-12 md:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
@@ -63,10 +63,10 @@ export function Footer() {
             <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t('platform')}</h4>
             <ul className="space-y-4 text-sm font-semibold text-slate-300 dark:text-slate-600">
               <li><Link href="/" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_home')}</Link></li>
-              <li><Link href="/projects" className="hover:text-[#FF7A00] transition-all duration-300">Projects</Link></li>
-              <li><Link href="/investment-guide" className="hover:text-[#FF7A00] transition-all duration-300">Investment Guide</Link></li>
-              <li><Link href="/government-schemes" className="hover:text-[#FF7A00] transition-all duration-300">Government Schemes</Link></li>
-              <li><Link href="/travel-lifestyle" className="hover:text-[#FF7A00] transition-all duration-300">Travel & Lifestyle</Link></li>
+              <li><Link href="/projects" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_projects') || 'Projects'}</Link></li>
+              <li><Link href="/investment-guide" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_investment_guide') || 'Investment Guide'}</Link></li>
+              <li><Link href="/government-schemes" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_government_schemes') || 'Government Schemes'}</Link></li>
+              <li><Link href="/travel-lifestyle" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_travel_lifestyle') || 'Travel & Lifestyle'}</Link></li>
               <li><Link href="/clearance-engine" className="hover:text-[#FF7A00] transition-all duration-300">{t('clearance_engine')}</Link></li>
               <li><Link href="/blogs" className="hover:text-[#FF7A00] transition-all duration-300">{t('growth_updates')}</Link></li>
               <li><Link href="/pdf?trigger=true" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_pdf')}</Link></li>
@@ -80,11 +80,11 @@ export function Footer() {
               <li><Link href="/privacy-policy" className="hover:text-[#FF7A00] transition-all duration-300">{t('privacy_policy')}</Link></li>
               <li><Link href="/terms-and-conditions" className="hover:text-[#FF7A00] transition-all duration-300">{t('terms_of_service')}</Link></li>
               <li><Link href="/contact" className="hover:text-[#FF7A00] transition-all duration-300">{t('contact')}</Link></li>
-              <li><Link href="/author/naresh-gohel" className="hover:text-[#FF7A00] transition-all duration-300">About the author</Link></li>
-              <li><Link href="/editorial-policy" className="hover:text-[#FF7A00] transition-all duration-300">Editorial policy</Link></li>
+              <li><Link href="/author/naresh-gohel" className="hover:text-[#FF7A00] transition-all duration-300">{t('about_the_author') || 'About the author'}</Link></li>
+              <li><Link href="/editorial-policy" className="hover:text-[#FF7A00] transition-all duration-300">{t('editorial_policy') || 'Editorial policy'}</Link></li>
               <li>
                 <button type="button" onClick={handleCookieSettings} className="hover:text-[#FF7A00] transition-all duration-300">
-                  Cookie settings
+                  {t('cookie_settings') || 'Cookie settings'}
                 </button>
               </li>
             </ul>
@@ -113,10 +113,10 @@ export function Footer() {
             {t('disclaimer')}
           </p>
           <p>
-            {t('rights_reserved')}
+            &copy; {new Date().getFullYear()} {ownerDetails.brandName}. {t('all_rights_reserved') || 'All rights reserved.'}
           </p>
         </div>
       </div>
     </footer>
- );
+  );
 }
