@@ -14,6 +14,7 @@ import { siteConfig } from "@/config/site";
 import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
 import { getBlogSlug } from "@/lib/blogSlug";
 import { CommentSection } from "@/features/updates/components/CommentSection";
+import { BlogLeadMagnets } from "@/features/updates/components/BlogLeadMagnets";
 
 
 export const dynamic ="force-dynamic";
@@ -235,6 +236,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
   ) : (
     <>
       <ArticleBody content={update.content} />
+      <BlogLeadMagnets blogTitle={update.title} slug={expectedSlug} />
       <FaqSchema content={update.content} />
       <CommentSection updateId={update.id} />
     </>
