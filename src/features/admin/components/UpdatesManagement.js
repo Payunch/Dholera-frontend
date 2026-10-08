@@ -308,7 +308,7 @@ export function UpdatesManagement() {
  }
 
  const csrf = await fetchCsrfToken();
- const config = { headers: { 'X-CSRF-Token': csrf || '' } };
+ const config = { headers: { 'X-CSRF-Token': csrf || '', 'Content-Type': 'multipart/form-data' } };
 
  if (editingId ==="new") {
  await apiClient.post("/updates", formData, config);

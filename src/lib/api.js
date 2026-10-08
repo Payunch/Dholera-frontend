@@ -29,6 +29,14 @@ export const apiClient = axios.create({
 
 // ROADMAP PHASE 6 APP CHECK SHIELD
 apiClient.interceptors.request.use(async (config) => {
+  // If data is FormData, ensure Content-Type is multipart/form-data so Axios attaches boundary properly
+  if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+    if (config.headers?.set) {
+      config.headers.set('Content-Type', 'multipart/form-data');
+    } else if (config.headers) {
+      config.headers['Content-Type'] = 'multipart/form-data';
+    }
+  }
  // 1. Attach Lead Token if present in browser (ONLY for non-admin requests)
  if (typeof window !=="undefined") {
  const requestUrl = config.url || "";
