@@ -36,7 +36,7 @@ export function HomeBlogsList({ updates = [] }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {updates.map((post) => {
+          {updates.map((post, pIdx) => {
             const imgSrc = post.imageUrl 
               ? (
                   post.imageUrl.startsWith("http") ? post.imageUrl : 
@@ -49,7 +49,10 @@ export function HomeBlogsList({ updates = [] }) {
               <Link 
                 key={post.id} 
                 href={getBlogPath(post)}
-                className="group flex flex-col bg-white dark:bg-slate-950 rounded-[1.5rem] border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl dark:hover:shadow-black/100 hover:border-[#FF7A00] hover:-translate-y-2 overflow-hidden"
+                className={cn(
+                  "group flex flex-col bg-white dark:bg-slate-950 rounded-[1.5rem] border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:shadow-2xl dark:hover:shadow-black/100 hover:border-[#FF7A00] hover:-translate-y-2 overflow-hidden",
+                  pIdx === 2 && "md:col-span-2 lg:col-span-1 md:max-w-md md:mx-auto md:w-full lg:max-w-none"
+                )}
               >
                 {imgSrc && (
                   <div className="relative h-56 w-full bg-slate-100 dark:bg-slate-900 overflow-hidden">

@@ -52,10 +52,10 @@ export default function BlogsClient({ initialUpdates, hasError }) {
 
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center pt-20">
           <div className="max-w-4xl mx-auto space-y-6">
-            <h1 className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-white leading-[0.85]">
+            <h1 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black uppercase tracking-tighter text-white leading-[0.95]">
               {t('intelligence_feed_title') || "Intelligence Feed"}
             </h1>
-            <p className="text-sm md:text-xl text-slate-400 font-bold uppercase tracking-[0.3em]">
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-slate-400 font-bold uppercase tracking-[0.25em]">
               {t('intelligence_feed_subtitle') || "Live updates from India's first smart city"}
             </p>
           </div>

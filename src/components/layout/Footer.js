@@ -27,7 +27,7 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-slate-800 dark:border-slate-200 bg-slate-950 dark:bg-white text-slate-100 dark:text-slate-900 pb-24 md:pb-0 transition-colors">
       <div className="container mx-auto px-4 py-12 md:px-8">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12">
           {/* Brand & Mission */}
           <div className="space-y-4">
             <h3 className="font-display text-2xl font-extrabold tracking-tight text-orange-600">

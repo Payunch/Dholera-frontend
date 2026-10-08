@@ -67,16 +67,16 @@ export function Navbar() {
               </div>
             </Link>
             
-            <div className="hidden min-w-0 items-center overflow-hidden border-l-2 border-slate-200 pl-2 ml-1 h-5 dark:border-slate-800 sm:flex md:hidden">
-              <span className="text-[9px] font-black uppercase tracking-[0.1em] text-[#FF7A00] truncate max-w-[90px] xs:max-w-[120px]">
+            <div className="hidden min-w-0 items-center overflow-hidden border-l-2 border-slate-200 pl-3 ml-2 h-6 dark:border-slate-800 sm:flex xl:hidden">
+              <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.15em] text-[#FF7A00] truncate max-w-[120px] md:max-w-[220px]">
                 {navItems.find(item => isItemActive(item.href))?.label || "DHOLERA"}
               </span>
             </div>
           </div>
 
-          {/* Desktop Nav: 7 Columns & 2 Rows with NO BOX (clean text links) */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-4 shrink-0">
-            <nav className="grid grid-cols-7 gap-x-2.5 lg:gap-x-3.5 xl:gap-x-4 gap-y-1.5 font-display items-center text-center">
+          {/* Desktop Nav: 7 Columns & 2 Rows with NO BOX (Visible only on xl+ screens >= 1280px) */}
+          <div className="hidden xl:flex items-center gap-4 shrink-0">
+            <nav className="grid grid-cols-7 gap-x-3.5 2xl:gap-x-4 gap-y-1.5 font-display items-center text-center">
               {navItems.map((item) => {
                 const active = isItemActive(item.href);
                 return (
@@ -84,7 +84,7 @@ export function Navbar() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "transition-colors text-[9px] lg:text-[10px] xl:text-[10.5px] font-black uppercase tracking-wider text-center whitespace-nowrap py-0.5",
+                      "transition-colors text-[9.5px] 2xl:text-[10.5px] font-black uppercase tracking-wider text-center whitespace-nowrap py-0.5",
                       active
                         ? "text-orange-600 dark:text-orange-500"
                         : "text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400"
@@ -98,8 +98,8 @@ export function Navbar() {
 
             <div className="h-9 w-px bg-slate-200 dark:bg-slate-800" />
 
-            {/* Utility Controls */}
-            <div className="flex items-center gap-1.5 lg:gap-2">
+            {/* Desktop Utility Controls */}
+            <div className="flex items-center gap-2">
               {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}
@@ -154,22 +154,74 @@ export function Navbar() {
               {/* Contact Button */}
               <Link
                 href="/contact"
-                className="hidden xl:inline-flex rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-white text-[10px] font-black uppercase tracking-wider transition-all shadow-md shadow-orange-600/10 shrink-0"
+                className="inline-flex rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-white text-[10px] font-black uppercase tracking-wider transition-all shadow-md shadow-orange-600/10 shrink-0"
               >
                 {t('nav_contact')}
               </Link>
             </div>
           </div>
 
-          {/* Mobile Nav Toggle */}
-          <div className="md:hidden flex shrink-0 items-center gap-2">
+          {/* Mobile & Tablet Utility Controls (< xl: 1280px) */}
+          <div className="xl:hidden flex shrink-0 items-center gap-2 sm:gap-2.5">
+            {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 transition-all"
+              className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 transition-all"
               aria-label="Toggle color theme"
             >
               {theme === 'light' ? <Sun className="h-4 w-4 text-orange-500" /> : <Moon className="h-4 w-4 text-amber-400" />}
             </button>
+
+            {/* Language Switcher for Tablet & Mobile */}
+            <div className="relative">
+              <button
+                onClick={toggleLang}
+                className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-900/50 text-orange-600 font-black transition-all hover:bg-orange-100 shrink-0"
+                aria-label="Select language"
+              >
+                <Languages className="h-3.5 w-3.5" />
+                <span className="text-[10px] uppercase font-black">{lang}</span>
+                <ChevronDown className={cn("h-3 w-3 transition-transform", isLangOpen && "rotate-180")} />
+              </button>
+              {isLangOpen && (
+                <div className="absolute right-0 mt-3 w-36 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md p-2 shadow-2xl animate-in fade-in zoom-in-95 z-[200]">
+                  {languages.map((l) => {
+                    let currentPath = pathname;
+                    if (currentPath.startsWith('/hi/') || currentPath === '/hi') {
+                      currentPath = currentPath.replace(/^\/hi/, '') || '/';
+                    } else if (currentPath.startsWith('/gu/') || currentPath === '/gu') {
+                      currentPath = currentPath.replace(/^\/gu/, '') || '/';
+                    }
+                    const localizedPath = l.code === 'en' ? currentPath : `/${l.code}${currentPath === '/' ? '' : currentPath}`;
+
+                    return (
+                      <Link
+                        key={l.code}
+                        href={localizedPath}
+                        onClick={() => {
+                          setLang(l.code);
+                          setIsLangOpen(false);
+                        }}
+                        className={cn(
+                          "block w-full rounded-lg px-3 py-1.5 text-left text-[10px] font-black uppercase tracking-widest transition-colors",
+                          lang === l.code ? "bg-orange-600 text-white" : "text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-slate-800 hover:text-orange-600"
+                        )}
+                      >
+                        {l.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Contact Button (Tablet screens: md to xl) */}
+            <Link
+              href="/contact"
+              className="hidden md:inline-flex rounded-full bg-orange-600 hover:bg-orange-500 px-3.5 py-2 text-white text-[10px] font-black uppercase tracking-wider transition-all shadow-md shadow-orange-600/10 shrink-0"
+            >
+              {t('nav_contact')}
+            </Link>
           </div>
         </div>
       </header>

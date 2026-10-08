@@ -79,7 +79,7 @@ export default function ProjectsPage() {
  <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400">
  {t('official_archives')}
  </span>
- <h1 className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">
+ <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">
  {t('verified_plotted_title').split('').slice(0, 2).join('')} <span className="text-orange-600 italic">{t('verified_plotted_title').split('').slice(2).join('')}</span>
  </h1>
  <p className="text-sm sm:text-lg md:text-xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">

@@ -12,14 +12,16 @@ export function FloatingActions() {
     return (
         <>
             {/* Global Sticky Owner Contact FAB (Visible on all devices) */}
-            <div className="fixed bottom-6 right-6 z-[140] flex flex-col gap-3 group items-end">
+            <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[140] flex flex-col gap-3 group items-end">
                 <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-4 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:bg-[#128C7E] transition-all hover:-translate-y-1 font-black tracking-widest text-sm"
+                    className="flex items-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 rounded-full bg-[#25D366] text-white shadow-2xl hover:bg-[#128C7E] transition-all hover:-translate-y-1 font-black tracking-widest text-xs sm:text-sm"
+                    aria-label="Contact Owner on WhatsApp"
                 >
-                    +91 74358 08031
+                    <MessageCircle className="h-4 w-4 shrink-0" />
+                    <span>+91 74358 08031</span>
                 </a>
             </div>
         </>

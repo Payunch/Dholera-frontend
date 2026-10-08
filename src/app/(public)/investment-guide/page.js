@@ -39,7 +39,7 @@ export default function InvestmentGuidePage() {
           <div className="inline-flex items-center rounded-full bg-green-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-green-500 border border-green-500/30">
             <Translate id="strategic_alpha" />
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight">
             <Translate id="investment_playbook_title" />
           </h1>
           <p className="max-w-2xl mx-auto text-sm sm:text-lg font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">

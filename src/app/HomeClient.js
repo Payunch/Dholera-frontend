@@ -182,8 +182,8 @@ export function HomeClient({ recentUpdates }) {
           </div>
         </div>
 
-        <div className="container relative z-10 px-4 md:px-8 mx-auto py-12 md:py-20 flex justify-center">
-          <div className="max-w-4xl w-full glass-panel p-6 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] shadow-heavy relative overflow-hidden">
+        <div className="container relative z-10 px-4 md:px-8 mx-auto py-10 md:py-16 lg:py-20 flex justify-center">
+          <div className="max-w-4xl w-full glass-panel p-6 sm:p-8 md:p-10 lg:p-14 xl:p-16 rounded-[2rem] md:rounded-[2.5rem] shadow-heavy relative overflow-hidden">
             {/* Background Image for the Content Box */}
             <div className="absolute inset-0 z-0 opacity-45 dark:opacity-40 pointer-events-none">
               <Image
@@ -197,8 +197,8 @@ export function HomeClient({ recentUpdates }) {
             <div className="absolute inset-0 z-0 bg-gradient-to-r from-white/95 via-white/80 to-white/35 dark:from-slate-950/95 dark:via-slate-950/80 dark:to-slate-950/40 pointer-events-none" />
 
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2.5 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-8 animate-fade-in">
-                <div className="relative h-6 w-6 shrink-0">
+              <div className="inline-flex items-center gap-3 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 sm:px-5 py-2 sm:py-2.5 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-6 sm:mb-8 animate-fade-in">
+                <div className="relative h-5 w-5 sm:h-6 sm:w-6 shrink-0">
                   <Image
                     src="/images/hp.png"
                     alt={t('verified_data')}
@@ -211,11 +211,11 @@ export function HomeClient({ recentUpdates }) {
                 <span className="sm:hidden font-black">{t('verified_data')}</span>
               </div>
 
-              <h1 className="font-display text-[1.913rem] sm:text-[3.188rem] md:text-[4.463rem] font-black tracking-normal text-slate-950 dark:text-white uppercase leading-[1.05] mb-8 max-w-3xl">
+              <h1 className="font-display text-[1.913rem] sm:text-[2.6rem] md:text-[3.2rem] lg:text-[3.8rem] xl:text-[4.463rem] font-black tracking-normal text-slate-950 dark:text-white uppercase leading-[1.08] sm:leading-[1.05] mb-6 sm:mb-8 max-w-3xl">
                 {t('hero_title')}
               </h1>
 
-              <p className="max-w-2xl text-[1.02rem] sm:text-[1.148rem] md:text-[1.275rem] font-bold text-slate-800 dark:text-slate-100 leading-relaxed mb-12">
+              <p className="max-w-2xl text-[0.95rem] sm:text-[1.05rem] md:text-[1.15rem] lg:text-[1.275rem] font-bold text-slate-800 dark:text-slate-100 leading-relaxed mb-8 sm:mb-12">
                 {t('hero_desc')}
               </p>
 
@@ -283,7 +283,7 @@ export function HomeClient({ recentUpdates }) {
                     { logo: "/images/torrent.png", name: "Torrent Power" },
                     { logo: "/images/renew.png", name: "ReNew Power" }
                   ].map((giant, idx) => (
-                    <div key={`${i}-${idx}`} className="relative h-32 w-80 flex-shrink-0 opacity-100 transition-all duration-500 hover:scale-110">
+                    <div key={`${i}-${idx}`} className="relative h-20 w-48 sm:h-24 sm:w-56 md:h-24 md:w-64 lg:h-28 lg:w-72 xl:h-32 xl:w-80 flex-shrink-0 opacity-100 transition-all duration-500 hover:scale-110">
                       <Image
                         src={giant.logo}
                         alt={`${giant.name} logo`}
@@ -312,14 +312,14 @@ export function HomeClient({ recentUpdates }) {
 
 
       {/* 1.25 FEATURED PROJECTS SECTION */}
-      <section className="py-24 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">
+      <section className="py-16 md:py-20 lg:py-24 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">
         <div className="container mx-auto px-4 md:px-8">
 
-          <div className="mb-16 text-center space-y-4 max-w-3xl mx-auto">
+          <div className="mb-12 md:mb-16 text-center space-y-4 max-w-3xl mx-auto">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">
               {t('verified_portfolio_title')}
             </span>
-            <h2 className="font-display text-4xl font-black text-slate-900 dark:text-white md:text-5xl uppercase leading-tight">
+            <h2 className="font-display text-3xl sm:text-4xl font-black text-slate-900 dark:text-white md:text-5xl uppercase leading-tight">
               {t('featured_developments').split('').slice(0, 1).join('')} <span className="text-[#FF7A00] italic">{t('featured_developments').split('').slice(1).join('')}</span>
             </h2>
             <p className="text-sm font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
@@ -327,14 +327,17 @@ export function HomeClient({ recentUpdates }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-            {projects.slice(0, 3).map((project) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto mb-16">
+            {projects.slice(0, 3).map((project, pIdx) => {
               const projectDesc = t(project.descKey);
               return (
                 <Link
                   key={project.slug}
                   href={`/projects/${project.slug}`}
-                  className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
+                  className={cn(
+                    "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between",
+                    pIdx === 2 && "md:col-span-2 lg:col-span-1 md:max-w-md md:mx-auto md:w-full lg:max-w-none"
+                  )}
                 >
                   <div>
                     {/* Project Image */}
@@ -408,9 +411,9 @@ export function HomeClient({ recentUpdates }) {
       </section>
 
       {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
-      <section id="site-visit" className="bg-white dark:bg-slate-950 py-32 relative overflow-hidden transition-colors">
+      <section id="site-visit" className="bg-white dark:bg-slate-950 py-16 md:py-24 lg:py-32 relative overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8 relative z-10 flex justify-center">
-          <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 md:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-16 items-center border border-slate-800 relative overflow-hidden dark:bg-slate-900">
+          <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-6 sm:p-8 md:p-10 lg:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center border border-slate-800 relative overflow-hidden dark:bg-slate-900">
 
             {/* Background Image Overlay */}
             <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
