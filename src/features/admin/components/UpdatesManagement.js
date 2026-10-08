@@ -303,6 +303,8 @@ export function UpdatesManagement() {
  formData.append("image", imageFile);
  } else if (imageUrl) {
  formData.append("imageUrl", imageUrl);
+ } else {
+ formData.append("imageUrl", "");
  }
 
  const csrf = await fetchCsrfToken();
@@ -602,13 +604,34 @@ export function UpdatesManagement() {
  fill
  className="object-cover"
  />
+ <div className="absolute right-4 top-4 flex items-center gap-2">
+ <label
+ className="flex cursor-pointer items-center gap-1.5 rounded-xl bg-white/90 dark:bg-slate-900/90 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-lg backdrop-blur hover:bg-white dark:hover:bg-slate-800 transition-colors"
+ title="Change Image"
+ >
+ <Pencil className="h-3.5 w-3.5 text-orange-600" />
+ <span>Change</span>
+ <input
+ type="file"
+ accept="image/*"
+ className="hidden"
+ onChange={(e) => {
+ if (e.target.files && e.target.files[0]) {
+ setImageFile(e.target.files[0]);
+ setImageUrl("");
+ }
+ }}
+ />
+ </label>
  <button
  type="button"
  onClick={() => { setImageFile(null); setImageUrl(""); }}
- className="absolute right-4 top-4 rounded-xl bg-white/90 dark:bg-slate-900/90 p-2 text-red-600 shadow-lg backdrop-blur hover:bg-white dark:hover:bg-slate-800 transition-colors"
+ className="rounded-xl bg-white/90 dark:bg-slate-900/90 p-2 text-red-600 shadow-lg backdrop-blur hover:bg-white dark:hover:bg-slate-800 transition-colors"
+ title="Remove Image"
  >
  <Trash2 className="h-4 w-4" />
  </button>
+ </div>
  </div>
  )}
 
