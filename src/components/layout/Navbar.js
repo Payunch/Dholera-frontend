@@ -47,10 +47,10 @@ export function Navbar() {
     <>
       <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/95 dark:bg-slate-950/95 dark:border-slate-800 backdrop-blur-md transition-colors shadow-sm">
         <div className="container mx-auto px-2 sm:px-3 md:px-4 lg:px-6 py-2.5">
-          <div className="grid grid-cols-12 items-center gap-1.5 md:gap-2 lg:gap-3 w-full">
+          <div className="flex w-full items-center justify-between gap-2 md:gap-3 lg:gap-4">
             
-            {/* LEFT 2 COLUMNS (Constant): Menu Icon + Logo */}
-            <div className="col-span-7 sm:col-span-6 md:col-span-2 flex items-center gap-1.5 sm:gap-2 min-w-0">
+            {/* LEFT SIDE (Constant): Menu Icon + Logo */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               <button
                 onClick={toggleSidebar}
                 className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-800 hover:border-orange-500 hover:text-orange-600 transition-all shadow-sm group"
@@ -60,18 +60,21 @@ export function Navbar() {
                 <AlignLeft className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:scale-110" />
               </button>
 
-              <Link href="/" className="flex items-center min-w-0 shrink-0">
-                <div className="hidden md:block">
+              <Link href="/" className="flex items-center shrink-0">
+                <div className="hidden lg:block">
                   <SplitLogo height={42} isFull />
                 </div>
+                <div className="hidden md:block lg:hidden">
+                  <SplitLogo height={34} isFull />
+                </div>
                 <div className="block md:hidden">
-                  <SplitLogo height={32} isFull />
+                  <SplitLogo height={30} isFull />
                 </div>
               </Link>
             </div>
 
-            {/* MIDDLE 8 COLUMNS (Flexible): 10 Buttons in 2 Rows Without Box */}
-            <div className="hidden md:block md:col-span-8 min-w-0">
+            {/* MIDDLE SECTION (Flexible 8-Column Space): 10 Buttons in 2 Rows Without Box */}
+            <div className="hidden md:flex flex-1 items-center justify-center min-w-0 px-1 sm:px-2 md:px-3">
               <nav className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 md:gap-x-2 lg:gap-x-2.5 xl:gap-x-3.5 gap-y-1 font-display items-center text-center w-full">
                 {navItems.map((item, idx) => {
                   const active = isItemActive(item.href);
@@ -94,8 +97,8 @@ export function Navbar() {
               </nav>
             </div>
 
-            {/* RIGHT 2 COLUMNS (Constant): Mode Select + Language + Contact Us */}
-            <div className="col-span-5 sm:col-span-6 md:col-span-2 flex items-center justify-end gap-1 sm:gap-1.5 md:gap-2 min-w-0">
+            {/* RIGHT SIDE (Constant): Mode Select + Language + Contact Us */}
+            <div className="flex items-center justify-end gap-1 sm:gap-1.5 md:gap-2 shrink-0">
               {/* Mode Select (Theme Toggle) */}
               <button
                 onClick={toggleTheme}
