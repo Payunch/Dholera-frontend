@@ -42,11 +42,18 @@ export async function getUpdateById(id, lang, audience = "web") {
 
 export async function getUpdateByRouteKey(routeKey, lang, audience = "web") {
   const numericId = getNumericBlogId(routeKey);
-  if (numericId) return getUpdateById(numericId, lang, audience);
+  if (numericId) {
+    const byId = await getUpdateById(numericId, lang, audience);
+    if (byId) return byId;
+  }
 
   const normalizedKey = slugifyBlogTitle(routeKey);
+  const cleanSlugWithoutId = slugifyBlogTitle(routeKey.replace(/^(\d+)-/, ""));
   const updates = await getUpdates(undefined, lang, audience);
-  const match = updates.find((update) => getBlogSlug(update) === normalizedKey);
+  const match = updates.find((update) => {
+    const updateSlug = getBlogSlug(update);
+    return updateSlug === normalizedKey || updateSlug === cleanSlugWithoutId || update.slug === cleanSlugWithoutId;
+  });
   if (!match?.id) return null;
 
   return getUpdateById(match.id, lang, audience);
