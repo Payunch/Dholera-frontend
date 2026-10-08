@@ -74,9 +74,9 @@ export function Navbar() {
             </div>
           </div>
 
-          {/* Desktop Nav: 2 Rows & 5 Columns of compact buttons + controls */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
-            <nav className="grid grid-cols-5 gap-1 lg:gap-1.5 font-display">
+          {/* Desktop Nav: 7 Columns & 2 Rows with NO BOX (clean text links) */}
+          <div className="hidden md:flex items-center gap-2 lg:gap-4 shrink-0">
+            <nav className="grid grid-cols-7 gap-x-2.5 lg:gap-x-3.5 xl:gap-x-4 gap-y-1.5 font-display items-center text-center">
               {navItems.map((item) => {
                 const active = isItemActive(item.href);
                 return (
@@ -84,10 +84,10 @@ export function Navbar() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "inline-flex items-center justify-center px-2 py-1 lg:px-2.5 lg:py-1 rounded-md text-[8.5px] lg:text-[9.5px] xl:text-[10px] font-black uppercase tracking-wider text-center transition-all whitespace-nowrap border",
+                      "transition-colors text-[9px] lg:text-[10px] xl:text-[10.5px] font-black uppercase tracking-wider text-center whitespace-nowrap py-0.5",
                       active
-                        ? "bg-orange-600 text-white border-orange-600 shadow-sm shadow-orange-600/25"
-                        : "bg-slate-100/80 hover:bg-orange-50 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200/90 dark:border-slate-800/80 hover:border-orange-500/50 hover:text-orange-600"
+                        ? "text-orange-600 dark:text-orange-500"
+                        : "text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400"
                     )}
                   >
                     {item.label}
