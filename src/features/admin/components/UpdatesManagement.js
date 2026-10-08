@@ -26,6 +26,67 @@ import Image from"next/image";
 import { fetchCsrfToken } from "@/utils/csrf";
 import { getBlogPath } from "@/lib/blogSlug";
 
+
+const safeIsoDate = (d) => {
+  if (!d) return new Date().toISOString().slice(0, 16);
+  try {
+    const parsed = new Date(d);
+    return !isNaN(parsed.getTime()) ? parsed.toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16);
+  } catch (_) {
+    return new Date().toISOString().slice(0, 16);
+  }
+};
+
+const safeFormatDate = (d, fmt = 'MMM d, yyyy') => {
+  if (!d) return 'Recent';
+  try {
+    const parsed = new Date(d);
+    return !isNaN(parsed.getTime()) ? format(parsed, fmt) : 'Recent';
+  } catch (_) {
+    return 'Recent';
+  }
+};
+
+class ModalErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error('ModalErrorBoundary caught an error:', error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/80 p-6 backdrop-blur-sm">
+          <div className="max-w-md rounded-3xl bg-white p-8 text-center shadow-2xl dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <h3 className="text-xl font-black text-red-600">Editor encountered an issue</h3>
+            <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-300">
+              {this.state.error?.message || 'An unexpected error occurred while loading the editor.'}
+            </p>
+            <div className="mt-6 flex justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => {
+                  this.setState({ hasError: false, error: null });
+                  if (this.props.onClose) this.props.onClose();
+                }}
+                className="rounded-2xl bg-slate-900 px-6 py-3 text-xs font-black uppercase text-white hover:bg-orange-600 dark:bg-white dark:text-slate-900"
+              >
+                Close Editor
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export function UpdatesManagement() {
  const [updates, setUpdates] = React.useState([]);
  const [loading, setLoading] = React.useState(true);
@@ -85,7 +146,7 @@ export function UpdatesManagement() {
  setPublished(true);
  setIsApproved(true);
  setIsExclusive(false);
- setPublishedAt(new Date().toISOString().slice(0, 16));
+ setPublishedAt(safeIsoDate(new Date()));
  setImageFile(null);
  setImageUrl("");
  setSeoTitle("");
@@ -109,7 +170,7 @@ export function UpdatesManagement() {
  setPublished(update.published);
  setIsApproved(update.isApproved !== false);
  setIsExclusive(update.isExclusive === true);
- setPublishedAt(new Date(update.publishedAt || update.createdAt).toISOString().slice(0, 16));
+ setPublishedAt(safeIsoDate(update.publishedAt || update.createdAt));
  setImageFile(null);
  setImageUrl(update.imageUrl ||"");
  setSeoTitle(update.seoTitle || "");
@@ -164,6 +225,36 @@ export function UpdatesManagement() {
     alert("✅ SEO basics have been successfully applied! Scroll down to the 'SEO Details & Tags' section to review them.");
   };
 
+  const handleAutoTranslate = async () => {
+    if (!title.trim() || !content.trim()) {
+      alert("Add an article title and content first, then click Auto-Translate.");
+      return;
+    }
+    setIsTranslating(true);
+    setTranslationStatus("");
+    try {
+      const csrf = await fetchCsrfToken();
+      const response = await apiClient.post("/updates/auto-translate", {
+        title,
+        content
+      }, { headers: { "X-CSRF-Token": csrf || "" } });
+
+      if (response.data) {
+        if (response.data.title_hi) setTitleHi(response.data.title_hi);
+        if (response.data.content_hi) setContentHi(response.data.content_hi);
+        if (response.data.title_gu) setTitleGu(response.data.title_gu);
+        if (response.data.content_gu) setContentGu(response.data.content_gu);
+        setTranslationStatus("Hindi and Gujarati translations ready ✓");
+      }
+    } catch (error) {
+      console.error("[updates.auto-translate]", error);
+      alert(error.response?.data?.error || "Translation could not be completed. Please try again.");
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
+
  const handleDelete = async (id) => {
  if (!confirm("Are you sure you want to delete this update? This action cannot be undone.")) return;
  
@@ -196,7 +287,7 @@ export function UpdatesManagement() {
  formData.append("published", String(publishNow));
  formData.append("isApproved", String(isApproved));
  formData.append("isExclusive", String(isExclusive));
- formData.append("publishedAt", new Date(publishedAt).toISOString());
+ formData.append("publishedAt", safeIsoDate(publishedAt));
  if (seoTitle) formData.append("seoTitle", seoTitle);
  if (seoDescription) formData.append("seoDescription", seoDescription);
  if (seoKeywords) formData.append("seoKeywords", seoKeywords);
@@ -346,7 +437,7 @@ export function UpdatesManagement() {
  </h4>
  
  <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">
- {update.category} • {format(new Date(update.publishedAt || update.createdAt),"MMM d, yyyy")}
+ {update.category} • {safeFormatDate(update.publishedAt || update.createdAt)}
  </p>
 
  <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
@@ -365,6 +456,7 @@ export function UpdatesManagement() {
 
  {/* Edit/New Modal Overlay */}
  {editingId !== null && (
+ <ModalErrorBoundary onClose={() => setEditingId(null)}>
  <div className="fixed inset-0 z-[300] flex bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
  <div className="relative flex h-dvh w-screen flex-col overflow-hidden bg-white shadow-2xl dark:bg-slate-900">
  {/* Modal Header */}
@@ -655,11 +747,12 @@ export function UpdatesManagement() {
  disabled={isSubmitting}
  className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
  >
- {isSubmitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</> : <><Check className="h-4 w-4" />{(!isExclusive && seoReview.score < 80) ? `Publish (${seoReview.score}/100)` : "Publish update"}</>}
+ {isSubmitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</> : <><Check className="h-4 w-4" />{(!isExclusive && (seoReview?.score ?? 0) < 80) ? `Publish (${seoReview?.score ?? 0}/100)` : "Publish update"}</>}
  </button>
  </div>
  </div>
  </div>
+ </ModalErrorBoundary>
  )}
 
  </div>
