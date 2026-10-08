@@ -166,8 +166,8 @@ export function UpdatesManagement() {
  if (isSubmitting) return;
  const publishNow = forcePublish ? true : (saveAsDraft ? false : published);
  if (publishNow && !isExclusive && seoReview.score < 80) {
-   alert(`This post is ${seoReview.score}/100. Publishing is locked until its SEO score reaches 80.`);
-   return;
+   const proceed = window.confirm(`Notice: Estimated SEO score is ${seoReview.score}/100 (Recommended target: 80+).\n\nDo you want to proceed and publish anyway?`);
+   if (!proceed) return;
  }
 
  setIsSubmitting(true);
@@ -205,7 +205,8 @@ export function UpdatesManagement() {
  await loadUpdates();
  setEditingId(null);
  } catch (err) {
- alert("Failed to save update");
+ const msg = err.response?.data?.error || err.response?.data?.message || err.message || "Failed to save update";
+ alert(`Failed to save update: ${msg}`);
  } finally {
  setIsSubmitting(false);
  }
@@ -626,10 +627,10 @@ export function UpdatesManagement() {
  <button
  type="button"
  onClick={() => handleSubmit(null, { publishNow: true })}
- disabled={isSubmitting || (!isExclusive && seoReview.score < 80)}
+ disabled={isSubmitting}
  className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-white dark:text-slate-900 shadow-xl transition-all hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-white dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
  >
- {isSubmitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</> : <><Check className="h-4 w-4" />{(!isExclusive && seoReview.score < 80) ? `Publish locked: ${seoReview.score}/100` : "Publish update"}</>}
+ {isSubmitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</> : <><Check className="h-4 w-4" />{(!isExclusive && seoReview.score < 80) ? `Publish (${seoReview.score}/100)` : "Publish update"}</>}
  </button>
  </div>
  </div>
