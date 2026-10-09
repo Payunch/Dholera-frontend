@@ -23,6 +23,7 @@ import { projects } from "@/data/projects";
 import { useLanguage } from "@/providers/LanguageProvider";
 import { useLead } from "@/providers/LeadProvider";
 import { apiClient } from "@/lib/api";
+import { trackFormSubmission } from "@/lib/conversionTracking";
 import { HomeBlogsList } from "@/components/home/HomeBlogsList";
 
 export function HomeClient({ recentUpdates }) {
@@ -106,17 +107,12 @@ export function HomeClient({ recentUpdates }) {
       });
       setVisitFormStatus("success");
       
-      // Fire Meta Pixel Event
-      if (typeof window !== "undefined" && (window).fbq) {
-        (window).fbq('track', 'Lead');
-      }
-
-      // Fire Google Ads Conversion Event
-      if (typeof window !== "undefined" && (window).gtag) {
-        (window).gtag('event', 'conversion', {
-          'send_to': process.env.NEXT_PUBLIC_GOOGLE_ADS_ID + '/lead_conversion_label' // Assuming a default label, they can change this later
-        });
-      }
+      // Track conversion across Google Ads, GTM, Meta Pixel
+      trackFormSubmission({
+        name: visitForm.name,
+        phone: visitForm.phone,
+        source: "home_page_site_visit",
+      });
     } catch (err) {
       console.error("Site visit submission error:", err);
       setVisitFormStatus("error");

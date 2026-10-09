@@ -9,6 +9,7 @@ import { SplitLogo } from '@/components/common/DynamicImages';
 import Link from 'next/link';
 import { auth } from "@/lib/firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { trackFormSubmission } from '@/lib/conversionTracking';
 
 const sanitizeDigits = (value, maxLength) => value.replace(/\D/g, '').slice(0, maxLength);
 const validateName = (name) => name.trim().length >= 2;
@@ -127,15 +128,12 @@ export const LeadPopup = ({
         loginLead({ ...res.data, token: res.data.lead_token });
       }
 
-      // Fire Google Ads Enhanced Conversions
-      if (typeof window !== "undefined" && window.gtag) {
-        window.gtag('set', 'user_data', {
-          phone_number: '+91' + cleanPhone
-        });
-        window.gtag('event', 'conversion', {
-          'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
-        });
-      }
+      // Fire Conversions across Google Ads, GTM, Meta Pixel
+      trackFormSubmission({
+        name: name.trim(),
+        phone: cleanPhone,
+        source: "lead_popup_direct",
+      });
 
       setStep('success');
       if (onSuccess) onSuccess(res.data);
@@ -194,15 +192,12 @@ export const LeadPopup = ({
         loginLead({ ...res.data, token: res.data.lead_token });
       }
 
-      // Fire Google Ads Enhanced Conversions (Phase 6 Blueprint Implementation)
-      if (typeof window !== "undefined" && (window).gtag) {
-        (window).gtag('set', 'user_data', {
-          phone_number: '+91' + cleanPhone
-        });
-        (window).gtag('event', 'conversion', {
-          'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
-        });
-      }
+      // Fire Conversions across Google Ads, GTM, Meta Pixel
+      trackFormSubmission({
+        name: name.trim(),
+        phone: cleanPhone,
+        source: "lead_popup_verified",
+      });
 
       setStep('success');
       if (onSuccess) onSuccess(res.data);

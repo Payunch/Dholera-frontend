@@ -23,6 +23,7 @@ import { apiClient } from"@/lib/api";
 import { cn } from"@/lib/utils";
 import { useLead } from"@/providers/LeadProvider";
 import { useLanguage } from"@/providers/LanguageProvider";
+import { trackFormSubmission } from "@/lib/conversionTracking";
 
 export default function AboutUsPage() {
  const { verifiedLead } = useLead();
@@ -68,6 +69,12 @@ export default function AboutUsPage() {
  try {
  await apiClient.post("/leads", { ...contactForm, source:"About Us - Contact Card" });
  setContactStatus("success");
+ trackFormSubmission({
+   name: contactForm.name,
+   phone: contactForm.phone,
+   email: contactForm.email,
+   source: "about_us_contact",
+ });
  setContactForm({ name:"", phone:"", email:"" });
  } catch (err) {
  setContactStatus("error");
@@ -90,6 +97,11 @@ export default function AboutUsPage() {
  notes:`Requested site visit for: ${visitForm.date}`
  });
  setVisitStatus("success");
+ trackFormSubmission({
+   name: visitForm.name,
+   phone: visitForm.phone,
+   source: "about_us_site_visit",
+ });
  } catch (err) {
  setVisitStatus("error");
  } finally {
