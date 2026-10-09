@@ -50,7 +50,7 @@ export default function GovernmentSchemesPage() {
  title:"Production Linked Incentives (PLI)", 
  items: ["Semiconductor Manufacturing Support","Electronics System Design (ESDM)","Solar PV Module Incentives","Advanced Chemistry Cell (ACC) Batteries"],
  icon: FileText,
- color:"border-orange-100 bg-orange-50/50"
+ color:"border-orange-100 bg-orange-50/50 dark:bg-slate-900/90 dark:border-orange-950/60"
  }
  ].map((scheme, i) => (
  <div key={i} className={`group p-10 rounded-[2.5rem] border-2 ${scheme.color} space-y-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}>

@@ -217,15 +217,15 @@ export function LeadsTable({ leads: initialLeads }) {
 
   return (
     <>
-      <div className="overflow-hidden bg-white shadow-xl rounded-[2.5rem] border border-slate-100">
-        <div className="px-8 py-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50">
+      <div className="overflow-hidden bg-white dark:bg-slate-900 shadow-xl rounded-[2.5rem] border border-slate-100 dark:border-slate-800 transition-colors">
+        <div className="px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 dark:bg-slate-800/50">
           <div>
-            <h3 className="text-xl font-black uppercase tracking-tight text-slate-900">Leads Database</h3>
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Live Client Stream</span>
+            <h3 className="text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">Leads Database</h3>
+            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Live Client Stream</span>
           </div>
-          <div className="flex bg-slate-200/60 p-1 rounded-xl">
-            <button onClick={() => setViewMode('table')} className={cn("px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all", viewMode === 'table' ? "bg-white shadow-sm text-slate-900" : "text-slate-500 hover:text-slate-700")}>Table</button>
-            <button onClick={() => setViewMode('kanban')} className={cn("px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all", viewMode === 'kanban' ? "bg-white shadow-sm text-slate-900" : "text-slate-500 hover:text-slate-700")}>Kanban</button>
+          <div className="flex bg-slate-200/60 dark:bg-slate-800 p-1 rounded-xl">
+            <button onClick={() => setViewMode('table')} className={cn("px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all", viewMode === 'table' ? "bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200")}>Table</button>
+            <button onClick={() => setViewMode('kanban')} className={cn("px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all", viewMode === 'kanban' ? "bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-white" : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200")}>Kanban</button>
           </div>
         </div>
         <div className="p-4 overflow-x-auto min-h-[60vh]">
@@ -236,30 +236,30 @@ export function LeadsTable({ leads: initialLeads }) {
               {['New', 'Contacted', 'Site Visit', 'Follow-up', 'Converted', 'Not Interested', 'Lost'].map(status => {
                 const columnLeads = leads.filter(l => (l.status || 'New') === status);
                 return (
-                  <div key={status} className="w-80 bg-slate-50/50 rounded-[2rem] border border-slate-100 p-4 flex flex-col gap-4">
+                  <div key={status} className="w-80 bg-slate-50/50 dark:bg-slate-800/40 rounded-[2rem] border border-slate-100 dark:border-slate-700/60 p-4 flex flex-col gap-4">
                     <div className="flex justify-between items-center px-2">
-                      <h4 className="text-xs font-black uppercase tracking-widest text-slate-700">{status}</h4>
-                      <span className="bg-white border border-slate-200 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full">{columnLeads.length}</span>
+                      <h4 className="text-xs font-black uppercase tracking-widest text-slate-700 dark:text-slate-200">{status}</h4>
+                      <span className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded-full">{columnLeads.length}</span>
                     </div>
                     <div className="flex flex-col gap-3">
                       {columnLeads.map(lead => (
-                        <div key={lead.id} onClick={() => setSelectedLead(lead)} className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm hover:shadow-md hover:border-orange-200 transition-all cursor-pointer group">
+                        <div key={lead.id} onClick={() => setSelectedLead(lead)} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 shadow-sm hover:shadow-md hover:border-orange-500 dark:hover:border-orange-500 transition-all cursor-pointer group">
                           <div className="flex justify-between items-start mb-3">
-                            <span className="font-bold text-slate-900 text-sm truncate">{lead.name}</span>
+                            <span className="font-bold text-slate-900 dark:text-white text-sm truncate">{lead.name}</span>
                             {lead.score > 0 && <span className={cn("rounded-md px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-tight", lead.score > 150 ? "bg-red-600 text-white" : "bg-orange-500 text-white")}>{lead.score}</span>}
                           </div>
-                          <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">
+                          <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">
                             <Phone className="h-3 w-3" /> {lead.phone}
                           </div>
-                          <div className="flex justify-between items-center pt-3 border-t border-slate-100">
+                          <div className="flex justify-between items-center pt-3 border-t border-slate-100 dark:border-slate-700">
                             <div className="flex gap-2">
-                              <span className="flex items-center gap-1 text-[10px] font-bold text-slate-400" title="Time Spent"><Clock className="h-3 w-3"/> {Math.round((lead.totalTimeSpent||0)/60)}m</span>
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-slate-400 dark:text-slate-400" title="Time Spent"><Clock className="h-3 w-3"/> {Math.round((lead.totalTimeSpent||0)/60)}m</span>
                             </div>
                             <select
                               value={lead.status || 'New'}
                               onClick={(e) => e.stopPropagation()}
                               onChange={(e) => handleStatusChange(lead.id, e.target.value)}
-                              className="text-[9px] font-bold uppercase tracking-widest bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-orange-500"
+                              className="text-[9px] font-bold uppercase tracking-widest bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-lg px-2 py-1 outline-none focus:border-orange-500"
                             >
                               <option value="New">New</option>
                               <option value="Contacted">Contacted</option>

@@ -131,7 +131,7 @@ export default function AboutUsPage() {
  {t('intelligence_network')}
  </div>
  <h1 className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-[0.85]">
- {t('nav_about').split('').slice(0, 1).join('')} <span className="text-orange-600 italic">{t('nav_about').split('').slice(1).join('')}</span>
+ {t('nav_about')}
  </h1>
  <p className="max-w-3xl mx-auto text-sm sm:text-lg md:text-xl font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
  {t('about_us_subtitle')}
@@ -208,7 +208,7 @@ export default function AboutUsPage() {
  {t('visionary_leadership_title')}
  </div>
  <h2 className="font-display text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 dark:text-white uppercase leading-[1] tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
- {t('about_title').split('').slice(0, 1).join('')} <span className="italic text-[#FF7A00]">{t('about_title').split('').slice(1).join('')}</span>
+ {t('about_title')}
  </h2>
  <div className="relative">
  {/* Quote Mark Decoration */}

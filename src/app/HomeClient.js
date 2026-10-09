@@ -225,7 +225,7 @@ export function HomeClient({ recentUpdates }) {
                 </button>
                 <Link
                   href="/projects"
-                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#0A192F] dark:bg-white dark:text-[#0A192F] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:scale-105 shadow-heavy sm:w-auto active:scale-95"
+                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 border border-slate-700/50 dark:bg-slate-800 dark:text-white dark:border-slate-600 dark:hover:bg-slate-700 px-10 text-xs font-black uppercase tracking-widest transition-all hover:scale-105 shadow-heavy sm:w-auto active:scale-95"
                 >
                   {t('view_projects')}
                 </Link>
@@ -279,13 +279,13 @@ export function HomeClient({ recentUpdates }) {
                     { logo: "/images/torrent.png", name: "Torrent Power" },
                     { logo: "/images/renew.png", name: "ReNew Power" }
                   ].map((giant, idx) => (
-                    <div key={`${i}-${idx}`} className="relative h-20 w-48 sm:h-24 sm:w-56 md:h-24 md:w-64 lg:h-28 lg:w-72 xl:h-32 xl:w-80 flex-shrink-0 opacity-100 transition-all duration-500 hover:scale-110">
+                    <div key={`${i}-${idx}`} className="relative h-20 w-48 sm:h-24 sm:w-56 md:h-24 md:w-64 lg:h-28 lg:w-72 xl:h-32 xl:w-80 flex-shrink-0 opacity-100 transition-all duration-500 hover:scale-110 dark:bg-slate-900/60 dark:p-3 dark:rounded-2xl dark:border dark:border-slate-800/80">
                       <Image
                         src={giant.logo}
                         alt={`${giant.name} logo`}
                         fill
                         sizes="(max-width: 768px) 200px, 320px"
-                        className="object-contain dark:brightness-200"
+                        className="object-contain dark:brightness-125"
                         onError={(e) => {
                           e.target.style.display = 'none';
                         }}
@@ -316,7 +316,7 @@ export function HomeClient({ recentUpdates }) {
               {t('verified_portfolio_title')}
             </span>
             <h2 className="font-display text-3xl sm:text-4xl font-black text-slate-900 dark:text-white md:text-5xl uppercase leading-tight">
-              {t('featured_developments').split('').slice(0, 1).join('')} <span className="text-[#FF7A00] italic">{t('featured_developments').split('').slice(1).join('')}</span>
+              {t('featured_developments')}
             </h2>
             <p className="text-sm font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
               {t('explore_verified_desc')}
@@ -428,7 +428,7 @@ export function HomeClient({ recentUpdates }) {
                 {t('exclusive_offer')}
               </div>
               <h2 className="font-display text-4xl font-black text-slate-900 dark:text-white md:text-5xl uppercase leading-[1.1]">
-                {t('talk_to_owner_title').split('').slice(0, 2).join('')} <br /> <span className="text-[#FF7A00] italic">{t('talk_to_owner_title').split('').slice(2).join('')}</span>
+                {t('talk_to_owner_title')}
               </h2>
               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed tracking-wide">
                 {t('talk_to_owner_desc')}

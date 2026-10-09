@@ -145,7 +145,7 @@ export function ContactForm() {
  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-6 text-center">{t('priority_conn')}</h3>
  <form className="space-y-4" onSubmit={handleSubmit}>
  <div className="space-y-2">
- <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-300 ml-1">{t('full_name')}</label>
+ <label className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 ml-1">{t('full_name')}</label>
  <div className="relative">
  <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 dark:text-slate-300" />
  <input 
@@ -159,7 +159,7 @@ export function ContactForm() {
  </div>
  </div>
  <div className="space-y-2">
- <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-300 ml-1">{t('mobile_number')}</label>
+ <label className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 ml-1">{t('mobile_number')}</label>
  <div className="relative">
  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 dark:text-slate-300" />
  <input 
@@ -180,7 +180,7 @@ export function ContactForm() {
  )}
  </div>
  <div className="space-y-2">
- <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-300 ml-1">Email (Optional)</label>
+ <label className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 ml-1">Email (Optional)</label>
  <div className="relative">
  <svg className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 dark:text-slate-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
  <input 
@@ -193,7 +193,7 @@ export function ContactForm() {
  </div>
  </div>
  <div className="space-y-2">
- <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-300 ml-1">Message (Optional)</label>
+ <label className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 ml-1">Message (Optional)</label>
  <div className="relative">
  <svg className="absolute left-4 top-5 -translate-y-1/2 h-4 w-4 text-slate-500 dark:text-slate-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
  <textarea 

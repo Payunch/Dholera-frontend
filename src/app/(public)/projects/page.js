@@ -80,7 +80,7 @@ export default function ProjectsPage() {
  {t('official_archives')}
  </span>
  <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight">
- {t('verified_plotted_title').split('').slice(0, 2).join('')} <span className="text-orange-600 italic">{t('verified_plotted_title').split('').slice(2).join('')}</span>
+ {t('verified_plotted_title')}
  </h1>
  <p className="text-sm sm:text-lg md:text-xl font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
  {t('verified_plotted_desc')}

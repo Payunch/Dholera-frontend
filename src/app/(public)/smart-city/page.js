@@ -38,7 +38,7 @@ export default function SmartCityPage() {
  </div>
 
  <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
- <div className="inline-flex items-center rounded-full bg-slate-900/50 border border-slate-700 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-slate-900 dark:text-white backdrop-blur-sm">
+ <div className="inline-flex items-center rounded-full bg-slate-900/70 border border-slate-700 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-orange-400 dark:text-orange-300 backdrop-blur-sm">
  {t('smart_hero_badge')}
  </div>
  <h1 className="font-display min-w-0 break-words text-3xl sm:text-5xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-tight sm:leading-none">

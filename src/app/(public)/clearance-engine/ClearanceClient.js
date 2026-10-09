@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Link from"next/link";
@@ -105,7 +105,7 @@ export function ClearanceClient() {
 
  <button 
  onClick={calculateFee}
- className="w-full h-16 rounded-2xl bg-white dark:bg-slate-900 text-white font-black uppercase tracking-[0.2em] text-sm hover:bg-[#FF7A00] transition-all shadow-xl shadow-slate-950/5"
+ className="w-full h-16 rounded-2xl bg-slate-900 dark:bg-orange-600 text-white font-black uppercase tracking-[0.2em] text-sm hover:bg-orange-600 dark:hover:bg-orange-500 transition-all shadow-xl shadow-slate-950/5 active:scale-95"
  >
  Generate Estimate
  </button>

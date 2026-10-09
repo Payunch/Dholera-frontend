@@ -25,7 +25,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full border-t border-slate-800 dark:border-slate-200 bg-slate-950 dark:bg-white text-slate-100 dark:text-slate-900 pb-24 md:pb-0 transition-colors">
+    <footer className="w-full border-t border-slate-800 bg-slate-950 text-slate-100 pb-24 md:pb-0 transition-colors">
       <div className="container mx-auto px-4 py-12 md:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12">
           {/* Brand & Mission */}
@@ -60,8 +60,8 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t('platform')}</h4>
-            <ul className="space-y-4 text-sm font-semibold text-slate-300 dark:text-slate-600">
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400">{t('platform')}</h4>
+            <ul className="space-y-4 text-sm font-semibold text-slate-300">
               <li><Link href="/" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_home')}</Link></li>
               <li><Link href="/projects" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_projects') || 'Projects'}</Link></li>
               <li><Link href="/investment-guide" className="hover:text-[#FF7A00] transition-all duration-300">{t('nav_investment_guide') || 'Investment Guide'}</Link></li>
@@ -75,8 +75,8 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t('legal')}</h4>
-            <ul className="space-y-4 text-sm font-semibold text-slate-300 dark:text-slate-600">
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400">{t('legal')}</h4>
+            <ul className="space-y-4 text-sm font-semibold text-slate-300">
               <li><Link href="/privacy-policy" className="hover:text-[#FF7A00] transition-all duration-300">{t('privacy_policy')}</Link></li>
               <li><Link href="/terms-and-conditions" className="hover:text-[#FF7A00] transition-all duration-300">{t('terms_of_service')}</Link></li>
               <li><Link href="/contact" className="hover:text-[#FF7A00] transition-all duration-300">{t('contact')}</Link></li>
@@ -92,23 +92,23 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">{t('footer_owner')}</h4>
-            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300 dark:text-slate-600">
+            <h4 className="mb-6 font-display text-sm font-bold uppercase tracking-widest text-slate-400">{t('footer_owner')}</h4>
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300">
               <User className="h-5 w-5 text-orange-600 shrink-0" />
               <span>{ownerDetails.operatorName}</span>
             </div>
-            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300 dark:text-slate-600">
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300">
               <Mail className="h-5 w-5 text-orange-600 shrink-0" />
               <span>{ownerDetails.email}</span>
             </div>
-            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300 dark:text-slate-600">
+            <div className="flex items-start space-x-3 text-sm font-semibold text-slate-300">
               <Phone className="h-5 w-5 text-orange-600 shrink-0" />
               <span>{ownerDetails.phoneDisplay}</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-slate-800 dark:border-slate-200 pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+        <div className="mt-12 border-t border-slate-800 pt-8 space-y-4 text-center text-xs font-bold uppercase tracking-widest text-slate-400">
           <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 normal-case tracking-normal max-w-4xl mx-auto font-medium leading-relaxed">
             {t('disclaimer')}
           </p>

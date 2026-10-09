@@ -33,7 +33,7 @@ export default function AirportPage() {
  
  <div className="container relative z-10 mx-auto px-4 md:px-8 text-center pt-20">
  <div className="inline-flex items-center gap-2 rounded-full bg-orange-600/20 border border-orange-500/30 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-orange-400 mb-6">
- <Plane className="h-3 w-3" /> <Translate id="strategic_roi" />
+ <Plane className="h-3 w-3" /> {t('strategic_roi') || 'Strategic ROI'}
  </div>
  <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter mb-6 leading-[0.85]">
  {t('airport_title')}

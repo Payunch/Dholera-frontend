@@ -47,7 +47,7 @@ export default function PlotsForSalePage() {
  { title:"Industrial Zones", desc:"Large land parcels for manufacturing and logistics units.", icon: ShieldCheck },
  ].map((cat, i) => (
  <div key={i} className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all">
- <div className="h-16 w-16 rounded-[1.5rem] bg-orange-600 flex items-center justify-center text-slate-900 dark:text-white mb-8">
+ <div className="h-16 w-16 rounded-[1.5rem] bg-orange-600 flex items-center justify-center text-white mb-8 shadow-md shadow-orange-600/20">
  <cat.icon className="h-8 w-8" />
  </div>
  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase mb-4">{cat.title}</h3>

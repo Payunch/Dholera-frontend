@@ -55,7 +55,7 @@ export default function TravelLifestylePage() {
  ))}
  </div>
 
- <section className="bg-white dark:bg-slate-900 rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden flex flex-col md:flex-row items-center gap-16">
+ <section className="bg-slate-900 dark:bg-slate-900/90 rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden flex flex-col md:flex-row items-center gap-16 border border-slate-800 shadow-2xl">
  <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none">
  <Image src="/images/expressHighway.webp" alt="Background" fill className="object-cover" />
  </div>
