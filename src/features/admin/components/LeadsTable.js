@@ -12,9 +12,7 @@ export function LeadsTable({ leads: initialLeads }) {
   const [viewMode, setViewMode] = useState('table');
 
   useEffect(() => {
-    if (leads !== initialLeads && initialLeads.length > 0) {
-      setLeads(initialLeads);
-    }
+    setLeads(initialLeads || []);
   }, [initialLeads]);
 
   const handleStatusChange = async (leadId, newStatus) => {
@@ -70,6 +68,35 @@ export function LeadsTable({ leads: initialLeads }) {
         },
       },
       {
+        accessorKey: 'source',
+        header: 'Lead Source',
+        Cell: ({ row }) => {
+          const lead = row.original;
+          const isGoogleAds = lead.utm_source === 'google_ads' || lead.source?.toLowerCase().includes('google') || lead.campaign_id;
+          return (
+            <div className="flex flex-col gap-1 max-w-[200px]">
+              <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                {lead.source || 'Website'}
+              </span>
+              {isGoogleAds ? (
+                <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-blue-600 bg-blue-50 dark:bg-blue-950/40 px-2 py-0.5 rounded-full w-fit">
+                  <Target className="h-3 w-3" /> Google Ads
+                </span>
+              ) : lead.utm_source ? (
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                  UTM: {lead.utm_source}
+                </span>
+              ) : null}
+              {lead.notes && (
+                <span className="text-[10px] text-slate-500 line-clamp-1 italic" title={lead.notes}>
+                  {lead.notes}
+                </span>
+              )}
+            </div>
+          );
+        },
+      },
+      {
         id: 'intelligence',
         header: 'Intelligence',
         Cell: ({ row }) => {
@@ -118,6 +145,21 @@ export function LeadsTable({ leads: initialLeads }) {
                   Google Ads
                 </div>
               )}
+            </div>
+          );
+        },
+      },
+      {
+        accessorKey: 'createdAt',
+        header: 'Received On',
+        Cell: ({ row }) => {
+          const lead = row.original;
+          const date = lead.createdAt ? new Date(lead.createdAt) : null;
+          if (!date) return <span className="text-xs text-slate-400">-</span>;
+          return (
+            <div className="flex flex-col text-xs font-semibold text-slate-700 dark:text-slate-300">
+              <span>{date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+              <span className="text-[10px] text-slate-500 font-normal">{date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
           );
         },
