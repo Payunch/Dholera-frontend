@@ -13,7 +13,10 @@ const resolveApiBaseUrl = () => {
  }
 
  // Fallback to production default
- return"https://api.dholeraplatform.com/api";
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return "http://localhost:3001/api";
+  }
+  return "https://api.dholeraplatform.com/api";
 };
 
 export const API_BASE_URL = resolveApiBaseUrl();

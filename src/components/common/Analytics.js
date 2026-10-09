@@ -2,6 +2,7 @@
 
 import Script from"next/script";
 import React, { useEffect } from"react";
+import { trackWhatsAppClick, trackPhoneClick } from "@/lib/conversionTracking";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID ||"GTM-WM9HRJVV";
 const CLARITY_ID = process.env.NEXT_PUBLIC_MS_CLARITY_ID;
@@ -24,10 +25,17 @@ export default function Analytics() {
 
    const href = link.getAttribute("href") || "";
    let eventName;
-   if (href.includes("wa.me/")) eventName = "whatsapp_click";
-   else if (href.startsWith("tel:")) eventName = "phone_click";
-   else if (href.startsWith("mailto:")) eventName = "email_click";
-   else if (href.startsWith("/download") || href.includes(".apk")) eventName = "download_click";
+   if (href.includes("wa.me/")) {
+     eventName = "whatsapp_click";
+     trackWhatsAppClick(window.location.pathname);
+   } else if (href.startsWith("tel:")) {
+     eventName = "phone_click";
+     trackPhoneClick(window.location.pathname);
+   } else if (href.startsWith("mailto:")) {
+     eventName = "email_click";
+   } else if (href.startsWith("/download") || href.includes(".apk")) {
+     eventName = "download_click";
+   }
 
    if (eventName) {
      trackCustomEvent(eventName, { 

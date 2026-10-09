@@ -77,8 +77,10 @@ export default function RootLayout({ children }) {
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'analytics_storage': 'denied'
+        'ad_storage': 'granted',
+        'analytics_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
       });
     `}
   </Script>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Link from"next/link";
@@ -6,6 +6,7 @@ import { User, Phone, CheckCircle2, AlertCircle, ChevronRight } from"lucide-reac
 import { apiClient } from"@/lib/api";
 import { useLead } from"@/providers/LeadProvider";
 import { useLanguage } from"@/providers/LanguageProvider";
+import { trackFormSubmission } from "@/lib/conversionTracking";
 
 export function ContactForm() {
  const { verifiedLead } = useLead();
@@ -33,7 +34,10 @@ export function ContactForm() {
  const [errorMessage, setErrorMessage] = React.useState("");
 
  const handlePhoneChange = (e) => {
- const val = e.target.value.replace(/\D/g,'').slice(0, 10);
+  let val = e.target.value.replace(/\D/g, '');
+  if (val.length === 12 && val.startsWith('91')) val = val.slice(2);
+  else if (val.length > 10 && val.startsWith('0')) val = val.slice(1);
+  val = val.slice(0, 10);
  setFormData({ ...formData, phone: val });
  if (status ==="error") {
  setStatus("idle");
@@ -63,6 +67,12 @@ export function ContactForm() {
  });
  setStatus("success");
  setErrorMessage("");
+ trackFormSubmission({
+   name: formData.name,
+   phone: formData.phone,
+   email: formData.email,
+   source: "contact_page",
+ });
  setFormData({ name:"", phone:"", email: "", notes: "" });
  
  // Fire Meta Pixel Event
@@ -197,7 +207,7 @@ export function ContactForm() {
  </div>
  <button 
  type="submit"
- disabled={status ==='loading' || !(/^[6-9]\d{9}$/.test(formData.phone))}
+ disabled={status === 'loading'}
  className="w-full h-14 mt-4 rounded-xl bg-[#FF7A00] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-orange-600 disabled:bg-slate-700 disabled:text-slate-400 transition-all shadow-xl shadow-orange-600/10 flex items-center justify-center active:scale-95 group"
  >
  {status ==='loading' ? (
