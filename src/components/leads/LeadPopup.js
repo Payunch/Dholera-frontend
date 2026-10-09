@@ -32,7 +32,7 @@ export const LeadPopup = ({
   const [open, setOpen] = useState(true);
   const [name, setName] = useState('Verified Visitor');
   const [phone, setPhone] = useState('');
-  const [otpCode, setOtpCode] = useState('');
+  const [otpCode, setOtpCode] = useState('123456');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -154,11 +154,7 @@ export const LeadPopup = ({
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    const code = sanitizeDigits(otpCode, 6);
-
-    if (confirmationResult?.verificationId === "test_bypass" && code !== "123456") {
-      return setError('Just click "Establish Connection" directly! (No need to type)');
-    }
+    const code = sanitizeDigits(otpCode, 6) || (confirmationResult?.verificationId === "test_bypass" ? "123456" : "");
 
     if (code.length !== 6) {
       return setError('Please enter a valid 6-digit verification code.');
@@ -356,8 +352,7 @@ export const LeadPopup = ({
                     maxLength={6}
                     autoFocus
                     autoComplete="one-time-code"
-                    readOnly
-                    className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400 cursor-not-allowed"
+                    className="w-full rounded-2xl border-2 border-white/10 dark:border-slate-800 bg-white/5 dark:bg-slate-950/40 py-5 text-center font-black uppercase tracking-widest text-[10px] outline-none focus:border-orange-500 focus:bg-white/10 dark:focus:bg-slate-900/40 transition-all text-white dark:text-white placeholder:text-slate-400"
                     value={otpCode}
                     onChange={(e) => setOtpCode(sanitizeDigits(e.target.value, 6))}
                   />
