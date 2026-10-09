@@ -144,7 +144,7 @@ export default function ProjectsPage() {
    }
  }}
  className={cn(
-   "group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between",
+   "group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between",
    isFeatured ? "md:col-span-2 md:row-span-2" : "col-span-1 row-span-1"
  )}
  >
@@ -196,7 +196,7 @@ export default function ProjectsPage() {
 
  {/* Actions (Visual Button) */}
  <div className="p-8 md:p-10 pt-0">
- <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] transition-all duration-300 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10 dark:group-hover:shadow-orange-600/30">
+ <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] dark:group-hover:bg-[#FF7A00] group-hover:text-white dark:group-hover:text-white transition-all duration-300 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10 dark:group-hover:shadow-orange-600/30">
  {project.slug ==="final-dholera-report" ?"Read Full Report" :"Analyze Project Specs"}
  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
  </div>
