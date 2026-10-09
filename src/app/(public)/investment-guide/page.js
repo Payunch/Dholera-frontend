@@ -52,7 +52,7 @@ export default function InvestmentGuidePage() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-32">
           <div className="lg:col-span-2 space-y-12">
-            <section className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
+            <section className="card-surface p-8 md:p-12 hover:-translate-y-1 transition-all duration-500">
               <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase mb-8 flex items-center gap-4">
                 <TrendingUp className="h-8 w-8 text-orange-600" /> <Translate id="why_dholera_now" />
               </h2>
@@ -68,25 +68,25 @@ export default function InvestmentGuidePage() {
               </div>
             </section>
 
-            <section className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 text-white shadow-2xl relative overflow-hidden group border border-slate-200 dark:border-slate-800">
+            <section className="card-surface p-8 md:p-12 relative overflow-hidden group">
               <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 bg-orange-600/10 blur-[100px] rounded-full pointer-events-none" />
               <h2 className="text-2xl font-black uppercase mb-8 relative z-10 text-slate-900 dark:text-white">
                 <Translate id="investment_zones_title" />
               </h2>
               <div className="space-y-6 relative z-10">
-                <div className="p-8 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-orange-500/30 transition-all duration-300">
-                  <h3 className="text-orange-500 font-black uppercase text-sm mb-3">
+                <div className="card-inset hover:border-orange-500/40 transition-all duration-300">
+                  <h3 className="card-heading-accent">
                     <Translate id="zone_activation_title" />
                   </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+                  <p className="card-body-text">
                     <Translate id="zone_activation_desc" />
                   </p>
                 </div>
-                <div className="p-8 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-orange-500/30 transition-all duration-300">
-                  <h3 className="text-orange-500 font-black uppercase text-sm mb-3">
+                <div className="card-inset hover:border-orange-500/40 transition-all duration-300">
+                  <h3 className="card-heading-accent">
                     <Translate id="zone_residential_title" />
                   </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+                  <p className="card-body-text">
                     <Translate id="zone_residential_desc" />
                   </p>
                 </div>
@@ -95,11 +95,11 @@ export default function InvestmentGuidePage() {
           </div>
 
           <div className="space-y-8">
-            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
+            <div className="card-surface p-8 md:p-10 hover:-translate-y-1 transition-all duration-500">
               <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-6">
                 <Translate id="risk_assessment_title" />
               </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-8 uppercase tracking-widest text-[10px]">
+              <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed mb-8 uppercase tracking-widest text-[10px]">
                 <Translate id="risk_assessment_desc" />
               </p>
               <Link href="/clearance-engine" className="flex h-14 w-full items-center justify-center bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg active:scale-95">

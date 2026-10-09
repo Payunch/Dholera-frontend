@@ -109,23 +109,23 @@ export default function SmartCityPage() {
 
  <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-32">
  {features.map((feature, i) => (
- <div key={i} className="group space-y-6 p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
- <div className="h-14 w-14 bg-white rounded-2xl flex items-center justify-center text-orange-600 shadow-sm group-hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all">
+ <div key={i} className="card-surface p-10 space-y-6 hover:-translate-y-2 transition-all duration-500 group">
+ <div className="h-14 w-14 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-center text-orange-600 shadow-sm transition-all">
  <feature.icon className="h-7 w-7" />
  </div>
  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase group-hover:text-orange-600 transition-colors">{feature.title}</h3>
- <p className="text-slate-500 font-medium leading-relaxed">{feature.desc}</p>
+ <p className="card-body-text">{feature.desc}</p>
  </div>
  ))}
  </div>
 
- <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-12 md:p-24 text-slate-900 dark:text-white text-center relative overflow-hidden">
+ <div className="card-surface p-12 md:p-24 text-center relative overflow-hidden">
  <div className="absolute inset-0 opacity-10 mix-blend-overlay">
  <Image src="/images/airportVision.webp" alt="Background" fill className="object-cover" />
  </div>
- <h2 className="break-words text-3xl md:text-6xl font-black uppercase mb-8 tracking-tighter relative z-10">{t('smart_cta_title')}</h2>
- <p className="text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto uppercase tracking-widest text-xs leading-loose mb-12 relative z-10">{t('smart_cta_desc')}</p>
- <Link href="/contact" className="relative z-10 inline-flex items-center gap-3 px-12 py-5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 hover:text-white transition-all shadow-xl active:scale-95">
+ <h2 className="break-words text-3xl md:text-6xl font-black uppercase mb-8 tracking-tighter relative z-10 text-slate-900 dark:text-white">{t('smart_cta_title')}</h2>
+ <p className="text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto uppercase tracking-widest text-xs leading-loose mb-12 relative z-10">{t('smart_cta_desc')}</p>
+ <Link href="/contact" className="relative z-10 btn-action-primary">
  {t('smart_cta_button')} <ArrowRight className="h-4 w-4" />
  </Link>
  </div>

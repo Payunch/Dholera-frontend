@@ -94,8 +94,8 @@ export default function InfrastructurePage() {
  <div className="container mx-auto px-4 md:px-8 max-w-[1600px]">
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
  {categories.map((cat, i) => (
- <div key={i} className="bg-white dark:bg-[#111A35] p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-2 transition-all group flex flex-col dark:bg-slate-900">
- <div className="h-16 w-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#FF7A00] mb-8 transition-colors group-hover:bg-[#FF7A00] group-hover:text-white">
+ <div key={i} className="card-surface p-8 md:p-10 hover:-translate-y-2 transition-all group flex flex-col">
+ <div className="h-16 w-16 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center justify-center text-[#FF7A00] mb-8 transition-colors group-hover:bg-[#FF7A00] group-hover:text-white">
  <cat.icon className="h-8 w-8" />
  </div>
  <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-6 group-hover:text-[#FF7A00] transition-colors">{cat.title}</h3>
@@ -103,7 +103,7 @@ export default function InfrastructurePage() {
  {cat.items.map((item, j) => (
  <div key={j} className="flex items-start gap-3">
  <CheckCircle2 className="h-4 w-4 text-green-500 mt-1 shrink-0" />
- <span className="text-sm font-bold text-slate-500 dark:text-slate-300 leading-snug uppercase tracking-wider">{item}</span>
+ <span className="text-sm font-bold text-slate-600 dark:text-slate-300 leading-snug uppercase tracking-wider">{item}</span>
  </div>
  ))}
  </div>
@@ -116,7 +116,7 @@ export default function InfrastructurePage() {
  {/* Detailed Section */}
  <section className="py-24">
  <div className="container mx-auto px-4 md:px-8">
- <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-20 text-slate-900 dark:text-white overflow-hidden relative">
+ <div className="card-surface p-8 md:p-20 overflow-hidden relative">
  <div className="absolute top-0 right-0 w-96 h-96 bg-orange-600 opacity-10 blur-[100px]" />
  
  <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
@@ -124,21 +124,21 @@ export default function InfrastructurePage() {
  <h2 className="break-words text-3xl md:text-5xl font-black uppercase leading-tight">
  {t('decide_ground_reality')}
  </h2>
- <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
+ <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
  {t('invest_rumors')}
  </p>
  <div className="flex flex-wrap gap-4">
- <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl dark:bg-slate-900">
- <p className="text-3xl font-black text-orange-500">₹3,000 cr+</p>
- <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-300 tracking-widest">{t('trunk_infra_spent')}</p>
+ <div className="card-inset px-6 py-4">
+ <p className="text-3xl font-black text-orange-600 dark:text-orange-400">₹3,000 cr+</p>
+ <p className="text-[10px] font-black uppercase text-slate-600 dark:text-slate-300 tracking-widest">{t('trunk_infra_spent')}</p>
  </div>
- <div className="bg-white dark:bg-[#111A35]/5 border border-white/10 px-6 py-4 rounded-2xl dark:bg-slate-900">
- <p className="text-3xl font-black text-orange-500">22.5 km²</p>
- <p className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-300 tracking-widest">{t('activation_area_val')}</p>
+ <div className="card-inset px-6 py-4">
+ <p className="text-3xl font-black text-orange-600 dark:text-orange-400">22.5 km²</p>
+ <p className="text-[10px] font-black uppercase text-slate-600 dark:text-slate-300 tracking-widest">{t('activation_area_val')}</p>
  </div>
  </div>
  <div className="pt-4">
- <Link href="/tp-maps" className="inline-flex items-center gap-3 bg-orange-600 hover:bg-orange-500 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs transition-all shadow-xl shadow-orange-600/10 dark:shadow-orange-600/50">
+ <Link href="/tp-maps" className="btn-action-primary">
  {t('browse_planning_maps')} <ArrowRight className="h-4 w-4" />
  </Link>
  </div>

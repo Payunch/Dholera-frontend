@@ -236,3 +236,153 @@ h1, h2, h3, h4, h5, h6 {
 .wp-content a { color: var(--accent); text-decoration: underline !important; text-underline-offset: 4px; }
 .wp-content a:hover { color: var(--accent-3); }
 .wp-content strong { font-weight: 900; color: var(--foreground); }
+
+/* ==========================================================================
+   GLOBAL DESIGN SYSTEM: REUSABLE COLOR-CODED BOXES, CARDS & BUTTONS
+   ========================================================================== */
+
+/* Primary Card Surface */
+.card-surface {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+  transition: all 0.3s ease;
+}
+.dark .card-surface {
+  background-color: #0f172a;
+  color: #f8fafc;
+  border-color: #1e293b;
+  box-shadow: none;
+}
+
+/* Secondary Inset Box (Info cards, specs, inner sections) */
+.card-inset {
+  background-color: #f8fafc;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  transition: all 0.3s ease;
+}
+.dark .card-inset {
+  background-color: rgba(30, 41, 59, 0.6);
+  color: #f8fafc;
+  border-color: rgba(51, 65, 85, 0.7);
+}
+
+/* Card Heading Accent - Guaranteed high contrast & visibility */
+.card-heading-accent {
+  color: #ea580c !important; /* Rich brand orange */
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.025em;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.dark .card-heading-accent {
+  color: #fb923c !important; /* Luminous warm orange for dark mode */
+}
+
+/* Card Body Text */
+.card-body-text {
+  color: #475569 !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.625;
+}
+.dark .card-body-text {
+  color: #cbd5e1 !important;
+}
+
+/* Inactive Card Action Button - Opposing Dark/Light contrast */
+.btn-action-surface {
+  display: flex;
+  height: 3.5rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  background-color: #0f172a;
+  color: #ffffff !important;
+  border: 1px solid #0f172a;
+  font-size: 0.625rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.dark .btn-action-surface {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #ffffff !important;
+}
+.btn-action-surface:hover,
+.dark .btn-action-surface:hover,
+.group:hover .btn-action-surface {
+  background-color: #FF7A00 !important;
+  border-color: #FF7A00 !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 15px -3px rgba(255, 122, 0, 0.25);
+}
+
+/* Primary Brand Button (CTAs) */
+.btn-action-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem 2.5rem;
+  border-radius: 1rem;
+  background-color: #ea580c;
+  color: #ffffff !important;
+  font-size: 0.625rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  box-shadow: 0 10px 20px -5px rgba(234, 88, 12, 0.25);
+  transition: all 0.25s ease;
+}
+.btn-action-primary:hover {
+  background-color: #c2410c;
+  transform: translateY(-2px);
+}
+.btn-action-primary:active {
+  transform: scale(0.98);
+}
+
+/* Global Section Header Badge */
+.badge-pill-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 237, 213, 0.7);
+  border: 1px solid rgba(254, 215, 170, 0.9);
+  color: #ea580c;
+  padding: 0.375rem 1rem;
+  font-size: 0.625rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+.dark .badge-pill-accent {
+  background-color: rgba(124, 45, 18, 0.3);
+  border-color: rgba(154, 52, 18, 0.6);
+  color: #fb923c;
+}
+
+/* Neutralize Bootstrap !important .text-white when applied on light containers */
+.bg-white.text-white:not(.dark):not(.dark *) {
+  color: #0f172a !important;
+}
+.bg-slate-50.text-white:not(.dark):not(.dark *) {
+  color: #0f172a !important;
+}
+

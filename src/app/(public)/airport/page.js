@@ -72,7 +72,7 @@ export default function AirportPage() {
  <div className="pt-6">
  <Link 
  href="/pdf?trigger=true" 
- className="inline-flex items-center gap-3 bg-[#FF7A00] text-white px-10 py-5 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl shadow-orange-600/10 dark:shadow-orange-600/50 active:scale-95"
+ className="btn-action-primary"
  >
  {t('download_airport_maps')} <ArrowRight className="h-4 w-4" />
  </Link>
@@ -81,14 +81,14 @@ export default function AirportPage() {
 
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
  {milestones.map((m, i) => (
- <div key={i} className="p-8 md:p-10 rounded-[2rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-2xl dark:hover:shadow-black/100 transition-all group flex flex-col justify-between">
+ <div key={i} className="card-surface p-8 md:p-10 hover:shadow-2xl transition-all group flex flex-col justify-between">
  <div className="space-y-4">
  <div className="flex justify-between items-start">
- <span className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00]">{m.phase}</span>
+ <span className="text-[10px] font-black uppercase tracking-widest text-orange-600 dark:text-orange-400">{m.phase}</span>
  <span className="bg-white dark:bg-slate-800 px-3 py-1 rounded-full text-[8px] font-black uppercase border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400">{m.status}</span>
  </div>
  <h4 className="text-2xl font-black text-slate-900 dark:text-white leading-tight group-hover:text-[#FF7A00] transition-colors">{m.date}</h4>
- <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-bold uppercase tracking-wider">{m.desc}</p>
+ <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-bold uppercase tracking-wider">{m.desc}</p>
  </div>
  </div>
  ))}

@@ -138,7 +138,7 @@ export default function PortalsPage() {
  href={link.url}
  target="_blank"
  rel="noopener noreferrer"
- className="group bg-white dark:bg-slate-900 rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-[#FF7A00] transition-all hover:-translate-y-1 flex flex-col justify-between"
+ className="card-surface p-8 hover:shadow-2xl hover:border-[#FF7A00] transition-all hover:-translate-y-1 flex flex-col justify-between group"
  >
  <div>
  <div className="flex justify-between items-start mb-6">
@@ -151,7 +151,7 @@ export default function PortalsPage() {
  <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors mb-3">
  {link.name}
  </h3>
- <p className="text-xs font-medium text-slate-600 dark:text-slate-300 leading-relaxed">
+ <p className="card-body-text text-xs">
  {link.desc}
  </p>
  </div>
