@@ -110,7 +110,7 @@ export function ContactForm() {
 
  if (status ==="success") {
  return (
- <div className="text-center py-12 space-y-6 bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl animate-in zoom-in-95 duration-300">
+ <div className="text-center py-12 space-y-6 bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-xl animate-in zoom-in-95 duration-300">
  <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30">
  <CheckCircle2 className="h-10 w-10" />
  </div>
@@ -129,7 +129,7 @@ export function ContactForm() {
  }
 
  return (
- <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-800 shadow-xl relative overflow-hidden transition-colors">
+ <div className="bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden transition-colors">
  {status ==='error' && (
  <div className="mb-8 flex flex-col gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-[10px] font-bold text-red-400 uppercase tracking-widest leading-relaxed">
  <div className="flex items-center gap-3">

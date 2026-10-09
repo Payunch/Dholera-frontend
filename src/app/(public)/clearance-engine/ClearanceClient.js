@@ -83,7 +83,7 @@ export function ClearanceClient() {
  onClick={() => setUseType(type)}
  className={cn(
 "py-4 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition-all",
- useType === type ?"bg-[#FF7A00] border-[#FF7A00] text-white" :"bg-white dark:bg-slate-900 border-slate-200 text-slate-500 hover:border-slate-300"
+ useType === type ?"bg-[#FF7A00] border-[#FF7A00] text-white" :"bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700"
  )}
  >
  {type}
@@ -93,13 +93,13 @@ export function ClearanceClient() {
  </div>
 
  <div className="space-y-4">
- <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-2">Total Plot Area (Sq. Meters)</label>
+ <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 ml-2">Total Plot Area (Sq. Meters)</label>
  <input 
  type="number" 
  placeholder="ENTER AREA IN SQM..."
  value={plotSize}
  onChange={(e) => setPlotSize(e.target.value)}
- className="w-full px-8 py-5 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 outline-none focus:border-[#FF7A00] text-sm font-black tracking-widest text-slate-900 dark:text-white transition-all shadow-sm"
+ className="w-full px-8 py-5 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 outline-none focus:border-[#FF7A00] text-sm font-black tracking-widest text-slate-900 dark:text-white transition-all shadow-sm"
  />
  </div>
 
@@ -112,15 +112,15 @@ export function ClearanceClient() {
  </div>
 
  {calculatedFee !== null && (
- <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 text-center space-y-6 border border-slate-800 shadow-2xl animate-in zoom-in-95 duration-300 dark:bg-slate-900">
+ <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-10 text-center space-y-6 border border-slate-200 dark:border-slate-800 shadow-2xl animate-in zoom-in-95 duration-300 dark:bg-slate-900">
  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FF7A00]">Estimated Development Charges</span>
  <div className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white font-display tabular-nums">
  ₹{calculatedFee.toLocaleString()}
  </div>
- <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest leading-relaxed">
+ <p className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
  *Note is an algorithmic estimate based on base GDCR rates. <br/> Actual scrutiny fees may vary by TP sub-zone and built-up area specifics.
  </p>
- <div className="pt-6 border-t border-slate-800">
+ <div className="pt-6 border-t border-slate-200 dark:border-slate-800">
  <Link href="/contact" className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00] hover:text-orange-400 flex items-center justify-center gap-2">
  Request Verified Scrutiny Report <ChevronRight className="h-4 w-4" />
  </Link>
@@ -130,7 +130,7 @@ export function ClearanceClient() {
  </div>
  ) : (
  <div className="flex flex-col items-center justify-center text-center space-y-8 py-20">
- <div className="h-24 w-24 rounded-[2rem] bg-orange-50 flex items-center justify-center text-orange-600">
+ <div className="h-24 w-24 rounded-[2rem] bg-orange-50 dark:bg-orange-950/40 border border-orange-200/50 dark:border-orange-800/40 flex items-center justify-center text-orange-600">
  {React.createElement(tabs[activeTab].icon, { className:"h-12 w-12" })}
  </div>
  

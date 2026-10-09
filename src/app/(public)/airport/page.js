@@ -18,7 +18,7 @@ export default function AirportPage() {
  return (
  <div className="bg-white dark:bg-slate-950 min-h-screen w-full overflow-x-hidden transition-colors">
  {/* Hero Section - Refactored for proper sizing */}
- <section className="relative min-h-[60vh] md:min-h-[75vh] flex items-center justify-center overflow-hidden bg-white dark:bg-slate-900 text-white">
+ <section className="relative min-h-[60vh] md:min-h-[75vh] flex items-center justify-center overflow-hidden bg-slate-950 text-white">
  <div className="absolute inset-0 z-0">
  <Image 
  src="/images/airportVision.webp" 
@@ -38,7 +38,7 @@ export default function AirportPage() {
  <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter mb-6 leading-[0.85]">
  {t('airport_title')}
  </h1>
- <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed uppercase tracking-widest">
+ <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-slate-200 font-medium leading-relaxed uppercase tracking-widest">
  {t('airport_subtitle')}
  </p>
  </div>
@@ -98,10 +98,10 @@ export default function AirportPage() {
  </section>
 
  {/* CTA Section */}
- <section className="bg-white dark:bg-slate-900 py-24 text-white">
+ <section className="bg-slate-50 dark:bg-slate-900/60 py-24 border-t border-slate-200 dark:border-slate-800 transition-colors">
  <div className="container mx-auto px-4 text-center space-y-8">
- <h2 className="text-3xl md:text-5xl font-black uppercase">{t('interested_airport_prop')}</h2>
- <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto uppercase text-xs font-black tracking-widest leading-loose">
+ <h2 className="text-3xl md:text-5xl font-black uppercase text-slate-900 dark:text-white">{t('interested_airport_prop')}</h2>
+ <p className="text-slate-600 dark:text-slate-400 max-w-xl mx-auto uppercase text-xs font-black tracking-widest leading-loose">
  {t('direct_access_tp')}
  </p>
  <div className="flex justify-center pt-4">

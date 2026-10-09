@@ -46,7 +46,7 @@ export default function TpMapsPage() {
  <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans w-full overflow-x-hidden dark:bg-slate-900">
  
  {/* Header Section - Refactored for proper sizing */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden dark:bg-slate-900">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
  <Image 
@@ -148,7 +148,7 @@ export default function TpMapsPage() {
  className={cn(
 "backdrop-blur-md text-[8px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-lg border",
  badge.type ==='compliance' 
- ?"bg-[#10B981] text-slate-900 dark:text-white border-[#10B981]" 
+ ?"bg-[#10B981] text-white border-[#10B981]" 
  :"bg-[#D97706] text-white border-[#D97706]"
  )}
  >
@@ -159,7 +159,7 @@ export default function TpMapsPage() {
 
  <div>
  <div className="flex justify-between items-start mb-10 pt-4">
- <div className="h-16 w-16 bg-white rounded-2xl flex items-center justify-center text-slate-900 group-hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 group-hover:text-slate-900 dark:text-white transition-all duration-300">
+ <div className="h-16 w-16 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white transition-all duration-300">
  <Map className="h-8 w-8" />
  </div>
  <div className="group/info relative cursor-help">
@@ -186,7 +186,7 @@ export default function TpMapsPage() {
  </div>
  </div>
 
- <div className="w-full h-14 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10">
+ <div className="w-full h-14 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-black uppercase tracking-widest text-[10px] group-hover:bg-[#FF7A00] group-hover:text-white group-hover:border-[#FF7A00] transition-all duration-300 flex items-center justify-center gap-3 shadow-sm group-hover:shadow-orange-600/10">
  {t('tp_explore_matrix')} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
  </div>
  </Link>

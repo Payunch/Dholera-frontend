@@ -24,9 +24,9 @@ export default function InvestmentGuidePage() {
     <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden dark:bg-slate-900">
       
       {/* Header Block */}
-      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16 dark:bg-slate-900">
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden mb-16">
         {/* Background Image Overlay */}
-        <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
+        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
           <Image 
             src="/images/dholerasirGujrat.webp" 
             alt="Dholera Strategic Alpha" 
@@ -34,6 +34,7 @@ export default function InvestmentGuidePage() {
             className="object-cover"
           />
         </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-white dark:from-[#0B132B]/80 dark:via-transparent dark:to-[#0B132B] z-0 pointer-events-none" />
 
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6">
           <div className="inline-flex items-center rounded-full bg-green-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-green-500 border border-green-500/30">
@@ -51,7 +52,7 @@ export default function InvestmentGuidePage() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-32">
           <div className="lg:col-span-2 space-y-12">
-            <section className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
+            <section className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
               <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase mb-8 flex items-center gap-4">
                 <TrendingUp className="h-8 w-8 text-orange-600" /> <Translate id="why_dholera_now" />
               </h2>
@@ -67,7 +68,7 @@ export default function InvestmentGuidePage() {
               </div>
             </section>
 
-            <section className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 text-white shadow-2xl relative overflow-hidden group">
+            <section className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-12 text-white shadow-2xl relative overflow-hidden group border border-slate-200 dark:border-slate-800">
               <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 bg-orange-600/10 blur-[100px] rounded-full pointer-events-none" />
               <h2 className="text-2xl font-black uppercase mb-8 relative z-10 text-slate-900 dark:text-white">
                 <Translate id="investment_zones_title" />
@@ -94,14 +95,14 @@ export default function InvestmentGuidePage() {
           </div>
 
           <div className="space-y-8">
-            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-100 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
+            <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/10 hover:-translate-y-1 transition-all duration-500">
               <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-6">
                 <Translate id="risk_assessment_title" />
               </h3>
-              <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8 uppercase tracking-widest text-[10px]">
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-8 uppercase tracking-widest text-[10px]">
                 <Translate id="risk_assessment_desc" />
               </p>
-              <Link href="/clearance-engine" className="flex h-14 w-full items-center justify-center bg-slate-900 dark:bg-slate-800 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-lg active:scale-95">
+              <Link href="/clearance-engine" className="flex h-14 w-full items-center justify-center bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-lg active:scale-95">
                 <Translate id="run_clearance_check" />
               </Link>
             </div>

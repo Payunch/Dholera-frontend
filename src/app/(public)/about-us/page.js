@@ -116,7 +116,7 @@ export default function AboutUsPage() {
  <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden font-sans dark:bg-slate-900">
  
  {/* Header Section - Refactored for proper sizing */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden dark:bg-slate-900">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
  <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
  <Image 
  src="/images/futuristic_dholera.png" 
@@ -207,13 +207,13 @@ export default function AboutUsPage() {
  <div className="inline-flex items-center rounded-full bg-orange-600/20 border border-orange-500/30 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-orange-400">
  {t('visionary_leadership_title')}
  </div>
- <h2 className="font-display text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 dark:text-white uppercase leading-[1] tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
+ <h2 className="font-display text-4xl md:text-5xl lg:text-7xl font-black text-white uppercase leading-[1] tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
  {t('about_title')}
  </h2>
  <div className="relative">
  {/* Quote Mark Decoration */}
  <div className="absolute -top-10 -left-10 text-[10rem] font-serif text-slate-700 dark:text-slate-800 opacity-20 z-0">"</div>
- <p className="relative z-10 text-xl md:text-2xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed italic border-l-8 border-[#FF7A00] pl-8">
+ <p className="relative z-10 text-xl md:text-2xl text-slate-200 font-medium leading-relaxed italic border-l-8 border-[#FF7A00] pl-8">
  {t('visionary_leadership_desc')}
  </p>
  </div>

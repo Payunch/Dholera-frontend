@@ -13,7 +13,7 @@ export default function PlotsForSalePage() {
  <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden dark:bg-slate-900">
  
  {/* Header Block */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-16 dark:bg-slate-900">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden mb-16 dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
  <Image 
@@ -46,12 +46,12 @@ export default function PlotsForSalePage() {
  { title:"Commercial Land", desc:"Strategic plots near the Activation Area and Linear Zone.", icon: Grid },
  { title:"Industrial Zones", desc:"Large land parcels for manufacturing and logistics units.", icon: ShieldCheck },
  ].map((cat, i) => (
- <div key={i} className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+ <div key={i} className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all">
  <div className="h-16 w-16 rounded-[1.5rem] bg-orange-600 flex items-center justify-center text-white mb-8 shadow-md shadow-orange-600/20">
  <cat.icon className="h-8 w-8" />
  </div>
  <h3 className="text-2xl font-black text-slate-900 dark:text-white uppercase mb-4">{cat.title}</h3>
- <p className="text-slate-500 font-medium leading-relaxed mb-8">{cat.desc}</p>
+ <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed mb-8">{cat.desc}</p>
  <Link href="/projects" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-orange-600 hover:gap-4 transition-all">
  Browse Inventory <ArrowRight className="h-4 w-4" />
  </Link>

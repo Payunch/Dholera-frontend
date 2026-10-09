@@ -89,17 +89,17 @@ export function ProjectDetailClient({ project }) {
  </div>
 
  {/* Overview / Story Card */}
- <div className="bg-white dark:bg-slate-900 border border-slate-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm space-y-6">
+ <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2.5rem] p-8 md:p-12 shadow-sm space-y-6">
  <h2 className="font-display text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
  Project Overview
  </h2>
  
- <p className="text-sm font-semibold text-slate-500 leading-relaxed">
+ <p className="text-sm font-semibold text-slate-600 dark:text-slate-300 leading-relaxed">
  {description}
  </p>
 
  {/* Specs Table List */}
- <div className="pt-6 border-t border-slate-100 grid gap-6 sm:grid-cols-2">
+ <div className="pt-6 border-t border-slate-100 dark:border-slate-800 grid gap-6 sm:grid-cols-2">
  <div className="space-y-1">
  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Available Sizes</span>
  <p className="text-sm font-black text-slate-800 dark:text-slate-200 uppercase">{project.plotSizes}</p>
@@ -161,7 +161,7 @@ export function ProjectDetailClient({ project }) {
  <h3 className="font-display text-2xl font-black uppercase tracking-tight">
  Advisory Desk
  </h3>
- <p className="text-xs font-semibold text-slate-350 leading-relaxed">
+ <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 leading-relaxed">
  Connect directly with our infrastructure desk to verify survey records, zoning boundaries, and current pricing.
  </p>
  </div>
@@ -190,7 +190,7 @@ export function ProjectDetailClient({ project }) {
 
  <Link
  href="/clearance-engine"
- className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 text-white text-xs font-black uppercase tracking-widest hover:bg-white dark:hover:bg-slate-800/10 transition-all dark:bg-slate-900"
+ className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-black uppercase tracking-widest hover:bg-slate-100 dark:hover:bg-slate-700 transition-all shadow-sm"
  >
  Verify via Clearance Engine
  </Link>

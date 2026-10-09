@@ -142,16 +142,16 @@ export default function PortalsPage() {
  >
  <div>
  <div className="flex justify-between items-start mb-6">
- <div className="flex items-center gap-2 px-3 py-1 bg-green-50 dark:bg-green-900/20 rounded-md border border-green-100 dark:border-green-800/30">
+ <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 dark:bg-emerald-950/40 rounded-full border border-emerald-200 dark:border-emerald-800/50">
  <ShieldCheck className="h-3 w-3 text-[#10B981]" />
- <span className="text-[8px] font-black uppercase tracking-widest text-[#10B981]">Verified Link</span>
+ <span className="text-[9px] font-black uppercase tracking-widest text-emerald-700 dark:text-emerald-300">Verified Link</span>
  </div>
  <ExternalLink className="h-5 w-5 text-slate-300 group-hover:text-[#FF7A00] transition-colors" />
  </div>
  <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase leading-snug group-hover:text-[#FF7A00] transition-colors mb-3">
  {link.name}
  </h3>
- <p className="text-xs font-medium text-slate-500 dark:text-slate-500 dark:text-slate-400 leading-relaxed">
+ <p className="text-xs font-medium text-slate-600 dark:text-slate-300 leading-relaxed">
  {link.desc}
  </p>
  </div>

@@ -409,7 +409,7 @@ export function HomeClient({ recentUpdates }) {
       {/* 1.3 FREE SITE VISIT & LUXURY STAY SECTION */}
       <section id="site-visit" className="bg-white dark:bg-slate-950 py-16 md:py-24 lg:py-32 relative overflow-hidden transition-colors">
         <div className="container mx-auto px-4 md:px-8 relative z-10 flex justify-center">
-          <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-6 sm:p-8 md:p-10 lg:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center border border-slate-800 relative overflow-hidden dark:bg-slate-900">
+          <div className="bg-white dark:bg-[#0B132B] rounded-[2rem] p-6 sm:p-8 md:p-10 lg:p-14 shadow-2xl w-full max-w-5xl grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center border border-slate-200 dark:border-slate-800 relative overflow-hidden dark:bg-slate-900">
 
             {/* Background Image Overlay */}
             <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
@@ -433,21 +433,21 @@ export function HomeClient({ recentUpdates }) {
               <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed tracking-wide">
                 {t('talk_to_owner_desc')}
               </p>
-              <div className="space-y-4 pt-4 border-t border-slate-800">
+              <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00] dark:bg-slate-900">
+                  <div className="h-10 w-10 rounded-xl bg-orange-50 dark:bg-slate-800 border border-orange-200/50 dark:border-slate-700 flex items-center justify-center text-[#FF7A00]">
                     <MapPin className="h-5 w-5" />
                   </div>
                   <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('pickup_service')}</span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00] dark:bg-slate-900">
+                  <div className="h-10 w-10 rounded-xl bg-orange-50 dark:bg-slate-800 border border-orange-200/50 dark:border-slate-700 flex items-center justify-center text-[#FF7A00]">
                     <Building className="h-5 w-5" />
                   </div>
                   <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('premium_stay')}</span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF7A00] dark:bg-slate-900">
+                  <div className="h-10 w-10 rounded-xl bg-orange-50 dark:bg-slate-800 border border-orange-200/50 dark:border-slate-700 flex items-center justify-center text-[#FF7A00]">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
                   <span className="text-xs font-black uppercase tracking-widest text-slate-600 dark:text-slate-300">{t('title_review')}</span>
@@ -488,7 +488,7 @@ export function HomeClient({ recentUpdates }) {
                   <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase mb-6 text-center">{t('priority_conn')}</h3>
                   <form className="space-y-4" onSubmit={handleVisitSubmit}>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{t('full_name')}</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 ml-1">{t('full_name')}</label>
                       <input
                         type="text"
                         placeholder={t('full_name')}
@@ -499,7 +499,7 @@ export function HomeClient({ recentUpdates }) {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1">{t('mobile_number')}</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 ml-1">{t('mobile_number')}</label>
                       <input
                         type="tel"
                         placeholder="10-DIGIT MOBILE"
@@ -517,7 +517,7 @@ export function HomeClient({ recentUpdates }) {
                       )}
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-1 flex justify-between">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 ml-1 flex justify-between">
                         <span>{t('deployment_date')}</span>
                         <span className="text-orange-500/50">{t('date_limit_msg')}</span>
                       </label>

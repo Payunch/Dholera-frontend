@@ -19,13 +19,13 @@ export default function ClearanceEnginePage() {
  <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 pt-24 pb-32 min-h-screen dark:bg-slate-900">
  <div className="container mx-auto px-4 md:px-8">
  <header className="mb-16 text-center space-y-6">
- <div className="inline-flex items-center rounded-full bg-orange-50 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 border border-orange-200">
+ <div className="inline-flex items-center rounded-full bg-orange-50 dark:bg-orange-950/40 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-600 dark:text-orange-400 border border-orange-200 dark:border-orange-800/40">
  Spatial Intelligence Hub
  </div>
  <h1 className="font-display text-4xl font-black tracking-tight text-slate-900 dark:text-white md:text-7xl uppercase leading-tight">
  Clearance <span className="text-orange-600 italic">&</span> Fee Engine
  </h1>
- <p className="mx-auto max-w-3xl text-lg font-medium text-slate-500 leading-relaxed">
+ <p className="mx-auto max-w-3xl text-lg font-medium text-slate-600 dark:text-slate-400 leading-relaxed">
  Configure your project parameters to meet strict DSIRDA structural guidelines. 
  Achieve total clearance certainty before spending capital.
  </p>

@@ -50,7 +50,7 @@ const steps = [
 
 export default function DownloadPage() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,122,0,0.16),_transparent_34%),linear-gradient(180deg,#08101f_0%,#0b132b_36%,#f8fafc_36%,#f8fafc_100%)] text-slate-900">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(255,122,0,0.16),_transparent_34%),linear-gradient(180deg,#08101f_0%,#0b132b_36%,#f8fafc_36%,#f8fafc_100%)] dark:bg-[radial-gradient(circle_at_top,_rgba(255,122,0,0.16),_transparent_34%),linear-gradient(180deg,#08101f_0%,#0b132b_36%,#020617_36%,#020617_100%)] text-slate-900 dark:text-slate-100 transition-colors">
       <section className="relative overflow-hidden pb-16 pt-10 text-white">
         <div className="absolute inset-0 bg-[url('/images/futuristic_dholera.png')] bg-cover bg-center opacity-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-950/70 to-slate-950/20" />
@@ -178,22 +178,22 @@ export default function DownloadPage() {
         </div>
       </section>
 
-      <section className="bg-[#f8fafc] pb-20">
+      <section className="bg-[#f8fafc] dark:bg-[#020617] pb-20 transition-colors">
         <div className="container mx-auto px-4 md:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-6 md:grid-cols-3">
               {steps.map((step, index) => (
                 <div
                   key={step.title}
-                  className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_12px_30px_rgba(15,23,42,0.05)]"
+                  className="rounded-[1.75rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-[0_12px_30px_rgba(15,23,42,0.05)] transition-colors"
                 >
-                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-white">
+                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 dark:bg-orange-600 text-white">
                     <span className="text-sm font-black">{index + 1}</span>
                   </div>
-                  <h2 className="text-xl font-black uppercase tracking-tight text-slate-950">
+                  <h2 className="text-xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
                     {step.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                     {step.text}
                   </p>
                 </div>
@@ -201,7 +201,7 @@ export default function DownloadPage() {
             </div>
 
             <div className="mt-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-              <div className="rounded-[2rem] border border-slate-200 bg-slate-950 p-8 text-white">
+              <div className="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-slate-950 p-8 text-white">
                 <p className="text-[10px] font-black uppercase tracking-[0.35em] text-orange-300">
                   What users get
                 </p>
@@ -228,26 +228,26 @@ export default function DownloadPage() {
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+              <div className="rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-[0_12px_30px_rgba(15,23,42,0.05)] transition-colors">
                 <p className="text-[10px] font-black uppercase tracking-[0.35em] text-[#FF7A00]">
                   Need help?
                 </p>
-                <h2 className="mt-3 text-3xl font-black uppercase tracking-tight text-slate-950">
+                <h2 className="mt-3 text-3xl font-black uppercase tracking-tight text-slate-950 dark:text-white">
                   Keep the site clean, keep the APK separate
                 </h2>
-                <p className="mt-4 text-sm leading-relaxed text-slate-600">
+                <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                   If you want, the homepage can stay as the single entry point, and this page can handle the actual APK download.
                 </p>
                 <div className="mt-6 flex flex-col gap-3">
                   <Link
                     href="/contact"
-                    className="inline-flex h-12 items-center justify-center rounded-xl bg-slate-950 px-5 text-xs font-black uppercase tracking-[0.2em] text-white transition-colors hover:bg-slate-800"
+                    className="inline-flex h-12 items-center justify-center rounded-xl bg-slate-950 dark:bg-orange-600 px-5 text-xs font-black uppercase tracking-[0.2em] text-white transition-colors hover:bg-slate-800 dark:hover:bg-orange-500"
                   >
                     Contact team
                   </Link>
                   <Link
                     href="/projects"
-                    className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-slate-200 px-5 text-xs font-black uppercase tracking-[0.2em] text-slate-700 transition-colors hover:border-[#FF7A00] hover:text-[#FF7A00]"
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 px-5 text-xs font-black uppercase tracking-[0.2em] text-slate-700 dark:text-slate-200 transition-colors hover:border-[#FF7A00] hover:text-[#FF7A00]"
                   >
                     Explore projects
                     <ExternalLink className="h-4 w-4" />
@@ -256,14 +256,14 @@ export default function DownloadPage() {
               </div>
             </div>
 
-            <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-[2rem] border border-slate-200 bg-white px-6 py-5 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:flex-row md:text-left">
+            <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-5 text-center shadow-[0_12px_30px_rgba(15,23,42,0.05)] md:flex-row md:text-left transition-colors">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-slate-500">
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-slate-500 dark:text-slate-400">
                   File path
                 </p>
-                <p className="mt-2 text-sm font-semibold text-slate-700">
+                <p className="mt-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
                   The APK is served from{" "}
-                  <span className="font-black">/downloads/dholera-{apkVersion}.apk</span>
+                  <span className="font-black text-slate-900 dark:text-white">/downloads/dholera-{apkVersion}.apk</span>
                 </p>
               </div>
               <Link

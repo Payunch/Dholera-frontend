@@ -46,7 +46,7 @@ export default function InfrastructurePage() {
  return (
  <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen w-full overflow-x-hidden dark:bg-slate-900">
  {/* Hero - Refactored for proper sizing */}
- <section className="relative min-h-[50vh] md:min-h-[65vh] flex items-center bg-white dark:bg-slate-900 text-white overflow-hidden">
+ <section className="relative min-h-[50vh] md:min-h-[65vh] flex items-center bg-slate-950 text-white overflow-hidden">
  <div className="absolute inset-0 z-0 opacity-40">
  <Image 
  src="/images/arialviewdholeraexpress.webp" 
@@ -65,7 +65,7 @@ export default function InfrastructurePage() {
  <h1 className="min-w-0 break-words text-3xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-tight sm:leading-[0.85] [overflow-wrap:anywhere]">
  {t('smart_infra_title')}
  </h1>
- <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium leading-relaxed uppercase tracking-widest">
+ <p className="text-base sm:text-lg md:text-xl text-slate-200 font-medium leading-relaxed uppercase tracking-widest">
  {t('ecosystem_desc')}
  </p>
  </div>
@@ -144,12 +144,14 @@ export default function InfrastructurePage() {
  </div>
  </div>
  <div className="grid grid-cols-2 gap-4">
- <div className="aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4 dark:bg-slate-900">
- <ShieldCheck className="h-10 w-10 text-orange-500" />
+ <div className="aspect-square rounded-[2rem] bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center p-6 space-y-2">
+ <ShieldCheck className="h-8 w-8 text-orange-500" />
+ <p className="text-2xl font-black text-slate-900 dark:text-white">100%</p>
  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('verified_plots')}</span>
  </div>
- <div className="mt-8 aspect-square rounded-[2rem] bg-white dark:bg-[#111A35]/5 border border-white/10 flex flex-col items-center justify-center text-center p-6 space-y-4 dark:bg-slate-900">
- <Road className="h-10 w-10 text-orange-500" />
+ <div className="mt-8 aspect-square rounded-[2rem] bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center p-6 space-y-2">
+ <Road className="h-8 w-8 text-orange-500" />
+ <p className="text-xl font-black text-slate-900 dark:text-white">55m - 250m</p>
  <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('internal_roads')}</span>
  </div>
  </div>

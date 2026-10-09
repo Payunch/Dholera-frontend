@@ -26,7 +26,7 @@ export default function SmartCityPage() {
  <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Dholera Smart City", path: "/smart-city" }]} />
  
  {/* Header Block */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-800 overflow-hidden mb-24 dark:bg-slate-900">
+ <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden mb-24 dark:bg-slate-900">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
  <Image 
@@ -56,11 +56,11 @@ export default function SmartCityPage() {
  <h2 className="break-words text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight sm:text-4xl sm:leading-none">{t('smart_vision_title')}</h2>
  <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{t('smart_vision_desc')}</p>
  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-8">
- <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
+ <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all duration-500 group">
  <div className="text-5xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-orange-600 transition-colors">920</div>
  <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('smart_total_area_short')}</div>
  </div>
- <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all duration-500 group">
+ <div className="p-8 bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800 hover:shadow-xl transition-all duration-500 group">
  <div className="text-5xl font-black text-slate-900 dark:text-white mb-2 group-hover:text-orange-600 transition-colors">22</div>
  <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">{t('smart_villages_short')}</div>
  </div>
@@ -74,12 +74,12 @@ export default function SmartCityPage() {
  className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-700"
  />
  <div className="absolute inset-0 flex items-center justify-center">
- <div className="h-20 w-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-slate-900 dark:text-white dark:bg-slate-900">
+ <div className="h-20 w-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white bg-slate-900/40">
  <Construction className="h-8 w-8 animate-pulse" />
  </div>
  </div>
  <div className="absolute bottom-8 left-8">
- <span className="px-4 py-2 bg-orange-600 text-slate-900 dark:text-white text-[10px] font-black uppercase tracking-widest rounded-lg">{t('smart_growth_badge')}</span>
+ <span className="px-4 py-2 bg-orange-600 text-white text-[10px] font-black uppercase tracking-widest rounded-lg">{t('smart_growth_badge')}</span>
  </div>
  </div>
  </section>
