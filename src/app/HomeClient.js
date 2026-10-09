@@ -383,7 +383,7 @@ export function HomeClient({ recentUpdates }) {
 
                   {/* Actions (Visual Button) */}
                   <div className="p-8 pt-0">
-                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-[10px] font-black uppercase tracking-widest group-hover:bg-[#FF7A00] dark:group-hover:bg-[#FF7A00] group-hover:text-white dark:group-hover:text-white transition-all duration-300 shadow-xl shadow-slate-950/5 group-hover:shadow-orange-600/10">
+                    <div className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white text-[10px] font-black uppercase tracking-widest border border-slate-900 dark:border-slate-700/80 group-hover:bg-[#FF7A00] dark:group-hover:bg-[#FF7A00] group-hover:border-[#FF7A00] dark:group-hover:border-[#FF7A00] group-hover:text-white dark:group-hover:text-white transition-all duration-300 shadow-md group-hover:shadow-orange-600/20">
                       {t('get_access')}
                       <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </div>
