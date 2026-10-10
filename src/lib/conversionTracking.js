@@ -115,7 +115,7 @@ export function trackPhoneClick(source = "general") {
 export function trackFormSubmission({ name, phone, email, source = "lead_form", budget = "" } = {}) {
   if (typeof window === "undefined") return;
 
-  // Set Enhanced Conversion user data if gtag available
+  // 1. Set Enhanced Conversion user data if gtag available
   if (typeof window.gtag === "function") {
     const userData = {};
     if (email) userData.email = email.trim().toLowerCase();
@@ -126,10 +126,28 @@ export function trackFormSubmission({ name, phone, email, source = "lead_form", 
     if (Object.keys(userData).length > 0) {
       window.gtag("set", "user_data", userData);
     }
+
+    // Fire GA4 imported conversion event specifically expected by Google Ads
+    window.gtag("event", "conversion_event_submit_lead_form", {
+      lead_source: source,
+      value: 200.0,
+      currency: "INR",
+    });
+
+    window.gtag("event", "conversion_event_contact", {
+      lead_source: source,
+    });
   }
 
-  // Push to dataLayer
+  // 2. Push to dataLayer for GTM / GA4
   if (window.dataLayer) {
+    window.dataLayer.push({
+      event: "conversion_event_submit_lead_form",
+      lead_source: source,
+      lead_budget: budget,
+      value: 200.0,
+      currency: "INR",
+    });
     window.dataLayer.push({
       event: "generate_lead",
       lead_source: source,
@@ -139,14 +157,14 @@ export function trackFormSubmission({ name, phone, email, source = "lead_form", 
     });
   }
 
-  // Fire Google Ads conversion
+  // 3. Fire direct Google Ads conversion tag if label configured
   trackGoogleConversion({
     label: DEFAULT_CONVERSION_LABEL,
     value: 200.0,
     currency: "INR",
   });
 
-  // Fire Meta Pixel
+  // 4. Fire Meta Pixel
   if (typeof window.fbq === "function") {
     window.fbq("track", "Lead", {
       content_category: "real_estate",

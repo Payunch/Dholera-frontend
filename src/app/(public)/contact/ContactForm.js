@@ -94,7 +94,9 @@ export function ContactForm() {
    });
 
    // Fire specific contact conversion event
-   (window).gtag('event', 'conversion_event_contact', {});
+   // Fire both GA4 imported events for Google Ads (Option A)
+    (window).gtag('event', 'conversion_event_submit_lead_form', {});
+    (window).gtag('event', 'conversion_event_contact', {});
  }
  } catch (err) {
  console.error("Submission error:", err);
