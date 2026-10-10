@@ -65,6 +65,8 @@ export default function LandingClientForm() {
         phone: formData.phone,
         source: "google_ads_landing_form",
         budget: formData.budget,
+        target_zone: formData.preference,
+        investor_type: "Campaign Inquirer",
       });
 
       // 3. Route to dedicated thank-you page
@@ -77,6 +79,8 @@ export default function LandingClientForm() {
         phone: formData.phone,
         source: "google_ads_landing_form_fallback",
         budget: formData.budget,
+        target_zone: formData.preference,
+        investor_type: "Campaign Inquirer",
       });
       router.push("/thank-you");
     }

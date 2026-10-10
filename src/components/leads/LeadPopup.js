@@ -133,6 +133,8 @@ export const LeadPopup = ({
         name: name.trim(),
         phone: cleanPhone,
         source: "lead_popup_direct",
+        property_name: title || "Dholera Intelligence",
+        investor_type: "Lead Gate Inquirer",
       });
 
       setStep('success');
@@ -197,6 +199,8 @@ export const LeadPopup = ({
         name: name.trim(),
         phone: cleanPhone,
         source: "lead_popup_verified",
+        property_name: title || "Dholera Intelligence",
+        investor_type: "Lead Gate Inquirer (Verified)",
       });
 
       setStep('success');

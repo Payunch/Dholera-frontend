@@ -112,6 +112,8 @@ export function HomeClient({ recentUpdates }) {
         name: visitForm.name,
         phone: visitForm.phone,
         source: "home_page_site_visit",
+        property_name: "Site Visit Request",
+        investor_type: "Physical Visit Request",
       });
     } catch (err) {
       console.error("Site visit submission error:", err);

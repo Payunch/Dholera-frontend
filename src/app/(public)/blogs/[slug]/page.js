@@ -16,6 +16,7 @@ import { getBlogSlug } from "@/lib/blogSlug";
 import { CommentSection } from "@/features/updates/components/CommentSection";
 import { BlogLeadMagnets } from "@/features/updates/components/BlogLeadMagnets";
 import { Translate } from "@/components/i18n/Translate";
+import { extractFaqSchema } from "@/lib/faqSchema";
 
 export const dynamic = "force-dynamic";
 
@@ -120,10 +121,18 @@ export default async function UpdateDetailPage({ params, searchParams }) {
     ...(imgSrc ? { image: [imgSrc] } : {}),
   };
 
+  const faqSchema = extractFaqSchema(update.content);
+
   return (
     <article className="bg-white dark:bg-slate-900 pt-24 pb-32">
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Blogs", path: "/blogs" }, { name: update.title, path: `/blogs/${expectedSlug}` }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c") }}
+        />
+      )}
       <BlogPopupTrigger blogTitle={update.title} />
       <div className="container mx-auto px-4 md:px-8">
         <div className="mx-auto max-w-4xl">
