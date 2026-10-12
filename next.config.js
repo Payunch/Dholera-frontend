@@ -86,6 +86,16 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: "/thank-you-home",
+        destination: "/thank-you/home",
+        permanent: true,
+      },
+      {
+        source: "/thank-you-contact",
+        destination: "/thank-you/contact",
+        permanent: true,
+      },
+      {
         source: "/updates",
         destination: "/blogs",
         permanent: true,

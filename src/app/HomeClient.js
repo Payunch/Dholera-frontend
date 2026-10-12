@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ChevronRight,
   ShieldCheck,
@@ -27,6 +28,7 @@ import { trackFormSubmission } from "@/lib/conversionTracking";
 import { HomeBlogsList } from "@/components/home/HomeBlogsList";
 
 export function HomeClient({ recentUpdates }) {
+  const router = useRouter();
   const { t } = useLanguage();
   const { verifiedLead } = useLead();
   const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -115,20 +117,22 @@ export function HomeClient({ recentUpdates }) {
         property_name: "Site Visit Request",
         investor_type: "Physical Visit Request",
       });
+
+      const targetUrl = `/thank-you/home?name=${encodeURIComponent(visitForm.name)}&date=${encodeURIComponent(visitForm.date)}`;
+      router.push(targetUrl);
     } catch (err) {
       console.error("Site visit submission error:", err);
-      setVisitFormStatus("error");
-      setVisitError(
-        err?.response?.data?.error ||
-        err?.response?.data?.message ||
-        err?.message ||
-        ""
-      );
+      // Fallback conversion tracking and routing
+      trackFormSubmission({
+        name: visitForm.name,
+        phone: visitForm.phone,
+        source: "home_page_site_visit_fallback",
+        property_name: "Site Visit Request",
+        investor_type: "Physical Visit Request",
+      });
+      const targetUrl = `/thank-you/home?name=${encodeURIComponent(visitForm.name)}&date=${encodeURIComponent(visitForm.date)}`;
+      router.push(targetUrl);
     } finally {
-      // ALWAYS open WhatsApp regardless of DB success (fallback)
-      const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
-      const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank');
       setVisitForm({ name: "", phone: "", date: tomorrow });
     }
   };

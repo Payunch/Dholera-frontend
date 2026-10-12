@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from"next/link";
+import { useRouter } from "next/navigation";
 import { User, Phone, CheckCircle2, AlertCircle, ChevronRight } from"lucide-react";
 import { apiClient } from"@/lib/api";
 import { useLead } from"@/providers/LeadProvider";
@@ -9,6 +10,7 @@ import { useLanguage } from"@/providers/LanguageProvider";
 import { trackFormSubmission } from "@/lib/conversionTracking";
 
 export function ContactForm() {
+  const router = useRouter();
  const { verifiedLead } = useLead();
  const { t } = useLanguage();
 
@@ -97,7 +99,10 @@ export function ContactForm() {
    // Fire both GA4 imported events for Google Ads (Option A)
     (window).gtag('event', 'conversion_event_submit_lead_form', {});
     (window).gtag('event', 'conversion_event_contact', {});
- }
+  }
+
+  const targetUrl = `/thank-you/contact?name=${encodeURIComponent(formData.name)}`;
+  router.push(targetUrl);
  } catch (err) {
  console.error("Submission error:", err);
  setStatus("error");
