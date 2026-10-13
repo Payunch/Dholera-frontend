@@ -54,11 +54,28 @@ function ThankYouContactContent() {
         page_location: window.location.href,
         page_path: "/thank-you/contact",
       });
+      window.dataLayer.push({
+        event: "conversion_event_submit_lead_form",
+        lead_source: "contact_page",
+        value: 200.0,
+        currency: "INR",
+      });
+      window.dataLayer.push({
+        event: "conversion_event_submit_lead_form_2",
+        lead_source: "contact_page",
+        value: 200.0,
+        currency: "INR",
+      });
     }
 
     // 4. Fire GA4 custom events (including both imported Google Ads identifiers)
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "conversion_event_submit_lead_form", {
+        lead_source: "contact_page",
+        value: 200.0,
+        currency: "INR",
+      });
+      window.gtag("event", "conversion_event_submit_lead_form_2", {
         lead_source: "contact_page",
         value: 200.0,
         currency: "INR",

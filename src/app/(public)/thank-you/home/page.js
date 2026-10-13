@@ -55,11 +55,28 @@ function ThankYouHomeContent() {
         page_location: window.location.href,
         page_path: "/thank-you/home",
       });
+      window.dataLayer.push({
+        event: "conversion_event_submit_lead_form",
+        lead_source: "homepage_site_visit",
+        value: 300.0,
+        currency: "INR",
+      });
+      window.dataLayer.push({
+        event: "conversion_event_submit_lead_form_2",
+        lead_source: "homepage_site_visit",
+        value: 300.0,
+        currency: "INR",
+      });
     }
 
     // 4. Fire GA4 custom conversion events
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "conversion_event_submit_lead_form", {
+        lead_source: "homepage_site_visit",
+        value: 300.0,
+        currency: "INR",
+      });
+      window.gtag("event", "conversion_event_submit_lead_form_2", {
         lead_source: "homepage_site_visit",
         value: 300.0,
         currency: "INR",

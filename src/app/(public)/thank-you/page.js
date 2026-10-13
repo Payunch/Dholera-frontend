@@ -31,6 +31,23 @@ export default function ThankYouPage() {
         page_location: window.location.href,
         page_path: "/thank-you",
       });
+      window.dataLayer.push({
+        event: "conversion_event_submit_lead_form_2",
+        value: 200.0,
+        currency: "INR",
+      });
+    }
+
+    // 4. Fire GA4 / Google Ads conversion events
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "conversion_event_submit_lead_form", {
+        value: 200.0,
+        currency: "INR",
+      });
+      window.gtag("event", "conversion_event_submit_lead_form_2", {
+        value: 200.0,
+        currency: "INR",
+      });
     }
   }, []);
 

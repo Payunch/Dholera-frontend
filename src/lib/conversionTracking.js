@@ -222,8 +222,18 @@ export function trackFormSubmission({
       window.gtag("set", "user_data", userData);
     }
 
-    // Fire GA4 imported conversion event specifically expected by Google Ads
+    // Fire GA4 imported conversion events specifically expected by Google Ads
     window.gtag("event", "conversion_event_submit_lead_form", {
+      lead_source: source,
+      investor_budget: resolvedBudget,
+      target_zone: resolvedZone,
+      investor_type: resolvedInvestorType,
+      property_name: resolvedProperty,
+      value: value,
+      currency: currency,
+    });
+
+    window.gtag("event", "conversion_event_submit_lead_form_2", {
       lead_source: source,
       investor_budget: resolvedBudget,
       target_zone: resolvedZone,
@@ -265,6 +275,11 @@ export function trackFormSubmission({
       timestamp: new Date().toISOString(),
     };
     window.dataLayer.push(payload);
+
+    window.dataLayer.push({
+      ...payload,
+      event: "conversion_event_submit_lead_form_2",
+    });
 
     window.dataLayer.push({
       ...payload,

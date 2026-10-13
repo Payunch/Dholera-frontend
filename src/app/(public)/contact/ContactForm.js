@@ -98,6 +98,7 @@ export function ContactForm() {
    // Fire specific contact conversion event
    // Fire both GA4 imported events for Google Ads (Option A)
     (window).gtag('event', 'conversion_event_submit_lead_form', {});
+    (window).gtag('event', 'conversion_event_submit_lead_form_2', {});
     (window).gtag('event', 'conversion_event_contact', {});
   }
 
