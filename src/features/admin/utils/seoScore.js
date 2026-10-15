@@ -46,8 +46,9 @@ export function getSeoReview({
   const descHasKeyword = Boolean(keyword) && (safeSeoDescription.toLowerCase().includes(keyword) || keyword.split(/\s+/).filter(w => w.length > 3).some(w => safeSeoDescription.toLowerCase().includes(w)));
 
   const checks = [
-    ["Primary keyword is set", Boolean(keyword), 6],
-    ["SEO title is 45–65 characters", safeSeoTitle.length >= 45 && safeSeoTitle.length <= 65, 12],
+    ["Primary keyword is set", Boolean(keyword), 4],
+    ["Focus keyword is a single phrase (no comma stuffing)", Boolean(safeFocusKeyword) && !safeFocusKeyword.includes(","), 4],
+    ["SEO title is 45–65 characters", safeSeoTitle.length >= 45 && safeSeoTitle.length <= 65, 10],
     ["SEO title includes the keyword", titleHasKeyword, 6],
     ["Meta description is 135–165 characters", safeSeoDescription.length >= 135 && safeSeoDescription.length <= 165, 10],
     ["Meta description includes the keyword", descHasKeyword, 5],

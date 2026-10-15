@@ -659,7 +659,11 @@ export function UpdatesManagement() {
  </div>
  )}
  <div className="grid gap-4 md:grid-cols-2">
-   <div className="space-y-2"><label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Image ALT Text</label><input value={imageAltText} onChange={(e) => setImageAltText(e.target.value)} placeholder="Describe the image with the focus keyword" className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white" /></div>
+   <div className="space-y-1.5">
+     <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Image ALT Text</label>
+     <input value={imageAltText} onChange={(e) => setImageAltText(e.target.value)} placeholder="Describe the image with the focus keyword" className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white" />
+     <p className="text-[10px] text-slate-400 font-medium">* Ensure ALT text accurately describes the visible subject (avoid labeling above-ground photos as subterranean ducts).</p>
+   </div>
    <div className="space-y-2"><label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Image Title</label><input value={imageTitle} onChange={(e) => setImageTitle(e.target.value)} placeholder="Descriptive image title" className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm font-bold text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-white" /></div>
  </div>
  </div>
@@ -667,7 +671,44 @@ export function UpdatesManagement() {
 
  {/* Content Editor */}
  <div className="space-y-2 flex flex-col">
- <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Article Content (Markdown supported)</label>
+ <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+   <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Article Content (HTML / Rich Format)</label>
+   <div className="flex flex-wrap items-center gap-1.5">
+     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mr-1">Insert Shortcode:</span>
+     <button
+       type="button"
+       onClick={() => setContent(prev => prev + '\n\n{{cta_rate_sheet}}\n\n')}
+       className="px-2.5 py-1 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 text-[10px] font-black uppercase tracking-wider transition-colors border border-orange-500/20"
+       title="Insert dynamic TP1 vs TP2 Rate Sheet Card"
+     >
+       + Rate Sheet CTA
+     </button>
+     <button
+       type="button"
+       onClick={() => setContent(prev => prev + '\n\n{{cta_site_visit}}\n\n')}
+       className="px-2.5 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-wider transition-colors border border-blue-500/20"
+       title="Insert Free Site Visit Cab Booking Card"
+     >
+       + Site Visit CTA
+     </button>
+     <button
+       type="button"
+       onClick={() => setContent(prev => prev + '\n\n{{cta_whatsapp}}\n\n')}
+       className="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-black uppercase tracking-wider transition-colors border border-emerald-500/20"
+       title="Insert Instant WhatsApp Advisory Card"
+     >
+       + WhatsApp CTA
+     </button>
+     <button
+       type="button"
+       onClick={() => setContent(prev => prev + '\n\n<div class="overflow-x-auto my-8">\n  <table class="w-full text-left border-collapse border border-slate-200 dark:border-slate-700 text-sm">\n    <thead>\n      <tr class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold">\n        <th class="p-3 border border-slate-200 dark:border-slate-700">Feature</th>\n        <th class="p-3 border border-slate-200 dark:border-slate-700">TP1 Scheme</th>\n        <th class="p-3 border border-slate-200 dark:border-slate-700">TP2 Scheme</th>\n      </tr>\n    </thead>\n    <tbody class="divide-y divide-slate-200 dark:divide-slate-700">\n      <tr>\n        <td class="p-3 font-semibold">Ready Possession</td>\n        <td class="p-3">Immediate Handover</td>\n        <td class="p-3">Handover 2026</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n\n')}
+       className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-black uppercase tracking-wider transition-colors"
+       title="Insert Responsive Table Template"
+     >
+       + Table
+     </button>
+   </div>
+ </div>
  <textarea
  required
  value={content}
@@ -685,15 +726,23 @@ export function UpdatesManagement() {
  </h4>
  
  <div className="grid gap-6 md:grid-cols-2">
- <div className="space-y-2">
- <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">SEO Focus Keyword</label>
+ <div className="space-y-1.5">
+ <div className="flex items-center justify-between">
+   <label className="text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Primary Focus Keyword (Single Phrase)</label>
+   {seoKeywords.includes(",") && (
+     <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 animate-pulse">
+       ⚠️ Use 1 phrase only (move secondary keywords to Tags)
+     </span>
+   )}
+ </div>
  <input
  type="text"
  value={seoKeywords}
  onChange={(e) => setSeoKeywords(e.target.value)}
- placeholder="e.g. Dholera Smart City investment"
+ placeholder="e.g. Dholera Smart Utility Ducts"
  className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-4 text-sm font-bold transition-all focus:border-orange-600 dark:focus:border-orange-500 text-slate-900 dark:text-white"
  />
+ <p className="text-[10px] text-slate-400 font-medium">Define one single core keyphrase for SEO algorithms. Put secondary keywords into Tags below.</p>
  </div>
 
  <div className="space-y-2">
