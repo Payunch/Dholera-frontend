@@ -80,18 +80,7 @@ export function ContactForm() {
       setStatus("success");
       setErrorMessage("");
 
-      // Standard single dataLayer push as recommended for Google Ads & GA4
-      if (typeof window !== 'undefined') {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'generate_lead',
-          lead_source: 'contact_page',
-          value: 200,
-          currency: 'INR'
-        });
-      }
-
-      // Track enhanced conversions (user_data) and Meta Pixel cleanly
+      // Track single standard generate_lead with Enhanced Conversions user_data & Meta Pixel
       trackFormSubmission({
         name: submittedName,
         phone: submittedPhone,
@@ -109,15 +98,14 @@ export function ContactForm() {
       console.error("Submission error:", err);
 
       // Fallback conversion tracking and immediate routing
-      if (typeof window !== 'undefined') {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'generate_lead',
-          lead_source: 'contact_page_fallback',
-          value: 200,
-          currency: 'INR'
-        });
-      }
+      trackFormSubmission({
+        name: submittedName,
+        phone: submittedPhone,
+        email: submittedEmail,
+        source: "contact_page_fallback",
+        value: 200,
+        currency: "INR"
+      });
 
       setFormData({ name: "", phone: "", email: "", notes: "" });
       const targetUrl = `/thank-you/contact?name=${encodeURIComponent(submittedName)}`;
