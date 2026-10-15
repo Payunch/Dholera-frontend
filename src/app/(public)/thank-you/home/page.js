@@ -2,8 +2,9 @@
 
 import React, { useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
+  X,
   CheckCircle2,
   MessageCircle,
   Phone,
@@ -22,9 +23,26 @@ import {
 import { trackGoogleConversion } from "@/lib/conversionTracking";
 
 function ThankYouHomeContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const userName = searchParams.get("name") || "";
   const visitDate = searchParams.get("date") || "";
+
+  const handleClose = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/");
+    }
+  };
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") handleClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   useEffect(() => {
     // 1. Fire Google Ads Conversion Event for Homepage Site Visit / Lead
@@ -105,12 +123,30 @@ function ThankYouHomeContent() {
   )}`;
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center py-16 px-4 sm:px-6 relative overflow-hidden">
+    <main
+      onClick={handleClose}
+      className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xl text-slate-100 flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-300 cursor-pointer"
+    >
       {/* Background Glow Accents */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed bottom-10 right-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-3xl mx-auto w-full bg-slate-900/90 border border-slate-800 rounded-[2.5rem] p-6 sm:p-10 md:p-12 shadow-2xl backdrop-blur-md relative z-10">
+      {/* Pop-up Modal Dialog Card (ARD) */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative max-w-3xl w-full bg-slate-900/95 border border-slate-700/80 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-10 md:p-12 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] backdrop-blur-2xl my-auto animate-in zoom-in-95 duration-300 z-10 cursor-default"
+      >
+        {/* Corner Close Icon Button */}
+        <button
+          type="button"
+          onClick={handleClose}
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all shadow-xl hover:scale-105 active:scale-95 group z-30"
+          aria-label="Close dialog"
+          title="Close dialog"
+        >
+          <X className="w-5 h-5 transition-transform group-hover:rotate-90 duration-200 text-slate-300 group-hover:text-white" />
+        </button>
+
         {/* Top Success Badge */}
         <div className="flex flex-col items-center text-center mb-8">
           <div className="relative mb-5">
@@ -269,6 +305,15 @@ function ThankYouHomeContent() {
               <Home className="h-3.5 w-3.5 text-orange-400" />
               Return Home
             </Link>
+            <span className="text-slate-700 hidden sm:inline">•</span>
+            <button
+              type="button"
+              onClick={handleClose}
+              className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 rounded-lg px-3 py-1 transition-colors cursor-pointer"
+            >
+              <X className="h-3.5 w-3.5 text-orange-400" />
+              Close Popup
+            </button>
           </div>
         </div>
       </div>

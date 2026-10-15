@@ -2,10 +2,28 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { CheckCircle2, MessageCircle, Phone, ArrowRight, ShieldCheck, Map, FileText, Home } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { X, CheckCircle2, MessageCircle, Phone, ArrowRight, ShieldCheck, Map, FileText, Home } from "lucide-react";
 import { trackGoogleConversion } from "@/lib/conversionTracking";
 
 export default function ThankYouPage() {
+  const router = useRouter();
+
+  const handleClose = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/");
+    }
+  };
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") handleClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
   useEffect(() => {
     // 1. Fire Google Ads Primary Conversion Event on /thank-you mount
     trackGoogleConversion({
@@ -56,8 +74,25 @@ export default function ThankYouPage() {
   )}`;
 
   return (
-    <main className="min-h-screen bg-slate-900 text-slate-100 flex flex-col justify-center py-20 px-4 sm:px-6">
-      <div className="max-w-2xl mx-auto w-full bg-slate-800/80 border border-slate-700/60 rounded-3xl p-8 sm:p-12 shadow-2xl backdrop-blur-sm text-center">
+    <main
+      onClick={handleClose}
+      className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-xl text-slate-100 flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-300 cursor-pointer"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative max-w-2xl w-full bg-slate-900/95 border border-slate-700/80 rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] backdrop-blur-2xl text-center my-auto animate-in zoom-in-95 duration-300 cursor-default"
+      >
+        {/* Corner Close Icon Button */}
+        <button
+          type="button"
+          onClick={handleClose}
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all shadow-xl hover:scale-105 active:scale-95 group z-30"
+          aria-label="Close dialog"
+          title="Close dialog"
+        >
+          <X className="w-5 h-5 transition-transform group-hover:rotate-90 duration-200 text-slate-300 group-hover:text-white" />
+        </button>
+
         {/* Success Badge */}
         <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/10">
           <CheckCircle2 className="h-10 w-10" />
@@ -76,7 +111,7 @@ export default function ThankYouPage() {
         </p>
 
         {/* Instant Fast-Track CTA */}
-        <div className="bg-slate-900/80 rounded-2xl p-6 border border-slate-700 mb-8 text-left">
+        <div className="bg-slate-950/80 rounded-2xl p-6 border border-slate-800 mb-8 text-left">
           <h2 className="text-sm font-bold uppercase tracking-wider text-slate-300 mb-2 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             Need Instant Details on WhatsApp?
@@ -133,6 +168,15 @@ export default function ThankYouPage() {
               <Home className="h-3.5 w-3.5" />
               Back to Home
             </Link>
+            <span className="text-slate-600">•</span>
+            <button
+              type="button"
+              onClick={handleClose}
+              className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 rounded-lg px-3 py-1 transition-colors cursor-pointer"
+            >
+              <X className="h-3.5 w-3.5 text-orange-400" />
+              Close Popup
+            </button>
           </div>
         </div>
       </div>
