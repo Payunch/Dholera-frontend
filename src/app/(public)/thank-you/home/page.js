@@ -25,7 +25,8 @@ import { trackGoogleConversion } from "@/lib/conversionTracking";
 function ThankYouHomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const userName = searchParams.get("name") || "";
+  const rawName = searchParams.get("name") || "";
+  const cleanName = rawName.trim();
   const visitDate = searchParams.get("date") || "";
 
   const handleClose = () => {
@@ -44,25 +45,31 @@ function ThankYouHomeContent() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  // Deduplicated view tracking to prevent refresh inflation
   useEffect(() => {
-    // Standard view event only (prevent duplicate conversion counts)
-    if (typeof window !== "undefined" && window.dataLayer) {
-      window.dataLayer.push({
-        event: "thank_you_home_view",
-        lead_source: "homepage_site_visit",
-        page_location: window.location.href,
-        page_path: "/thank-you/home",
-      });
-    }
+    if (typeof window === "undefined") return;
+    const dedupeKey = `ty_home_view_${cleanName || "visit"}`;
+    if (!sessionStorage.getItem(dedupeKey)) {
+      sessionStorage.setItem(dedupeKey, "true");
 
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "page_view", {
-        page_title: "Thank You Site Visit",
-        page_location: window.location.href,
-        page_path: "/thank-you/home",
-      });
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "thank_you_home_view",
+          lead_source: "homepage_site_visit",
+          page_location: window.location.href,
+          page_path: "/thank-you/home",
+        });
+      }
+
+      if (window.gtag) {
+        window.gtag("event", "page_view", {
+          page_title: "Thank You Site Visit",
+          page_location: window.location.href,
+          page_path: "/thank-you/home",
+        });
+      }
     }
-  }, []);
+  }, [cleanName]);
 
   const formattedDate = visitDate
     ? new Date(visitDate).toLocaleDateString("en-IN", {
@@ -73,8 +80,8 @@ function ThankYouHomeContent() {
       })
     : "Next Available Slot";
 
-  const whatsappMessage = userName
-    ? `Hi Naresh, I am ${userName}. I just booked a Dholera Site Visit on the homepage for ${formattedDate}. Please confirm my itinerary and share the TP1/TP2 maps.`
+  const whatsappMessage = cleanName
+    ? `Hi Naresh, I am ${cleanName}. I just booked a Dholera Site Visit on the homepage for ${formattedDate}. Please confirm my itinerary and share the TP1/TP2 maps.`
     : `Hi Naresh, I just booked a Dholera Site Visit on the homepage for ${formattedDate}. Please confirm my itinerary and share the TP1/TP2 maps.`;
 
   const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(
@@ -114,7 +121,7 @@ function ThankYouHomeContent() {
             </div>
             <span className="absolute -bottom-1 -right-1 flex h-5 w-5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-5 w-5 bg-emerald-500 items-center justify-center text-[10px] text-white">✓</span>
+              <span className="relative inline-flex rounded-full h-5 w-5 bg-emerald-500 items-center justify-center text-[10px] text-white font-bold">✓</span>
             </span>
           </div>
 
@@ -123,12 +130,12 @@ function ThankYouHomeContent() {
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white mb-3">
-            {userName ? `Thank You, ${userName}!` : "Thank You! Request Received"}
+            {cleanName ? `Thank You, ${cleanName}!` : "Thank You! Request Received"}
           </h1>
 
           <p className="text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed">
-            Your Dholera Smart City on-ground site visit request has been securely logged. Our senior infrastructure advisor will call you within{" "}
-            <span className="text-orange-400 font-bold">15 minutes</span>.
+            Your Dholera Smart City on-ground site visit request has been securely logged. Our senior infrastructure advisor will contact you within{" "}
+            <span className="text-orange-400 font-bold">2 to 4 business hours</span> (or instantly via WhatsApp).
           </p>
         </div>
 
