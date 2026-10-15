@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from "next/link";
-import { ArrowRight, TrendingUp, Landmark, HardHat, Search, Filter, Lock } from "lucide-react";
+import { ArrowRight, TrendingUp, Search, Lock } from "lucide-react";
 import Image from "next/image";
 import { SITE_BASE_URL } from "@/lib/api";
 import { format } from "date-fns";
@@ -10,28 +10,76 @@ import { useLanguage } from '@/providers/LanguageProvider';
 import { cn } from "@/lib/utils";
 import { getBlogPath } from "@/lib/blogSlug";
 
+function sanitizeExcerpt(content) {
+  if (!content) return "";
+  return content
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/\|[^\n]+\|/g, '')
+    .replace(/#{1,6}\s+[^\n]+/g, '')
+    .replace(/\*{1,3}([^\*]+)\*{1,3}/g, '$1')
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 160);
+}
+
+function cleanCategoryBadge(category) {
+  if (!category) return "News";
+  const primary = category.split(',')[0].trim();
+  return primary.replace(/&amp;/g, '&').replace(/_/g, ' ');
+}
+
 export default function BlogsClient({ initialUpdates, hasError }) {
   const { t } = useLanguage();
-  const [search, setSearch] = useState("");
-  const [activeTab, setActiveTab] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const TABS = [
-    { id: "All", label: t('all_news') || "All News", keywords: [] },
-    { id: "Investment", label: t('investment') || "Investment", keywords: ["investment", "price", "market"] },
-    { id: "Infrastructure", label: t('nav_infrastructure') || "Infrastructure", keywords: ["infrastructure", "construction", "project"] },
-    { id: "Legal", label: t('legal_planning') || "Legal & Planning", keywords: ["planning", "policy", "legal", "subsidy", "registration"] },
+  const CATEGORIES = [
+    { label: t('all_news') || 'All News', slug: 'all' },
+    { label: t('nav_infrastructure') || 'Infrastructure', slug: 'infrastructure' },
+    { label: t('investment') || 'Investment', slug: 'investment' },
+    { label: 'Industrial & Planning', slug: 'industrial' },
+    { label: 'Connectivity', slug: 'connectivity' },
   ];
 
-  const filtered = initialUpdates.filter(post => {
-    const matchesSearch = !search || 
-      `${post.title} ${post.category} ${post.content}`.toLowerCase().includes(search.toLowerCase());
-    
-    if (activeTab === "All") return matchesSearch;
-    const tabObj = TABS.find(t => t.id === activeTab);
-    if (!tabObj) return true;
-    return tabObj.keywords.some(k => 
-      `${post.title} ${post.category} ${post.content}`.toLowerCase().includes(k)
-    );
+  const filteredBlogs = (initialUpdates || []).filter((blog) => {
+    const postCategory = (blog.category || '').toLowerCase();
+    const postTitle = (blog.title || '').toLowerCase();
+    const postContent = (blog.content || '').toLowerCase();
+    const query = searchQuery.toLowerCase().trim();
+
+    // Category filter with case-insensitive and related-term matching
+    const matchesCategory =
+      selectedCategory === 'all' ||
+      postCategory.includes(selectedCategory.toLowerCase()) ||
+      (selectedCategory === 'industrial' && (
+        postCategory.includes('plan') ||
+        postCategory.includes('industr') ||
+        postCategory.includes('scheme') ||
+        postCategory.includes('project') ||
+        postCategory.includes('map')
+      )) ||
+      (selectedCategory === 'connectivity' && (
+        postCategory.includes('connect') ||
+        postCategory.includes('expressway') ||
+        postCategory.includes('airport') ||
+        postCategory.includes('logistic') ||
+        postCategory.includes('travel')
+      ));
+
+    // Search input filter
+    const matchesSearch =
+      !query ||
+      postTitle.includes(query) ||
+      postCategory.includes(query) ||
+      postContent.includes(query);
+
+    return matchesCategory && matchesSearch;
   });
 
   return (
@@ -62,6 +110,7 @@ export default function BlogsClient({ initialUpdates, hasError }) {
         </div>
       </section>
 
+      {/* Guide Links */}
       <section className="border-b border-slate-200 bg-slate-50 py-12 dark:border-slate-800 dark:bg-slate-950">
         <div className="mx-auto max-w-5xl px-4 md:px-8">
           <h2 className="text-3xl font-black text-slate-950 dark:text-white">
@@ -71,22 +120,22 @@ export default function BlogsClient({ initialUpdates, hasError }) {
             {t('blogs_header_desc') || "Follow dated coverage of Dholera SIR infrastructure, industrial announcements, planning, policy and property due diligence. Time-sensitive claims should be checked against the linked primary source and the article's publication or update date."}
           </p>
           <nav aria-label="Dholera topic guides" className="mt-7 flex flex-wrap gap-3">
-            <Link href="/tp-maps" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+            <Link href="/tp-maps" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700 hover:border-orange-500 transition-colors">
               {t('topic_tp_maps') || "TP maps"}
             </Link>
-            <Link href="/smart-city" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+            <Link href="/smart-city" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700 hover:border-orange-500 transition-colors">
               {t('topic_dholera_facts') || "Dholera SIR facts"}
             </Link>
-            <Link href="/infrastructure" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+            <Link href="/infrastructure" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700 hover:border-orange-500 transition-colors">
               {t('topic_infrastructure') || "Infrastructure"}
             </Link>
-            <Link href="/airport" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+            <Link href="/airport" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700 hover:border-orange-500 transition-colors">
               {t('topic_airport') || "Airport"}
             </Link>
-            <Link href="/investment-guide" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+            <Link href="/investment-guide" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700 hover:border-orange-500 transition-colors">
               {t('topic_due_diligence') || "Due diligence"}
             </Link>
-            <Link href="/editorial-policy" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700">
+            <Link href="/editorial-policy" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-black dark:border-slate-700 hover:border-orange-500 transition-colors">
               {t('topic_editorial_standards') || "Editorial standards"}
             </Link>
           </nav>
@@ -99,18 +148,19 @@ export default function BlogsClient({ initialUpdates, hasError }) {
           
           {/* Category Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0 w-full md:w-auto">
-            {TABS.map(tab => (
+            {CATEGORIES.map(cat => (
               <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                key={cat.slug}
+                type="button"
+                onClick={() => setSelectedCategory(cat.slug)}
                 className={cn(
                   "whitespace-nowrap px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2",
-                  activeTab === tab.id 
-                    ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/10 dark:shadow-orange-600/50" 
-                    : "bg-transparent border-transparent text-slate-400 hover:text-slate-900 dark:text-white dark:hover:text-white"
+                  selectedCategory === cat.slug 
+                    ? "bg-[#FF7A00] border-[#FF7A00] text-white shadow-xl shadow-orange-600/20" 
+                    : "bg-transparent border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:border-slate-400"
                 )}
               >
-                {tab.label}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -121,8 +171,8 @@ export default function BlogsClient({ initialUpdates, hasError }) {
             <input 
               type="text"
               placeholder={t?.('search_placeholder') || 'Search intelligence...'}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-11 pr-4 py-3 rounded-full bg-slate-100 dark:bg-slate-900 border border-transparent dark:border-slate-800 text-xs font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#FF7A00]"
             />
           </div>
@@ -137,18 +187,25 @@ export default function BlogsClient({ initialUpdates, hasError }) {
           {hasError ? (
             <div className="py-24 text-center">
               <p className="text-sm font-black uppercase tracking-widest text-red-500">
-                {t('feed_offline_notice')}
+                {t('feed_offline_notice') || "Intelligence feed is temporarily unavailable. Please retry shortly."}
               </p>
             </div>
-          ) : filtered.length === 0 ? (
-            <div className="py-24 text-center">
+          ) : filteredBlogs.length === 0 ? (
+            <div className="py-24 text-center space-y-3">
               <p className="text-sm font-black uppercase tracking-widest text-slate-400">
-                {t('no_records_found')}
+                {t('no_records_found') || "No intelligence posts found matching this category or search filter."}
               </p>
+              <button
+                type="button"
+                onClick={() => { setSelectedCategory("all"); setSearchQuery(""); }}
+                className="px-6 py-2.5 rounded-full bg-orange-600 text-white text-xs font-black uppercase tracking-wider"
+              >
+                Reset Filters
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-              {filtered.map(post => {
+              {filteredBlogs.map(post => {
                 const imgSrc = post.imageUrl 
                   ? (
                       post.imageUrl.startsWith("http") ? post.imageUrl : 
@@ -156,6 +213,9 @@ export default function BlogsClient({ initialUpdates, hasError }) {
                       post.imageUrl
                     )
                   : null;
+
+                const excerpt = sanitizeExcerpt(post.content);
+                const badge = cleanCategoryBadge(post.category);
 
                 return (
                   <Link 
@@ -181,7 +241,7 @@ export default function BlogsClient({ initialUpdates, hasError }) {
                         <div className="flex flex-col gap-2">
                           <div className="flex items-center gap-2">
                             <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#FF7A00] px-3 py-1 bg-orange-50 dark:bg-orange-950/10 rounded-lg border border-orange-100/50 dark:border-orange-500/20 self-start">
-                              {post.category}
+                              {badge}
                             </span>
                             {post.isExclusive && (
                               <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-amber-500 px-2.5 py-1 bg-amber-500/10 rounded-lg border border-amber-500/20">
@@ -205,9 +265,11 @@ export default function BlogsClient({ initialUpdates, hasError }) {
                         {post.title}
                       </h3>
 
-                      <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 mb-10 opacity-80 group-hover:opacity-100 transition-opacity">
-                        {post.content.replace(/<[^>]*>?/gm, '').slice(0, 150)}...
-                      </p>
+                      {excerpt && (
+                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-3 mb-10 opacity-80 group-hover:opacity-100 transition-opacity">
+                          {excerpt}...
+                        </p>
+                      )}
 
                       <div className="mt-auto pt-8 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between text-[10px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-all duration-300">
                         <span>Read Analysis</span>
@@ -215,7 +277,7 @@ export default function BlogsClient({ initialUpdates, hasError }) {
                       </div>
                     </div>
                   </Link>
-                )
+                );
               })}
             </div>
           )}
