@@ -204,11 +204,12 @@ export default function AboutPage() {
             >
               Book via WhatsApp <ArrowRight className="h-4 w-4" />
             </a>
-            <a 
-              href="tel:+917435808031" 
-              className="px-8 py-4 rounded-xl bg-white text-orange-600 hover:bg-slate-100 text-xs font-black uppercase tracking-widest transition-all shadow-xl text-center flex items-center justify-center gap-2 font-black"
+            <a  
+              href="tel:+917435808031"
+              className="px-8 py-4 rounded-xl bg-white hover:bg-slate-100 text-slate-900 border border-slate-200 text-xs font-black tracking-widest transition-all shadow-xl text-center flex items-center justify-center gap-2"
             >
-              <Phone className="h-4 w-4" /> +91 74358 08031
+              <Phone className="h-4 w-4 text-orange-600" />
+              +91 74358 08031
             </a>
           </div>
         </section>
