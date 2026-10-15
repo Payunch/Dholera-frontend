@@ -176,9 +176,11 @@ export default function PortalsPage() {
             </div>
             <Link
               href="/clearance-engine"
-              className="shrink-0 px-8 py-3.5 rounded-xl bg-white text-orange-600 font-black uppercase text-xs tracking-widest hover:bg-slate-100 transition-all shadow-lg flex items-center gap-2"
+              style={{ color: '#ffffff' }}
+              className="shrink-0 px-8 py-4 rounded-xl bg-slate-900 hover:bg-black text-white !text-white font-black uppercase text-xs tracking-widest transition-all shadow-2xl flex items-center justify-center gap-2 border border-slate-800 hover:scale-[1.02] active:scale-95"
             >
-              Request Clearance Report <ArrowRight className="h-4 w-4" />
+              <span>Request Clearance Report</span>
+              <ArrowRight className="h-4 w-4 text-[#FF7A00]" />
             </Link>
           </div>
         </div>
