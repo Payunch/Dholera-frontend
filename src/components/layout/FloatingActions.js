@@ -25,7 +25,7 @@ export function FloatingActions() {
                         <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#25D366] shadow-[0_0_8px_#25D366]" />
                     </span>
                     <MessageCircle className="h-4 w-4 shrink-0 text-[#25D366] transition-transform group-hover:scale-110" />
-                    <span>Chat with Land Advisor</span>
+                    <span className="font-bold tracking-wider">+91 74358 08031</span>
                 </a>
             </div>
         </>
