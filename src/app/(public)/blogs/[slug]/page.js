@@ -124,7 +124,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
   const faqSchema = extractFaqSchema(update.content);
 
   return (
-    <article className="bg-white dark:bg-slate-900 pt-24 pb-32">
+    <article className="bg-white dark:bg-slate-900 pt-8 md:pt-12 pb-24">
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Blogs", path: "/blogs" }, { name: update.title, path: `/blogs/${expectedSlug}` }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
       {faqSchema && (
@@ -139,50 +139,50 @@ export default async function UpdateDetailPage({ params, searchParams }) {
           {/* Back Navigation */}
           <Link
             href="/blogs"
-            className="mb-12 inline-flex items-center gap-2 text-sm font-black uppercase tracking-[0.2em] text-slate-400 transition-colors hover:text-orange-600"
+            className="mb-4 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 transition-colors hover:text-orange-600"
           >
             <ChevronLeft className="h-4 w-4" />
             Back to Intelligence
           </Link>
 
           {/* Header */}
-          <header className="space-y-6">
-            <div className="flex flex-wrap items-center gap-4">
-              <span className={cn("rounded-full border px-4 py-1.5 text-[10px] font-black uppercase tracking-widest", catColor)}>
+          <header className="space-y-3.5">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className={cn("rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-wider", catColor)}>
                 {update.category}
               </span>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                <Calendar className="h-4 w-4" />
-                {format(new Date(update.publishedAt || update.createdAt), "MMMM d, yyyy, h:mm a")}
+              <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <Calendar className="h-3.5 w-3.5" />
+                {format(new Date(update.publishedAt || update.createdAt), "MMM d, yyyy")}
               </div>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                <Clock className="h-4 w-4" />
+              <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <Clock className="h-3.5 w-3.5" />
                 5 min read
               </div>
             </div>
 
-            <h1 className="text-4xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white md:text-6xl uppercase">
+            <h1 className="text-3xl font-black leading-tight tracking-tight text-slate-900 dark:text-white md:text-5xl uppercase">
               {update.seoTitle || update.title}
             </h1>
 
             {update.tags && (
-              <div className="flex flex-wrap gap-2 pt-4">
+              <div className="flex flex-wrap gap-1.5 pt-1">
                 {update.tags.split(',').slice(0, 5).map((tag, i) => (
-                  <span key={i} className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-wider rounded-full">
+                  <span key={i} className="px-2.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-wider rounded-md">
                     {tag.trim()}
                   </span>
                 ))}
               </div>
             )}
 
-            <div className="flex items-center justify-between border-y border-slate-100 py-6">
+            <div className="flex items-center justify-between border-y border-slate-100 dark:border-slate-800 py-3">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center text-slate-900 dark:text-white font-black text-xs">
+                <div className="h-9 w-9 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white font-black text-xs border border-slate-200 dark:border-slate-700">
                   DP
                 </div>
                 <div className="flex flex-col">
-                  <Link href="/author/naresh-gohel" className="text-sm font-black uppercase tracking-tight text-slate-900 hover:text-orange-600 dark:text-white">Naresh Gohel</Link>
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Verified Analysis</span>
+                  <Link href="/author/naresh-gohel" className="text-xs font-black uppercase tracking-tight text-slate-900 hover:text-orange-600 dark:text-white">Naresh Gohel</Link>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Verified Analysis</span>
                 </div>
               </div>
               <ShareButton 
@@ -195,7 +195,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
 
           {/* Top Image */}
           {imgSrc && imgPos === "top" && (
-            <div className="relative mt-12 aspect-[21/9] w-full overflow-hidden rounded-[2rem] shadow-2xl">
+            <div className="relative mt-6 aspect-[21/9] max-h-[420px] w-full overflow-hidden rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800">
               <Image
                 src={imgSrc}
                 alt={update.title}

@@ -234,8 +234,95 @@ h1, h2, h3, h4, h5, h6 {
 .wp-content figure { margin: 2rem 0; }
 .wp-content figcaption { text-align: center; font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.75rem; }
 .wp-content a { color: var(--accent); text-decoration: underline !important; text-underline-offset: 4px; }
-.wp-content a:hover { color: var(--accent-3); }
 .wp-content strong { font-weight: 900; color: var(--foreground); }
+
+/* Responsive Article Tables & Mobile Stacked Cards */
+.wp-content table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.wp-content th {
+  padding: 0.875rem 1rem;
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(241, 245, 249, 0.85);
+  border-bottom: 2px solid var(--border);
+}
+.dark .wp-content th {
+  background-color: rgba(30, 41, 59, 0.85);
+}
+.wp-content td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  vertical-align: top;
+}
+@media (max-width: 767px) {
+  .wp-content table {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+  }
+  .wp-content thead {
+    display: none !important;
+  }
+  .wp-content tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    padding: 0.25rem 0 !important;
+  }
+  .wp-content tr {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    padding: 1.125rem !important;
+    border-radius: 1rem !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+  }
+  .dark .wp-content tr {
+    background-color: #0f172a !important;
+    border-color: #1e293b !important;
+  }
+  .wp-content td {
+    display: block !important;
+    padding: 0.25rem 0 !important;
+    border: none !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.45 !important;
+  }
+  .wp-content td:first-child {
+    font-size: 0.9375rem !important;
+    font-weight: 800 !important;
+    color: #ea580c !important;
+    border-bottom: 1px dashed #cbd5e1 !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .dark .wp-content td:first-child {
+    color: #f97316 !important;
+    border-color: #334155 !important;
+  }
+  .wp-content td[data-label]::before {
+    content: attr(data-label) ": ";
+    font-weight: 700 !important;
+    color: #64748b !important;
+    display: inline-block !important;
+    margin-right: 0.35rem !important;
+  }
+  .dark .wp-content td[data-label]::before {
+    color: #94a3b8 !important;
+  }
+  .wp-content td:first-child[data-label]::before {
+    content: "" !important;
+    display: none !important;
+  }
+}
 
 /* ==========================================================================
    GLOBAL DESIGN SYSTEM: REUSABLE COLOR-CODED BOXES, CARDS & BUTTONS
