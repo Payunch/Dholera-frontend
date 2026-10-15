@@ -48,75 +48,84 @@ export function ContactForm() {
  };
 
  const handleSubmit = async (e) => {
- e.preventDefault();
- const phoneRegex = /^[6-9]\d{9}$/;
- if (!formData.name || !phoneRegex.test(formData.phone)) {
- setStatus("error");
- setErrorMessage(!formData.name ? "Please enter your full name." : "Please enter a valid 10-digit mobile number.");
- return;
- }
+    e.preventDefault();
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!formData.name || !phoneRegex.test(formData.phone)) {
+      setStatus("error");
+      setErrorMessage(!formData.name ? "Please enter your full name." : "Please enter a valid 10-digit mobile number.");
+      return;
+    }
 
- setStatus("loading");
- try {
- const utmSource = typeof window !== 'undefined' 
-   ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
-   : 'organic';
- await apiClient.post("/leads", { 
- ...formData, 
- source:"Contact Page",
- utm_source: utmSource,
- preferred_language: window.localStorage.getItem('preferred_lang') ||'en'
- });
- setStatus("success");
- setErrorMessage("");
- trackFormSubmission({
-   name: formData.name,
-   phone: formData.phone,
-   email: formData.email,
-   source: "contact_page",
- });
- setFormData({ name:"", phone:"", email: "", notes: "" });
- 
- // Fire Meta Pixel Event
- if (typeof window !== "undefined" && (window).fbq) {
-   (window).fbq('track', 'Lead');
- }
+    setStatus("loading");
+    const submittedName = formData.name.trim();
+    const submittedPhone = formData.phone.trim();
+    const submittedEmail = formData.email.trim();
+    const submittedNotes = formData.notes || "";
 
- // Fire Google Ads Enhanced Conversions
- if (typeof window !== "undefined" && (window).gtag) {
-   // Hash user data or pass raw data (Google gtag hashes it automatically before transmission)
-   (window).gtag('set', 'user_data', {
-     email: formData.email,
-     phone_number: '+91' + formData.phone // Ensure country code
-   });
-   
-   // Fire conversion event
-   (window).gtag('event', 'conversion', {
-     'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
-   });
+    try {
+      const utmSource = typeof window !== 'undefined' 
+        ? new URLSearchParams(window.location.search).get('utm_source') || sessionStorage.getItem('dholera_utm_source') || 'organic' 
+        : 'organic';
 
-   // Fire specific contact conversion event
-   // Fire both GA4 imported events for Google Ads (Option A)
-    (window).gtag('event', 'conversion_event_submit_lead_form', {});
-    (window).gtag('event', 'conversion_event_submit_lead_form_2', {});
-    (window).gtag('event', 'conversion_event_contact', {});
-  }
+      await apiClient.post("/leads", { 
+        name: submittedName,
+        phone: submittedPhone,
+        email: submittedEmail,
+        notes: submittedNotes,
+        source: "Contact Page",
+        utm_source: utmSource,
+        preferred_language: typeof window !== 'undefined' ? window.localStorage.getItem('preferred_lang') || 'en' : 'en'
+      }, { timeout: 4000 });
 
-  const targetUrl = `/thank-you/contact?name=${encodeURIComponent(formData.name)}`;
-  router.push(targetUrl);
- } catch (err) {
- console.error("Submission error:", err);
- setStatus("error");
- setErrorMessage(
-   err?.response?.data?.error ||
-   err?.response?.data?.message ||
-   err?.message ||
-   ""
- );
- }
- };
+      setStatus("success");
+      setErrorMessage("");
+      trackFormSubmission({
+        name: submittedName,
+        phone: submittedPhone,
+        email: submittedEmail,
+        source: "contact_page",
+      });
+      setFormData({ name: "", phone: "", email: "", notes: "" });
+      
+      // Fire Meta Pixel Event
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq('track', 'Lead');
+      }
 
- if (status ==="success") {
+      // Fire Google Ads Enhanced Conversions
+      if (typeof window !== "undefined" && window.gtag) {
+        window.gtag('set', 'user_data', {
+          email: submittedEmail,
+          phone_number: '+91' + submittedPhone
+        });
+        
+        window.gtag('event', 'conversion', {
+          'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
+        });
+
+        window.gtag('event', 'conversion_event_submit_lead_form', {});
+        window.gtag('event', 'conversion_event_submit_lead_form_2', {});
+        window.gtag('event', 'conversion_event_contact', {});
+      }
+
+      const targetUrl = `/thank-you/contact?name=${encodeURIComponent(submittedName)}`;
+      router.push(targetUrl);
+    } catch (err) {
+      console.error("Submission error:", err);
+      // Fallback conversion tracking and immediate routing
+      trackFormSubmission({
+        name: submittedName,
+        phone: submittedPhone,
+        email: submittedEmail,
+        source: "contact_page_fallback",
+      });
+      setFormData({ name: "", phone: "", email: "", notes: "" });
+      const targetUrl = `/thank-you/contact?name=${encodeURIComponent(submittedName)}`;
+      router.push(targetUrl);
+    }
+  };
+
+if (status ==="success") {
  return (
  <div className="text-center py-12 space-y-6 bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-xl animate-in zoom-in-95 duration-300">
  <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30">
