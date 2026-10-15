@@ -2,14 +2,31 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
-import { MessageSquare, Phone, Info, Eye, Clock, ShieldCheck, MapPin, Monitor, X, Globe, Calendar, Trash2, Target } from "lucide-react";
+import { MessageSquare, Phone, Info, Eye, EyeOff, Clock, ShieldCheck, MapPin, Monitor, X, Globe, Calendar, Trash2, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { apiClient } from "@/lib/api";
+
+function maskPhoneNumber(phone) {
+  if (!phone) return "—";
+  const str = String(phone).trim();
+  if (str.length < 8) return str;
+  const prefix = str.slice(0, 4);
+  const suffix = str.slice(-2);
+  return `${prefix}****${suffix}`;
+}
 
 export function LeadsTable({ leads: initialLeads }) {
   const [leads, setLeads] = useState(initialLeads);
   const [selectedLead, setSelectedLead] = useState(null);
   const [viewMode, setViewMode] = useState('table');
+  const [revealedPhones, setRevealedPhones] = useState({});
+
+  const toggleRevealPhone = (leadId) => {
+    setRevealedPhones(prev => ({
+      ...prev,
+      [leadId]: !prev[leadId]
+    }));
+  };
 
   useEffect(() => {
     setLeads(initialLeads || []);
@@ -48,6 +65,8 @@ export function LeadsTable({ leads: initialLeads }) {
         header: 'Investor Name',
         Cell: ({ row }) => {
           const lead = row.original;
+          const isRevealed = Boolean(revealedPhones[lead.id]);
+          const displayPhone = isRevealed ? lead.phone : maskPhoneNumber(lead.phone);
           return (
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
@@ -62,7 +81,20 @@ export function LeadsTable({ leads: initialLeads }) {
                   </span>
                 )}
               </div>
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{lead.phone}</span>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider font-mono">{displayPhone}</span>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleRevealPhone(lead.id);
+                  }}
+                  className="text-slate-400 hover:text-orange-600 transition-colors p-0.5"
+                  title={isRevealed ? "Click to mask" : "Click to reveal phone"}
+                >
+                  {isRevealed ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                </button>
+              </div>
             </div>
           );
         },
@@ -248,8 +280,20 @@ export function LeadsTable({ leads: initialLeads }) {
                             <span className="font-bold text-slate-900 dark:text-white text-sm truncate">{lead.name}</span>
                             {lead.score > 0 && <span className={cn("rounded-md px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-tight", lead.score > 150 ? "bg-red-600 text-white" : "bg-orange-500 text-white")}>{lead.score}</span>}
                           </div>
-                          <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">
-                            <Phone className="h-3 w-3" /> {lead.phone}
+                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">
+                            <Phone className="h-3 w-3" />
+                            <span className="font-mono">{revealedPhones[lead.id] ? lead.phone : maskPhoneNumber(lead.phone)}</span>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleRevealPhone(lead.id);
+                              }}
+                              className="text-slate-400 hover:text-orange-600 p-0.5 transition-colors"
+                              title={revealedPhones[lead.id] ? "Click to mask" : "Click to reveal phone"}
+                            >
+                              {revealedPhones[lead.id] ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                            </button>
                           </div>
                           <div className="flex justify-between items-center pt-3 border-t border-slate-100 dark:border-slate-700">
                             <div className="flex gap-2">
@@ -288,7 +332,19 @@ export function LeadsTable({ leads: initialLeads }) {
          <div className="p-8 text-slate-900 dark:text-white flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
          <div>
          <h3 className="text-2xl font-black uppercase tracking-tight">{selectedLead.name}</h3>
-         <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-1">Lead ID: {selectedLead.id} • {selectedLead.phone}</p>
+         <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-1 flex items-center gap-2">
+           <span>Lead ID: {selectedLead.id}</span>
+           <span>•</span>
+           <span className="font-mono">{revealedPhones[selectedLead.id] ? selectedLead.phone : maskPhoneNumber(selectedLead.phone)}</span>
+           <button
+             type="button"
+             onClick={() => toggleRevealPhone(selectedLead.id)}
+             className="text-slate-400 hover:text-orange-600 transition-colors p-0.5"
+             title={revealedPhones[selectedLead.id] ? "Click to mask" : "Click to reveal phone"}
+           >
+             {revealedPhones[selectedLead.id] ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+           </button>
+         </p>
          </div>
          <button onClick={() => setSelectedLead(null)} className="p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl text-slate-400 hover:text-red-500 transition-all">
          <X className="h-6 w-6" />
