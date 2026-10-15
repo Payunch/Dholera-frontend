@@ -207,8 +207,8 @@ export function PdfListing() {
  className={cn(
 "px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
  activeTab === tab.id 
- ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-md"
- : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white"
+ ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950 border-slate-900 dark:border-white shadow-md font-black"
+ : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white border border-transparent dark:border-slate-700/60"
  )}
  >
  {tab.label}
@@ -350,9 +350,9 @@ export function PdfListing() {
    setShowVerifyPopup(false);
    setPostLoginAction(null);
  }}
- title="Limited Time Offer"
- subtitle="Complete your mobile verification to unlock and view any PDF document instantly"
- showCountdown={true}
+ title="Instant Document Access"
+ subtitle="Verify your mobile number to unlock instant high-resolution viewing and downloads for all official DSIRDA Town Planning and Development Plan gazettes."
+ showCountdown={false}
  />
  )}
  

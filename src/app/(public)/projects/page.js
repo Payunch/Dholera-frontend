@@ -114,8 +114,8 @@ export default function ProjectsPage() {
  onClick={() => setSelectedCategory(cat.key)}
  className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
  selectedCategory === cat.key
- ?"bg-slate-900 dark:bg-white text-white dark:text-slate-900 border border-slate-900 dark:border-white shadow-md"
- :"bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white"
+ ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950 border border-slate-900 dark:border-white shadow-md font-black"
+ : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white border border-transparent dark:border-slate-700/60"
  }`}
  >
  {cat.label}

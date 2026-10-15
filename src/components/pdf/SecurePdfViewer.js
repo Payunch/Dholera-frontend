@@ -202,8 +202,8 @@ export const SecurePdfViewer = ({ pdfId, onClose, refreshToken, initialType ='vi
         setShowVerifyPopup(false);
         onClose();
       }}
-      title={t('limited_time_free_access')}
-      subtitle={t('offer_ends_in_10_days')}
+      title="Instant Document Access"
+      subtitle="Verify your mobile number to unlock instant high-resolution viewing and downloads for all official DSIRDA Town Planning and Development Plan gazettes."
     />
   )}
 

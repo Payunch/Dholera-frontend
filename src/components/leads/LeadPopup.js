@@ -238,47 +238,38 @@ export const LeadPopup = ({
         <div className="p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
 
           {/* Left Column */}
-          <div className="flex-1 w-full text-center md:text-left flex flex-col justify-center">
-            <div className="flex justify-center md:justify-start mb-6 md:mb-10 brightness-0 invert">
-              <SplitLogo height={42} isFull={true} />
+          <div className="flex-1 w-full text-left flex flex-col justify-center space-y-4 p-2 sm:p-4">
+            <div className="flex justify-start mb-2 brightness-0 invert">
+              <SplitLogo height={38} isFull={true} />
             </div>
 
-            <div>
-              {step === 'details' && (compulsory || showCountdown) && (
-                <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/50 bg-orange-500/20 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-[#FF7A00] mb-6 animate-pulse shadow-[0_0_15px_rgba(255,122,0,0.3)]">
-                  {t('exclusive_10_day_offer')}
-                </div>
-              )}
-              <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-3">
-                {step === 'success' ? t('access_granted') || 'Access Granted' : (step === 'otp' ? t('verify_code') : (title || t('start_here')))}
-              </h2>
-              <p className="text-[10px] md:text-xs font-bold text-slate-300 dark:text-slate-400 uppercase tracking-widest leading-relaxed">
-                {step === 'otp' ? t('enter_verification_code') : (subtitle || t('verify_desc'))}
-              </p>
-
-              {step === 'details' && (compulsory || showCountdown) && timeLeft && (
-                <>
-                  <div className="mt-8 flex justify-center md:justify-start gap-3">
-                    {[
-                      { label: 'Days', value: timeLeft.d },
-                      { label: 'Hours', value: timeLeft.h },
-                      { label: 'Mins', value: timeLeft.m },
-                      { label: 'Secs', value: timeLeft.s }
-                    ].map((unit, i) => (
-                      <div key={i} className="flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl w-14 h-14 md:w-16 md:h-16 backdrop-blur-md shadow-lg">
-                        <span className="text-lg md:text-xl font-black text-white">{String(unit.value).padStart(2, '0')}</span>
-                        <span className="text-[8px] md:text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-1">{unit.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 inline-flex justify-center md:justify-start">
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-400 font-bold text-[10px] md:text-xs px-3 py-2 rounded-lg tracking-wide text-center md:text-left">
-                      {(t('paid_warning') || 'After {days} days, viewing will require a paid subscription.').replace('{days}', timeLeft.d.toString())}
-                    </div>
-                  </div>
-                </>
-              )}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 w-fit">
+              <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+              <span className="text-[11px] font-bold text-orange-500 uppercase tracking-widest">
+                Verified Access
+              </span>
             </div>
+
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              {step === 'success' ? (t('access_granted') || 'Access Granted') : (step === 'otp' ? (t('verify_code') || 'Enter Verification Code') : (title || 'Instant Document Access'))}
+            </h2>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              {step === 'otp'
+                ? (t('enter_verification_code') || 'Enter the 6-digit verification code sent to your mobile.')
+                : (subtitle || 'Verify your mobile number to unlock instant high-resolution viewing and downloads for all official DSIRDA Town Planning and Development Plan gazettes.')}
+            </p>
+
+            {step !== 'success' && (
+              <ul className="text-xs text-slate-400 space-y-2 pt-2">
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-400 font-bold">✓</span> Direct high-res PDF &amp; Naksha viewer
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-emerald-400 font-bold">✓</span> Official survey &amp; zoning demarcations
+                </li>
+              </ul>
+            )}
           </div>
 
           {/* Right Column */}

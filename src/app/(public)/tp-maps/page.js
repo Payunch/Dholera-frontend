@@ -140,16 +140,19 @@ export default function TpMapsPage() {
             sizes="100vw"
           />
         </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/80 to-slate-950/95" />
 
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-4">
-          <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400">
-            Official DSIRDA Master Plan & GIS Matrix
-          </span>
-          <h1 className="font-display min-w-0 break-words text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-            {t('tp_maps_matrix_title') || 'Dholera TP Maps Matrix'}
+          <div>
+            <span className="relative z-10 inline-block px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-700 text-[11px] font-bold text-orange-400 uppercase tracking-widest backdrop-blur-md mb-3">
+              Official DSIRDA Master Plan & GIS Matrix
+            </span>
+          </div>
+          <h1 className="relative z-10 text-3xl sm:text-5xl font-black text-white tracking-tight drop-shadow-md uppercase">
+            {t('tp_maps_matrix_title') || 'DHOLERA SIR TP MAPS MATRIX'}
           </h1>
-          <p className="text-xs sm:text-sm md:text-base font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest max-w-2xl mx-auto leading-relaxed">
-            {t('tp_maps_matrix_desc') || 'Explore sanctioned Town Planning Schemes (TP1 to TP6) with high-precision GIS coordinates and legal zoning clearances.'}
+          <p className="relative z-10 text-xs sm:text-sm font-semibold text-slate-200 max-w-2xl mx-auto uppercase tracking-wider drop-shadow-sm leading-relaxed">
+            {t('tp_maps_matrix_desc') || 'Access verified town planning records, road widths, and zoning use-cases for the entire Dholera Special Investment Region.'}
           </p>
         </div>
       </section>
@@ -235,8 +238,8 @@ export default function TpMapsPage() {
  className={cn(
 "min-h-11 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
  activeFilter === filter 
- ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-md"
- : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white"
+ ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950 border-slate-900 dark:border-white shadow-md font-black"
+ : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white border border-transparent dark:border-slate-700/60"
  )}
  >
  {filter}
