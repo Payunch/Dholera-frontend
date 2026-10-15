@@ -130,7 +130,7 @@ export default function PortalsPage() {
     <div className="bg-white dark:bg-slate-950 min-h-screen font-sans w-full overflow-x-hidden transition-colors">
       
       {/* Header Section */}
-      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
+      <section className="relative bg-slate-950 pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
           <Image 
             src="/images/futuristic_dholera.png" 
@@ -145,10 +145,10 @@ export default function PortalsPage() {
           <div className="inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#10B981]">
             <ShieldCheck className="h-4 w-4" /> {t('third_party_verification') || 'Official Government Revenue Direct Access'}
           </div>
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-[1.1]">
             {t('verified_portals_title') || 'Verified Land & Project Portals'}
           </h1>
-          <p className="text-base sm:text-xl text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
+          <p className="text-base sm:text-xl text-slate-300 font-medium max-w-2xl mx-auto leading-relaxed uppercase tracking-widest">
             {t('portals_desc') || 'Direct gateway to Gujarat State Land Records, AnyRoR, i-ORA, RERA verification, and DSIRDA development authority portals.'}
           </p>
         </div>

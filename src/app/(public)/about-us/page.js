@@ -41,10 +41,10 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden font-sans dark:bg-slate-900">
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden font-sans">
       
       {/* Header Section */}
-      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
+      <section className="relative bg-slate-950 pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
         <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <Image 
             src="/images/futuristic_dholera.png" 

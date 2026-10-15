@@ -74,10 +74,10 @@ export default function ProjectsPage() {
  });
 
  return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-24 w-full overflow-x-hidden dark:bg-slate-900">
+ <div className="bg-white dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-24 w-full overflow-x-hidden">
  
  {/* Header Block - Refactored for proper sizing */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden mb-16 dark:bg-slate-900">
+ <section className="relative bg-slate-950 pt-32 pb-16 md:pb-24 border-b border-slate-800 overflow-hidden mb-16">
  {/* Background Image Overlay */}
  <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
  <Image 
@@ -114,8 +114,8 @@ export default function ProjectsPage() {
  onClick={() => setSelectedCategory(cat.key)}
  className={`px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
  selectedCategory === cat.key
- ?"bg-[#FF7A00] text-white shadow-md shadow-orange-600/10 dark:shadow-orange-600/50"
- :"bg-white dark:bg-slate-800 border border-slate-150 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-700"
+ ?"bg-slate-900 dark:bg-white text-white dark:text-slate-900 border border-slate-900 dark:border-white shadow-md"
+ :"bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white"
  }`}
  >
  {cat.label}

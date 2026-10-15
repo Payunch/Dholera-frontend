@@ -127,10 +127,10 @@ export default function TpMapsPage() {
   });
 
   return (
-    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans w-full overflow-x-hidden dark:bg-slate-900">
+    <div className="bg-white dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans w-full overflow-x-hidden">
       
       {/* Header Section */}
-      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-16 md:pb-20 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
+      <section className="relative bg-slate-950 pt-32 pb-16 md:pb-20 border-b border-slate-800 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
           <Image 
             src="/images/airportVision.webp" 
@@ -235,8 +235,8 @@ export default function TpMapsPage() {
  className={cn(
 "min-h-11 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
  activeFilter === filter 
- ?"bg-[#FF7A00] text-white border-[#FF7A00] shadow-lg shadow-orange-600/10 dark:shadow-orange-600/50" 
- :"bg-white dark:bg-[#111A35] text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:bg-slate-900"
+ ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-md"
+ : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white"
  )}
  >
  {filter}
@@ -261,7 +261,7 @@ export default function TpMapsPage() {
    return (
      <div 
        key={tp.tp_id} 
-       className="group relative p-8 rounded-[2rem] md:rounded-[2.5rem] bg-white dark:bg-[#111A35] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between dark:bg-slate-900"
+       className="group relative p-8 rounded-[2rem] md:rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-[#FF7A00] transition-all duration-500 flex flex-col justify-between"
      >
        {/* Psychology Badges */}
        <div className="absolute -top-4 right-6 flex flex-col gap-2 z-10 items-end transition-transform group-hover:scale-110">

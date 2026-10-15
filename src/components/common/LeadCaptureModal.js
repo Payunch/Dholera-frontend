@@ -88,12 +88,12 @@ export default function LeadCaptureModal() {
 
  return (
  <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-500">
- <div className="bg-white dark:bg-[#0B132B] w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl relative border border-slate-800 animate-in zoom-in-95 duration-500 dark:bg-slate-900">
+ <div className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl relative border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-500">
  
  {/* Close Button */}
  <button 
  onClick={handleClose}
- className="absolute top-6 right-6 p-2 rounded-xl bg-white dark:bg-slate-900 text-slate-400 hover:text-white transition-all z-20"
+ className="absolute top-6 right-6 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all z-20"
  >
  <X className="h-5 w-5" />
  </button>

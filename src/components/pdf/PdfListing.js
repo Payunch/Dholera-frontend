@@ -188,14 +188,14 @@ export function PdfListing() {
  };
 
  return (
- <section className="py-24 bg-white dark:bg-[#0B132B] transition-colors dark:bg-slate-900" id="documents">
+ <section className="py-24 bg-[#F8FAFC] dark:bg-[#0B0F19] transition-colors" id="documents">
  <div className="container mx-auto px-4 md:px-8">
  <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
  <div className="space-y-4">
  <h2 className="font-display text-4xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
  Verified <span className="text-orange-600 italic">Intelligence</span>
  </h2>
- <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 border border-slate-100 px-3 py-1.5 rounded-lg w-fit">
+ <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-1.5 rounded-lg w-fit">
  <ShieldCheck className="h-3 w-3 text-green-600" />
  All maps cross-verified with official DSIRDA releases
  </div>
@@ -205,11 +205,10 @@ export function PdfListing() {
  key={tab.id}
  onClick={() => setActiveTab(tab.id)}
  className={cn(
-"px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border-2",
+"px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all border",
  activeTab === tab.id 
- ?"bg-orange-600 border-orange-600 text-white shadow-xl shadow-orange-600/10 dark:shadow-orange-600/50"
- 
- :"bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-400 hover:border-orange-600 hover:text-orange-600"
+ ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white shadow-md"
+ : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white"
  )}
  >
  {tab.label}
@@ -243,6 +242,9 @@ export function PdfListing() {
  const isSelected = selectedPdfs.includes(pdf.id);
  const isFree = false;
  const hasAccess = !!verifiedLead;
+ const catLower = (pdf.category || '').toLowerCase();
+ const titleLower = (pdf.title || '').toLowerCase();
+ const isMasterPlan = catLower.includes('tp') || catLower.includes('naksha') || catLower.includes('dp') || catLower.includes('map') || titleLower.includes('master') || titleLower.includes('town planning') || titleLower.includes('scheme') || activeTab > 0;
  
  return (
  <div 
@@ -256,12 +258,18 @@ export function PdfListing() {
   }}
  className={cn(
 "group flex flex-col bg-white dark:bg-slate-900 rounded-[2.5rem] p-6 border dark:border-slate-800 transition-all relative cursor-pointer select-none",
- isSelected ?"border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" :"border-slate-100 shadow-xl shadow-slate-200/10 hover:shadow-2xl hover:-translate-y-2",
+ isSelected ? "border-orange-600 ring-4 ring-orange-500/10 shadow-2xl" : "border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-orange-500/50 hover:-translate-y-1.5",
  isSelectionMode && isFree &&"opacity-50 cursor-not-allowed"
  )}
  >
- <div className="mb-6 aspect-[4/3] rounded-2xl bg-white dark:bg-slate-950 flex items-center justify-center relative overflow-hidden border border-slate-50 dark:border-slate-800">
- <FileText className={cn("h-16 w-16 transition-all duration-500", isSelected ?"text-orange-600 scale-110" :"text-slate-200 dark:text-slate-700 group-hover:scale-110")} />
+ <div className="mb-6 aspect-[4/3] rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100/90 dark:from-slate-950 dark:to-slate-900/90 flex flex-col items-center justify-center relative overflow-hidden border border-slate-200/80 dark:border-slate-800 group-hover:border-orange-500/50 transition-colors">
+   <div className="absolute inset-0 opacity-[0.04] dark:opacity-[0.08] bg-[radial-gradient(#000_1px,transparent_1px)] dark:bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+   <div className="h-16 w-16 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700 shadow-md flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+     <FileText className={cn("h-8 w-8 transition-colors", isSelected ? "text-[#FF7A00]" : isMasterPlan ? "text-[#FF7A00]" : "text-slate-700 dark:text-slate-300")} />
+   </div>
+   <span className="mt-3 text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
+     {isMasterPlan ? "Town Planning Archive" : "Government Document"}
+   </span>
  
  {isSelectionMode && !isFree && (
  <div className={cn(
@@ -289,21 +297,36 @@ export function PdfListing() {
  
  <div className="pt-2 mt-auto">
   {!hasAccess && !isSelectionMode ? (
-  <button 
-  onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id,'view'); }}
-  className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] bg-orange-600 text-white hover:bg-orange-500 transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"
-  >
-  <Lock className="h-4 w-4" /> Verify Mobile to View
-  </button>
+    isMasterPlan ? (
+      <button 
+        onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id,'view'); }}
+        className="w-full py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] bg-[#FF7A00] hover:bg-orange-600 text-white transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-orange-600/20 active:scale-95"
+      >
+        <Lock className="h-3.5 w-3.5" /> Unlock Master Plan
+      </button>
+    ) : (
+      <button 
+        onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id,'view'); }}
+        className="w-full py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] bg-slate-900 hover:bg-black dark:bg-slate-800 dark:hover:bg-slate-700 text-white border border-slate-700/60 transition-all flex items-center justify-center gap-2.5 shadow-md active:scale-95"
+      >
+        <FileText className="h-3.5 w-3.5 text-[#FF7A00]" /> Verify & Access PDF
+      </button>
+    )
   ) : (
   <button 
   onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
   className={cn(
- "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-  isSelected ?"bg-orange-600 text-white" :"bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-orange-600 hover:text-white shadow-sm"
+ "w-full py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
+  isSelected 
+    ? "bg-orange-600 text-white shadow-md shadow-orange-600/20" 
+    : "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 shadow-sm"
   )}
   >
-  {isSelectionMode ? (isSelected ?'Selected' :'Select PDF') :'Open Vault'}
+  {isSelectionMode ? (isSelected ? 'Selected' : 'Select PDF') : (
+    <>
+      <Eye className="h-3.5 w-3.5 text-emerald-500" /> Open Document
+    </>
+  )}
   </button>
   )}
  </div>
