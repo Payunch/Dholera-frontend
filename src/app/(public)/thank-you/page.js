@@ -25,46 +25,20 @@ export default function ThankYouPage() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
   useEffect(() => {
-    // 1. Fire Google Ads Primary Conversion Event on /thank-you mount
-    trackGoogleConversion({
-      label: process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || "",
-      value: 200.0,
-      currency: "INR",
-      transactionId: `lead_${Date.now()}`,
-    });
-
-    // 2. Fire Meta Pixel Lead Event
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "Lead", {
-        content_name: "thank_you_page",
-        value: 200.0,
-        currency: "INR",
-      });
-    }
-
-    // 3. Push pageview conversion event to dataLayer
+    // Standard view event only (prevent duplicate conversion counts)
     if (typeof window !== "undefined" && window.dataLayer) {
       window.dataLayer.push({
-        event: "conversion_thank_you_view",
+        event: "thank_you_view",
         page_location: window.location.href,
         page_path: "/thank-you",
       });
-      window.dataLayer.push({
-        event: "conversion_event_submit_lead_form_2",
-        value: 200.0,
-        currency: "INR",
-      });
     }
 
-    // 4. Fire GA4 / Google Ads conversion events
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "conversion_event_submit_lead_form", {
-        value: 200.0,
-        currency: "INR",
-      });
-      window.gtag("event", "conversion_event_submit_lead_form_2", {
-        value: 200.0,
-        currency: "INR",
+      window.gtag("event", "page_view", {
+        page_title: "Thank You",
+        page_location: window.location.href,
+        page_path: "/thank-you",
       });
     }
   }, []);

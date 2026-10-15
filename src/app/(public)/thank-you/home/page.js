@@ -45,62 +45,21 @@ function ThankYouHomeContent() {
   }, []);
 
   useEffect(() => {
-    // 1. Fire Google Ads Conversion Event for Homepage Site Visit / Lead
-    trackGoogleConversion({
-      label:
-        process.env.NEXT_PUBLIC_GOOGLE_ADS_HOME_LABEL ||
-        process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL ||
-        "",
-      value: 300.0,
-      currency: "INR",
-      transactionId: `home_lead_${Date.now()}`,
-    });
-
-    // 2. Fire Meta Pixel Lead Event
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "Lead", {
-        content_name: "homepage_site_visit_thank_you",
-        value: 300.0,
-        currency: "INR",
-      });
-    }
-
-    // 3. Push to GTM dataLayer
+    // Standard view event only (prevent duplicate conversion counts)
     if (typeof window !== "undefined" && window.dataLayer) {
       window.dataLayer.push({
-        event: "conversion_thank_you_home_view",
+        event: "thank_you_home_view",
         lead_source: "homepage_site_visit",
         page_location: window.location.href,
         page_path: "/thank-you/home",
       });
-      window.dataLayer.push({
-        event: "conversion_event_submit_lead_form",
-        lead_source: "homepage_site_visit",
-        value: 300.0,
-        currency: "INR",
-      });
-      window.dataLayer.push({
-        event: "conversion_event_submit_lead_form_2",
-        lead_source: "homepage_site_visit",
-        value: 300.0,
-        currency: "INR",
-      });
     }
 
-    // 4. Fire GA4 custom conversion events
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "conversion_event_submit_lead_form", {
-        lead_source: "homepage_site_visit",
-        value: 300.0,
-        currency: "INR",
-      });
-      window.gtag("event", "conversion_event_submit_lead_form_2", {
-        lead_source: "homepage_site_visit",
-        value: 300.0,
-        currency: "INR",
-      });
-      window.gtag("event", "conversion_event_home_thank_you", {
-        lead_source: "homepage_site_visit",
+      window.gtag("event", "page_view", {
+        page_title: "Thank You Site Visit",
+        page_location: window.location.href,
+        page_path: "/thank-you/home",
       });
     }
   }, []);

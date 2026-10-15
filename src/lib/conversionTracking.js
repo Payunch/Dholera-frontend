@@ -2,18 +2,17 @@
 
 /**
  * Universal Google Ads & Analytics Conversion Tracking Helper
- * Provides unified, safe dispatchers for ad networks (Google Ads, GTM, Meta Pixel).
- * Enriched with dynamic custom dimensions for real estate investment leads:
- * - investor_budget
- * - target_zone
- * - investor_type
- * - property_name
+ * Provides clean, single-source dispatchers for ad networks (Google Ads, GTM, Meta Pixel).
+ * Follows Google & GA4 best practices:
+ * - Single standard 'generate_lead' event
+ * - Enhanced conversions user_data hashing
+ * - No duplicate / blank label dispatches
  */
 
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "";
 const DEFAULT_CONVERSION_LABEL = process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || "";
-const WHATSAPP_CONVERSION_LABEL = process.env.NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_LABEL || DEFAULT_CONVERSION_LABEL;
-const CALL_CONVERSION_LABEL = process.env.NEXT_PUBLIC_GOOGLE_ADS_CALL_LABEL || DEFAULT_CONVERSION_LABEL;
+const WHATSAPP_CONVERSION_LABEL = process.env.NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_LABEL || "";
+const CALL_CONVERSION_LABEL = process.env.NEXT_PUBLIC_GOOGLE_ADS_CALL_LABEL || "";
 
 /**
  * Helper to auto-infer zone from URL or context if not explicitly provided
@@ -42,7 +41,7 @@ function inferProperty(explicitProperty = "") {
 }
 
 /**
- * Dispatch a conversion event directly to Google Ads and dataLayer
+ * Dispatch a conversion event directly to Google Ads and dataLayer ONLY if valid alphanumeric label exists
  */
 export function trackGoogleConversion({
   label = DEFAULT_CONVERSION_LABEL,
@@ -51,6 +50,11 @@ export function trackGoogleConversion({
   transactionId = null,
 } = {}) {
   if (typeof window === "undefined") return;
+
+  // Strict check: never push blank or placeholder conversion labels
+  if (!label || label === "" || label === "YOUR_LABEL" || label.startsWith("YOUR_")) {
+    return;
+  }
 
   // 1. Send via GTM / dataLayer
   if (window.dataLayer) {
@@ -64,7 +68,7 @@ export function trackGoogleConversion({
   }
 
   // 2. Send via gtag if configured
-  if (typeof window.gtag === "function" && GOOGLE_ADS_ID && label) {
+  if (typeof window.gtag === "function" && GOOGLE_ADS_ID && !GOOGLE_ADS_ID.includes("123456789")) {
     const sendTo = `${GOOGLE_ADS_ID}/${label}`;
     const payload = {
       send_to: sendTo,
@@ -87,7 +91,7 @@ export function trackWhatsAppClick(source = "general", { target_zone = "", prope
   const resolvedZone = inferZone(target_zone);
   const resolvedProperty = inferProperty(property_name);
 
-  // Push to dataLayer with enriched custom dimensions
+  // Push to dataLayer
   if (window.dataLayer) {
     window.dataLayer.push({
       event: "whatsapp_click",
@@ -109,7 +113,6 @@ export function trackWhatsAppClick(source = "general", { target_zone = "", prope
     });
   }
 
-  // Trigger Google Ads conversion
   if (WHATSAPP_CONVERSION_LABEL) {
     trackGoogleConversion({
       label: WHATSAPP_CONVERSION_LABEL,
@@ -118,7 +121,6 @@ export function trackWhatsAppClick(source = "general", { target_zone = "", prope
     });
   }
 
-  // Trigger Meta Pixel if present
   if (typeof window.fbq === "function") {
     window.fbq("track", "Contact", { 
       content_category: "whatsapp", 
@@ -137,7 +139,6 @@ export function trackPhoneClick(source = "general", { target_zone = "", property
   const resolvedZone = inferZone(target_zone);
   const resolvedProperty = inferProperty(property_name);
 
-  // Push to dataLayer with enriched custom dimensions
   if (window.dataLayer) {
     window.dataLayer.push({
       event: "phone_click",
@@ -159,7 +160,6 @@ export function trackPhoneClick(source = "general", { target_zone = "", property
     });
   }
 
-  // Trigger Google Ads conversion
   if (CALL_CONVERSION_LABEL) {
     trackGoogleConversion({
       label: CALL_CONVERSION_LABEL,
@@ -168,7 +168,6 @@ export function trackPhoneClick(source = "general", { target_zone = "", property
     });
   }
 
-  // Trigger Meta Pixel if present
   if (typeof window.fbq === "function") {
     window.fbq("track", "Contact", { 
       content_category: "phone", 
@@ -180,11 +179,7 @@ export function trackPhoneClick(source = "general", { target_zone = "", property
 
 /**
  * Track Completed Lead Submissions (Form / Squeeze Page / Popup)
- * Sends custom dimensions to GA4, GTM, and Google Ads Enhanced Conversions:
- * - investor_budget
- * - target_zone
- * - investor_type
- * - property_name
+ * Clean, standard, single-event push avoiding all duplicate triggers
  */
 export function trackFormSubmission({
   name,
@@ -205,7 +200,7 @@ export function trackFormSubmission({
   const resolvedBudget = budget || "Standard Investment Tier";
   const resolvedInvestorType = investor_type || "Direct Inquirer";
 
-  // 1. Set Enhanced Conversion user data if gtag available
+  // 1. Set Enhanced Conversion user data if gtag is available
   if (typeof window.gtag === "function") {
     const userData = {};
     if (email) userData.email = email.trim().toLowerCase();
@@ -222,28 +217,7 @@ export function trackFormSubmission({
       window.gtag("set", "user_data", userData);
     }
 
-    // Fire GA4 imported conversion events specifically expected by Google Ads
-    window.gtag("event", "conversion_event_submit_lead_form", {
-      lead_source: source,
-      investor_budget: resolvedBudget,
-      target_zone: resolvedZone,
-      investor_type: resolvedInvestorType,
-      property_name: resolvedProperty,
-      value: value,
-      currency: currency,
-    });
-
-    window.gtag("event", "conversion_event_submit_lead_form_2", {
-      lead_source: source,
-      investor_budget: resolvedBudget,
-      target_zone: resolvedZone,
-      investor_type: resolvedInvestorType,
-      property_name: resolvedProperty,
-      value: value,
-      currency: currency,
-    });
-
-    // Standard GA4 generate_lead with custom dimensions
+    // Single standard GA4 generate_lead event
     window.gtag("event", "generate_lead", {
       lead_source: source,
       investor_budget: resolvedBudget,
@@ -253,17 +227,12 @@ export function trackFormSubmission({
       value: value,
       currency: currency,
     });
-
-    window.gtag("event", "conversion_event_contact", {
-      lead_source: source,
-      target_zone: resolvedZone,
-    });
   }
 
-  // 2. Push to dataLayer for GTM / GA4 custom variables
+  // 2. Single standard push to dataLayer for GTM / GA4
   if (window.dataLayer) {
-    const payload = {
-      event: "conversion_event_submit_lead_form",
+    window.dataLayer.push({
+      event: "generate_lead",
       lead_source: source,
       investor_budget: resolvedBudget,
       lead_budget: resolvedBudget,
@@ -273,28 +242,19 @@ export function trackFormSubmission({
       value: value,
       currency: currency,
       timestamp: new Date().toISOString(),
-    };
-    window.dataLayer.push(payload);
-
-    window.dataLayer.push({
-      ...payload,
-      event: "conversion_event_submit_lead_form_2",
-    });
-
-    window.dataLayer.push({
-      ...payload,
-      event: "generate_lead",
     });
   }
 
-  // 3. Fire direct Google Ads conversion tag if label configured
-  trackGoogleConversion({
-    label: DEFAULT_CONVERSION_LABEL,
-    value: value,
-    currency: currency,
-  });
+  // 3. Fire direct Google Ads conversion ONLY if valid label is present
+  if (DEFAULT_CONVERSION_LABEL && DEFAULT_CONVERSION_LABEL !== "YOUR_LABEL") {
+    trackGoogleConversion({
+      label: DEFAULT_CONVERSION_LABEL,
+      value: value,
+      currency: currency,
+    });
+  }
 
-  // 4. Fire Meta Pixel
+  // 4. Fire Meta Pixel Lead Event
   if (typeof window.fbq === "function") {
     window.fbq("track", "Lead", {
       content_category: "real_estate",

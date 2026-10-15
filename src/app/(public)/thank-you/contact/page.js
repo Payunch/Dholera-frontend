@@ -44,65 +44,21 @@ function ThankYouContactContent() {
   }, []);
 
   useEffect(() => {
-    // 1. Fire Google Ads Primary Conversion Event for Contact Inquiry
-    trackGoogleConversion({
-      label:
-        process.env.NEXT_PUBLIC_GOOGLE_ADS_CONTACT_LABEL ||
-        process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL ||
-        "",
-      value: 200.0,
-      currency: "INR",
-      transactionId: `contact_lead_${Date.now()}`,
-    });
-
-    // 2. Fire Meta Pixel Lead Event
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "Lead", {
-        content_name: "contact_page_thank_you",
-        value: 200.0,
-        currency: "INR",
-      });
-    }
-
-    // 3. Push to GTM dataLayer
+    // Standard view event only (prevent duplicate conversion counts)
     if (typeof window !== "undefined" && window.dataLayer) {
       window.dataLayer.push({
-        event: "conversion_thank_you_contact_view",
+        event: "thank_you_contact_view",
         lead_source: "contact_page",
         page_location: window.location.href,
         page_path: "/thank-you/contact",
       });
-      window.dataLayer.push({
-        event: "conversion_event_submit_lead_form",
-        lead_source: "contact_page",
-        value: 200.0,
-        currency: "INR",
-      });
-      window.dataLayer.push({
-        event: "conversion_event_submit_lead_form_2",
-        lead_source: "contact_page",
-        value: 200.0,
-        currency: "INR",
-      });
     }
 
-    // 4. Fire GA4 custom events (including both imported Google Ads identifiers)
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "conversion_event_submit_lead_form", {
-        lead_source: "contact_page",
-        value: 200.0,
-        currency: "INR",
-      });
-      window.gtag("event", "conversion_event_submit_lead_form_2", {
-        lead_source: "contact_page",
-        value: 200.0,
-        currency: "INR",
-      });
-      window.gtag("event", "conversion_event_contact", {
-        lead_source: "contact_page",
-      });
-      window.gtag("event", "conversion_event_contact_thank_you", {
-        lead_source: "contact_page",
+      window.gtag("event", "page_view", {
+        page_title: "Thank You Contact",
+        page_location: window.location.href,
+        page_path: "/thank-you/contact",
       });
     }
   }, []);

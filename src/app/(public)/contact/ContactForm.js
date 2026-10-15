@@ -79,53 +79,53 @@ export function ContactForm() {
 
       setStatus("success");
       setErrorMessage("");
+
+      // Standard single dataLayer push as recommended for Google Ads & GA4
+      if (typeof window !== 'undefined') {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'generate_lead',
+          lead_source: 'contact_page',
+          value: 200,
+          currency: 'INR'
+        });
+      }
+
+      // Track enhanced conversions (user_data) and Meta Pixel cleanly
       trackFormSubmission({
         name: submittedName,
         phone: submittedPhone,
         email: submittedEmail,
         source: "contact_page",
+        value: 200,
+        currency: "INR"
       });
+
       setFormData({ name: "", phone: "", email: "", notes: "" });
-      
-      // Fire Meta Pixel Event
-      if (typeof window !== "undefined" && window.fbq) {
-        window.fbq('track', 'Lead');
-      }
-
-      // Fire Google Ads Enhanced Conversions
-      if (typeof window !== "undefined" && window.gtag) {
-        window.gtag('set', 'user_data', {
-          email: submittedEmail,
-          phone_number: '+91' + submittedPhone
-        });
-        
-        window.gtag('event', 'conversion', {
-          'send_to': (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-123456789') + '/' + (process.env.NEXT_PUBLIC_GOOGLE_CONVERSION_LABEL || 'YOUR_LABEL')
-        });
-
-        window.gtag('event', 'conversion_event_submit_lead_form', {});
-        window.gtag('event', 'conversion_event_submit_lead_form_2', {});
-        window.gtag('event', 'conversion_event_contact', {});
-      }
 
       const targetUrl = `/thank-you/contact?name=${encodeURIComponent(submittedName)}`;
       router.push(targetUrl);
     } catch (err) {
       console.error("Submission error:", err);
+
       // Fallback conversion tracking and immediate routing
-      trackFormSubmission({
-        name: submittedName,
-        phone: submittedPhone,
-        email: submittedEmail,
-        source: "contact_page_fallback",
-      });
+      if (typeof window !== 'undefined') {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'generate_lead',
+          lead_source: 'contact_page_fallback',
+          value: 200,
+          currency: 'INR'
+        });
+      }
+
       setFormData({ name: "", phone: "", email: "", notes: "" });
       const targetUrl = `/thank-you/contact?name=${encodeURIComponent(submittedName)}`;
       router.push(targetUrl);
     }
   };
 
-if (status ==="success") {
+  if (status ==="success") {
  return (
  <div className="text-center py-12 space-y-6 bg-white dark:bg-slate-900 rounded-[1.5rem] p-8 md:p-10 border border-slate-200 dark:border-slate-800 shadow-xl animate-in zoom-in-95 duration-300">
  <div className="h-20 w-20 bg-green-500/20 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-6 border border-[#10B981]/30">
