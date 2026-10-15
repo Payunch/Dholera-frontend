@@ -168,19 +168,27 @@ export default function PortalsPage() {
           </div>
 
           {/* High-Intent Title Clearance Trigger */}
-          <div className="p-6 rounded-[2rem] bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-1">
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/80">Need 7/12 Mutation Extracts or Title Verification?</span>
-              <h2 className="text-xl md:text-2xl font-black uppercase tracking-tight">Request an Official Land Title Clearance Report</h2>
-              <p className="text-xs text-white/90 font-medium">Our legal advocates cross-verify raw survey numbers against AnyRoR, i-ORA, and DSIRDA TP records on your behalf.</p>
+          <div className="relative overflow-hidden p-8 md:p-10 rounded-[2rem] bg-gradient-to-br from-slate-900 via-[#0B0F19] to-slate-900 border border-slate-800 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* Subtle Ambient Radial Glow */}
+            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-orange-600/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 space-y-2 max-w-2xl">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF7A00] text-[10px] font-black uppercase tracking-[0.25em]">
+                <ShieldCheck className="h-3 w-3" /> Due Diligence Engine
+              </span>
+              <h2 className="text-xl md:text-3xl font-black uppercase tracking-tight text-white">
+                Request an Official Land Title Clearance Report
+              </h2>
+              <p className="text-xs md:text-sm text-slate-300 font-medium leading-relaxed">
+                Our legal advocates cross-verify raw survey numbers against AnyRoR, i-ORA, and DSIRDA TP records on your behalf.
+              </p>
             </div>
             <Link
               href="/clearance-engine"
-              style={{ color: '#ffffff' }}
-              className="shrink-0 px-8 py-4 rounded-xl bg-slate-900 hover:bg-black text-white !text-white font-black uppercase text-xs tracking-widest transition-all shadow-2xl flex items-center justify-center gap-2 border border-slate-800 hover:scale-[1.02] active:scale-95"
+              className="relative z-10 shrink-0 px-8 py-4 rounded-xl bg-[#FF7A00] hover:bg-orange-600 text-white font-black uppercase text-xs tracking-widest transition-all shadow-xl shadow-orange-600/25 flex items-center justify-center gap-2 group active:scale-95"
             >
               <span>Request Clearance Report</span>
-              <ArrowRight className="h-4 w-4 text-[#FF7A00]" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>

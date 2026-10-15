@@ -34,35 +34,36 @@ header .container a.rounded-full {
 
 :root {
   --background: #ffffff;
-  --foreground: #0A192F;
-  --accent: #F59E0B;
-  --accent-2: #10b981;
-  --accent-3: #d97706;
+  --foreground: #0F172A;
+  --accent: #FF7A00;
+  --accent-hover: #EA580C;
+  --accent-2: #10B981;
+  --accent-3: #F59E0B;
   --primary-base: #ffffff;
   --panel: #ffffff;
   --muted: #64748b;
   --line: #e2e8f0;
-  --ring: #F59E0B;
+  --ring: #FF7A00;
   --shadow-color: rgb(0 0 0 / 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --background: #0A192F;
+    --background: #0B0F19;
     --foreground: #f8fafc;
-    --panel: #112240;
-    --line: #233554;
-    --ring: #F59E0B;
+    --panel: #111827;
+    --line: #1F2937;
+    --ring: #FF7A00;
     --shadow-color: transparent;
   }
 }
 
 .dark {
-  --background: #0A192F;
+  --background: #0B0F19;
   --foreground: #f8fafc;
-  --panel: #112240;
-  --line: #233554;
-  --ring: #F59E0B;
+  --panel: #111827;
+  --line: #1F2937;
+  --ring: #FF7A00;
   --shadow-color: transparent;
 }
 

@@ -58,18 +58,18 @@ function expandShortcodes(html) {
 `;
 
   const siteVisitCtaHtml = `
-<div class="my-10 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-orange-600 to-amber-600 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 not-prose">
+<div class="relative overflow-hidden my-10 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-[#0B0F19] to-slate-900 text-white border border-slate-800 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 not-prose">
   <div class="space-y-2 text-center md:text-left">
-    <span class="inline-block px-3 py-1 rounded-full bg-black/20 text-white text-[10px] font-black uppercase tracking-wider">
+    <span class="inline-block px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF7A00] text-[10px] font-black uppercase tracking-wider">
       Complimentary Ground Service
     </span>
     <h3 class="text-xl sm:text-2xl font-black uppercase tracking-tight text-white m-0">Book Free Dholera SIR Site Visit (Cab Provided)</h3>
-    <p class="text-xs sm:text-sm text-orange-100 max-w-xl m-0 leading-relaxed">
+    <p class="text-xs sm:text-sm text-slate-300 max-w-xl m-0 leading-relaxed">
       Inspect trunk utility ducts, ABCD building, expressway interchanges, and vetted TP plots with our ground development team. Pick-up from Ahmedabad / Vadodara.
     </p>
   </div>
   <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0">
-    <a href="/#site-visit" class="px-7 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-900 text-xs font-black uppercase tracking-wider text-center shadow-xl transition-all font-sans">
+    <a href="/#site-visit" class="px-7 py-3.5 rounded-xl bg-[#FF7A00] hover:bg-orange-600 text-white text-xs font-black uppercase tracking-wider text-center shadow-xl shadow-orange-600/20 transition-all font-sans">
       Book Free Cab
     </a>
   </div>

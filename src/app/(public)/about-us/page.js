@@ -185,30 +185,37 @@ export default function AboutPage() {
         </section>
 
         {/* Actionable 1-on-1 Consultation Booking Card */}
-        <section className="bg-gradient-to-br from-orange-600 via-orange-500 to-amber-600 rounded-[3rem] p-8 md:p-14 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 max-w-2xl text-center md:text-left">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80">Direct Consultation</span>
-            <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight">
+        <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-[#0B0F19] to-slate-900 border border-slate-800 rounded-[3rem] p-8 md:p-14 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
+          {/* Subtle Ambient Radial Glow */}
+          <div className="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 space-y-3 max-w-2xl text-center md:text-left">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-[#FF7A00] text-[10px] font-black uppercase tracking-[0.25em]">
+              Direct Consultation
+            </span>
+            <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight text-white">
               Book a 1-on-1 Strategic Land Consultation
             </h2>
-            <p className="text-xs md:text-sm text-white/90 font-medium leading-relaxed">
+            <p className="text-xs md:text-sm text-slate-300 font-medium leading-relaxed">
               Have specific survey numbers, TP schemes, or budget parameters? Speak directly with Naresh Gohel for unbiased, certified title guidance and on-ground plot verification.
             </p>
           </div>
-          <div className="shrink-0 flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <div className="relative z-10 shrink-0 flex flex-col sm:flex-row gap-3 w-full md:w-auto">
             <a 
               href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20would%20like%20to%20book%20a%201-on-1%20strategic%20land%20consultation%20with%20you%20regarding%20Dholera%20investments." 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="px-8 py-4 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-black uppercase tracking-widest transition-all shadow-xl text-center flex items-center justify-center gap-2"
+              className="px-8 py-4 rounded-xl bg-[#FF7A00] hover:bg-orange-600 text-white text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20 text-center flex items-center justify-center gap-2 group active:scale-95"
             >
-              Book via WhatsApp <ArrowRight className="h-4 w-4" />
+              <span>Book via WhatsApp</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a  
               href="tel:+917435808031"
-              className="px-8 py-4 rounded-xl bg-white hover:bg-slate-100 text-slate-900 border border-slate-200 text-xs font-black tracking-widest transition-all shadow-xl text-center flex items-center justify-center gap-2"
+              style={{ color: '#ffffff' }}
+              className="px-8 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-white !text-white border border-slate-700 text-xs font-black tracking-widest transition-all shadow-lg text-center flex items-center justify-center gap-2"
             >
-              <Phone className="h-4 w-4 text-orange-600" />
+              <Phone className="h-4 w-4 text-[#FF7A00]" />
               +91 74358 08031
             </a>
           </div>

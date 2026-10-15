@@ -10,6 +10,23 @@ import { cn } from '@/lib/utils';
 import { useLanguage } from '@/providers/LanguageProvider';
 import { getBlogPath } from '@/lib/blogSlug';
 
+function sanitizeExcerpt(content) {
+  if (!content) return "";
+  return content
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/&#8217;/g, "'")
+    .replace(/&#8220;/g, '"')
+    .replace(/&#8221;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/\|[^\n]+\|/g, '')
+    .replace(/#{1,6}\s+[^\n]+/g, '')
+    .replace(/\*{1,3}([^\*]+)\*{1,3}/g, '$1')
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export function HomeBlogsList({ updates = [] }) {
   const { t } = useLanguage();
   if (!updates || updates.length === 0) return null;
@@ -90,7 +107,7 @@ export function HomeBlogsList({ updates = [] }) {
                   </h3>
 
                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 mb-6 opacity-80 group-hover:opacity-100 transition-opacity">
-                    {post.content.replace(/<[^>]*>?/gm, '').slice(0, 100)}...
+                    {sanitizeExcerpt(post.content)}
                   </p>
 
                   <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[9px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white group-hover:text-[#FF7A00] transition-all duration-300">
