@@ -19,6 +19,9 @@ export function ArticleBody({ content }) {
   // Handle inverted bolding (strong wrapping block elements)
   parsedContent = parsedContent.replace(/<strong>\s*<p>(.*?)<\/p>\s*<\/strong>/g, '<p>$1</p>');
 
+  // Strip any legacy trailing call/website block to avoid duplicates with BlogQuickLinks
+  parsedContent = parsedContent.replace(/<p[^>]*>📞[\s\S]*$/i, '');
+
   return (
     <div 
       className="wp-content mt-8 text-lg leading-relaxed text-slate-700 dark:text-slate-300 md:text-xl md:leading-loose"
