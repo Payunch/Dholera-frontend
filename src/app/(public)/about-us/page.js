@@ -1,227 +1,219 @@
 "use client";
 
-import * as React from "react";
-import Image from"next/image";
-import Link from"next/link";
-import { 
- User, 
- Phone, 
- Send, 
- CheckCircle2, 
- AlertCircle, 
- MapPin, 
- Building, 
- ShieldCheck, 
- Calendar ,
- ChevronRight,
- Target,
- Users,
- History,
- Mail
-} from"lucide-react";
-import { apiClient } from"@/lib/api";
-import { cn } from"@/lib/utils";
-import { useLead } from"@/providers/LeadProvider";
-import { useLanguage } from"@/providers/LanguageProvider";
-import { trackFormSubmission } from "@/lib/conversionTracking";
+import React from 'react';
+import Image from 'next/image';
+import { ShieldCheck, Users, Target, History, Award, CheckCircle2, ArrowRight, MessageSquare, Phone, Linkedin, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { useLanguage } from '@/providers/LanguageProvider';
 
-export default function AboutUsPage() {
- const { verifiedLead } = useLead();
- const { t } = useLanguage();
- const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
- const today = new Date().toISOString().split('T')[0];
- const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+export default function AboutPage() {
+  const { t } = useLanguage();
 
- // Contact Form State
- const [contactForm, setContactForm] = React.useState({ name:"", phone:"", email:"" });
- const [contactStatus, setContactStatus] = React.useState("idle");
+  const trustPillars = [
+    { 
+      title: "Verified Data", 
+      desc: "Real-time TP schemes, GIS coordinates, and land records cross-checked with Gujarat State gazettes.", 
+      icon: ShieldCheck, 
+      img: "/images/airportVision.webp",
+      tag: "100% Due Diligence"
+    },
+    { 
+      title: "Expert Support", 
+      desc: "Direct access to certified legal advocates, RERA advisors, and civil engineers on ground in Dholera.", 
+      icon: Users, 
+      img: "/images/arialviewdholeraexpress.webp",
+      tag: "On-Ground Advisory"
+    },
+    { 
+      title: "Strategic ROI", 
+      desc: "Data-driven capital allocation models to maximize appreciation across industrial and plotted sectors.", 
+      icon: Target, 
+      img: "/images/expressHighway.webp",
+      tag: "Capital Alpha"
+    },
+    { 
+      title: "Trust Record", 
+      desc: "Over 5 years of tracking Dholera's infrastructure milestones, civil progress, and policy updates.", 
+      icon: History, 
+      img: "/images/dholerasirGujrat.webp",
+      tag: "Proven Track Record"
+    },
+  ];
 
- // Site Visit Form State
- const [visitForm, setVisitForm] = React.useState({ name:"", phone:"", date: tomorrow });
+  return (
+    <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden font-sans dark:bg-slate-900">
+      
+      {/* Header Section */}
+      <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
+        <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+          <Image 
+            src="/images/futuristic_dholera.png" 
+            alt="Dholera Vision" 
+            fill 
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+        <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6 pt-20">
+          <div className="inline-flex items-center rounded-full bg-[#FF7A00]/10 border border-orange-500/30 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-[#FF7A00]">
+            {t('intelligence_network') || 'Dholera Platform Intelligence Network'}
+          </div>
+          <h1 className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-[0.85]">
+            {t('nav_about') || 'About Us'}
+          </h1>
+          <p className="max-w-3xl mx-auto text-sm sm:text-lg md:text-xl font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
+            {t('about_us_subtitle') || 'Bridging institutional investors and landowners with verified DSIRDA land intelligence, Town Planning schemes, and on-ground due diligence.'}
+          </p>
+        </div>
+      </section>
 
- // Pre-fill forms if lead is already verified
- React.useEffect(() => {
- if (verifiedLead) {
- setContactForm(prev => ({
- ...prev,
- name: verifiedLead.name || prev.name,
- phone: verifiedLead.phone || prev.phone
- }));
- setVisitForm(prev => ({
- ...prev,
- name: verifiedLead.name || prev.name,
- phone: verifiedLead.phone || prev.phone
- }));
- }
- }, [verifiedLead]);
- const [visitStatus, setVisitStatus] = React.useState("idle");
+      <div className="container mx-auto px-4 md:px-8 mt-24 max-w-[1600px] space-y-28">
+        
+        {/* Trust Pillars Grid */}
+        <section className="space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">Our Institutional Foundation</span>
+            <h2 className="text-3xl md:text-4xl font-black uppercase text-slate-900 dark:text-white">
+              Why Investors Trust Dholera Platform
+            </h2>
+          </div>
 
- const handlePhoneChange = (e, type) => {
- const val = e.target.value.replace(/\D/g,'').slice(0, 10);
- if (type ==='contact') setContactForm({ ...contactForm, phone: val });
- else setVisitForm({ ...visitForm, phone: val });
- };
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {trustPillars.map((item, i) => (
+              <div 
+                key={i} 
+                className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="relative h-52 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+                    <Image 
+                      src={item.img} 
+                      alt={item.title} 
+                      fill 
+                      className="object-cover opacity-80 group-hover:scale-110 transition-transform duration-700"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                    />
+                    <div className="absolute inset-0 bg-slate-900/30 group-hover:bg-transparent transition-colors" />
+                    <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-[9px] font-black uppercase tracking-wider text-orange-600">
+                      {item.tag}
+                    </span>
+                    <div className="absolute bottom-4 left-4 h-12 w-12 rounded-xl bg-white dark:bg-slate-900 flex items-center justify-center text-orange-600 shadow-lg border border-slate-100 dark:border-slate-800">
+                      <item.icon className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <div className="p-6 md:p-8 space-y-3">
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight group-hover:text-orange-600 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
- const handleContactSubmit = async (e) => {
- e.preventDefault();
- if (!contactForm.name || contactForm.phone.length !== 10) return;
- setContactStatus("loading");
- try {
- await apiClient.post("/leads", { ...contactForm, source:"About Us - Contact Card" });
- setContactStatus("success");
- trackFormSubmission({
-   name: contactForm.name,
-   phone: contactForm.phone,
-   email: contactForm.email,
-   source: "about_us_contact",
- });
- setContactForm({ name:"", phone:"", email:"" });
- } catch (err) {
- setContactStatus("error");
- }
- };
+        {/* Founder Profile Section */}
+        <section className="relative bg-slate-900 rounded-[3rem] p-8 md:p-14 lg:p-20 border border-slate-800 shadow-2xl overflow-hidden text-white">
+          <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
+            <Image 
+              src="/images/a1.jpg" 
+              alt="Naresh Gohel Dholera Site" 
+              fill 
+              className="object-cover"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-slate-950/80" />
+          </div>
 
- const handleVisitSubmit = async (e) => {
- e.preventDefault();
- if (!visitForm.name || visitForm.phone.length !== 10) return;
- const selectedDate = new Date(visitForm.date);
- if (selectedDate > new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)) {
- setVisitStatus("error");
- return;
- }
- setVisitStatus("loading");
- try {
- await apiClient.post("/leads", { 
- ...visitForm, 
- source:"About Us - Site Visit Card",
- notes:`Requested site visit for: ${visitForm.date}`
- });
- setVisitStatus("success");
- trackFormSubmission({
-   name: visitForm.name,
-   phone: visitForm.phone,
-   source: "about_us_site_visit",
- });
- } catch (err) {
- setVisitStatus("error");
- } finally {
- const whatsappMessage = `Hello Naresh, I have submitted a Site Visit Request from the About Us page.\n*Name:* ${visitForm.name}\n*Phone:* ${visitForm.phone}\n*Date:* ${visitForm.date}`;
- const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(whatsappMessage)}`;
- window.open(whatsappUrl, '_blank');
- setVisitForm({ name:"", phone:"", date: tomorrow });
- }
- };
+          <div className="relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+            {/* Founder Image */}
+            <div className="relative w-full lg:w-[380px] shrink-0 aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 group">
+              <Image 
+                src="/images/ng.png" 
+                alt="Naresh Gohel - Founder & Senior Land Advisor" 
+                fill 
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 1024px) 100vw, 400px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 space-y-1">
+                <h3 className="text-2xl font-black text-white uppercase tracking-tight">Naresh Gohel</h3>
+                <p className="text-xs font-black uppercase tracking-widest text-[#FF7A00]">Founder & Chief Land Strategist</p>
+              </div>
+            </div>
 
- return (
- <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden font-sans dark:bg-slate-900">
- 
- {/* Header Section - Refactored for proper sizing */}
- <section className="relative bg-white dark:bg-[#0B132B] pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
- <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
- <Image 
- src="/images/futuristic_dholera.png" 
- alt="Dholera Vision" 
- fill 
- className="object-cover"
- sizes="100vw"
- />
- </div>
- <div className="container relative z-10 mx-auto px-4 md:px-8 text-center space-y-6 pt-20">
- <div className="inline-flex items-center rounded-full bg-[#FF7A00]/10 border border-orange-500/30 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-[#FF7A00]">
- {t('intelligence_network')}
- </div>
- <h1 className="font-display text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tight text-slate-900 dark:text-white uppercase leading-[0.85]">
- {t('nav_about')}
- </h1>
- <p className="max-w-3xl mx-auto text-sm sm:text-lg md:text-xl font-medium text-slate-600 dark:text-slate-300 leading-relaxed uppercase tracking-widest">
- {t('about_us_subtitle')}
- </p>
- </div>
- </section>
+            {/* Founder Narrative */}
+            <div className="flex-1 space-y-6">
+              <div className="inline-flex items-center rounded-full bg-orange-600/20 border border-orange-500/30 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-orange-400">
+                Ground Leadership & Proven Integrity
+              </div>
+              <h2 className="font-display text-3xl md:text-5xl font-black text-white uppercase leading-tight">
+                Empowering Investors with Uncompromising Due Diligence
+              </h2>
 
- <div className="container mx-auto px-4 md:px-8 mt-24 max-w-[1600px]">
- 
- {/* About Us Cards - REFACTORED FOR 1/2/3/4 RESPONSIVENESS */}
- <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-32">
- {[
- { title:"Verified Data", desc:"Real-time TP maps and land records cross-checked with DSIRDA.", icon: ShieldCheck, img:"/images/airportVision.webp" },
- { title:"Expert Support", desc:"Connecting you with certified developers and legal advisors.", icon: Users, img:"/images/arialviewdholeraexpress.webp" },
- { title:"Strategic ROI", desc:"Data-driven insights to maximize your land appreciation.", icon: Target, img:"/images/expressHighway.webp" },
- { title:"Trust Record", desc:"Over 5 years of tracking Dholera's infrastructure milestones.", icon: History, img:"/images/dholerasirGujrat.webp" },
- ].map((item, i) => (
- <div key={i} className="group bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl dark:hover:shadow-black/100 hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col">
- <div className="relative h-56 w-full">
- <Image 
- src={item.img} 
- alt={item.title} 
- fill 
- className="object-cover opacity-80 group-hover:scale-110 transition-transform duration-700"
- sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
- />
- <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors" />
- <div className="absolute bottom-6 left-6 h-12 w-12 rounded-xl bg-white dark:bg-slate-900 flex items-center justify-center text-orange-600 shadow-lg border border-slate-100 dark:border-slate-800">
- <item.icon className="h-6 w-6" />
- </div>
- </div>
- <div className="p-8 space-y-3">
- <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight group-hover:text-orange-600 transition-colors">{item.title}</h3>
- <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 leading-relaxed uppercase tracking-widest">{item.desc}</p>
- </div>
- </div>
- ))}
- </div>
+              <blockquote className="text-lg md:text-xl text-slate-200 font-medium leading-relaxed italic border-l-4 border-orange-500 pl-6 space-y-2">
+                <p>
+                  &ldquo;In Dholera SIR, true capital protection comes from verifying every single Survey Number, Final Plot allocation, and revenue entry at the taluka office before a single rupee changes hands.&rdquo;
+                </p>
+              </blockquote>
 
- {/* Founder Profile Section - Refactored for better spacing/grid */}
- <div className="relative bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-14 lg:p-20 border border-slate-200 dark:border-slate-800 shadow-xl mb-32 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 group hover:shadow-2xl dark:hover:shadow-black/100 transition-all duration-500 overflow-hidden">
- 
- {/* Background Image */}
- <div className="absolute inset-0 z-0 opacity-40 transition-opacity duration-700 pointer-events-none">
- <Image 
- src="/images/a1.jpg" 
- alt="Naresh Gohel Dholera Site" 
- fill 
- className="object-cover"
- sizes="100vw"
- />
- <div className="absolute inset-0 bg-slate-900/80 group-hover:bg-slate-900/70 transition-colors duration-500" />
- </div>
+              <p className="text-xs md:text-sm text-slate-300 leading-relaxed font-medium">
+                With over a decade of deep involvement in Gujarat&apos;s special investment regions, Naresh Gohel has guided domestic buyers, NRIs, and institutional developers through land assembly, title verification, NA permissions, and RERA compliance.
+              </p>
 
- {/* Founder Image */}
- <div className="relative z-10 w-full lg:w-[400px] shrink-0 aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl group-hover:-translate-y-2 transition-transform duration-500 border border-white/10">
- <Image 
- src="/images/ng.png" 
- alt="Naresh Gohel - Founder" 
- fill 
- className="object-cover group-hover:scale-105 transition-transform duration-700"
- sizes="(max-width: 1024px) 100vw, 400px"
- />
- <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent" />
- <div className="absolute bottom-8 left-8">
- <h3 className="text-3xl font-black text-white uppercase tracking-tight">Naresh Gohel</h3>
- <p className="text-[10px] font-black uppercase tracking-widest text-[#FF7A00]">Founder & Director</p>
- </div>
- </div>
+              <div className="flex flex-wrap gap-4 pt-4">
+                <a 
+                  href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20would%20like%20to%20connect%20regarding%20land%20advisory%20in%20Dholera." 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="px-6 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2"
+                >
+                  <MessageSquare className="h-4 w-4" /> Connect with Naresh
+                </a>
+                <Link
+                  href="/contact"
+                  className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2"
+                >
+                  Schedule Advisory Session
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
- {/* Content */}
- <div className="relative z-10 flex-1 space-y-10">
- <div className="inline-flex items-center rounded-full bg-orange-600/20 border border-orange-500/30 px-5 py-2 text-[10px] font-black uppercase tracking-[0.4em] text-orange-400">
- {t('visionary_leadership_title')}
- </div>
- <h2 className="font-display text-4xl md:text-5xl lg:text-7xl font-black text-white uppercase leading-[1] tracking-tight group-hover:text-[#FF7A00] transition-colors duration-300">
- {t('about_title')}
- </h2>
- <div className="relative">
- {/* Quote Mark Decoration */}
- <div className="absolute -top-10 -left-10 text-[10rem] font-serif text-slate-700 dark:text-slate-800 opacity-20 z-0">"</div>
- <p className="relative z-10 text-xl md:text-2xl text-slate-200 font-medium leading-relaxed italic border-l-8 border-[#FF7A00] pl-8">
- {t('visionary_leadership_desc')}
- </p>
- </div>
- </div>
+        {/* Actionable 1-on-1 Consultation Booking Card */}
+        <section className="bg-gradient-to-br from-orange-600 via-orange-500 to-amber-600 rounded-[3rem] p-8 md:p-14 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-3 max-w-2xl text-center md:text-left">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80">Direct Consultation</span>
+            <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight">
+              Book a 1-on-1 Strategic Land Consultation
+            </h2>
+            <p className="text-xs md:text-sm text-white/90 font-medium leading-relaxed">
+              Have specific survey numbers, TP schemes, or budget parameters? Speak directly with Naresh Gohel for unbiased, certified title guidance and on-ground plot verification.
+            </p>
+          </div>
+          <div className="shrink-0 flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            <a 
+              href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20would%20like%20to%20book%20a%201-on-1%20strategic%20land%20consultation%20with%20you%20regarding%20Dholera%20investments." 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="px-8 py-4 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-black uppercase tracking-widest transition-all shadow-xl text-center flex items-center justify-center gap-2"
+            >
+              Book via WhatsApp <ArrowRight className="h-4 w-4" />
+            </a>
+            <a 
+              href="tel:+917435808031" 
+              className="px-8 py-4 rounded-xl bg-white text-orange-600 hover:bg-slate-100 text-xs font-black uppercase tracking-widest transition-all shadow-xl text-center flex items-center justify-center gap-2 font-black"
+            >
+              <Phone className="h-4 w-4" /> +91 74358 08031
+            </a>
+          </div>
+        </section>
 
- </div>
-
- </div>
- </div>
- );
+      </div>
+    </div>
+  );
 }

@@ -14,18 +14,28 @@ export function Navbar() {
   const { lang, setLang, t, theme, toggleTheme } = useLanguage();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [isLangOpen, setIsLangOpen] = React.useState(false);
+  const [isInsightsOpen, setIsInsightsOpen] = React.useState(false);
 
-  const navItems = [
+  const primaryNavItems = [
     { label: t('nav_home') || 'Home', href: '/' },
-    { label: t('nav_blogs') || 'Blogs', href: '/blogs' },
+    { label: t('nav_projects') || 'Projects', href: '/projects' },
     { label: t('nav_tp_maps') || 'Maps', href: '/tp-maps' },
     { label: t('nav_pdf') || 'Documents', href: '/pdf?trigger=true' },
     { label: t('nav_portals') || 'Portals', href: '/portals' },
-    { label: t('nav_projects') || 'Projects', href: '/projects' },
-    { label: t('nav_investment_guide') || 'Investment Guide', href: '/investment-guide' },
-    { label: t('nav_airport') || 'Airport', href: '/airport' },
-    { label: t('nav_infrastructure') || 'Infrastructure', href: '/infrastructure' },
+    { label: t('nav_blogs') || 'Blogs', href: '/blogs' },
     { label: t('nav_about') || 'About Us', href: '/about-us' },
+  ];
+
+  const intelligenceItems = [
+    { label: t('nav_investment_guide') || 'Investment Guide', href: '/investment-guide', desc: 'ROI & acquisition playbook' },
+    { label: t('nav_airport') || 'Airport Corridor', href: '/airport', desc: 'Dholera Int’l Airport progress' },
+    { label: t('nav_infrastructure') || 'Smart Infrastructure', href: '/infrastructure', desc: 'Plug-and-play ducts & solar park' },
+    { label: 'Clearance Engine', href: '/clearance-engine', desc: 'Verify plot survey & RERA clearance' },
+  ];
+
+  const navItems = [
+    ...primaryNavItems,
+    ...intelligenceItems.map(i => ({ label: i.label, href: i.href }))
   ];
 
   const languages = [
@@ -73,20 +83,83 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* MIDDLE SECTION (Flexible 8-Column Space): 10 Buttons in 2 Rows Without Box */}
-            <div className="hidden md:flex flex-1 items-center justify-center min-w-0 px-1 sm:px-2 md:px-3">
-              <nav className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 md:gap-x-2 lg:gap-x-2.5 xl:gap-x-3.5 gap-y-1 font-display items-center text-center w-full">
-                {navItems.map((item, idx) => {
+            {/* MIDDLE SECTION: Single-row Clean Navigation with Intelligence Dropdown */}
+            <div className="hidden md:flex flex-1 items-center justify-center min-w-0 px-2 lg:px-4">
+              <nav className="flex items-center gap-1 lg:gap-1.5 xl:gap-2 2xl:gap-3 font-display">
+                {primaryNavItems.slice(0, 5).map((item) => {
                   const active = isItemActive(item.href);
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "transition-colors text-[8px] md:text-[8.5px] lg:text-[9.5px] xl:text-[10px] 2xl:text-[10.5px] font-black uppercase tracking-tight md:tracking-normal lg:tracking-wider text-center py-0.5 leading-tight block truncate",
+                        "px-2 py-1 rounded-lg text-[10px] lg:text-[11px] xl:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap",
                         active
-                          ? "text-orange-600 dark:text-orange-500 font-black"
-                          : "text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400"
+                          ? "text-orange-600 dark:text-orange-500 bg-orange-50 dark:bg-orange-950/30"
+                          : "text-slate-700 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-slate-50 dark:hover:bg-slate-900"
+                      )}
+                      title={item.label}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+
+                {/* Intelligence Dropdown */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => setIsInsightsOpen(true)}
+                  onMouseLeave={() => setIsInsightsOpen(false)}
+                >
+                  <button
+                    onClick={() => setIsInsightsOpen(!isInsightsOpen)}
+                    className={cn(
+                      "flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] lg:text-[11px] xl:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap",
+                      intelligenceItems.some((i) => isItemActive(i.href))
+                        ? "text-orange-600 dark:text-orange-500 bg-orange-50 dark:bg-orange-950/30"
+                        : "text-slate-700 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-slate-50 dark:hover:bg-slate-900"
+                    )}
+                  >
+                    <span>Intelligence</span>
+                    <ChevronDown className={cn("h-3 w-3 transition-transform", isInsightsOpen && "rotate-180")} />
+                  </button>
+
+                  {isInsightsOpen && (
+                    <div className="absolute left-1/2 -translate-x-1/2 mt-1 w-64 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-2 shadow-2xl animate-in fade-in zoom-in-95 z-[200]">
+                      {intelligenceItems.map((item) => {
+                        const active = isItemActive(item.href);
+                        return (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setIsInsightsOpen(false)}
+                            className={cn(
+                              "block px-3 py-2 rounded-xl transition-all text-left",
+                              active
+                                ? "bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400"
+                                : "hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-800 dark:text-slate-200"
+                            )}
+                          >
+                            <div className="text-[11px] font-black uppercase tracking-wider">{item.label}</div>
+                            <div className="text-[9px] font-medium text-slate-500 dark:text-slate-400 leading-tight">{item.desc}</div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                {primaryNavItems.slice(5).map((item) => {
+                  const active = isItemActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        "px-2 py-1 rounded-lg text-[10px] lg:text-[11px] xl:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap",
+                        active
+                          ? "text-orange-600 dark:text-orange-500 bg-orange-50 dark:bg-orange-950/30"
+                          : "text-slate-700 dark:text-slate-200 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-slate-50 dark:hover:bg-slate-900"
                       )}
                       title={item.label}
                     >

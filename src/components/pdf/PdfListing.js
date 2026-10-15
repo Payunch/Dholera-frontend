@@ -62,36 +62,46 @@ export function PdfListing() {
  ];
 
  const filtered = pdfs.filter(pdf => {
- const cat = (pdf.category ||'').toLowerCase();
- const matchesTab = tabs[activeTab].keywords.some(k => cat.includes(k));
- const matchesSearch = !search || 
-`${pdf.title} ${pdf.category}`.toLowerCase().includes(search.toLowerCase());
- return matchesTab && matchesSearch;
+   const titleLower = (pdf.title || '').toLowerCase();
+   if (titleLower.includes('test') || titleLower.includes('mutool') || /^file\s+[a-z0-9]+/i.test(titleLower)) {
+     return false;
+   }
+   const cat = (pdf.category || '').toLowerCase();
+   const matchesTab = tabs[activeTab].keywords.some(k => cat.includes(k));
+   const matchesSearch = !search || 
+     `${pdf.title} ${pdf.category}`.toLowerCase().includes(search.toLowerCase());
+   return matchesTab && matchesSearch;
  });
 
- const handlePdfClick = (pdfId, type ='view') => {
- if (isSelectionMode) {
- toggleSelection(pdfId);
- return;
- }
+ const isDocFree = (pdf) => {
+   if (!pdf) return false;
+   const idStr = String(pdf.id);
+   const cat = (pdf.category || '').toLowerCase();
+   return idStr === '19' || idStr === '21' || idStr === '46' || cat === 'pdfs' || cat === 'general';
+ };
 
-  const freeTrialId = process.env.NEXT_PUBLIC_FREE_TRIAL_PDF_ID ||'19';
-  const isFree = false; // All PDFs now require verification
+ const handlePdfClick = (pdfId, type = 'view') => {
+   if (isSelectionMode) {
+     toggleSelection(pdfId);
+     return;
+   }
 
- // Completely close viewer first to clear state
- setShowViewer(false);
- 
- // Set parameters
- setSelectedPdfId(pdfId);
- setPreSelectedType(type);
+   const pdf = pdfs.find(p => String(p.id) === String(pdfId));
+   const isFree = isDocFree(pdf);
 
- if (isFree || verifiedLead) {
- // Delay opening slightly to ensure clean mount
- setTimeout(() => setShowViewer(true), 50);
- } else {
- setPostLoginAction('view');
- setShowVerifyPopup(true);
- }
+   // Completely close viewer first to clear state
+   setShowViewer(false);
+   
+   // Set parameters
+   setSelectedPdfId(pdfId);
+   setPreSelectedType(type);
+
+   if (isFree || verifiedLead) {
+     setTimeout(() => setShowViewer(true), 50);
+   } else {
+     setPostLoginAction('view');
+     setShowVerifyPopup(true);
+   }
  };
 
  const toggleSelection = (pdfId) => {
@@ -237,8 +247,8 @@ export function PdfListing() {
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-20">
  {filtered.map(pdf => {
  const isSelected = selectedPdfs.includes(pdf.id);
- const isFree = false;
- const hasAccess = !!verifiedLead;
+ const isFree = isDocFree(pdf);
+ const hasAccess = !!verifiedLead || isFree;
  
  return (
  <div 
@@ -293,13 +303,17 @@ export function PdfListing() {
   </button>
   ) : (
   <button 
-  onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id); }}
+  onClick={(e) => { e.stopPropagation(); handlePdfClick(pdf.id, 'view'); }}
   className={cn(
  "w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2",
-  isSelected ?"bg-orange-600 text-white" :"bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-orange-600 hover:text-white shadow-sm"
+  isSelected ?"bg-orange-600 text-white" : isFree ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm" : "bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-orange-600 hover:text-white shadow-sm"
   )}
   >
-  {isSelectionMode ? (isSelected ?'Selected' :'Select PDF') :'Open Vault'}
+  {isSelectionMode ? (isSelected ?'Selected' :'Select PDF') : isFree ? (
+    <span className="flex items-center gap-2"><Eye className="h-4 w-4" /> Instant Preview (Free)</span>
+  ) : (
+    'Open Vault'
+  )}
   </button>
   )}
  </div>
