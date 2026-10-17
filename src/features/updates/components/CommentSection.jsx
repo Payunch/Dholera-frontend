@@ -55,7 +55,7 @@ export function CommentSection({ updateId }) {
       if (!res.ok) {
         setError(data.error || "Failed to post comment.");
       } else {
-        setSuccess(data.message || "Comment posted successfully! It will appear once approved.");
+        setSuccess(data.message || (data.status === "pending" ? "Comment submitted for review before publishing." : "Comment published successfully!"));
         setAuthorName("");
         setAuthorEmail("");
         setBody("");
