@@ -7,7 +7,7 @@ import { MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
 
 export function CommentSection({ updateId }) {
   const [comments, setComments] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [authorName, setAuthorName] = useState("");
   const [authorEmail, setAuthorEmail] = useState("");
   const [body, setBody] = useState("");
@@ -23,15 +23,12 @@ export function CommentSection({ updateId }) {
         const payload = await res.json();
         const loadedComments = payload.data || payload || [];
         setComments(loadedComments);
-        // Automatically open if there are existing comments
-        if (loadedComments.length > 0) {
-          setIsOpen(true);
-        }
       }
     } catch (err) {
       console.error("Failed to fetch comments", err);
     }
   };
+
 
   useEffect(() => {
     fetchComments();
@@ -165,7 +162,7 @@ export function CommentSection({ updateId }) {
             </form>
           </div>
 
-          {comments.length > 0 && (
+          {comments.length > 0 ? (
             <div className="space-y-4 pt-2">
               {comments.map((comment) => (
                 <div key={comment.id} className="pb-4 border-b border-slate-100 dark:border-slate-800 last:border-0">
@@ -186,7 +183,12 @@ export function CommentSection({ updateId }) {
                 </div>
               ))}
             </div>
+          ) : (
+            <div className="pt-2 text-xs text-slate-500 dark:text-slate-400 italic">
+              No comments posted yet. Be the first to share your perspective!
+            </div>
           )}
+
         </div>
       )}
     </div>
