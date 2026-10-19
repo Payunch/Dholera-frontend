@@ -106,6 +106,22 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/blog",
+        destination: "/blogs",
+        permanent: true,
+      },
+      {
+        source: "/blog/:path*",
+        destination: "/blogs/:path*",
+        permanent: true,
+      },
+      {
+        source: "/blogs/dholera-semiconductor-ecosystem",
+        destination: "/blogs/dholeras-semiconductor-ecosystem-silicon-valley-of-india",
+        permanent: true,
+      },
+
+      {
         source: "/professional/clearance-requests",
         destination: "/clearance-engine",
         permanent: true,
