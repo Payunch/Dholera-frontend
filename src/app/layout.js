@@ -24,10 +24,10 @@ const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export const metadata = {
  title: {
- default:"Dholera Platform | Independent Infrastructure Intelligence & Planning Maps",
+ default:"Dholera Smart City Plots for Sale | TP Maps & Investment 2026",
  template:"%s | Dholera Platform",
  },
- description:"Independent Dholera Platform for infrastructure intelligence, planning maps, TP maps, and land investment growth evidence in Dholera Smart City.",
+ description:"Verified portal for Dholera Smart City plots for sale, 2026 price per sq yard, TP 1 to TP 6 planning maps, and direct NA/NOC land investment advisory.",
  keywords: ["Dholera Platform","Dholera Smart City","Dholera Maps","Dholera Planning","TP Map Dholera","Dholera Investment","Dholera Growth Evidence"],
  authors: [{ name:"Naresh Gohel", url:"/author/naresh-gohel" }],
  creator:"Dholera Platform",

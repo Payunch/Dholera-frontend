@@ -156,6 +156,11 @@ const nextConfig = {
         destination: "/blogs/western-railway-has-floated-a-massive-1890168-crore-tender",
         permanent: true,
       },
+      {
+        source: "/plots-for-sale",
+        destination: "/projects",
+        permanent: true,
+      },
     ];
   },
   images: {

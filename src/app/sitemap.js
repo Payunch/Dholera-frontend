@@ -17,7 +17,6 @@ const publicRoutes = [
   { path: "/government-schemes", changeFrequency: "weekly", priority: 0.8 },
   { path: "/infrastructure", changeFrequency: "weekly", priority: 0.8 },
   { path: "/investment-guide", changeFrequency: "weekly", priority: 0.9 },
-  { path: "/plots-for-sale", changeFrequency: "weekly", priority: 0.8 },
   { path: "/projects", changeFrequency: "weekly", priority: 0.8 },
   { path: "/smart-city", changeFrequency: "weekly", priority: 0.8 },
   { path: "/tp-maps", changeFrequency: "weekly", priority: 0.9 },

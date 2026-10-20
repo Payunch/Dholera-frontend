@@ -5,23 +5,24 @@ import { getUpdates } from "@/features/updates/api";
 import { cookies } from "next/headers";
 
 export const metadata = {
-  title: "Independent Dholera Platform | Infrastructure Intelligence & Planning Maps",
-  description: "Access verified planning maps, TP maps, and development permission fee calculators for Dholera Smart City. India's first operational smart city intelligence portal.",
+  title: "Dholera Smart City Plots for Sale | Price per Sq Yard & TP Maps 2026",
+  description: "Explore verified residential, commercial & industrial plots for sale in Dholera SIR. Check 2026 price per sq yard, TP1 & TP2 master plans, NA/NOC clear titles, and book a free site visit.",
   keywords: [
-    "Dholera Platform",
-    "Dholera Smart City",
-    "Dholera TP Map",
-    "Dholera Planning Maps",
-    "Dholera Investment Evidence",
-    "Dholera DSIRDA Fees",
-    "Dholera Infrastructure Data"
+    "Dholera Smart City plots for sale",
+    "Dholera SIR plot price 2026",
+    "Dholera residential plots per sq yard",
+    "Dholera TP1 TP2 land rates",
+    "Tata semiconductor Dholera plots",
+    "Dholera TP maps PDF download",
+    "Buy plot in Dholera SIR",
+    "Dholera investment guide"
   ],
   alternates: {
     canonical: siteConfig.url,
   },
   openGraph: {
-    title: "Dholera Platform | Growth Evidence & Planning Maps",
-    description: "Verified infrastructure data and planning resources for Dholera Special Investment Region.",
+    title: "Dholera Smart City Plots for Sale | Price per Sq Yard & TP Maps 2026",
+    description: "Verified residential, commercial & industrial plots for sale in Dholera SIR. Check 2026 price per sq yard, TP1 & TP2 master planning maps, and book a free site visit.",
     url: siteConfig.url,
     type: "website",
   }

@@ -16,13 +16,29 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }) {
     const dismissed = sessionStorage.getItem('blog_lead_popup_dismissed');
     if (dismissed === 'true') return;
 
-    // Show popup after 45 seconds of reading
-    const timer = setTimeout(() => {
+    const triggerPopup = () => {
       setShowPopup(true);
       setHasTriggered(true);
-    }, 45000);
+    };
 
-    return () => clearTimeout(timer);
+    // Show popup after 18 seconds of reading (optimized from 45s for modern mobile reader bounce rates)
+    const timer = setTimeout(triggerPopup, 18000);
+
+    // Scroll depth trigger: when reader scrolls past 40% of the article
+    const handleScroll = () => {
+      const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      if (scrollPercent > 40) {
+        triggerPopup();
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [hasTriggered]);
 
   const handleClose = () => {
@@ -39,8 +55,7 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }) {
       (window).fbq('track', 'Contact');
     }
 
-    // WhatsApp native bold formatting uses asterisks * instead of <b> tags
-    const text = encodeURIComponent(`HELLO NARESH, I AM INTERESTED IN INVESTMENT OPPORTUNITIES IN *DHOLERA SMART CITY*. PLEASE SHARE THE LATEST UPDATES AND PROJECT DETAILS`);
+    const text = encodeURIComponent(`Hi Naresh, I am reading "${blogTitle}" on Dholera Platform. Please share the verified 2026 TP1/TP2 plot rate sheet and available inventory.`);
     window.open(`https://wa.me/917435808031?text=${text}`, '_blank');
   };
 

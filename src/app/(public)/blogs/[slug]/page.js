@@ -15,6 +15,7 @@ import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
 import { getBlogSlug } from "@/lib/blogSlug";
 import { CommentSection } from "@/features/updates/components/CommentSection";
 import { BlogQuickLinks } from "@/features/updates/components/BlogQuickLinks";
+import { BlogLeadMagnets } from "@/features/updates/components/BlogLeadMagnets";
 import { Translate } from "@/components/i18n/Translate";
 import { extractFaqSchema } from "@/lib/faqSchema";
 
@@ -245,6 +246,7 @@ export default async function UpdateDetailPage({ params, searchParams }) {
           ) : (
             <>
               <ArticleBody content={update.content} />
+              <BlogLeadMagnets blogTitle={update.title} slug={expectedSlug} />
               <BlogQuickLinks blogTitle={update.title} />
               <FaqSchema content={update.content} />
               <CommentSection updateId={update.id} />

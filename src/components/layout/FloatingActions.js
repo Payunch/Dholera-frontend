@@ -7,17 +7,58 @@ import { useLanguage } from "@/providers/LanguageProvider";
 export function FloatingActions() {
     const { t } = useLanguage();
 
-    const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent("Hi Naresh, I am inquiring about available title-clear plots and investment opportunities in Dholera SIR. Please share current rates and project details.")}`;
+    const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent("Hi Naresh, I am inquiring about available title-clear plots and 2026 price per sq yard in Dholera SIR. Please share project details.")}`;
+    const callUrl = "tel:+917435808031";
+
+    const handleCallClick = () => {
+        if (typeof window !== "undefined" && window.fbq) {
+            window.fbq('track', 'Contact');
+        }
+    };
+
+    const handleWhatsAppClick = () => {
+        if (typeof window !== "undefined" && window.fbq) {
+            window.fbq('track', 'Contact');
+        }
+    };
 
     return (
         <>
-            {/* Global Sticky Land Advisory FAB (Visible on all devices) */}
-            <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[140] flex flex-col gap-3 group items-end">
+            {/* 1. Mobile Dual Sticky Conversion Bar (Visible on mobile/tablet screens < 640px) */}
+            <div className="sm:hidden fixed bottom-0 left-0 right-0 z-[150] bg-slate-950/95 backdrop-blur-lg border-t border-slate-800 p-2.5 px-3 flex items-center gap-2.5 shadow-[0_-8px_30px_rgba(0,0,0,0.5)]">
+                {/* Direct Call Button */}
+                <a
+                    href={callUrl}
+                    onClick={handleCallClick}
+                    className="flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-600/30 active:scale-95 transition-all text-center"
+                    aria-label="Call Land Advisor directly"
+                >
+                    <Phone className="h-4 w-4 shrink-0 fill-current" />
+                    <span>Call Advisor</span>
+                </a>
+
+                {/* WhatsApp Rate Card Button */}
                 <a
                     href={whatsappUrl}
+                    onClick={handleWhatsAppClick}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5 rounded-full bg-slate-900/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-700/60 hover:border-emerald-500/60 text-white shadow-2xl transition-all duration-300 hover:-translate-y-1 font-bold text-xs uppercase tracking-wider group"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/30 active:scale-95 transition-all text-center"
+                    aria-label="Inquire on WhatsApp"
+                >
+                    <MessageCircle className="h-4 w-4 shrink-0 fill-current" />
+                    <span>WhatsApp Rates</span>
+                </a>
+            </div>
+
+            {/* 2. Desktop Floating Pill (Visible on screens >= 640px) */}
+            <div className="hidden sm:flex fixed bottom-6 right-6 z-[140] flex-col gap-3 group items-end">
+                <a
+                    href={whatsappUrl}
+                    onClick={handleWhatsAppClick}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 px-5 py-3.5 rounded-full bg-slate-900/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-700/60 hover:border-emerald-500/60 text-white shadow-2xl transition-all duration-300 hover:-translate-y-1 font-bold text-xs uppercase tracking-wider group"
                     aria-label="Chat with Land Advisor on WhatsApp"
                 >
                     <span className="relative flex h-2.5 w-2.5 shrink-0">
