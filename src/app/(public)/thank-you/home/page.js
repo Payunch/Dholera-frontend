@@ -73,18 +73,18 @@ function ThankYouHomeContent() {
 
   const formattedDate = visitDate
     ? new Date(visitDate).toLocaleDateString("en-IN", {
-        weekday: "short",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
     : "Next Available Slot";
 
   const whatsappMessage = cleanName
     ? `Hi Naresh, I am ${cleanName}. I just booked a Dholera Site Visit on the homepage for ${formattedDate}. Please confirm my itinerary and share the TP1/TP2 maps.`
     : `Hi Naresh, I just booked a Dholera Site Visit on the homepage for ${formattedDate}. Please confirm my itinerary and share the TP1/TP2 maps.`;
 
-  const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/918200448270?text=${encodeURIComponent(
     whatsappMessage
   )}`;
 
@@ -225,11 +225,11 @@ function ThankYouHomeContent() {
               Chat on WhatsApp Now
             </a>
             <a
-              href="tel:+917435808031"
+              href="tel:+918200448270"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white px-6 py-4 text-xs font-black uppercase tracking-wider border border-slate-700 transition-colors"
             >
               <Phone className="h-4 w-4 text-orange-400" />
-              +91 74358 08031
+              +91 82004 48270
             </a>
           </div>
         </div>

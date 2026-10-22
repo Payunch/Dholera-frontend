@@ -7,8 +7,8 @@ import { useLanguage } from "@/providers/LanguageProvider";
 export function FloatingActions() {
     const { t } = useLanguage();
 
-    const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent("Hi Naresh, I am inquiring about available title-clear plots and 2026 price per sq yard in Dholera SIR. Please share project details.")}`;
-    const callUrl = "tel:+917435808031";
+    const whatsappUrl = `https://wa.me/918200448270?text=${encodeURIComponent("Hi Naresh, I am inquiring about available title-clear plots and 2026 price per sq yard in Dholera SIR. Please share project details.")}`;
+    const callUrl = "tel:+918200448270";
 
     const handleCallClick = () => {
         if (typeof window !== "undefined" && window.fbq) {
@@ -66,7 +66,7 @@ export function FloatingActions() {
                         <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#25D366] shadow-[0_0_8px_#25D366]" />
                     </span>
                     <MessageCircle className="h-4 w-4 shrink-0 text-[#25D366] transition-transform group-hover:scale-110" />
-                    <span className="font-bold tracking-wider">+91 74358 08031</span>
+                    <span className="font-bold tracking-wider">+91 82004 48270</span>
                 </a>
             </div>
         </>

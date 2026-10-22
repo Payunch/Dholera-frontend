@@ -5,7 +5,7 @@ import { ProjectDetailClient } from "./ProjectDetailClient";
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
-  
+
   if (!project) return {};
 
   return {
@@ -60,7 +60,7 @@ export default async function ProjectPage({ params }) {
       seller: {
         "@type": "RealEstateAgent",
         name: "Dholera Platform",
-        telephone: "+91-7435808031",
+        telephone: "+91-8200448270",
         url: "https://dholeraplatform.com"
       }
     },

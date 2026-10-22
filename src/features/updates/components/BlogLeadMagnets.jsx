@@ -2,13 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
-import { 
-  Map, 
-  Smartphone, 
-  MessageSquare, 
-  Download, 
-  ArrowRight, 
-  ShieldCheck, 
+import {
+  Map,
+  Smartphone,
+  MessageSquare,
+  Download,
+  ArrowRight,
+  ShieldCheck,
   Sparkles,
   ExternalLink,
   Car
@@ -119,7 +119,7 @@ export function BlogLeadMagnets({ blogTitle = "Dholera Smart City Update", slug 
           </div>
           <div className="pt-6">
             <a
-              href={`https://wa.me/917435808031?text=${whatsappMessage}`}
+              href={`https://wa.me/918200448270?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-3 text-xs font-black uppercase tracking-wider text-white transition-all shadow-md shadow-emerald-600/30"

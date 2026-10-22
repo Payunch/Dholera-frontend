@@ -3,7 +3,7 @@ import Script from "next/script";
 
 export default function OrganizationSchema() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.includes('localhost') ? process.env.NEXT_PUBLIC_SITE_URL : "https://www.dholeraplatform.com";
-  
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -26,7 +26,7 @@ export default function OrganizationSchema() {
         ],
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+91-7435808031",
+          "telephone": "+91-8200448270",
           "contactType": "customer service",
           "email": "gohelnaresh7707@gmail.com",
           "areaServed": "IN",
@@ -39,7 +39,7 @@ export default function OrganizationSchema() {
         "name": "Dholera Platform Land & Infrastructure Advisory",
         "url": siteUrl,
         "logo": `${siteUrl}/logo.png`,
-        "telephone": "+91-7435808031",
+        "telephone": "+91-8200448270",
         "email": "gohelnaresh7707@gmail.com",
         "priceRange": "₹3,500 - ₹16,500 per sq yard",
         "currenciesAccepted": "INR",

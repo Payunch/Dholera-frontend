@@ -49,14 +49,14 @@ export function BlogPopupTrigger({ blogTitle = "Dholera Investment Update" }) {
   const handleWhatsAppClick = () => {
     setShowPopup(false);
     sessionStorage.setItem('blog_lead_popup_dismissed', 'true');
-    
+
     // Fire Meta Pixel Event
     if (typeof window !== "undefined" && (window).fbq) {
       (window).fbq('track', 'Contact');
     }
 
     const text = encodeURIComponent(`Hi Naresh, I am reading "${blogTitle}" on Dholera Platform. Please share the verified 2026 TP1/TP2 plot rate sheet and available inventory.`);
-    window.open(`https://wa.me/917435808031?text=${text}`, '_blank');
+    window.open(`https://wa.me/918200448270?text=${text}`, '_blank');
   };
 
   if (!showPopup) return null;

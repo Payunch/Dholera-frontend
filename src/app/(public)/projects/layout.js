@@ -28,7 +28,7 @@ export default function Layout({ children }) {
           seller: {
             "@type": "RealEstateAgent",
             name: "Dholera Platform",
-            telephone: "+91-7435808031"
+            telephone: "+91-8200448270"
           }
         }
       }

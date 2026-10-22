@@ -9,7 +9,7 @@ const ownerDetails = {
   brandName: "dholera platform",
   operatorName: "Naresh Gohel",
   email: "gohelnaresh7707@gmail.com",
-  phoneDisplay: "+91 7435808031",
+  phoneDisplay: "+91 8200448270",
 };
 
 const OPEN_CONSENT_EVENT = "open-consent-banner";

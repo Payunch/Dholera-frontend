@@ -60,14 +60,14 @@ export default function InvestmentGuidePage() {
 
   return (
     <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden">
-      
+
       {/* Header Block */}
       <section className="relative bg-slate-950 pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden mb-16 dark:bg-slate-900">
         <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-          <Image 
-            src="/images/dholerasirGujrat.webp" 
-            alt="Dholera Strategic Alpha" 
-            fill 
+          <Image
+            src="/images/dholerasirGujrat.webp"
+            alt="Dholera Strategic Alpha"
+            fill
             className="object-cover"
           />
         </div>
@@ -87,11 +87,11 @@ export default function InvestmentGuidePage() {
       </section>
 
       <div className="container mx-auto px-4 md:px-8 max-w-[1600px] space-y-20">
-        
+
         {/* Dynamic Stamp Duty & Land Acquisition Cost Calculator */}
         <section className="rounded-[2.5rem] bg-gradient-to-br from-slate-900 via-slate-950 to-black text-white p-8 md:p-14 border border-slate-800 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-orange-600/15 blur-[120px] pointer-events-none" />
-          
+
           <div className="relative z-10 max-w-5xl mx-auto space-y-10">
             <div className="space-y-3 text-center md:text-left">
               <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-orange-400">
@@ -113,10 +113,10 @@ export default function InvestmentGuidePage() {
                     <span>Plot Dimension:</span>
                     <span className="text-orange-400">{plotSize} Sq. Yards</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="150" 
-                    max="2000" 
+                  <input
+                    type="range"
+                    min="150"
+                    max="2000"
                     step="25"
                     value={plotSize}
                     onChange={(e) => setPlotSize(Number(e.target.value))}
@@ -134,10 +134,10 @@ export default function InvestmentGuidePage() {
                     <span>Rate Per Sq. Yard:</span>
                     <span className="text-orange-400">₹{ratePerSqYd.toLocaleString('en-IN')} / Sq. Yd</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="2500" 
-                    max="12000" 
+                  <input
+                    type="range"
+                    min="2500"
+                    max="12000"
                     step="250"
                     value={ratePerSqYd}
                     onChange={(e) => setRatePerSqYd(Number(e.target.value))}
@@ -180,7 +180,7 @@ export default function InvestmentGuidePage() {
                     </span>
                   </div>
                   <a
-                    href={`https://wa.me/917435808031?text=${encodeURIComponent(`Hi Naresh, I calculated an acquisition cost of ₹${totalCost.toLocaleString('en-IN')} for a ${plotSize} sq. yd plot at ₹${ratePerSqYd}/sq.yd. Please share matching title-clear plots.`)}`}
+                    href={`https://wa.me/918200448270?text=${encodeURIComponent(`Hi Naresh, I calculated an acquisition cost of ₹${totalCost.toLocaleString('en-IN')} for a ${plotSize} sq. yd plot at ₹${ratePerSqYd}/sq.yd. Please share matching title-clear plots.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-5 py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-[10px] font-black uppercase tracking-widest transition-all shadow-lg"
@@ -320,7 +320,7 @@ export default function InvestmentGuidePage() {
               Start Clearance Verification
             </Link>
             <a
-              href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20would%20like%20to%20request%20a%20legal%20Title%20Clearance%20Due%20Diligence%20Check%20for%20a%20survey%20plot%20in%20Dholera."
+              href="https://wa.me/918200448270?text=Hi%20Naresh,%20I%20would%20like%20to%20request%20a%20legal%20Title%20Clearance%20Due%20Diligence%20Check%20for%20a%20survey%20plot%20in%20Dholera."
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-black uppercase tracking-widest text-center transition-all border border-white/20"

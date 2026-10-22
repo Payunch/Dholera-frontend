@@ -62,7 +62,7 @@ export default function ContactPage() {
                 <div className="space-y-2 pt-2">
                   <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Direct Hotline</h4>
                   <p className="font-display text-2xl md:text-3xl font-black text-slate-900 dark:text-white leading-tight">
-                    <a href="https://wa.me/917435808031" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF7A00] transition-colors">+91 74358 08031</a>
+                    <a href="https://wa.me/918200448270" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF7A00] transition-colors">+91 82004 48270</a>
                   </p>
                 </div>
               </div>

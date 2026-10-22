@@ -10,31 +10,31 @@ export default function AboutPage() {
   const { t } = useLanguage();
 
   const trustPillars = [
-    { 
-      title: "Verified Data", 
-      desc: "Real-time TP schemes, GIS coordinates, and land records cross-checked with Gujarat State gazettes.", 
-      icon: ShieldCheck, 
+    {
+      title: "Verified Data",
+      desc: "Real-time TP schemes, GIS coordinates, and land records cross-checked with Gujarat State gazettes.",
+      icon: ShieldCheck,
       img: "/images/airportVision.webp",
       tag: "100% Due Diligence"
     },
-    { 
-      title: "Expert Support", 
-      desc: "Direct access to certified legal advocates, RERA advisors, and civil engineers on ground in Dholera.", 
-      icon: Users, 
+    {
+      title: "Expert Support",
+      desc: "Direct access to certified legal advocates, RERA advisors, and civil engineers on ground in Dholera.",
+      icon: Users,
       img: "/images/arialviewdholeraexpress.webp",
       tag: "On-Ground Advisory"
     },
-    { 
-      title: "Strategic ROI", 
-      desc: "Data-driven capital allocation models to maximize appreciation across industrial and plotted sectors.", 
-      icon: Target, 
+    {
+      title: "Strategic ROI",
+      desc: "Data-driven capital allocation models to maximize appreciation across industrial and plotted sectors.",
+      icon: Target,
       img: "/images/expressHighway.webp",
       tag: "Capital Alpha"
     },
-    { 
-      title: "Trust Record", 
-      desc: "Over 5 years of tracking Dholera's infrastructure milestones, civil progress, and policy updates.", 
-      icon: History, 
+    {
+      title: "Trust Record",
+      desc: "Over 5 years of tracking Dholera's infrastructure milestones, civil progress, and policy updates.",
+      icon: History,
       img: "/images/dholerasirGujrat.webp",
       tag: "Proven Track Record"
     },
@@ -42,14 +42,14 @@ export default function AboutPage() {
 
   return (
     <div className="bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen pb-32 w-full overflow-x-hidden font-sans">
-      
+
       {/* Header Section */}
       <section className="relative bg-slate-950 pt-32 pb-24 border-b border-slate-200 dark:border-slate-800 overflow-hidden dark:bg-slate-900">
         <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-          <Image 
-            src="/images/futuristic_dholera.png" 
-            alt="Dholera Vision" 
-            fill 
+          <Image
+            src="/images/futuristic_dholera.png"
+            alt="Dholera Vision"
+            fill
             className="object-cover"
             sizes="100vw"
           />
@@ -68,7 +68,7 @@ export default function AboutPage() {
       </section>
 
       <div className="container mx-auto px-4 md:px-8 mt-24 max-w-[1600px] space-y-28">
-        
+
         {/* Trust Pillars Grid */}
         <section className="space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -80,16 +80,16 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {trustPillars.map((item, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="group bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-[#FF7A00] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
               >
                 <div>
                   <div className="relative h-52 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <Image 
-                      src={item.img} 
-                      alt={item.title} 
-                      fill 
+                    <Image
+                      src={item.img}
+                      alt={item.title}
+                      fill
                       className="object-cover opacity-80 group-hover:scale-110 transition-transform duration-700"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                     />
@@ -118,10 +118,10 @@ export default function AboutPage() {
         {/* Founder Profile Section */}
         <section className="relative bg-slate-900 rounded-[3rem] p-8 md:p-14 lg:p-20 border border-slate-800 shadow-2xl overflow-hidden text-white">
           <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-            <Image 
-              src="/images/a1.jpg" 
-              alt="Naresh Gohel Dholera Site" 
-              fill 
+            <Image
+              src="/images/a1.jpg"
+              alt="Naresh Gohel Dholera Site"
+              fill
               className="object-cover"
               sizes="100vw"
             />
@@ -131,10 +131,10 @@ export default function AboutPage() {
           <div className="relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
             {/* Founder Image */}
             <div className="relative w-full lg:w-[380px] shrink-0 aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 group">
-              <Image 
-                src="/images/ng.png" 
-                alt="Naresh Gohel - Founder & Senior Land Advisor" 
-                fill 
+              <Image
+                src="/images/ng.png"
+                alt="Naresh Gohel - Founder & Senior Land Advisor"
+                fill
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 1024px) 100vw, 400px"
               />
@@ -165,9 +165,9 @@ export default function AboutPage() {
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
-                <a 
-                  href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20would%20like%20to%20connect%20regarding%20land%20advisory%20in%20Dholera." 
-                  target="_blank" 
+                <a
+                  href="https://wa.me/918200448270?text=Hi%20Naresh,%20I%20would%20like%20to%20connect%20regarding%20land%20advisory%20in%20Dholera."
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black uppercase tracking-widest transition-all shadow-lg flex items-center gap-2"
                 >
@@ -201,22 +201,22 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="relative z-10 shrink-0 flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-            <a 
-              href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20would%20like%20to%20book%20a%201-on-1%20strategic%20land%20consultation%20with%20you%20regarding%20Dholera%20investments." 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://wa.me/918200448270?text=Hi%20Naresh,%20I%20would%20like%20to%20book%20a%201-on-1%20strategic%20land%20consultation%20with%20you%20regarding%20Dholera%20investments."
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-4 rounded-xl bg-[#FF7A00] hover:bg-orange-600 text-white text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/20 text-center flex items-center justify-center gap-2 group active:scale-95"
             >
               <span>Book via WhatsApp</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a  
-              href="tel:+917435808031"
+            <a
+              href="tel:+918200448270"
               style={{ color: '#ffffff' }}
               className="px-8 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-white !text-white border border-slate-700 text-xs font-black tracking-widest transition-all shadow-lg text-center flex items-center justify-center gap-2"
             >
               <Phone className="h-4 w-4 text-[#FF7A00]" />
-              +91 74358 08031
+              +91 82004 48270
             </a>
           </div>
         </section>

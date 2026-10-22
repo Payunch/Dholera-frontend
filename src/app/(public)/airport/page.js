@@ -8,7 +8,7 @@ import { useLanguage } from '@/providers/LanguageProvider';
 
 export default function AirportPage() {
   const { t } = useLanguage();
-  
+
   const distanceMatrix = [
     { destination: "ABCD Command Building (TP2A)", distance: "14 km", time: "15 mins via 55m Avenue" },
     { destination: "TP2 Commercial & Smart Residency", distance: "12 km", time: "12 mins direct access" },
@@ -17,29 +17,29 @@ export default function AirportPage() {
   ];
 
   const milestones = [
-    { 
-      phase: "Phase 1 Runway & Terminal", 
-      status: "Advanced Civil Works (85%+ Sub-Grade Complete)", 
-      date: "Targeted Initial Flight Trials", 
-      desc: "3,200-meter Code 4E runway capable of handling wide-body passenger aircraft (Boeing 777 / Airbus A350) and 1.5 million annual passengers." 
+    {
+      phase: "Phase 1 Runway & Terminal",
+      status: "Advanced Civil Works (85%+ Sub-Grade Complete)",
+      date: "Targeted Initial Flight Trials",
+      desc: "3,200-meter Code 4E runway capable of handling wide-body passenger aircraft (Boeing 777 / Airbus A350) and 1.5 million annual passengers."
     },
-    { 
-      phase: "ATC Tower & Navigational Aids", 
-      status: "Superstructure Topped Out", 
-      date: "DVOR & Radar Installation", 
-      desc: "Advanced Air Traffic Control tower with Instrument Landing System (ILS CAT-I) and Doppler Very High Frequency Omnirange (DVOR) beacons." 
+    {
+      phase: "ATC Tower & Navigational Aids",
+      status: "Superstructure Topped Out",
+      date: "DVOR & Radar Installation",
+      desc: "Advanced Air Traffic Control tower with Instrument Landing System (ILS CAT-I) and Doppler Very High Frequency Omnirange (DVOR) beacons."
     },
-    { 
-      phase: "Phase 2 Cargo & Parallel Runway", 
-      status: "Master Plan Allocated", 
-      date: "Capacity Scale to 5M+ Passengers", 
-      desc: "Secondary 4,000m runway, dedicated international air cargo terminal, and bonded cold-chain logistics for semiconductor wafer transit." 
+    {
+      phase: "Phase 2 Cargo & Parallel Runway",
+      status: "Master Plan Allocated",
+      date: "Capacity Scale to 5M+ Passengers",
+      desc: "Secondary 4,000m runway, dedicated international air cargo terminal, and bonded cold-chain logistics for semiconductor wafer transit."
     },
-    { 
-      phase: "Multi-Modal Expressway Link", 
-      status: "Connected Feeder Interchange", 
-      date: "NH-751 Direct Access", 
-      desc: "Direct expressway spur and proposed Ahmedabad-Dholera Semi-High Speed Regional Rapid Rail Transit (RRTS) station." 
+    {
+      phase: "Multi-Modal Expressway Link",
+      status: "Connected Feeder Interchange",
+      date: "NH-751 Direct Access",
+      desc: "Direct expressway spur and proposed Ahmedabad-Dholera Semi-High Speed Regional Rapid Rail Transit (RRTS) station."
     }
   ];
 
@@ -51,21 +51,21 @@ export default function AirportPage() {
 
   return (
     <div className="bg-white dark:bg-slate-950 min-h-screen w-full overflow-x-hidden transition-colors">
-      
+
       {/* Hero Section */}
       <section className="relative min-h-[60vh] md:min-h-[75vh] flex items-center justify-center overflow-hidden bg-slate-950 text-white">
         <div className="absolute inset-0 z-0">
-          <Image 
-            src="/images/airportVision.webp" 
-            alt={t('airport_title') || 'Dholera International Airport (DIACL)'} 
-            fill 
+          <Image
+            src="/images/airportVision.webp"
+            alt={t('airport_title') || 'Dholera International Airport (DIACL)'}
+            fill
             className="object-cover opacity-60"
             sizes="100vw"
             priority
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
-        
+
         <div className="container relative z-10 mx-auto px-4 md:px-8 text-center pt-24 space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full bg-orange-600/20 border border-orange-500/30 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-orange-400">
             <Plane className="h-3.5 w-3.5" /> DIACL Green-Field Aerotropolis
@@ -77,14 +77,14 @@ export default function AirportPage() {
             Spanning 1,426 hectares (3,525 acres) across Navagam & Fedara. Designed as Western India&apos;s premier dual-use commercial & cargo aviation gateway.
           </p>
           <div className="pt-4 flex flex-wrap justify-center gap-4">
-            <Link 
-              href="/tp-maps" 
+            <Link
+              href="/tp-maps"
               className="px-8 py-4 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-600/30 flex items-center gap-2"
             >
               See the Airport TP Map <ArrowRight className="h-4 w-4" />
             </Link>
-            <a 
-              href="https://wa.me/917435808031?text=Hi%20Naresh,%20please%20share%20the%20Airport%20Influence%20Zone%20Plot%20Guide%20and%20proximity%20matrix." 
+            <a
+              href="https://wa.me/918200448270?text=Hi%20Naresh,%20please%20share%20the%20Airport%20Influence%20Zone%20Plot%20Guide%20and%20proximity%20matrix."
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-black uppercase tracking-widest transition-all flex items-center gap-2"
@@ -107,7 +107,7 @@ export default function AirportPage() {
               <p className="text-slate-600 dark:text-slate-300 text-base leading-relaxed font-medium">
                 The airport is situated at the northern apex of the Dholera Special Investment Region across <strong>Navagam</strong> and <strong>Fedara</strong> villages (Dholera Taluka, Ahmedabad District). It operates under Dholera International Airport Company Limited (DIACL) with zero residential displacement.
               </p>
-              
+
               <div className="grid sm:grid-cols-2 gap-4 pt-2">
                 {[
                   "1,426 Hectares (3,525 Acres) Acquired",
@@ -214,16 +214,16 @@ export default function AirportPage() {
             Direct access to Town Planning Scheme 1 & 2 parcels flanking the airport feeder corridor. Request a customized plot portfolio or schedule an on-ground site briefing with Naresh Gohel.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-            <a 
-              href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20am%20interested%20in%20acquiring%20land%20in%20the%20Dholera%20Airport%20Influence%20Zone.%20Please%20share%20available%20survey%20numbers%20and%20rates." 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://wa.me/918200448270?text=Hi%20Naresh,%20I%20am%20interested%20in%20acquiring%20land%20in%20the%20Dholera%20Airport%20Influence%20Zone.%20Please%20share%20available%20survey%20numbers%20and%20rates."
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-xl text-xs font-black uppercase tracking-widest shadow-xl transition-all flex items-center justify-center gap-2"
             >
-              Inquire via WhatsApp (+91 74358 08031)
+              Inquire via WhatsApp (+91 82004 48270)
             </a>
-            <Link 
-              href="/tp-maps" 
+            <Link
+              href="/tp-maps"
               className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-xl text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2"
             >
               Explore Airport TP Map

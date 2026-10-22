@@ -50,7 +50,7 @@ function expandShortcodes(html) {
     <a href="/contact?intent=rate-sheet" class="px-6 py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black uppercase tracking-wider text-center shadow-lg shadow-orange-600/30 transition-all font-sans">
       Request Rate Sheet
     </a>
-    <a href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20am%20reading%20about%20Dholera%20utility%20ducts%20and%20would%20like%20to%20compare%20TP1%20vs%20TP2%20plot%20rates." target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider text-center transition-all font-sans">
+    <a href="https://wa.me/918200448270?text=Hi%20Naresh,%20I%20am%20reading%20about%20Dholera%20utility%20ducts%20and%20would%20like%20to%20compare%20TP1%20vs%20TP2%20plot%20rates." target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider text-center transition-all font-sans">
       WhatsApp Instant
     </a>
   </div>
@@ -88,7 +88,7 @@ function expandShortcodes(html) {
     </p>
   </div>
   <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0">
-    <a href="https://wa.me/917435808031?text=Hi%20Naresh,%20I%20would%20like%20a%20one-to-one%20consultation%20regarding%20Dholera%20SIR%20plots." target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider text-center shadow-lg transition-all font-sans">
+    <a href="https://wa.me/918200448270?text=Hi%20Naresh,%20I%20would%20like%20a%20one-to-one%20consultation%20regarding%20Dholera%20SIR%20plots." target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider text-center shadow-lg transition-all font-sans">
       Chat on WhatsApp
     </a>
   </div>
@@ -107,15 +107,15 @@ export function ArticleBody({ content }) {
 
   // Custom parser to handle LLM markdown artifacts and excessive bolding
   let parsedContent = content;
-  
+
   // Convert markdown bold to HTML if any leaked through
   parsedContent = parsedContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  
+
   // Un-bold entire paragraphs, list items, and table cells
   parsedContent = parsedContent.replace(/<p>\s*<strong>(.*?)<\/strong>\s*<\/p>/g, '<p>$1</p>');
   parsedContent = parsedContent.replace(/<li>\s*<strong>(.*?)<\/strong>\s*<\/li>/g, '<li>$1</li>');
   parsedContent = parsedContent.replace(/<td>\s*<strong>(.*?)<\/strong>\s*<\/td>/g, '<td>$1</td>');
-  
+
   // Handle inverted bolding (strong wrapping block elements)
   parsedContent = parsedContent.replace(/<strong>\s*<p>(.*?)<\/p>\s*<\/strong>/g, '<p>$1</p>');
 
@@ -129,7 +129,7 @@ export function ArticleBody({ content }) {
   parsedContent = makeTablesResponsive(parsedContent);
 
   return (
-    <div 
+    <div
       className="wp-content mt-6 text-base sm:text-lg leading-relaxed text-slate-700 dark:text-slate-300 md:text-xl md:leading-loose"
       dangerouslySetInnerHTML={{ __html: parsedContent }}
     />

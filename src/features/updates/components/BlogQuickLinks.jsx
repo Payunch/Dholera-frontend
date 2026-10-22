@@ -21,12 +21,12 @@ export function BlogQuickLinks({ blogTitle = "Dholera Smart City Update" }) {
     },
     {
       title: "Chat on WhatsApp with Advisory Desk",
-      href: `https://wa.me/917435808031?text=${whatsappMessage}`,
+      href: `https://wa.me/918200448270?text=${whatsappMessage}`,
       isExternal: true,
     },
     {
-      title: "Call / WhatsApp: +91 7435808031",
-      href: "https://wa.me/917435808031",
+      title: "Call / WhatsApp: +91 8200448270",
+      href: "https://wa.me/918200448270",
       isExternal: true,
     },
     {

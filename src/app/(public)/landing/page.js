@@ -13,7 +13,7 @@ export const metadata = {
 };
 
 export default function LandingPage() {
-  const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/918200448270?text=${encodeURIComponent(
     "Hi Naresh, I am interested in Dholera TP1/TP2 plots. Please send me the latest price guide and master plan."
   )}`;
 
@@ -82,11 +82,11 @@ export default function LandingPage() {
                 </a>
 
                 <a
-                  href="tel:+917435808031"
+                  href="tel:+918200448270"
                   className="inline-flex items-center justify-center gap-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 px-8 py-4 text-sm font-black uppercase tracking-wider transition-transform hover:-translate-y-0.5"
                 >
                   <Phone className="h-5 w-5 text-orange-400" />
-                  Call: +91 74358 08031
+                  Call: +91 82004 48270
                 </a>
               </div>
             </div>

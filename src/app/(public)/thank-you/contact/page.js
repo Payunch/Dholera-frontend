@@ -73,7 +73,7 @@ function ThankYouContactContent() {
     ? `Hi Naresh, I am ${cleanName}. I just submitted an inquiry on Dholera Platform regarding verified plot availability, TP master plans, and investment options. Please share the details.`
     : `Hi Naresh, I just submitted an inquiry on Dholera Platform regarding verified plot availability, TP master plans, and investment options. Please share the details.`;
 
-  const whatsappUrl = `https://wa.me/917435808031?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/918200448270?text=${encodeURIComponent(
     whatsappMessage
   )}`;
 
@@ -267,11 +267,11 @@ function ThankYouContactContent() {
         <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 mb-6">
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
             <a
-              href="tel:+917435808031"
+              href="tel:+918200448270"
               className="flex items-center gap-2.5 py-2 px-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-orange-500/50 transition-colors"
             >
               <Phone className="h-4 w-4 text-orange-400 shrink-0" />
-              <span className="font-bold text-slate-200">Call: +91 74358 08031</span>
+              <span className="font-bold text-slate-200">Call: +91 82004 48270</span>
             </a>
 
             <a
