@@ -3,7 +3,7 @@ import { projects } from "@/data/projects";
 export const metadata = {
   title: "Dholera Projects & Plots for Sale | Verified Property Listings",
   description: "Explore verified residential, commercial, and industrial plots for sale in Dholera Special Investment Region (SIR). Pricing, sizes, and DSIRDA zoning clearance.",
-  alternates: { canonical: "/projects" },
+  alternates: { canonical: "https://www.dholeraplatform.com/projects" },
 };
 
 export default function Layout({ children }) {
@@ -18,7 +18,7 @@ export default function Layout({ children }) {
       item: {
         "@type": "RealEstateListing",
         name: p.name,
-        url: `https://dholeraplatform.com/projects/${p.slug}`,
+        url: `https://www.dholeraplatform.com/projects/${p.slug}`,
         category: p.category,
         offers: {
           "@type": "Offer",

@@ -161,6 +161,31 @@ const nextConfig = {
         destination: "/projects",
         permanent: true,
       },
+      {
+        source: "/leads",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/dholera-sir-smart-city",
+        destination: "/smart-city",
+        permanent: true,
+      },
+      {
+        source: "/dholera-smart-city-portal",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/system",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/database",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
   images: {

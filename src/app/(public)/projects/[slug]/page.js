@@ -11,6 +11,15 @@ export async function generateMetadata({ params }) {
   return {
     title: `${project.name} | Dholera Investment Project`,
     description: `${project.name} offers ${project.offering} in the ${project.category} zone. Plot sizes: ${project.plotSizes}. Zoning: ${project.zoning}.`,
+    alternates: {
+      canonical: `https://www.dholeraplatform.com/projects/${project.slug}`,
+      languages: {
+        'en': `https://www.dholeraplatform.com/projects/${project.slug}`,
+        'gu': `https://www.dholeraplatform.com/gu/projects/${project.slug}`,
+        'hi': `https://www.dholeraplatform.com/hi/projects/${project.slug}`,
+        'x-default': `https://www.dholeraplatform.com/projects/${project.slug}`,
+      }
+    },
     openGraph: {
       title: `${project.name} | Dholera Projects`,
       description: `${project.name} offers ${project.offering} in the ${project.category} zone. Plot sizes: ${project.plotSizes}. Zoning: ${project.zoning}.`,
@@ -45,8 +54,8 @@ export default async function ProjectPage({ params }) {
     "@type": "RealEstateListing",
     name: project.name,
     description: `${project.name} offers ${project.offering} in Dholera SIR (${project.category} zone). Available plot sizes: ${project.plotSizes}. Zoning: ${project.zoning}.`,
-    url: `https://dholeraplatform.com/projects/${project.slug}`,
-    image: project.image?.startsWith("http") ? project.image : `https://dholeraplatform.com${project.image}`,
+    url: `https://www.dholeraplatform.com/projects/${project.slug}`,
+    image: project.image?.startsWith("http") ? project.image : `https://www.dholeraplatform.com${project.image}`,
     category: project.category,
     datePosted: "2026-01-01",
     offers: {
@@ -61,7 +70,7 @@ export default async function ProjectPage({ params }) {
         "@type": "RealEstateAgent",
         name: "Dholera Platform",
         telephone: "+91-8200448270",
-        url: "https://dholeraplatform.com"
+        url: "https://www.dholeraplatform.com"
       }
     },
     about: {
