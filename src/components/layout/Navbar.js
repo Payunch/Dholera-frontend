@@ -56,7 +56,7 @@ export function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/95 dark:bg-slate-950/95 dark:border-slate-800 backdrop-blur-md transition-colors shadow-sm">
-        <div className="container mx-auto px-2 sm:px-3 md:px-4 lg:px-6 py-2.5">
+        <div className="w-full max-w-7xl mx-auto px-2.5 sm:px-4 lg:px-6 py-2.5">
           <div className="flex w-full items-center justify-between gap-2 md:gap-3 lg:gap-4">
             
             {/* LEFT SIDE (Constant): Menu Icon + Logo */}
@@ -84,8 +84,8 @@ export function Navbar() {
             </div>
 
             {/* MIDDLE SECTION: Single-row Clean Navigation with Intelligence Dropdown */}
-            <div className="hidden md:flex flex-1 items-center justify-center min-w-0 px-2 lg:px-4">
-              <nav className="flex items-center gap-1 lg:gap-1.5 xl:gap-2 2xl:gap-3 font-display">
+            <div className="hidden lg:flex flex-1 items-center justify-center min-w-0 px-2 xl:px-4">
+              <nav className="flex items-center gap-0.5 lg:gap-1 xl:gap-2 2xl:gap-2.5 font-display">
                 {primaryNavItems.slice(0, 5).map((item) => {
                   const active = isItemActive(item.href);
                   return (
