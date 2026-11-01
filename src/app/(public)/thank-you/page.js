@@ -25,21 +25,55 @@ export default function ThankYouPage() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
   useEffect(() => {
-    // Standard view event only (prevent duplicate conversion counts)
-    if (typeof window !== "undefined" && window.dataLayer) {
-      window.dataLayer.push({
-        event: "thank_you_view",
-        page_location: window.location.href,
-        page_path: "/thank-you",
-      });
-    }
+    if (typeof window === "undefined") return;
+    const dedupeKey = "ty_landing_view_dedupe";
+    if (!sessionStorage.getItem(dedupeKey)) {
+      sessionStorage.setItem(dedupeKey, "true");
 
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "page_view", {
-        page_title: "Thank You",
+      const conversionPayload = {
+        event: "conversion_event_submit_lead_form",
+        lead_source: "google_ads_landing_page",
         page_location: window.location.href,
         page_path: "/thank-you",
-      });
+        value: 200.0,
+        currency: "INR",
+      };
+
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: "thank_you_view",
+          page_location: window.location.href,
+          page_path: "/thank-you",
+        });
+        window.dataLayer.push(conversionPayload);
+        window.dataLayer.push({
+          ...conversionPayload,
+          event: "conversion_event_submit_lead_form_2",
+        });
+        window.dataLayer.push({
+          ...conversionPayload,
+          event: "generate_lead",
+        });
+      }
+
+      if (window.gtag) {
+        window.gtag("event", "page_view", {
+          page_title: "Thank You",
+          page_location: window.location.href,
+          page_path: "/thank-you",
+        });
+        window.gtag("event", "conversion_event_submit_lead_form", conversionPayload);
+        window.gtag("event", "conversion_event_submit_lead_form_2", conversionPayload);
+        window.gtag("event", "generate_lead", conversionPayload);
+      }
+
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Lead", {
+          content_name: "landing_thank_you",
+          value: 200.0,
+          currency: "INR",
+        });
+      }
     }
   }, []);
 

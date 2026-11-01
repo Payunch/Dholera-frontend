@@ -52,12 +52,30 @@ function ThankYouHomeContent() {
     if (!sessionStorage.getItem(dedupeKey)) {
       sessionStorage.setItem(dedupeKey, "true");
 
+      const conversionPayload = {
+        event: "conversion_event_submit_lead_form",
+        lead_source: "homepage_site_visit",
+        page_location: window.location.href,
+        page_path: "/thank-you/home",
+        value: 300.0,
+        currency: "INR",
+      };
+
       if (window.dataLayer) {
         window.dataLayer.push({
           event: "thank_you_home_view",
           lead_source: "homepage_site_visit",
           page_location: window.location.href,
           page_path: "/thank-you/home",
+        });
+        window.dataLayer.push(conversionPayload);
+        window.dataLayer.push({
+          ...conversionPayload,
+          event: "conversion_event_submit_lead_form_2",
+        });
+        window.dataLayer.push({
+          ...conversionPayload,
+          event: "generate_lead",
         });
       }
 
@@ -66,6 +84,17 @@ function ThankYouHomeContent() {
           page_title: "Thank You Site Visit",
           page_location: window.location.href,
           page_path: "/thank-you/home",
+        });
+        window.gtag("event", "conversion_event_submit_lead_form", conversionPayload);
+        window.gtag("event", "conversion_event_submit_lead_form_2", conversionPayload);
+        window.gtag("event", "generate_lead", conversionPayload);
+      }
+
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Lead", {
+          content_name: "home_visit_thank_you",
+          value: 300.0,
+          currency: "INR",
         });
       }
     }

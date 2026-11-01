@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from'react';
 import { X, ShieldCheck, ArrowRight, User, Phone, CheckCircle2, AlertCircle, Loader2 } from'lucide-react';
-import { cn } from'@/lib/utils';
 import { useLead } from'@/providers/LeadProvider';
 import { useLanguage } from'@/providers/LanguageProvider';
 import { apiClient } from'@/lib/api';
+import { trackFormSubmission } from '@/lib/conversionTracking';
 
 export default function LeadCaptureModal() {
  const { verifiedLead, loginLead, loading: leadLoading } = useLead();
@@ -13,7 +13,7 @@ export default function LeadCaptureModal() {
  const [isOpen, setIsOpen] = useState(false);
  const [form, setForm] = useState({ name:'', phone:'' });
  const [status, setStatus] = useState('idle');
- const [hasDismissed, setHasDismissed] = useState(false);
+ const [hasDismissed, setHasDismissed] = useState(() => typeof window !== 'undefined' ? Boolean(sessionStorage.getItem('lead_modal_dismissed')) : false);
 
  useEffect(() => {
  // Disabled automatic popup to reduce friction for SEO and ads
@@ -59,6 +59,15 @@ export default function LeadCaptureModal() {
  phone: response.data.phone,
  token: response.data.lead_token
  });
+
+ trackFormSubmission({
+ name: form.name,
+ phone: form.phone,
+ source: 'proactive_lead_capture',
+ value: 200,
+ currency: 'INR'
+ });
+
  setStatus('success');
  setTimeout(() => setIsOpen(false), 2000);
  } else {
@@ -76,13 +85,6 @@ export default function LeadCaptureModal() {
  // Optional: store dismissal in sessionStorage to avoid showing again in the same tab
  sessionStorage.setItem('lead_modal_dismissed','true');
  };
-
- // Re-check dismissal on mount
- useEffect(() => {
- if (sessionStorage.getItem('lead_modal_dismissed')) {
- setHasDismissed(true);
- }
- }, []);
 
  if (!isOpen) return null;
 

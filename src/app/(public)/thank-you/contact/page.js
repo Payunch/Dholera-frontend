@@ -50,12 +50,30 @@ function ThankYouContactContent() {
     if (!sessionStorage.getItem(dedupeKey)) {
       sessionStorage.setItem(dedupeKey, "true");
 
+      const conversionPayload = {
+        event: "conversion_event_submit_lead_form",
+        lead_source: "contact_page",
+        page_location: window.location.href,
+        page_path: "/thank-you/contact",
+        value: 200.0,
+        currency: "INR",
+      };
+
       if (window.dataLayer) {
         window.dataLayer.push({
           event: "thank_you_contact_view",
           lead_source: "contact_page",
           page_location: window.location.href,
           page_path: "/thank-you/contact",
+        });
+        window.dataLayer.push(conversionPayload);
+        window.dataLayer.push({
+          ...conversionPayload,
+          event: "conversion_event_submit_lead_form_2",
+        });
+        window.dataLayer.push({
+          ...conversionPayload,
+          event: "generate_lead",
         });
       }
 
@@ -64,6 +82,17 @@ function ThankYouContactContent() {
           page_title: "Thank You Contact",
           page_location: window.location.href,
           page_path: "/thank-you/contact",
+        });
+        window.gtag("event", "conversion_event_submit_lead_form", conversionPayload);
+        window.gtag("event", "conversion_event_submit_lead_form_2", conversionPayload);
+        window.gtag("event", "generate_lead", conversionPayload);
+      }
+
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Lead", {
+          content_name: "contact_thank_you",
+          value: 200.0,
+          currency: "INR",
         });
       }
     }

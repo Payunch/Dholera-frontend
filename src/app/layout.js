@@ -18,8 +18,9 @@ const outfit = Outfit({
  display:"swap",
 });
 
-const GTM_CONTAINER_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID ||"GTM-WM9HRJVV";
+const GTM_CONTAINER_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID || "GTM-WM9HRJVV";
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export const viewport = {
@@ -80,12 +81,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
  return (
  <html lang="en" suppressHydrationWarning>
-  <GoogleTagManager gtmId={GTM_CONTAINER_ID} />
  <head>
   <Script id="consent-default" strategy="beforeInteractive">
     {`
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
       gtag('consent', 'default', {
         'ad_storage': 'granted',
         'analytics_storage': 'granted',
@@ -94,11 +95,22 @@ export default function RootLayout({ children }) {
       });
     `}
   </Script>
+  {GA_MEASUREMENT_ID && !GOOGLE_ADS_ID && <Script id="ga-tag" strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />}
+  {GA_MEASUREMENT_ID && !GOOGLE_ADS_ID && <Script id="ga-config" strategy="afterInteractive">
+    {`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', '${GA_MEASUREMENT_ID}');
+    `}
+  </Script>}
   {GOOGLE_ADS_ID && <Script id="aw-tag" strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`} />}
   {GOOGLE_ADS_ID && <Script id="aw-config" strategy="afterInteractive">
     {`
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
       gtag('js', new Date());
       gtag('config', '${GOOGLE_ADS_ID}');
     `}
@@ -125,6 +137,7 @@ export default function RootLayout({ children }) {
   </Script>}
  </head>
  <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`} suppressHydrationWarning>
+ <GoogleTagManager gtmId={GTM_CONTAINER_ID} />
  <OrganizationSchema />
  <Analytics />
 

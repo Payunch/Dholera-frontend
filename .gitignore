@@ -55,3 +55,6 @@ public/images/dholera-tp3-*.jpg
 public/images/dholera-solar-*.png
 public/images/dholera-solar-*.jpg
 public/images/dholera-semiconductor-*.jpg
+
+# Large Android binary releases (>100MB exceeds GitHub push limits)
+public/downloads/dholera-*.apk

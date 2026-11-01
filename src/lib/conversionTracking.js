@@ -101,10 +101,27 @@ export function trackWhatsAppClick(source = "general", { target_zone = "", prope
       property_name: resolvedProperty,
       timestamp: new Date().toISOString(),
     });
+    window.dataLayer.push({
+      event: "conversion_event_whatsapp",
+      lead_source: source,
+      intent_type: "inquiry_chat",
+      target_zone: resolvedZone,
+      property_name: resolvedProperty,
+      value: 50.0,
+      currency: "INR",
+      timestamp: new Date().toISOString(),
+    });
   }
 
   if (typeof window.gtag === "function") {
     window.gtag("event", "whatsapp_click", {
+      lead_source: source,
+      target_zone: resolvedZone,
+      property_name: resolvedProperty,
+      value: 50.0,
+      currency: "INR",
+    });
+    window.gtag("event", "conversion_event_whatsapp", {
       lead_source: source,
       target_zone: resolvedZone,
       property_name: resolvedProperty,
@@ -148,10 +165,27 @@ export function trackPhoneClick(source = "general", { target_zone = "", property
       property_name: resolvedProperty,
       timestamp: new Date().toISOString(),
     });
+    window.dataLayer.push({
+      event: "conversion_event_phone",
+      lead_source: source,
+      intent_type: "direct_call",
+      target_zone: resolvedZone,
+      property_name: resolvedProperty,
+      value: 100.0,
+      currency: "INR",
+      timestamp: new Date().toISOString(),
+    });
   }
 
   if (typeof window.gtag === "function") {
     window.gtag("event", "phone_click", {
+      lead_source: source,
+      target_zone: resolvedZone,
+      property_name: resolvedProperty,
+      value: 100.0,
+      currency: "INR",
+    });
+    window.gtag("event", "conversion_event_phone", {
       lead_source: source,
       target_zone: resolvedZone,
       property_name: resolvedProperty,
@@ -200,48 +234,70 @@ export function trackFormSubmission({
   const resolvedBudget = budget || "Standard Investment Tier";
   const resolvedInvestorType = investor_type || "Direct Inquirer";
 
+  const userData = {};
+  if (email) userData.email = email.trim().toLowerCase();
+  if (phone) {
+    const cleanPhone = phone.replace(/\D/g, "");
+    userData.phone_number = cleanPhone.startsWith("91") ? `+${cleanPhone}` : `+91${cleanPhone}`;
+  }
+  if (name) {
+    userData.address = {
+      first_name: name.trim().split(" ")[0] || name.trim(),
+    };
+  }
+
+  const payload = {
+    lead_source: source,
+    investor_budget: resolvedBudget,
+    lead_budget: resolvedBudget,
+    target_zone: resolvedZone,
+    investor_type: resolvedInvestorType,
+    property_name: resolvedProperty,
+    value: value,
+    currency: currency,
+    timestamp: new Date().toISOString(),
+  };
+
   // 1. Set Enhanced Conversion user data if gtag is available
   if (typeof window.gtag === "function") {
-    const userData = {};
-    if (email) userData.email = email.trim().toLowerCase();
-    if (phone) {
-      const cleanPhone = phone.replace(/\D/g, "");
-      userData.phone_number = cleanPhone.startsWith("91") ? `+${cleanPhone}` : `+91${cleanPhone}`;
-    }
-    if (name) {
-      userData.address = {
-        first_name: name.trim().split(" ")[0] || name.trim(),
-      };
-    }
     if (Object.keys(userData).length > 0) {
       window.gtag("set", "user_data", userData);
     }
 
-    // Single standard GA4 generate_lead event
-    window.gtag("event", "generate_lead", {
-      lead_source: source,
-      investor_budget: resolvedBudget,
-      target_zone: resolvedZone,
-      investor_type: resolvedInvestorType,
-      property_name: resolvedProperty,
-      value: value,
-      currency: currency,
-    });
+    // A. Standard GA4 generate_lead event
+    window.gtag("event", "generate_lead", payload);
+
+    // B. Google Ads primary imported conversion action
+    window.gtag("event", "conversion_event_submit_lead_form", payload);
+
+    // C. Google Ads secondary imported conversion action
+    window.gtag("event", "conversion_event_submit_lead_form_2", payload);
+
+    // D. Contact event for specific ad attribution
+    window.gtag("event", "conversion_event_contact", payload);
   }
 
-  // 2. Single standard push to dataLayer for GTM / GA4
+  // 2. Dispatch to GTM dataLayer
   if (window.dataLayer) {
+    // Pass user_data to dataLayer for GTM Enhanced Conversions variables
+    const dlPayload = {
+      ...payload,
+      ...(Object.keys(userData).length > 0 ? { user_data: userData } : {}),
+    };
+
     window.dataLayer.push({
       event: "generate_lead",
-      lead_source: source,
-      investor_budget: resolvedBudget,
-      lead_budget: resolvedBudget,
-      target_zone: resolvedZone,
-      investor_type: resolvedInvestorType,
-      property_name: resolvedProperty,
-      value: value,
-      currency: currency,
-      timestamp: new Date().toISOString(),
+      ...dlPayload,
+    });
+
+    window.dataLayer.push({
+      event: "conversion_event_submit_lead_form",
+      ...dlPayload,
+    });
+
+    window.dataLayer.push({
+      event: "conversion_event_submit_lead_form_2",
+      ...dlPayload,
     });
   }
 
