@@ -2,6 +2,7 @@
 
 import React, { useEffect, Suspense } from "react";
 import Link from "next/link";
+import { trackGoogleConversion } from "@/lib/conversionTracking";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   X,
@@ -87,6 +88,12 @@ function ThankYouContactContent() {
         window.gtag("event", "conversion_event_submit_lead_form_2", conversionPayload);
         window.gtag("event", "generate_lead", conversionPayload);
       }
+
+      trackGoogleConversion({
+        label: "hpidCJOp8Z0dEN08tupD",
+        value: 200.0,
+        currency: "INR",
+      });
 
       if (typeof window.fbq === "function") {
         window.fbq("track", "Lead", {

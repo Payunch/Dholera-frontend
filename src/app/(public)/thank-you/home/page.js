@@ -90,6 +90,12 @@ function ThankYouHomeContent() {
         window.gtag("event", "generate_lead", conversionPayload);
       }
 
+      trackGoogleConversion({
+        label: "hpidCJOp8Z0dEN08tupD",
+        value: 300.0,
+        currency: "INR",
+      });
+
       if (typeof window.fbq === "function") {
         window.fbq("track", "Lead", {
           content_name: "home_visit_thank_you",

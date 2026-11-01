@@ -67,6 +67,12 @@ export default function ThankYouPage() {
         window.gtag("event", "generate_lead", conversionPayload);
       }
 
+      trackGoogleConversion({
+        label: "hpidCJOp8Z0dEN08tupD",
+        value: 200.0,
+        currency: "INR",
+      });
+
       if (typeof window.fbq === "function") {
         window.fbq("track", "Lead", {
           content_name: "landing_thank_you",
