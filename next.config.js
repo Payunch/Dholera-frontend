@@ -157,6 +157,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/invest",
+        destination: "/investment-guide",
+        permanent: true,
+      },
+      {
         source: "/plots-for-sale",
         destination: "/projects",
         permanent: true,
