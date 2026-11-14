@@ -4,10 +4,11 @@ export const siteConfig = {
     ogImage: "https://www.dholeraplatform.com/og.png",
     description: "Independent Dholera Platform for infrastructure intelligence, planning maps, TP maps, and land investment growth evidence in Dholera Smart City.",
     links: {
-        facebook: "https://www.facebook.com/dholeraplatform",
-        twitter: "https://twitter.com/dholeraplatform",
+        facebook: "https://www.facebook.com/profile.php?id=61595972710026",
+        twitter: "https://x.com/dholeraplatform",
         instagram: "https://www.instagram.com/dholeraplatform",
         youtube: "https://www.youtube.com/@dholeraplatform",
+        whatsapp: "https://wa.me/918200448270",
     },
     contact: {
         email: "gohelnaresh7707@gmail.com",
