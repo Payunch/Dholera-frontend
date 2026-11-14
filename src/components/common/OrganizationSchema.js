@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import Script from "next/script";
 
 export default function OrganizationSchema() {
@@ -19,10 +19,11 @@ export default function OrganizationSchema() {
           "url": `${siteUrl}/author/naresh-gohel`
         },
         "sameAs": [
-          "https://www.facebook.com/dholeraplatform",
-          "https://twitter.com/dholeraplatform",
+          "https://www.facebook.com/profile.php?id=61595972710026",
+          "https://x.com/dholeraplatform",
           "https://www.instagram.com/dholeraplatform",
-          "https://www.youtube.com/@dholeraplatform"
+          "https://www.youtube.com/@dholeraplatform",
+          "https://wa.me/918200448270"
         ],
         "contactPoint": {
           "@type": "ContactPoint",
@@ -41,7 +42,7 @@ export default function OrganizationSchema() {
         "logo": `${siteUrl}/logo.png`,
         "telephone": "+91-8200448270",
         "email": "gohelnaresh7707@gmail.com",
-        "priceRange": "₹3,500 - ₹16,500 per sq yard",
+        "priceRange": "₹9,500 - ₹35,000 per sq yard",
         "currenciesAccepted": "INR",
         "paymentAccepted": "Bank Transfer, RTGS, Cheque",
         "openingHours": "Mo,Tu,We,Th,Fr,Sa,Su 09:00-20:00",
@@ -79,3 +80,4 @@ export default function OrganizationSchema() {
     />
   );
 }
+
