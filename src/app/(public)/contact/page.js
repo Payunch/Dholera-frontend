@@ -4,8 +4,9 @@ import { Mail, Phone, MapPin, Globe, ShieldAlert } from "lucide-react";
 import { Translate } from "@/components/i18n/Translate";
 
 export const metadata = {
-  title: "Contact Dholera Platform | Expert Investment Consultation",
-  description: "Get in touch with our Dholera Smart City experts. Request TP maps, investment brochures, or book a site visit. Your gateway to DSIR growth.",
+  title: "Contact Dholera Land Advisory",
+  description: "Contact Dholera Platform land experts for verified TP1 & TP2 plot bookings, Collector NA due diligence, title clearance, and scheduled site visits.",
+  alternates: { canonical: "https://www.dholeraplatform.com/contact" },
 };
 
 export default function ContactPage() {

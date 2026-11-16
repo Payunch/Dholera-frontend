@@ -5,8 +5,8 @@ import { getUpdates } from "@/features/updates/api";
 import { cookies } from "next/headers";
 
 export const metadata = {
-  title: "Dholera Smart City Plots for Sale | Price per Sq Yard & TP Maps 2026",
-  description: "Explore verified residential, commercial & industrial plots for sale in Dholera SIR. Check 2026 price per sq yard, TP1 & TP2 master plans, NA/NOC clear titles, and book a free site visit.",
+  title: "Dholera Smart City Plots for Sale: TP Rates 2026",
+  description: "Buy verified residential and commercial plots in Dholera SIR. Check 2026 price per sq yard, TP1 & TP2 town planning maps, Collector NA titles, and site visits.",
   keywords: [
     "Dholera Smart City plots for sale",
     "Dholera SIR plot price 2026",
@@ -21,8 +21,8 @@ export const metadata = {
     canonical: siteConfig.url,
   },
   openGraph: {
-    title: "Dholera Smart City Plots for Sale | Price per Sq Yard & TP Maps 2026",
-    description: "Verified residential, commercial & industrial plots for sale in Dholera SIR. Check 2026 price per sq yard, TP1 & TP2 master planning maps, and book a free site visit.",
+    title: "Dholera Smart City Plots for Sale: TP Rates 2026",
+    description: "Buy verified residential and commercial plots in Dholera SIR. Check 2026 price per sq yard, TP1 & TP2 town planning maps, Collector NA titles, and site visits.",
     url: siteConfig.url,
     type: "website",
   }

@@ -1,9 +1,9 @@
 import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
 
 export const metadata = {
-  title: "Dholera Infrastructure Projects & Development Updates",
-  description: "Track Dholera SIR infrastructure including roads, utilities, industrial projects, semiconductor investment, and regional connectivity.",
-  alternates: { canonical: "/infrastructure" },
+  title: "Dholera Infrastructure & City Updates",
+  description: "Track live Dholera SIR infrastructure updates: Ahmedabad-Dholera Expressway, international airport, plug-and-play utilities, and Tata semiconductor fab progress.",
+  alternates: { canonical: "https://www.dholeraplatform.com/infrastructure" },
 };
 
 export default function Layout({ children }) {

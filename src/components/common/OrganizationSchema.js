@@ -1,5 +1,4 @@
 import React from "react";
-import Script from "next/script";
 
 export default function OrganizationSchema() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.includes('localhost') ? process.env.NEXT_PUBLIC_SITE_URL : "https://www.dholeraplatform.com";
@@ -73,10 +72,10 @@ export default function OrganizationSchema() {
   };
 
   return (
-    <Script
+    <script
       id="organization-schema"
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
     />
   );
 }

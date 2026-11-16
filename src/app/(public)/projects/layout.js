@@ -1,7 +1,7 @@
 import { projects } from "@/data/projects";
 
 export const metadata = {
-  title: "Dholera Projects & Plots for Sale | Verified Property Listings",
+  title: "Dholera Projects & Plots for Sale",
   description: "Explore verified residential, commercial, and industrial plots for sale in Dholera Special Investment Region (SIR). Pricing, sizes, and DSIRDA zoning clearance.",
   alternates: { canonical: "https://www.dholeraplatform.com/projects" },
 };

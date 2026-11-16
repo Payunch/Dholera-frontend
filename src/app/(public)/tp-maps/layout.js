@@ -1,9 +1,9 @@
 import BreadcrumbSchema from "@/components/common/BreadcrumbSchema";
 
 export const metadata = {
-  title: "Dholera TP Maps | Town Planning Scheme Maps & Information",
-  description: "Explore Dholera TP scheme maps and town-planning information for Dholera Special Investment Region in one searchable resource.",
-  alternates: { canonical: "/tp-maps" },
+  title: "Dholera TP Maps: Town Planning Schemes",
+  description: "Download official Dholera SIR Town Planning (TP) scheme maps 1 to 6. Detailed zoning boundaries, village survey numbers, road networks, and land use plans.",
+  alternates: { canonical: "https://www.dholeraplatform.com/tp-maps" },
 };
 
 export default function Layout({ children }) {
