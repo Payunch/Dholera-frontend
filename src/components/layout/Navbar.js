@@ -55,6 +55,24 @@ export function Navbar() {
 
   return (
     <>
+      {/* Top Direct Call & Free Site Visit Urgency Banner */}
+      <div className="bg-gradient-to-r from-orange-600 via-amber-600 to-orange-600 text-white text-[10.5px] sm:text-xs font-black uppercase tracking-wider py-1.5 px-3 text-center flex items-center justify-center gap-2 sm:gap-4 shadow-sm z-[160] relative">
+        <span className="flex h-2 w-2 relative shrink-0">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+        </span>
+        <span className="truncate">
+          Free Guided Dholera Site Visit Cabs from Ahmedabad &bull; Collector NA Clear Plots
+        </span>
+        <a
+          href="tel:+918200448270"
+          className="underline font-black hover:text-slate-900 shrink-0 ml-1 inline-flex items-center gap-1"
+        >
+          <Phone className="h-3 w-3 fill-current" />
+          Call +91 82004 48270
+        </a>
+      </div>
+
       <header className="sticky top-0 z-[150] w-full border-b border-slate-100 bg-white/95 dark:bg-slate-950/95 dark:border-slate-800 backdrop-blur-md transition-colors shadow-sm">
         <div className="w-full max-w-7xl mx-auto px-2.5 sm:px-4 lg:px-6 py-2.5">
           <div className="flex w-full items-center justify-between gap-2 md:gap-3 lg:gap-4">
