@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Languages, Sun, Moon, AlignLeft } from "lucide-react";
+import { ChevronDown, Languages, Sun, Moon, AlignLeft, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SplitLogo } from "@/components/common/DynamicImages";
 import { useLanguage } from "@/providers/LanguageProvider";
@@ -224,6 +224,16 @@ export function Navbar() {
                   </div>
                 )}
               </div>
+
+              {/* Direct Call Button */}
+              <a
+                href="tel:+918200448270"
+                className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-white text-[9.5px] font-black uppercase tracking-wider transition-all shadow-md shadow-emerald-600/20 shrink-0"
+                aria-label="Call Land Advisor"
+              >
+                <Phone className="h-3 w-3 fill-current" />
+                <span>+91 82004 48270</span>
+              </a>
 
               {/* Contact Us */}
               <Link

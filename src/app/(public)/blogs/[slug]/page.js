@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound, permanentRedirect } from "next/navigation";
-import { ChevronLeft, Calendar, Share2, Clock, Lock, Smartphone } from "lucide-react";
+import { ChevronLeft, Calendar, Share2, Clock, Lock, Smartphone, Phone, MessageCircle, CheckCircle2, ShieldCheck } from "lucide-react";
 import { format } from "date-fns";
 import { getUpdateByRouteKey } from "@/features/updates/api";
 import { ArticleBody } from "@/features/updates/components/ArticleBody";
@@ -35,13 +35,20 @@ export async function generateMetadata({ params, searchParams }, parent) {
   const expectedSlug = getBlogSlug(update);
 
   const previousImages = (await parent).openGraph?.images || [];
-  const imgSrc = update.imageUrl 
+  const DEFAULT_FALLBACK_IMG = "https://res.cloudinary.com/dhf36t4vw/image/upload/v1794806547/dholera/images/dholera-expressway-land-2026-corridor-cover-nov16.jpg";
+
+  let imgSrc = update.imageUrl 
     ? (
         update.imageUrl.startsWith("http") ? update.imageUrl : 
         update.imageUrl.startsWith("/uploads/") ? `${SITE_BASE_URL}${update.imageUrl}` :
         update.imageUrl
       )
     : null;
+
+  if (!imgSrc || imgSrc.includes("dholerahub.com")) {
+    const contentMatch = update.content ? update.content.match(/<img[^>]+src=["']([^"']+)["']/i) : null;
+    imgSrc = (contentMatch && !contentMatch[1].includes("dholerahub.com")) ? contentMatch[1] : DEFAULT_FALLBACK_IMG;
+  }
 
   return {
     title: update.seoTitle || update.title,
@@ -100,13 +107,20 @@ export default async function UpdateDetailPage({ params, searchParams }) {
     permanentRedirect(`${require("@/lib/blogSlug").getBlogPath(update)}${audience === "app" ? "?audience=app" : ""}`);
   }
 
-  const imgSrc = update.imageUrl 
+  const DEFAULT_FALLBACK_IMG = "https://res.cloudinary.com/dhf36t4vw/image/upload/v1794806547/dholera/images/dholera-expressway-land-2026-corridor-cover-nov16.jpg";
+
+  let imgSrc = update.imageUrl 
     ? (
         update.imageUrl.startsWith("http") ? update.imageUrl : 
         update.imageUrl.startsWith("/uploads/") ? `${SITE_BASE_URL}${update.imageUrl}` :
         update.imageUrl
       )
     : null;
+
+  if (!imgSrc || imgSrc.includes("dholerahub.com")) {
+    const contentMatch = update.content ? update.content.match(/<img[^>]+src=["']([^"']+)["']/i) : null;
+    imgSrc = (contentMatch && !contentMatch[1].includes("dholerahub.com")) ? contentMatch[1] : DEFAULT_FALLBACK_IMG;
+  }
   const imgPos = update.imagePosition || "top";
   const catColor = CATEGORY_COLORS[update.category] || CATEGORY_COLORS.General;
   const publishedAt = update.publishedAt || update.createdAt;
@@ -264,6 +278,53 @@ export default async function UpdateDetailPage({ params, searchParams }) {
               />
             </div>
           )}
+
+          {/* High-Converting Investor Action Box */}
+          <div className="mt-14 p-8 sm:p-10 rounded-[2.5rem] bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border border-orange-500/30 text-white shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-orange-600/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative z-10 max-w-2xl mx-auto text-center space-y-4">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 text-[10px] font-black uppercase tracking-widest">
+                <ShieldCheck className="h-4 w-4" /> Direct Land Advisory Desk
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white leading-tight">
+                Planning to Buy Land in Dholera SIR?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+                Connect directly with founder Naresh Gohel for verified TP1 &amp; TP2 plot availability, Collector NA title search, and government circle rate guidance.
+              </p>
+
+              <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+                <a
+                  href="tel:+918200448270"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black uppercase tracking-wider transition-all shadow-xl shadow-orange-600/30"
+                >
+                  <Phone className="h-4 w-4 fill-current" />
+                  <span>Call: +91 82004 48270</span>
+                </a>
+                <a
+                  href={`https://wa.me/918200448270?text=${encodeURIComponent(`Hi Nareshji, I read "${update.title}" on Dholera Platform. I want to inquire about available plots for sale.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider transition-all shadow-xl shadow-emerald-600/30"
+                >
+                  <MessageCircle className="h-4 w-4 fill-current" />
+                  <span>Inquire on WhatsApp</span>
+                </a>
+                <Link
+                  href="/projects"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-black uppercase tracking-wider border border-slate-700 transition-all"
+                >
+                  <span>View Projects</span>
+                </Link>
+              </div>
+
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-6 text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> 100% Collector NA</span>
+                <span className="inline-flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Direct Title Registry</span>
+                <span className="inline-flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" /> Free Ahmedabad Cab Visit</span>
+              </div>
+            </div>
+          </div>
 
           <footer className="mt-20 border-t border-slate-100 pt-12 text-center">
             <h4 className="mb-6 text-xl font-black uppercase tracking-tight text-slate-900 dark:text-white">

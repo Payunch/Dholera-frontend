@@ -205,13 +205,20 @@ export default function BlogsClient({ initialUpdates, hasError }) {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
               {filteredBlogs.map(post => {
-                const imgSrc = post.imageUrl 
+                const DEFAULT_FALLBACK_IMG = "https://res.cloudinary.com/dhf36t4vw/image/upload/v1794806547/dholera/images/dholera-expressway-land-2026-corridor-cover-nov16.jpg";
+
+                let imgSrc = post.imageUrl 
                   ? (
                       post.imageUrl.startsWith("http") ? post.imageUrl : 
                       post.imageUrl.startsWith("/uploads/") ? `${SITE_BASE_URL}${post.imageUrl}` :
                       post.imageUrl
                     )
                   : null;
+
+                if (!imgSrc || imgSrc.includes("dholerahub.com")) {
+                  const contentMatch = post.content ? post.content.match(/<img[^>]+src=["']([^"']+)["']/i) : null;
+                  imgSrc = (contentMatch && !contentMatch[1].includes("dholerahub.com")) ? contentMatch[1] : DEFAULT_FALLBACK_IMG;
+                }
 
                 const excerpt = sanitizeExcerpt(post.content);
                 const badge = cleanCategoryBadge(post.category);

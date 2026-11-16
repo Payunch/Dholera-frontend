@@ -17,7 +17,8 @@ import {
   Lock,
   Shield,
   Bell,
-  FileText
+  FileText,
+  Phone
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
@@ -221,17 +222,25 @@ export function HomeClient({ recentUpdates }) {
                 {t('hero_desc')}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap items-center gap-3.5">
                 <button
-                  onClick={() => window.dispatchEvent(new Event("openLeadModal"))}
-                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-[#F59E0B] px-10 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-[#d97706] hover:scale-105 shadow-heavy sm:w-auto active:scale-95"
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent("openLeadModal"))}
+                  className="group flex h-14 w-full sm:w-auto items-center justify-center gap-2.5 rounded-2xl bg-[#FF7A00] hover:bg-orange-600 px-7 text-xs font-black uppercase tracking-widest text-white transition-all shadow-xl shadow-orange-600/20 active:scale-95"
                 >
-                  {t('talk_to_owner')}
+                  <span>{t('talk_to_owner') || "Consult Land Advisor"}</span>
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
+                <a
+                  href="tel:+918200448270"
+                  className="flex h-14 w-full sm:w-auto items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-7 text-xs font-black uppercase tracking-widest text-white transition-all shadow-xl shadow-emerald-600/20 active:scale-95"
+                >
+                  <Phone className="h-4 w-4 fill-current" />
+                  <span>Call: +91 82004 48270</span>
+                </a>
                 <Link
                   href="/projects"
-                  className="group flex h-16 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 border border-slate-700/50 dark:bg-slate-800 dark:text-white dark:border-slate-600 dark:hover:bg-slate-700 px-10 text-xs font-black uppercase tracking-widest transition-all hover:scale-105 shadow-heavy sm:w-auto active:scale-95"
+                  className="flex h-14 w-full sm:w-auto items-center justify-center gap-2.5 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 border border-slate-700/60 dark:bg-slate-800 dark:text-white dark:border-slate-600 px-7 text-xs font-black uppercase tracking-widest transition-all active:scale-95"
                 >
                   {t('view_projects')}
                 </Link>
